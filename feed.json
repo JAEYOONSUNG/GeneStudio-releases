@@ -1,11 +1,11 @@
 {
   "mac": {
-    "version": "1.1.36",
-    "url": "https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.36"
+    "version": "1.1.37",
+    "url": "https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.37"
   },
   "win": {
-    "version": "1.1.36",
-    "url": "https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.36"
+    "version": "1.1.37",
+    "url": "https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.37"
   },
-  "notes": "Gene Studio 1.1.36"
+  "notes": "Gene Studio 1.1.37"
 }
