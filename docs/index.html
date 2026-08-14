@@ -1,15 +1,17 @@
 <!doctype html>
-<html lang="en" data-lang="en">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Gene Studio — a plasmid workbench that opens what your lab already has</title>
 <meta name="description" content="Circular and linear maps, an annotated sequence, restriction digests with a simulated gel, PCR and cloning, CRISPR guides and Sanger .ab1 review. Reads GenBank, SnapGene .dna, FASTA and .ab1, and writes them back without losing what was in them. macOS and Windows.">
 <meta name="theme-color" content="#0D1315">
+<meta name="color-scheme" content="dark">
 <meta property="og:title" content="Gene Studio">
 <meta property="og:description" content="A plasmid workbench that opens what your lab already has — GenBank, SnapGene .dna, FASTA and Sanger traces — and writes them back without losing what was in them.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="shot/map.png">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23E8A33D' stroke-width='2.5'/%3E%3Ccircle cx='16' cy='5' r='3' fill='%234FB79E'/%3E%3C/svg%3E">
 <style>
 /* The page is dressed in the application's own tokens rather than in a set
@@ -28,56 +30,56 @@
   --wide:1180px;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
-@media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} *{animation:none!important;transition:none!important} }
+html{scroll-behavior:smooth; background:var(--paper)}
 body{
   margin:0; background:var(--paper); color:var(--body);
   font:400 17px/1.65 var(--ui); -webkit-font-smoothing:antialiased;
   overflow-x:hidden;
 }
-h1,h2,h3{color:var(--ink); line-height:1.12; letter-spacing:-.02em; margin:0}
-/* Korean breaks anywhere unless told not to, which cuts a word in half across
-   a line; and the small mono labels are a Latin convention that comes out
-   letter-spaced and wrong in a Korean face. */
-:root[data-lang="ko"] h1,
-:root[data-lang="ko"] h2,
-:root[data-lang="ko"] p,
-:root[data-lang="ko"] li{word-break:keep-all; overflow-wrap:anywhere}
-:root[data-lang="ko"] .eyebrow,
-:root[data-lang="ko"] .verline,
-:root[data-lang="ko"] figcaption,
-:root[data-lang="ko"] .num{font-family:var(--ui); letter-spacing:.02em}
-:root[data-lang="ko"] h1{max-width:22ch}
+h1,h2,h3{color:var(--ink); line-height:1.14; letter-spacing:-.02em; margin:0}
 a{color:inherit}
-img{max-width:100%; display:block}
+/* **`height` is an attribute, and the phone gets a different picture.** Each
+   frame carries a wide screenshot and a crop of it for narrow screens; with the
+   width/height attributes left to decide the box, the crop was drawn into the
+   wide one's 1600×1000 — 448×1000 measured, the ring stretched down the page.
+   The attributes stay, because they are what reserves the right space while the
+   image loads; `height:auto` is what hands the shape back to whichever picture
+   actually arrived. */
+img{max-width:100%; height:auto; display:block}
+code{font-family:var(--mono); font-size:.92em}
+::selection{background:var(--amber-soft); color:var(--ink)}
+:focus-visible{outline:2px solid var(--amber); outline-offset:3px; border-radius:6px}
 .wrap{max-width:var(--wide); margin:0 auto; padding:0 var(--pad)}
-.mono{font-family:var(--mono)}
+section[id], div[id]{scroll-margin-top:74px}
+
+/* Everything that arrives with a scroll is a nicety, and it must never be the
+   reason something cannot be read. So the hiding is **opt-in**: the class that
+   hides these is put on the document by the script that reveals them, and only
+   where there is an observer to do it. A page whose script never ran, or ran
+   and threw, is a page with everything on it. */
+html.js .rise{opacity:0; transform:translateY(14px); transition:opacity .5s ease, transform .5s ease}
+html.js .rise.in{opacity:1; transform:none}
+@media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} }
 
 /* ── the strip along the top ─────────────────────────────────────────────── */
 header.rail{
   position:sticky; top:0; z-index:40;
-  background:rgba(13,19,21,.72); backdrop-filter:blur(14px) saturate(1.4);
+  background:rgba(13,19,21,.74); backdrop-filter:blur(14px) saturate(1.4);
   border-bottom:1px solid var(--hair);
 }
 .rail .wrap{display:flex; align-items:center; gap:18px; height:58px}
 .brand{display:flex; align-items:center; gap:9px; font-weight:650; color:var(--ink); text-decoration:none; letter-spacing:-.01em}
 .brand svg{flex:none}
 .brand .tag{font:500 10px/1 var(--mono); color:var(--faint); letter-spacing:.14em; padding-top:2px}
-.rail nav{margin-left:auto; display:flex; align-items:center; gap:4px}
-.rail nav a{
-  font-size:14px; color:var(--slate); text-decoration:none;
-  padding:7px 11px; border-radius:8px;
-}
+.rail nav{margin-left:auto; display:flex; align-items:center; gap:2px}
+.rail nav a{font-size:14px; color:var(--slate); text-decoration:none; padding:7px 11px; border-radius:8px; white-space:nowrap}
 .rail nav a:hover{color:var(--ink); background:var(--hair)}
+.rail nav a.get{color:var(--ink); border:1px solid var(--line); margin-left:8px}
+.rail nav a.get:hover{border-color:var(--amber); background:transparent}
 @media (max-width:760px){ .rail nav a.hide-s{display:none} }
-.langbtn{
-  font:500 12px/1 var(--mono); color:var(--slate); background:none;
-  border:1px solid var(--line); border-radius:999px; padding:6px 10px; cursor:pointer;
-}
-.langbtn:hover{color:var(--ink); border-color:var(--slate)}
 
 /* ── hero ────────────────────────────────────────────────────────────────── */
-.hero{position:relative; padding:clamp(56px,9vw,116px) 0 0; overflow:hidden}
+.hero{position:relative; padding:clamp(52px,9vw,112px) 0 0; overflow:hidden}
 .hero::before{
   content:''; position:absolute; inset:-40% 0 auto 0; height:760px; pointer-events:none;
   background:
@@ -85,15 +87,15 @@ header.rail{
     radial-gradient(40% 34% at 76% 12%, rgba(79,183,158,.13), transparent 72%);
 }
 .hero .wrap{position:relative}
-.eyebrow{
-  font:500 11.5px/1 var(--mono); letter-spacing:.16em; text-transform:uppercase;
-  color:var(--amber); margin-bottom:20px;
+.eyebrow{font:500 11.5px/1 var(--mono); letter-spacing:.16em; text-transform:uppercase; color:var(--amber); margin:0 0 20px}
+h1{font-size:clamp(36px,6.2vw,66px); font-weight:660; max-width:19ch}
+.sub{margin:22px 0 0; max-width:60ch; font-size:clamp(17px,2vw,20px)}
+.chips{display:flex; flex-wrap:wrap; gap:7px; margin:26px 0 0; padding:0; list-style:none}
+.chips li{
+  font:500 12px/1 var(--mono); color:var(--slate);
+  border:1px solid var(--hair); border-radius:7px; padding:7px 9px; background:var(--ground);
 }
-h1{font-size:clamp(38px,6.4vw,68px); font-weight:660; max-width:19ch}
-.sub{
-  margin:22px 0 0; max-width:62ch; font-size:clamp(17px,2vw,20px); color:var(--body);
-}
-.cta{display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin:34px 0 0}
+.cta{display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin:28px 0 0}
 .btn{
   display:inline-flex; align-items:center; gap:9px; text-decoration:none;
   font:550 15px/1 var(--ui); padding:13px 20px; border-radius:11px;
@@ -103,78 +105,78 @@ h1{font-size:clamp(38px,6.4vw,68px); font-weight:660; max-width:19ch}
 .btn:hover{transform:translateY(-1px); border-color:var(--slate)}
 .btn.primary{background:var(--amber); color:var(--amber-ink); border-color:var(--amber)}
 .btn.primary:hover{background:#f0b055}
-.btn small{font:400 12px/1 var(--mono); opacity:.72}
-.verline{margin:16px 0 0; font:400 13px/1.5 var(--mono); color:var(--faint)}
-.verline b{color:var(--slate); font-weight:500}
+.btn small{font:400 12px/1 var(--mono); opacity:.75}
+.verline{margin:16px 0 0; font:400 13.5px/1.6 var(--ui); color:var(--faint); max-width:56ch}
+.verline b{color:var(--slate); font-weight:600}
 
 /* the screenshot, framed as a window */
-.shot{
-  margin:clamp(38px,6vw,72px) auto 0; max-width:calc(var(--wide) + 140px);
-  padding:0 var(--pad);
-}
+.shot{margin:clamp(36px,6vw,68px) auto 0; max-width:calc(var(--wide) + 140px); padding:0 var(--pad)}
 figure{margin:0}
 .frame{
-  border:1px solid var(--line); border-radius:14px; overflow:hidden;
-  background:var(--sunk); box-shadow:0 30px 80px rgba(0,0,0,.5), 0 2px 0 rgba(255,255,255,.03) inset;
+  border:1px solid var(--line); border-radius:14px; overflow:hidden; background:var(--sunk);
+  box-shadow:0 30px 80px rgba(0,0,0,.5), 0 2px 0 rgba(255,255,255,.03) inset;
 }
-.frame .bar{
-  display:flex; align-items:center; gap:7px; padding:10px 14px;
-  border-bottom:1px solid var(--hair); background:var(--ground);
-}
+.frame .bar{display:flex; align-items:center; gap:7px; padding:10px 14px; border-bottom:1px solid var(--hair); background:var(--ground)}
 .frame .bar i{width:10px; height:10px; border-radius:50%; background:var(--line); display:block}
-.frame .bar span{
-  margin-left:8px; font:400 11.5px/1 var(--mono); color:var(--faint);
-  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-}
+.frame .bar span{margin-left:8px; font:400 11.5px/1 var(--mono); color:var(--faint); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
 figcaption{margin:14px 2px 0; font:400 13px/1.5 var(--mono); color:var(--faint)}
 
 /* ── the measured band ───────────────────────────────────────────────────── */
-.band{border-top:1px solid var(--hair); border-bottom:1px solid var(--hair); margin-top:clamp(60px,9vw,110px); background:var(--sunk)}
+.band{border-top:1px solid var(--hair); border-bottom:1px solid var(--hair); margin-top:clamp(56px,9vw,104px); background:var(--sunk)}
 .stats{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--hair)}
 .stats div{background:var(--sunk); padding:26px var(--pad)}
 .stats b{display:block; font:600 26px/1.1 var(--mono); color:var(--ink); letter-spacing:-.02em}
 .stats span{display:block; margin-top:7px; font-size:13.5px; color:var(--slate); line-height:1.45}
-@media (max-width:880px){ .stats{grid-template-columns:repeat(2,1fr)} }
+@media (max-width:880px){ .stats{grid-template-columns:repeat(2,1fr)} .stats div{padding:20px var(--pad)} }
 
 /* ── the numbered sections ───────────────────────────────────────────────── */
-section.feat{padding:clamp(64px,10vw,120px) 0; border-bottom:1px solid var(--hair)}
-.feat .wrap{display:block}
-.feat .say{max-width:min(100%, 720px)}
-.feat figure{margin-top:clamp(28px,4vw,46px)}
+section.feat{padding:clamp(58px,9vw,110px) 0; border-bottom:1px solid var(--hair)}
 .feat .cols{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,.92fr); gap:clamp(20px,4vw,56px); align-items:start}
-@media (max-width:860px){ .feat .cols{grid-template-columns:1fr} }
+@media (max-width:860px){ .feat .cols{grid-template-columns:1fr; gap:20px} }
 .num{font:500 12px/1 var(--mono); color:var(--amber); letter-spacing:.18em}
 .feat h2{font-size:clamp(26px,3.4vw,36px); margin:14px 0 0; max-width:20ch}
-.feat p{margin:16px 0 0; max-width:52ch}
+.feat .say p{margin:16px 0 0; max-width:52ch}
 .feat ul{margin:0; padding:0; list-style:none}
 .feat li{position:relative; padding-left:20px; margin:9px 0; font-size:15.5px; color:var(--slate)}
 .feat li::before{content:''; position:absolute; left:2px; top:.62em; width:7px; height:7px; border-radius:2px; background:var(--fwd)}
 .feat li em{font-style:normal; color:var(--ink)}
+.feat figure{margin-top:clamp(26px,4vw,44px)}
 
-/* ── formats ─────────────────────────────────────────────────────────────── */
+/* ── plain grids ─────────────────────────────────────────────────────────── */
+section.plain{padding:clamp(58px,9vw,110px) 0; border-bottom:1px solid var(--hair)}
+section.plain h2{font-size:clamp(26px,3.4vw,36px); margin-top:14px}
+.lede{margin:16px 0 0; max-width:64ch; font-size:clamp(16px,1.8vw,18.5px)}
 .cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(258px,1fr)); gap:14px; margin-top:34px}
-.card{border:1px solid var(--hair); border-radius:13px; padding:20px 20px 22px; background:var(--ground)}
+.card{border:1px solid var(--hair); border-radius:13px; padding:20px; background:var(--ground)}
 .card h3{font-size:16px; display:flex; align-items:center; gap:9px}
 .card h3 code{font:500 11.5px/1 var(--mono); color:var(--amber); background:var(--amber-soft); padding:4px 7px; border-radius:6px}
 .card p{margin:11px 0 0; font-size:14.5px; color:var(--slate); line-height:1.6}
+.also{display:grid; grid-template-columns:repeat(auto-fit,minmax(216px,1fr)); gap:1px; margin-top:32px; background:var(--hair); border:1px solid var(--hair); border-radius:13px; overflow:hidden}
+.also div{background:var(--paper); padding:17px 18px}
+.also b{display:block; color:var(--ink); font-size:14.5px; font-weight:600}
+.also span{display:block; margin-top:5px; font-size:13.5px; color:var(--faint); line-height:1.5}
 
-/* ── beta ────────────────────────────────────────────────────────────────── */
-.beta{padding:clamp(64px,10vw,110px) 0}
-.betabox{
-  border:1px solid var(--line); border-radius:16px; padding:clamp(26px,4vw,42px);
-  background:linear-gradient(180deg, var(--ground), var(--sunk));
-}
-.betabox h2{font-size:clamp(24px,3.2vw,32px)}
+/* ── questions ───────────────────────────────────────────────────────────── */
+.qs{margin-top:26px; border-top:1px solid var(--hair)}
+details{border-bottom:1px solid var(--hair)}
+summary{cursor:pointer; list-style:none; padding:18px 34px 18px 0; position:relative; color:var(--ink); font-weight:560; font-size:16.5px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:'+'; position:absolute; right:6px; top:50%; transform:translateY(-50%); font:400 20px/1 var(--mono); color:var(--slate)}
+details[open] summary::after{content:'–'}
+details p{margin:0 0 20px; max-width:70ch; font-size:15.5px; color:var(--slate)}
+
+/* ── get it ──────────────────────────────────────────────────────────────── */
+.beta{padding:clamp(58px,9vw,104px) 0}
+.betabox{border:1px solid var(--line); border-radius:16px; padding:clamp(24px,4vw,42px); background:linear-gradient(180deg, var(--ground), var(--sunk))}
+.betabox h2{font-size:clamp(24px,3.2vw,32px); margin-top:14px}
 .steps{margin:26px 0 0; padding:0; list-style:none; counter-reset:s}
 .steps li{counter-increment:s; position:relative; padding-left:40px; margin:16px 0; max-width:66ch}
-.steps li::before{
-  content:counter(s,decimal-leading-zero); position:absolute; left:0; top:1px;
-  font:500 12px/1.5 var(--mono); color:var(--amber);
-}
+.steps li::before{content:counter(s,decimal-leading-zero); position:absolute; left:0; top:1px; font:500 12px/1.5 var(--mono); color:var(--amber)}
 .mail{
   display:inline-flex; align-items:center; gap:10px; margin-top:26px;
   font:500 15px/1 var(--mono); color:var(--ink); text-decoration:none;
   border:1px solid var(--line); border-radius:11px; padding:13px 18px; background:var(--paper);
+  word-break:break-all;
 }
 .mail:hover{border-color:var(--amber)}
 .note{margin-top:20px; font-size:14px; color:var(--faint); max-width:66ch}
@@ -182,11 +184,10 @@ section.feat{padding:clamp(64px,10vw,120px) 0; border-bottom:1px solid var(--hai
 /* ── footer ──────────────────────────────────────────────────────────────── */
 footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--sunk)}
 .foot{display:flex; flex-wrap:wrap; gap:22px 40px; align-items:flex-start}
-.foot p{margin:0; font-size:13.5px; color:var(--faint); max-width:44ch}
+.foot p{margin:0; font-size:13.5px; color:var(--faint); max-width:46ch}
 .foot nav{display:flex; flex-wrap:wrap; gap:18px; margin-left:auto}
 .foot nav a{font-size:13.5px; color:var(--slate); text-decoration:none}
 .foot nav a:hover{color:var(--ink)}
-[hidden]{display:none!important}
 </style>
 </head>
 <body>
@@ -201,10 +202,10 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--s
       Gene Studio <span class="tag">BETA</span>
     </a>
     <nav>
-      <a class="hide-s" href="#views" data-en="What it does" data-ko="기능">What it does</a>
-      <a class="hide-s" href="#formats" data-en="Your files" data-ko="파일">Your files</a>
-      <a href="#get" data-en="Get it" data-ko="받기">Get it</a>
-      <button class="langbtn" id="lang" type="button">한국어</button>
+      <a class="hide-s" href="#views">What it does</a>
+      <a class="hide-s" href="#formats">Your files</a>
+      <a class="hide-s" href="#questions">Questions</a>
+      <a class="get" href="#get">Get it</a>
     </nav>
   </div>
 </header>
@@ -213,44 +214,46 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--s
 
 <section class="hero">
   <div class="wrap">
-    <p class="eyebrow" data-en="Private beta · macOS &amp; Windows" data-ko="비공개 베타 · macOS &amp; Windows">Private beta · macOS &amp; Windows</p>
-    <h1 data-en="The plasmid you are holding, drawn from the file you already have."
-        data-ko="지금 손에 있는 플라스미드를, 이미 가진 그 파일 그대로.">The plasmid you are holding, drawn from the file you already have.</h1>
-    <p class="sub" data-en="Circular and linear maps, an annotated sequence, restriction digests with a simulated gel, PCR and cloning, CRISPR guides and Sanger review — over GenBank, SnapGene .dna, FASTA and .ab1, written back without losing what was in them."
-       data-ko="원형·선형 맵, 주석이 달린 서열, 아가로스 젤까지 그리는 제한효소 절단, PCR과 클로닝, CRISPR 가이드, Sanger 판독 — GenBank, SnapGene .dna, FASTA, .ab1 을 그대로 읽고, 들어 있던 것을 잃지 않은 채 다시 씁니다.">Circular and linear maps, an annotated sequence, restriction digests with a simulated gel, PCR and cloning, CRISPR guides and Sanger review — over GenBank, SnapGene .dna, FASTA and .ab1, written back without losing what was in them.</p>
+    <p class="eyebrow">Private beta · macOS &amp; Windows</p>
+    <h1>The plasmid you are holding, drawn from the file you already have.</h1>
+    <p class="sub">Circular and linear maps, an annotated sequence, restriction digests with a simulated gel, PCR and cloning, CRISPR guides and Sanger review — over GenBank, SnapGene <code>.dna</code>, FASTA and <code>.ab1</code>, written back without losing what was in them.</p>
+    <ul class="chips">
+      <li>.gb</li><li>.gbk</li><li>.gbff</li><li>.dna</li><li>.fa / .fasta / .fna</li><li>.ab1</li>
+    </ul>
 
     <div class="cta">
       <a class="btn primary" id="dlmac" href="https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/latest">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M10.8 8.5c0-1.5 1.2-2.2 1.3-2.3-.7-1-1.8-1.2-2.2-1.2-.9-.1-1.8.6-2.3.6-.5 0-1.2-.6-2-.5-1 0-2 .6-2.5 1.5-1.1 1.9-.3 4.7.8 6.2.5.7 1.1 1.6 1.9 1.5.8 0 1.1-.5 2-.5s1.2.5 2 .5c.8 0 1.4-.7 1.9-1.5.6-.8.8-1.7.8-1.8 0 0-1.6-.6-1.7-2.5zM9.4 3.7c.4-.5.7-1.2.6-1.9-.6 0-1.4.4-1.8.9-.4.5-.7 1.2-.6 1.9.7.1 1.4-.3 1.8-.9z"/></svg>
-        <span data-en="Download for Mac" data-ko="Mac용 내려받기">Download for Mac</span> <small id="macv">Apple silicon</small>
+        Download for Mac <small id="macv">Apple silicon</small>
       </a>
       <a class="btn" id="dlwin" href="https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/latest">
         <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M0 2.4 6.5 1.5v6.1H0zM7.4 1.4 16 .2v7.4H7.4zM0 8.5h6.5v6.1L0 13.7zM7.4 8.5H16v7.3L7.4 14.6z"/></svg>
-        <span data-en="Download for Windows" data-ko="Windows용 내려받기">Download for Windows</span> <small id="winv">64-bit</small>
+        Download for Windows <small id="winv">64-bit</small>
       </a>
     </div>
-    <p class="verline" id="ver" data-en="Free while the beta lasts. A licence is issued per computer — <b>ask for one below</b>."
-       data-ko="베타 기간 동안 무료입니다. 라이선스는 컴퓨터마다 발급됩니다 — <b>아래에서 요청하세요</b>.">Free while the beta lasts. A licence is issued per computer — <b>ask for one below</b>.</p>
+    <p class="verline">Free while the beta lasts. A licence is written for one computer and takes a minute — <b><a href="#get" style="color:inherit">ask for one</a></b>.</p>
   </div>
 
   <div class="shot">
     <figure>
       <div class="frame">
         <div class="bar"><i></i><i></i><i></i><span>pDEMO-T7 · 2,950 bp · circular</span></div>
-        <img src="shot/map.png" width="1600" height="1000" alt="The circular map of a 2,950 bp plasmid: features on both strands, restriction sites named in the margin, a coordinate ruler inside the ring.">
+        <picture>
+          <source media="(max-width:760px)" srcset="shot/map-phone.png">
+          <img src="shot/map.png" width="1600" height="1000" alt="The circular map of a 2,950 bp plasmid: features on both strands, every restriction site named in the margin, a coordinate ruler inside the ring.">
+        </picture>
       </div>
-      <figcaption data-en="The map — every cut named in the margin, features on the strand they are on."
-                  data-ko="맵 — 모든 절단 위치가 여백에 이름으로, 피처는 각자의 가닥 위에.">The map — every cut named in the margin, features on the strand they are on.</figcaption>
+      <figcaption>The map — every cut named in the margin, features on the strand they are on.</figcaption>
     </figure>
   </div>
 </section>
 
 <div class="band">
   <div class="stats">
-    <div><b>400 / 400</b><span data-en="real GenBank files opened, written and read back with every header field intact" data-ko="실제 GenBank 파일을 열고 쓰고 다시 읽어 헤더의 모든 필드가 그대로">real GenBank files opened, written and read back with every header field intact</span></div>
-    <div><b>1,113</b><span data-en="restriction enzymes from REBASE — every enzyme NEB sells, with the methylation each was measured against" data-ko="REBASE 기반 제한효소 — NEB가 파는 모든 효소와, 각각에 대해 측정된 메틸화 감수성">restriction enzymes from REBASE — every enzyme NEB sells, with the methylation each was measured against</span></div>
-    <div><b>1.2 s</b><span data-en="to open a 4.2 Mb genome carrying 8,338 features, map drawn" data-ko="8,338개 피처를 가진 4.2 Mb 유전체를 맵까지 그려 여는 데">to open a 4.2 Mb genome carrying 8,338 features, map drawn</span></div>
-    <div><b>60 / 60</b><span data-en="of this lab's own Sanger traces parsed, trimmed and aligned with nothing wrong" data-ko="실험실의 실제 Sanger 트레이스를 읽고 트리밍하고 정렬해 이상 없음">of this lab's own Sanger traces parsed, trimmed and aligned with nothing wrong</span></div>
+    <div><b>400 / 400</b><span>real GenBank files opened, written and read back with every header field intact</span></div>
+    <div><b>1,113</b><span>restriction enzymes from REBASE — every enzyme NEB sells, with the methylation each was measured against</span></div>
+    <div><b>1.2 s</b><span>to open a 4.2 Mb genome carrying 8,338 features, map drawn</span></div>
+    <div><b>60 / 60</b><span>of this lab's own Sanger traces parsed, trimmed and aligned with nothing wrong</span></div>
   </div>
 </div>
 
@@ -258,135 +261,214 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--s
 
 <section class="feat">
   <div class="wrap">
-    <div class="cols">
+    <div class="cols rise">
       <div class="say">
-  <p class="num">01</p>
-        <h2 data-en="The sequence, with everything on it" data-ko="서열, 그 위의 모든 것">The sequence, with everything on it</h2>
-        <p data-en="Each stretch is one card: the enzymes above it, the primers that read 5′→3′, both strands, and each translation drawn directly under its own residues." data-ko="한 구간이 한 장의 카드입니다. 위에는 효소, 그 아래 5′→3′로 읽는 프라이머, 두 가닥, 그리고 각 번역은 자기 잔기 바로 아래에 그려집니다.">Each stretch is one card: the enzymes above it, the primers that read 5′→3′, both strands, and each translation drawn directly under its own residues.</p>
+        <p class="num">01</p>
+        <h2>The sequence, with everything on it</h2>
+        <p>Each stretch is one card: the enzymes above it, the primers that read 5′→3′, both strands, and each translation drawn directly under its own residues.</p>
       </div>
       <ul>
-        <li data-en="<em>A primer is drawn as it is</em> — the 5′ overhang and any designed mismatch stepped down out of the shaft." data-ko="<em>프라이머는 있는 그대로</em> — 5′ 오버행과 의도된 미스매치가 축에서 한 단 내려가 그려집니다."><em>A primer is drawn as it is</em> — the 5′ overhang and any designed mismatch stepped down out of the shaft.</li>
-        <li data-en="<em>A cut is a stepped mark through both strands</em>, so the overhang reads off the bases." data-ko="<em>절단은 두 가닥을 지나는 계단 모양</em>이라, 오버행이 염기에서 바로 읽힙니다."><em>A cut is a stepped mark through both strands</em>, so the overhang reads off the bases.</li>
-        <li data-en="<em>Type to edit</em>, with the features carried across the edit and one undo for a run." data-ko="<em>타이핑으로 편집</em>. 편집을 따라 피처가 옮겨가고, 연속 입력은 되돌리기 한 번입니다."><em>Type to edit</em>, with the features carried across the edit and one undo for a run.</li>
+        <li><em>A primer is drawn as it is</em> — the 5′ overhang and any designed mismatch stepped down out of the shaft.</li>
+        <li><em>A cut is a stepped mark through both strands</em>, so which strand breaks where, and which way the overhang points, reads off the bases.</li>
+        <li><em>Type to edit</em>, with the features carried across the edit and one undo for a run of typing.</li>
       </ul>
     </div>
-    <figure>
-      <div class="frame"><img src="shot/seq.png" width="1600" height="1000" loading="lazy" alt="The sequence view: enzyme names above the bases, primers as stepped arrows, both strands, translations under their own codons."></div>
-    </figure>
-  </div>
-</section>
-
-<section class="feat flip">
-  <div class="wrap">
-    <div class="cols">
-      <div class="say">
-  <p class="num">02</p>
-        <h2 data-en="A digest you can read before you run it" data-ko="돌리기 전에 읽는 절단 반응">A digest you can read before you run it</h2>
-        <p data-en="Pick enzymes and the gel redraws as you type. Lanes are loaded by clicking the well, the ladder is the one you actually use, and a band that would be blocked by the host's methylation is said so before the tube is opened." data-ko="효소를 고르면 타이핑하는 대로 젤이 다시 그려집니다. 웰을 눌러 레인을 채우고, 사다리는 실제로 쓰는 것이며, 숙주의 메틸화에 막히는 절단은 튜브를 열기 전에 알려줍니다.">Pick enzymes and the gel redraws as you type. Lanes are loaded by clicking the well, the ladder is the one you actually use, and a band that would be blocked by the host's methylation is said so before the tube is opened.</p>
+    <figure class="rise">
+      <div class="frame">
+        <picture>
+          <source media="(max-width:760px)" srcset="shot/seq-phone.png">
+          <img src="shot/seq.png" width="1600" height="1000" loading="lazy" alt="The sequence view: enzyme names above the bases, primers as stepped arrows, both strands, translations under their own codons.">
+        </picture>
       </div>
-      <ul>
-        <li data-en="<em>Suggest digests</em> scores every pair for bands the agarose can actually resolve." data-ko="<em>절단 조합 추천</em> — 아가로스가 실제로 분리할 수 있는 밴드인지로 점수를 매깁니다."><em>Suggest digests</em> scores every pair for bands the agarose can actually resolve.</li>
-        <li data-en="<em>Dam, Dcm, CpG, EcoKI and EcoBI</em>, against the strain the DNA was grown in and the one it is going into." data-ko="<em>Dam, Dcm, CpG, EcoKI, EcoBI</em> — DNA를 키운 균주와 들어갈 균주 양쪽에 대해."><em>Dam, Dcm, CpG, EcoKI and EcoBI</em>, against the strain the DNA was grown in and the one it is going into.</li>
-        <li data-en="<em>2,672 published experiments</em> from REBASE behind the verdict, not one word." data-ko="<em>REBASE의 실험 기록 2,672건</em>이 그 판정 뒤에 있습니다. 한 단어가 아니라."><em>2,672 published experiments</em> from REBASE behind the verdict, not one word.</li>
-      </ul>
-    </div>
-    <figure>
-      <div class="frame"><img src="shot/dig.png" width="1600" height="1000" loading="lazy" alt="The digest view: enzyme list, a simulated agarose gel with a ladder and sample lanes, and the methylation table beneath it."></div>
     </figure>
   </div>
 </section>
 
 <section class="feat">
   <div class="wrap">
-    <div class="cols">
+    <div class="cols rise">
       <div class="say">
-  <p class="num">03</p>
-        <h2 data-en="Sanger reads, against the construct they came from" data-ko="Sanger 판독을, 그 클론의 서열에 대고">Sanger reads, against the construct they came from</h2>
-        <p data-en="Drop the .ab1 files from a run and each is trimmed, aligned and laid under the reference as a pileup with its own chromatogram in the same columns. A real difference is told apart from a decayed tail rather than counted with it." data-ko=".ab1 파일을 떨어뜨리면 각각 트리밍·정렬되어, 같은 열에 자기 크로마토그램을 달고 레퍼런스 아래에 쌓입니다. 진짜 차이와 끝부분이 무너진 구간을 함께 세지 않고 구분합니다.">Drop the .ab1 files from a run and each is trimmed, aligned and laid under the reference as a pileup with its own chromatogram in the same columns. A real difference is told apart from a decayed tail rather than counted with it.</p>
+        <p class="num">02</p>
+        <h2>A digest you can read before you run it</h2>
+        <p>Pick enzymes and the gel redraws as you type. Lanes are loaded by clicking the well, the ladder and the agarose are the ones you actually use, and a fragment that would run off the end is marked on the dye front rather than left out.</p>
       </div>
       <ul>
-        <li data-en="<em>Indels are aligned as indels</em> — one deleted base is one event, not two hundred mismatches." data-ko="<em>인델은 인델로 정렬</em> — 한 염기 결실은 사건 하나이지, 미스매치 200개가 아닙니다."><em>Indels are aligned as indels</em> — one deleted base is one event, not two hundred mismatches.</li>
-        <li data-en="<em>What it does to the protein</em>, on the spot: Ala41Val · missense, or the frame it shifts and where that frame stops." data-ko="<em>단백질에 무슨 일이 생기는지</em> 그 자리에서: Ala41Val · missense, 또는 프레임이 어디서 밀려 어디서 멈추는지."><em>What it does to the protein</em>, on the spot: Ala41Val · missense, or the frame it shifts and where that frame stops.</li>
-        <li data-en="<em>A .dna carrying aligned traces</em> brings them in — SnapGene keeps them inside the file, and they are read." data-ko="<em>트레이스가 들어 있는 .dna</em>는 그대로 가져옵니다 — SnapGene이 파일 안에 넣어 둔 것을 읽습니다."><em>A .dna carrying aligned traces</em> brings them in — SnapGene keeps them inside the file, and they are read.</li>
+        <li><em>Suggest digests</em> scores every combination for bands the agarose can actually resolve.</li>
+        <li><em>Dam, Dcm, CpG, EcoKI and EcoBI</em> — judged against the strain the DNA was grown in and the one it is going into.</li>
+        <li><em>2,672 published experiments</em> from REBASE sit behind the verdict, not one word.</li>
       </ul>
     </div>
-    <figure>
-      <div class="frame"><img src="shot/san.png" width="1600" height="1000" loading="lazy" alt="The Sanger view: a table of reads with quality and verdict, a map of where each read lands, and the pileup with chromatograms."></div>
-    </figure>
-  </div>
-</section>
-
-<section class="feat flip">
-  <div class="wrap">
-    <div class="cols">
-      <div class="say">
-  <p class="num">04</p>
-        <h2 data-en="Guides, arms and the oligos to order" data-ko="가이드와 상동 팔, 그리고 주문할 올리고">Guides, arms and the oligos to order</h2>
-        <p data-en="A port of the lab's own R package: guide scoring, Golden Gate oligos, Gibson inverse-PCR primers and four-primer deletion arms — the thresholds and weights copied rather than reinvented, because they are tuned against real cloning outcomes." data-ko="실험실 자체 R 패키지를 옮긴 것입니다. 가이드 점수, Golden Gate 올리고, Gibson inverse-PCR 프라이머, 4-프라이머 결실 팔 — 임계값과 가중치는 새로 만들지 않고 그대로 가져왔습니다. 실제 클로닝 결과에 맞춰 조정된 값이기 때문입니다.">A port of the lab's own R package: guide scoring, Golden Gate oligos, Gibson inverse-PCR primers and four-primer deletion arms — the thresholds and weights copied rather than reinvented, because they are tuned against real cloning outcomes.</p>
+    <figure class="rise">
+      <div class="frame">
+        <picture>
+          <source media="(max-width:760px)" srcset="shot/dig-phone.png">
+          <img src="shot/dig.png" width="1600" height="1000" loading="lazy" alt="The digest view: a simulated agarose gel with a ladder and sample lanes, the fragments listed with their ends, and the methylation table beneath.">
+        </picture>
       </div>
-      <ul>
-        <li data-en="<em>The vector is a real file</em>, starred and kept, so moving or changing the source cannot change the design." data-ko="<em>벡터는 실제 파일</em>입니다. 즐겨찾기로 스냅샷이 저장되어, 원본을 옮기거나 바꿔도 설계가 달라지지 않습니다."><em>The vector is a real file</em>, starred and kept, so moving or changing the source cannot change the design.</li>
-        <li data-en="<em>Every Type IIS enzyme in the table</em>, with the cut offsets read from the enzyme rather than written out by hand." data-ko="<em>표에 있는 모든 Type IIS 효소</em>. 절단 위치는 손으로 적지 않고 효소에서 읽습니다."><em>Every Type IIS enzyme in the table</em>, with the cut offsets read from the enzyme rather than written out by hand.</li>
-        <li data-en="<em>The product opens as its own tab</em> — original, the exact replacement, and the transformed vector, one under the other." data-ko="<em>결과물은 자기 탭으로 열립니다</em> — 원본, 치환된 부분, 변형된 벡터를 위아래로."><em>The product opens as its own tab</em> — original, the exact replacement, and the transformed vector, one under the other.</li>
-      </ul>
-    </div>
-    <figure>
-      <div class="frame"><img src="shot/gg.png" width="1600" height="1000" loading="lazy" alt="The guide design view: nuclease and target, the scored guides, and the oligos with their overhangs."></div>
     </figure>
   </div>
 </section>
 
 <section class="feat">
   <div class="wrap">
-    <div class="cols">
+    <div class="cols rise">
       <div class="say">
-  <p class="num">05</p>
-        <h2 data-en="A genome is a construct too" data-ko="유전체도 하나의 컨스트럭트입니다">A genome is a construct too</h2>
-        <p data-en="The linear map zooms from a whole chromosome down to two genes with a ruler over them, and the sequence scrolls a 4.6 Mb record without pages. An assembly of 186 contigs is listed down the side and read by hopping between its pieces." data-ko="선형 맵은 염색체 전체에서 유전자 두 개와 그 위 눈금까지 확대됩니다. 서열은 4.6 Mb 레코드를 페이지 없이 스크롤합니다. 186개 컨티그의 어셈블리는 옆에 목록으로 나와, 조각 사이를 오가며 읽습니다.">The linear map zooms from a whole chromosome down to two genes with a ruler over them, and the sequence scrolls a 4.6 Mb record without pages. An assembly of 186 contigs is listed down the side and read by hopping between its pieces.</p>
+        <p class="num">03</p>
+        <h2>Sanger reads, against the construct they came from</h2>
+        <p>Drop the <code>.ab1</code> files from a run and each is trimmed, aligned and laid under the reference as a pileup, with its own chromatogram in the same columns. A real difference is told apart from a decayed tail rather than counted with it.</p>
       </div>
       <ul>
-        <li data-en="<em>Prodigal</em> where it is installed, as real Prodigal — never a re-implementation, and never over a record that brought its own genes." data-ko="<em>Prodigal</em>이 설치되어 있으면 진짜 Prodigal로 돌립니다. 재구현이 아니고, 자기 유전자를 이미 가진 레코드에는 돌리지 않습니다."><em>Prodigal</em> where it is installed, as real Prodigal — never a re-implementation, and never over a record that brought its own genes.</li>
-        <li data-en="<em>eggNOG-mapper, InterProScan and DefenseFinder</em> results drop straight onto the genes, column for column." data-ko="<em>eggNOG-mapper, InterProScan, DefenseFinder</em> 결과가 유전자 위에 열 단위로 그대로 붙습니다."><em>eggNOG-mapper, InterProScan and DefenseFinder</em> results drop straight onto the genes, column for column.</li>
-        <li data-en="<em>Terminators, RBS and rare codons</em> for every gene at once — the 3′ end of a whole genome in under a second." data-ko="<em>터미네이터, RBS, 희귀 코돈</em>을 모든 유전자에 대해 한 번에 — 유전체 전체의 3′ 말단이 1초 안에."><em>Terminators, RBS and rare codons</em> for every gene at once — the 3′ end of a whole genome in under a second.</li>
+        <li><em>Indels are aligned as indels</em> — one deleted base is one event, not two hundred mismatches.</li>
+        <li><em>What it does to the protein</em>, on the spot: <code>Ala41Val · missense</code>, or the frame it shifts and where that frame stops.</li>
+        <li><em>A .dna carrying aligned traces</em> brings them in — SnapGene keeps them inside the file, and they are read.</li>
       </ul>
     </div>
-    <figure>
-      <div class="frame"><img src="shot/lin.png" width="1600" height="1000" loading="lazy" alt="The linear map: features on both sides of the backbone, cut sites and a coordinate ruler, folded into rows."></div>
+    <figure class="rise">
+      <div class="frame">
+        <picture>
+          <source media="(max-width:760px)" srcset="shot/san-phone.png">
+          <img src="shot/san.png" width="1600" height="1000" loading="lazy" alt="The Sanger view: a table of reads with quality and verdict, a map of where each read lands, and the pileup with chromatograms.">
+        </picture>
+      </div>
     </figure>
   </div>
 </section>
 
-<section class="beta" id="formats">
+<section class="feat">
+  <div class="wrap">
+    <div class="cols rise">
+      <div class="say">
+        <p class="num">04</p>
+        <h2>Guides, arms and the oligos to order</h2>
+        <p>A port of the lab's own R package: guide scoring, Golden Gate oligos, Gibson inverse-PCR primers and four-primer deletion arms — the thresholds and weights copied rather than reinvented, because they are tuned against real cloning outcomes.</p>
+      </div>
+      <ul>
+        <li><em>One gene or every CDS in a genome</em>, each target contributing its own top-ranked guides.</li>
+        <li><em>The editing vector is a real file</em>, starred and kept, so moving or changing the source cannot change the design.</li>
+        <li><em>The product opens as its own tab</em> — original, the exact replacement, and the transformed vector, one under the other.</li>
+      </ul>
+    </div>
+    <figure class="rise">
+      <div class="frame">
+        <picture>
+          <source media="(max-width:760px)" srcset="shot/cr-phone.png">
+          <img src="shot/cr.png" width="1600" height="1000" loading="lazy" alt="The guides view: target and nuclease, the editing vector with its gRNA and homology-arm sites, and the design controls.">
+        </picture>
+      </div>
+    </figure>
+  </div>
+</section>
+
+<section class="feat">
+  <div class="wrap">
+    <div class="cols rise">
+      <div class="say">
+        <p class="num">05</p>
+        <h2>A genome is a construct too</h2>
+        <p>The linear map zooms from a whole chromosome down to two genes with a ruler over them, and the sequence scrolls a 4.6 Mb record without pages. An assembly of 186 contigs is listed down the side and read by hopping between its pieces.</p>
+      </div>
+      <ul>
+        <li><em>Prodigal</em> where it is installed, as real Prodigal — and never over a record that brought its own genes.</li>
+        <li><em>eggNOG-mapper, InterProScan and DefenseFinder</em> results drop straight onto the genes, column for column.</li>
+        <li><em>Terminators, RBS and rare codons</em> for every gene at once — the 3′ ends of a whole genome in under a second.</li>
+      </ul>
+    </div>
+    <figure class="rise">
+      <div class="frame">
+        <picture>
+          <source media="(max-width:760px)" srcset="shot/lin-phone.png">
+          <img src="shot/lin.png" width="1600" height="1000" loading="lazy" alt="The linear map: features above and below the backbone, cut sites and a coordinate ruler, folded into rows.">
+        </picture>
+      </div>
+    </figure>
+  </div>
+</section>
+
+<section class="plain">
   <div class="wrap">
     <p class="num">06</p>
-    <h2 data-en="It opens what your lab already has" data-ko="실험실에 이미 있는 파일을 엽니다">It opens what your lab already has</h2>
-    <p class="sub" data-en="And writes it back. Every claim here was checked against somebody else's reader — Biopython and snapgene_reader — over hundreds of this lab's own files, not against a fixture written by whoever wrote the test."
-       data-ko="그리고 다시 씁니다. 여기 적힌 모든 것은 남의 리더 — Biopython, snapgene_reader — 로 실험실의 실제 파일 수백 개에 대해 확인한 것입니다. 테스트를 쓴 사람이 만든 픽스처가 아니라.">And writes it back. Every claim here was checked against somebody else's reader — Biopython and snapgene_reader — over hundreds of this lab's own files, not against a fixture written by whoever wrote the test.</p>
-    <div class="cards">
+    <h2>Also in the box</h2>
+    <p class="lede">Twelve views, one construct at a time or a dozen in tabs. None of this is an add-on.</p>
+    <div class="also rise">
+      <div><b>PCR</b><span>Primers made from a selection, Tm and hairpins as you type, products with their ends.</span></div>
+      <div><b>Cloning</b><span>Restriction and Gibson, with a region of one construct picked by pointing at it.</span></div>
+      <div><b>Golden Gate</b><span>Assembly with domestication, overhangs read from the enzyme itself.</span></div>
+      <div><b>Enzyme database</b><span>A card per enzyme: cut, overhang, suppliers, isoschizomers, buffer, price per digest.</span></div>
+      <div><b>Find</b><span>DNA (IUPAC or a regular expression), protein, any field, or a coordinate — marked on all three drawings.</span></div>
+      <div><b>Folding</b><span>A region folded and drawn as a structure, plus a profile saying which part of it does anything.</span></div>
+      <div><b>Repeats</b><span>Tandem, imperfect, inverted and palindromic — kept as colours on the DNA, not lost with the panel.</span></div>
+      <div><b>Terminators &amp; RBS</b><span>The hairpin and its T-tract reported apart, and whether a ribosome can reach the start.</span></div>
+      <div><b>Codon usage</b><span>Per amino acid, with the rare codons of the 5′ head counted separately.</span></div>
+      <div><b>Genetic codes</b><span>NCBI's tables as what each differs from the standard one, start codons marked.</span></div>
+      <div><b>History</b><span>Every saved version as its own small map, with the changes that made it laid along the row.</span></div>
+      <div><b>Figures</b><span>Every drawing out as vector PDF or SVG, labels still editable in Illustrator.</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="plain" id="formats">
+  <div class="wrap">
+    <p class="num">07</p>
+    <h2>It opens what your lab already has</h2>
+    <p class="lede">And writes it back. Every claim here was checked against somebody else's reader — Biopython and <code>snapgene_reader</code> — over hundreds of this lab's own files, not against a fixture written by whoever wrote the test.</p>
+    <div class="cards rise">
       <div class="card">
         <h3><code>.gb .gbk .gbff</code></h3>
-        <p data-en="The record above FEATURES is kept whole — accession, organism, lineage, the papers, the structured comments — and written back as it arrived. Saving twice gives a byte-identical file." data-ko="FEATURES 위의 레코드를 통째로 보존합니다 — accession, 생물종, 계통, 논문, structured comment — 도착한 그대로 다시 씁니다. 두 번 저장해도 바이트까지 같은 파일입니다.">The record above FEATURES is kept whole — accession, organism, lineage, the papers, the structured comments — and written back as it arrived. Saving twice gives a byte-identical file.</p>
+        <p>The record above FEATURES is kept whole — accession, organism, lineage, the papers, the structured comments — and written back as it arrived. Saving twice gives a byte-identical file.</p>
       </div>
       <div class="card">
         <h3><code>.dna</code></h3>
-        <p data-en="SnapGene files are read and written, packet for packet: the colours, the history, the aligned traces and every packet this reader does not interpret ride through untouched." data-ko="SnapGene 파일을 패킷 단위로 읽고 씁니다. 색, 편집 이력, 정렬된 트레이스, 그리고 이 리더가 해석하지 않는 패킷까지 손대지 않고 그대로 실려 나갑니다.">SnapGene files are read and written, packet for packet: the colours, the history, the aligned traces and every packet this reader does not interpret ride through untouched.</p>
+        <p>SnapGene files are read and written packet for packet: the colours, the edit history, the aligned traces and every packet this reader does not interpret ride through untouched.</p>
       </div>
       <div class="card">
         <h3><code>.fa .fasta .fna</code></h3>
-        <p data-en="A file carrying 85,142 records is listed and read a record at a time, in milliseconds — because splitting is cheap and parsing everything is not." data-ko="레코드 85,142개가 든 파일도 목록으로 보여 주고 필요한 것만 밀리초 단위로 읽습니다 — 나누는 일은 싸고, 전부 파싱하는 일은 비싸기 때문입니다.">A file carrying 85,142 records is listed and read a record at a time, in milliseconds — because splitting is cheap and parsing everything is not.</p>
+        <p>A file carrying 85,142 records is listed and read a record at a time, in milliseconds — because splitting is cheap and parsing everything is not.</p>
       </div>
       <div class="card">
         <h3><code>.ab1</code></h3>
-        <p data-en="Read as a read of the construct, not as a document of its own: end-trimmed by quality, aligned both ways round, and kept with the plasmid it was read against." data-ko="독립 문서가 아니라 그 컨스트럭트의 판독으로 다룹니다. 품질로 끝을 다듬고, 양방향으로 정렬하고, 대조한 플라스미드와 함께 보관됩니다.">Read as a read of the construct, not as a document of its own: end-trimmed by quality, aligned both ways round, and kept with the plasmid it was read against.</p>
+        <p>Read as a read <em>of the construct</em>, not as a document of its own: end-trimmed by quality, aligned both ways round, and kept with the plasmid it was read against.</p>
       </div>
       <div class="card">
-        <h3><code data-en="out" data-ko="내보내기">out</code></h3>
-        <p data-en="GenBank (and a separate sharing copy that says what it left behind), SnapGene .dna, FASTA, an .xlsx workbook, and every drawing as vector PDF or SVG with the labels still editable." data-ko="GenBank(그리고 무엇을 뺐는지 말해 주는 공유용 사본), SnapGene .dna, FASTA, .xlsx 워크북, 그리고 모든 그림을 라벨이 살아 있는 벡터 PDF/SVG로.">GenBank (and a separate sharing copy that says what it left behind), SnapGene .dna, FASTA, an .xlsx workbook, and every drawing as vector PDF or SVG with the labels still editable.</p>
+        <h3><code>out</code></h3>
+        <p>GenBank — and a separate sharing copy that says what it left behind — SnapGene <code>.dna</code>, FASTA, an <code>.xlsx</code> workbook, and every drawing as vector.</p>
       </div>
       <div class="card">
-        <h3><code data-en="on your machine" data-ko="이 컴퓨터 안에서">on your machine</code></h3>
-        <p data-en="Your files are read from disk and stay there. Nothing is uploaded, and the only outbound requests are the ones you press — BLAST, InterProScan, eggNOG — each named before it is made." data-ko="파일은 디스크에서 읽고 디스크에 남습니다. 업로드는 없고, 바깥으로 나가는 요청은 직접 누른 것뿐입니다 — BLAST, InterProScan, eggNOG — 보내기 전에 각각 무엇인지 말해 줍니다.">Your files are read from disk and stay there. Nothing is uploaded, and the only outbound requests are the ones you press — BLAST, InterProScan, eggNOG — each named before it is made.</p>
+        <h3><code>on your machine</code></h3>
+        <p>Your files are read from disk and stay there. Nothing is uploaded, and the only outbound requests are the ones you press — BLAST, InterProScan, eggNOG — each named before it is made.</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<section class="plain" id="questions">
+  <div class="wrap">
+    <p class="num">08</p>
+    <h2>Questions</h2>
+    <div class="qs">
+      <details>
+        <summary>Does it work offline?</summary>
+        <p>Yes, and so does the licence check — it is verified on your own machine against a key built into the app, with nothing to ask and no server to be down. The only requests this app makes are the ones you press: a BLAST, an InterProScan or eggNOG submission, and the once-a-launch look for a newer build, which can be switched off.</p>
+      </details>
+      <details>
+        <summary>Is it open source?</summary>
+        <p>No. It is free to use for research and is given to named people; copying, changing or passing it on needs written permission. Third-party components — SeqFold, MAFFT, Electron, the REBASE data and the rest — keep their own terms, and every one of them is named in the app.</p>
+      </details>
+      <details>
+        <summary>Will it break my SnapGene files?</summary>
+        <p>Opening one changes nothing on disk. Saving one writes it back packet for packet, including every packet this reader does not interpret — and the result is opened by <code>snapgene_reader</code> and by Biopython's SnapGeneIO with no warnings at all, which is checked over dozens of this lab's own files. Files written here have also been opened in SnapGene 8 itself.</p>
+      </details>
+      <details>
+        <summary>Which Mac, which Windows?</summary>
+        <p>The Mac build is Apple silicon and signed with a Developer ID. The Windows build is a 64-bit installer, with a portable build beside it. Updates arrive in the app: one press downloads and installs the newest version, and the button names the version it is about to install.</p>
+      </details>
+      <details>
+        <summary>What about a genome, not a plasmid?</summary>
+        <p>A 4.2 Mb chromosome with 8,338 features opens in about a second with its map drawn. The restriction scan is the one thing that still costs on a record that size, so past a few hundred kilobases it is scheduled just after the first paint instead of in front of it.</p>
+      </details>
+      <details>
+        <summary>How much will it cost after the beta?</summary>
+        <p>Nothing is charged during the beta, and not retrospectively for it either. The intention is half of what SnapGene charges for the equivalent seat; the table is in the app under Settings → About.</p>
+      </details>
     </div>
   </div>
 </section>
@@ -394,18 +476,16 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--s
 <section class="beta" id="get">
   <div class="wrap">
     <div class="betabox">
-      <p class="num">07</p>
-      <h2 data-en="Getting in during the beta" data-ko="베타 참여 방법">Getting in during the beta</h2>
-      <p style="margin-top:16px; max-width:66ch" data-en="Gene Studio is free to use and is not open source: it is given to named people for research. A licence is written for one computer and it takes a minute."
-         data-ko="Gene Studio는 무료로 쓸 수 있지만 오픈소스는 아닙니다. 연구용으로, 이름을 아는 분들께 드립니다. 라이선스는 컴퓨터 한 대 기준으로 발급되고, 1분이면 됩니다.">Gene Studio is free to use and is not open source: it is given to named people for research. A licence is written for one computer and it takes a minute.</p>
+      <p class="num">09</p>
+      <h2>Getting in during the beta</h2>
+      <p style="margin-top:16px; max-width:66ch">Gene Studio is free to use and is not open source: it is given to named people for research. A licence is written for one computer and it takes a minute.</p>
       <ol class="steps">
-        <li data-en="Download and open it. The first window shows a <b>Machine ID</b> — twelve characters that identify the computer to nobody but the licence." data-ko="내려받아 실행하면 첫 창에 <b>Machine ID</b>가 보입니다 — 이 컴퓨터를 라이선스에게만 알려 주는 12자리입니다.">Download and open it. The first window shows a <b>Machine ID</b> — twelve characters that identify the computer to nobody but the licence.</li>
-        <li data-en="Press <b>Ask for a licence</b>. It writes the mail for you, with your name, institution and that id already in it." data-ko="<b>Ask for a licence</b>를 누르면 이름·소속·그 id가 이미 들어간 메일이 만들어집니다.">Press <b>Ask for a licence</b>. It writes the mail for you, with your name, institution and that id already in it.</li>
-        <li data-en="Paste the licence that comes back into the same window. It is verified on your machine — nothing is sent anywhere, so it works on a plane." data-ko="돌아온 라이선스를 같은 창에 붙여 넣으면 됩니다. 검증은 이 컴퓨터에서 이뤄지고 아무것도 전송되지 않아, 비행기 안에서도 작동합니다.">Paste the licence that comes back into the same window. It is verified on your machine — nothing is sent anywhere, so it works on a plane.</li>
+        <li>Download and open it. The first window shows a <b>Machine ID</b> — twelve characters that identify the computer to nobody but the licence.</li>
+        <li>Press <b>Ask for a licence</b>. It writes the mail for you, with your name, institution and that id already in it.</li>
+        <li>Paste the licence that comes back into the same window. It is verified on your machine — nothing is sent anywhere, so it works on a plane.</li>
       </ol>
       <a class="mail" href="mailto:genestudio.help@gmail.com?subject=Gene%20Studio%20beta">genestudio.help@gmail.com</a>
-      <p class="note" data-en="Nothing is charged during the beta, and not retrospectively for it either. The Mac build is signed and notarized; the Windows build is an ordinary installer. Updates arrive in the app itself."
-         data-ko="베타 기간에는 요금이 없고, 나중에 소급해서 청구하지도 않습니다. Mac 빌드는 서명·공증되어 있고 Windows 빌드는 일반 설치 파일입니다. 업데이트는 앱 안에서 받습니다.">Nothing is charged during the beta, and not retrospectively for it either. The Mac build is signed and notarized; the Windows build is an ordinary installer. Updates arrive in the app itself.</p>
+      <p class="note">Bug reports are welcome at the same address — the app writes one for you, with the version, the platform and what it was doing, under the <b>?</b> in the toolbar.</p>
     </div>
   </div>
 </section>
@@ -414,12 +494,11 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--s
 
 <footer>
   <div class="wrap foot">
-    <p data-en="Gene Studio — by Jae-Yoon Sung. Free to use for research; copying, changing or passing it on needs written permission. Third-party components keep their own terms."
-       data-ko="Gene Studio — 성재윤. 연구 목적 사용은 무료이며, 복제·변경·재배포는 서면 허가가 필요합니다. 서드파티 구성요소는 각자의 라이선스를 따릅니다.">Gene Studio — by Jae-Yoon Sung. Free to use for research; copying, changing or passing it on needs written permission. Third-party components keep their own terms.</p>
+    <p>Gene Studio — by Jae-Yoon Sung. Free to use for research; copying, changing or passing it on needs written permission. Third-party components keep their own terms.</p>
     <nav>
-      <a href="https://github.com/JAEYOONSUNG/GeneStudio-releases/releases" data-en="All releases" data-ko="전체 릴리즈">All releases</a>
-      <a href="https://github.com/JAEYOONSUNG/DNMB" data-en="DNMB" data-ko="DNMB">DNMB</a>
-      <a href="mailto:genestudio.help@gmail.com" data-en="Contact" data-ko="문의">Contact</a>
+      <a href="https://github.com/JAEYOONSUNG/GeneStudio-releases/releases">All releases</a>
+      <a href="https://github.com/JAEYOONSUNG/DNMB">DNMB</a>
+      <a href="mailto:genestudio.help@gmail.com">Contact</a>
     </nav>
   </div>
 </footer>
@@ -441,31 +520,25 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
   document.getElementById('winv').textContent = v + ' · 64-bit';
 }).catch(() => {});
 
-/* ── two languages, one page ───────────────────────────────────────────────
-   Every string is on the element it belongs to, so the two can never drift
-   into two different pages; the choice is remembered because somebody who
-   reads Korean reads Korean next time too. */
-const KEY = 'gs-site-lang';
-function setLang(l){
-  document.documentElement.lang = l === 'ko' ? 'ko' : 'en';
-  document.documentElement.dataset.lang = l;
-  for(const el of document.querySelectorAll('[data-en]')){
-    const t = el.getAttribute('data-' + l);
-    if(t != null) el.innerHTML = t;
-  }
-  document.getElementById('lang').textContent = l === 'ko' ? 'English' : '한국어';
-  try{ localStorage.setItem(KEY, l); }catch(e){}
+/* ── things arrive as they are reached ─────────────────────────────────────
+   A browser with no observer, or a reader who has asked for less motion, gets
+   the page as it stands: the class that hides them is only worth having while
+   something is certain to take it off again. */
+if('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion:reduce)').matches){
+  document.documentElement.classList.add('js');     // now, and only now, they are hidden
+  const io = new IntersectionObserver(es => {
+    for(const e of es) if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+  }, {rootMargin:'0px 0px -8% 0px'});
+  for(const el of document.querySelectorAll('.rise')) io.observe(el);
+  /* and a belt: anything still unrevealed a moment after load is shown anyway,
+     since a picture nobody can see is worse than one that did not slide in */
+  addEventListener('load', () => setTimeout(() => {
+    for(const el of document.querySelectorAll('.rise:not(.in)')){
+      const r = el.getBoundingClientRect();
+      if(r.top < innerHeight) el.classList.add('in');
+    }
+  }, 300));
 }
-document.getElementById('lang').addEventListener('click', () => {
-  setLang(document.documentElement.dataset.lang === 'ko' ? 'en' : 'ko');
-});
-/* a link can name the language it should open in, so one can be sent to
-   somebody who reads the other one */
-let start = new URLSearchParams(location.search).get('lang');
-if(start !== 'ko' && start !== 'en') start = null;
-if(!start) try{ start = localStorage.getItem(KEY); }catch(e){}
-if(!start) start = (navigator.language || '').toLowerCase().startsWith('ko') ? 'ko' : 'en';
-setLang(start === 'ko' ? 'ko' : 'en');
 </script>
 </body>
 </html>
