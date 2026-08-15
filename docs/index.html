@@ -24,7 +24,13 @@
    different program. */
 :root{
   --paper:#0D1315; --ground:#131B1D; --sunk:#0A1012;
-  --ink:#EAF0EE; --body:#C6D2D0; --slate:#8A9B9D; --faint:#5E6F71;
+  /* `--faint` was #5E6F71: 3.56:1 on the paper, 3.64 on the sunk, 3.32 on a
+     card — fifteen body-size call sites, all needing 4.5, and all of them the
+     default theme every reader sees. The light block below was measured and
+     corrected before it was written down; the theme beside it never had been,
+     which is the wrong way round. #75888B reads 5.04 / 5.16 / 4.70 and stays
+     clearly quieter than --slate at 6.47, so faint still reads as faint. */
+  --ink:#EAF0EE; --body:#C6D2D0; --slate:#8A9B9D; --faint:#75888B;
   --line:#263235; --hair:#1D272A;
   --amber:#E8A33D; --amber-soft:rgba(232,163,61,.18); --amber-ink:#1a1205;
   --fwd:#4FB79E; --rev:#A98AD8; --cut:#E1655C;
@@ -169,7 +175,17 @@ figcaption{margin:14px 2px 0; font:400 13px/1.5 var(--mono); color:var(--faint)}
 .frame video{display:block; width:100%; height:auto; background:var(--sunk)}
 /* under 760 px the wide clips are a window shrunk into a palm; the phone crop
    says the same thing legibly, and nothing is downloaded that is not shown */
-.narrow{display:none}
+/* **`!important`, and this is the third time in this file.** `.narrow` is one
+   class (0,1,0) and `.frame video` is a class and an element (0,1,1), so the
+   rule that hides the phone clip on a desktop lost to the rule that lays it
+   out. It did not bite while `.narrow` was on an `<img>` — `img{display:block}`
+   is an element selector, which one class beats — and turning those five into
+   `<video>` silently un-hid every one of them: measured at 1400 px, the page
+   grew from 20,610 px to 23,969, the hero drew the same ring twice (the crop
+   blown up from 780 to 1050 under the clip it is a crop of), and a desktop
+   downloaded 670 kB of phone video it never showed. The Linux button's
+   `hidden` and `.wide` are the other two. */
+.narrow{display:none !important}
 @media (max-width:760px){
   /* **`!important`, and it is not laziness.** `.frame video` is a class and an
      element (0,1,1) and `.wide` is one class (0,1,0), so the rule meant to hide
@@ -180,7 +196,7 @@ figcaption{margin:14px 2px 0; font:400 13px/1.5 var(--mono); color:var(--faint)}
      other was the `hidden` attribute on the Linux button), so the hiding says
      what it means rather than hoping to out-rank whatever is added later. */
   .wide{display:none !important}
-  .narrow{display:block}
+  .narrow{display:block !important}   /* or the base rule above wins */
   /* a section carrying two clips shows one of them on a phone: the second
      would otherwise fall back to the same still as the first, and the same
      picture printed twice reads as the page having repeated itself */
@@ -509,7 +525,14 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--s
      follow: the rail's own translucency, the hero's two lights, the primary
      button's hover, the icon wash, and the mark's stroke and dot — which are
      SVG presentation attributes, so CSS is what reaches them */
-  header.rail{ background:rgba(247,249,249,.78) }
+  /* **.78 was translated from the dark rail's .74 without re-measuring.** In
+     dark the backdrop is dark whatever is under it; on light the rail crosses
+     the figures, which are near-black and are the page's tallest blocks — so
+     sampled over the hero the rail composited to rgb(196,200,200) and the nav
+     links read 3.35:1, the BETA tag 3.19, and the Get it button's outline
+     vanished at 1.08. At .95 the composite is rgb(235,237,237): 4.89, 4.65, and
+     the outline is back. .93 was tried and leaves the tag at 4.46. */
+  header.rail{ background:rgba(247,249,249,.95) }
   .hero::before{
     background:
       radial-gradient(58% 46% at 50% 34%, rgba(232,163,61,.20), transparent 70%),
@@ -609,17 +632,17 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--s
     <figure>
       <div class="frame">
         <div class="bar"><i></i><i></i><i></i><span>pDEMO-T7 · 2,950 bp · circular</span></div>
-        <video class="wide" data-clip="clip/map.mp4" poster="clip/map.webp" width="1200" height="750"
+        <video class="wide" data-clip="clip/map.mp4" data-poster="clip/map.webp" width="1200" height="750"
                muted loop playsinline preload="none"
                aria-label="The circular map being zoomed out to the whole plasmid, the restriction sites resolving into the margin as there is room for them."></video>
-        <video class="narrow" data-clip="clip/map-phone.mp4" poster="clip/map-phone.webp" width="390" height="380"
+        <video class="narrow" data-clip="clip/map-phone.mp4" data-poster="clip/map-phone.webp" width="390" height="380"
                muted loop playsinline preload="none" aria-label="The circular map of a 2,950 bp plasmid: features on both strands, every restriction site named in the margin."></video>
       </div>
       <figcaption>The map — every cut named in the margin, features on the strand they are on. Zoom is the same slider you drag.</figcaption>
     </figure>
     <figure class="rise wideonly">
       <div class="frame">
-        <video class="wide" data-clip="clip/measure.mp4" poster="clip/measure.webp" width="1200" height="750"
+        <video class="wide" data-clip="clip/measure.mp4" data-poster="clip/measure.webp" width="1200" height="750"
                muted loop playsinline preload="none"
                aria-label="Dragging an arc of the ring: the wedge follows the pointer and the length of the stretch is counted out as it grows."></video>
       </div>
@@ -659,17 +682,17 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--s
     </div>
     <figure class="rise">
       <div class="frame">
-        <video class="wide" data-clip="clip/drag.mp4" poster="clip/drag.webp" width="1200" height="750"
+        <video class="wide" data-clip="clip/drag.mp4" data-poster="clip/drag.webp" width="1200" height="750"
                muted loop playsinline preload="none"
                aria-label="Someone dragging across the His6 tag: the stretch lights up, a card follows the pointer with its length, melting temperature and GC, and the bar along the bottom spells the residues out."></video>
-        <video class="narrow" data-clip="clip/drag-phone.mp4" poster="clip/drag-phone.webp" width="390" height="219"
+        <video class="narrow" data-clip="clip/drag-phone.mp4" data-poster="clip/drag-phone.webp" width="390" height="219"
                muted loop playsinline preload="none" aria-label="The sequence view: enzyme names above the bases, primers as stepped arrows, both strands, translations under their own codons."></video>
       </div>
       <figcaption>Dragging across the His6 tag. Nothing was pressed first — the figures are what a selection says about itself.</figcaption>
     </figure>
     <figure class="rise wideonly">
       <div class="frame">
-        <video class="wide" data-clip="clip/find.mp4" poster="clip/find.webp" width="1200" height="750"
+        <video class="wide" data-clip="clip/find.mp4" data-poster="clip/find.webp" width="1200" height="750"
                muted loop playsinline preload="none"
                aria-label="A motif being typed into the find bar, and every place it matches lighting up along the sequence."></video>
       </div>
@@ -677,7 +700,7 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--s
     </figure>
     <figure class="rise wideonly">
       <div class="frame">
-        <video class="wide" data-clip="clip/primer.mp4" poster="clip/primer.webp" width="1200" height="750"
+        <video class="wide" data-clip="clip/primer.mp4" data-poster="clip/primer.webp" width="1200" height="750"
                muted loop playsinline preload="none"
                aria-label="A primer opened by double-clicking it: the dialog draws the construct under the oligo at the site it binds, and the figures move as the sequence is typed."></video>
       </div>
@@ -708,17 +731,17 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--s
              not a bigger one, which is the rule tools/clip.mjs cuts it by. The
              width and height are the clip's own, so the box before it decodes is
              the shape it will be. -->
-        <video class="wide" data-clip="clip/gel.mp4" poster="clip/gel.webp" width="448" height="400"
+        <video class="wide" data-clip="clip/gel.mp4" data-poster="clip/gel.webp" width="448" height="400"
                muted loop playsinline preload="none"
                aria-label="The gel running: the fragments of a four-enzyme digest migrating down the lanes as the running time goes up."></video>
-        <video class="narrow" data-clip="clip/gel.mp4" poster="clip/gel.webp" width="448" height="400"
+        <video class="narrow" data-clip="clip/gel.mp4" data-poster="clip/gel.webp" width="448" height="400"
                muted loop playsinline preload="none" aria-label="The digest view: a simulated agarose gel with a ladder and sample lanes, the fragments listed with their ends."></video>
       </div>
           <figcaption>The gel running — the ladder, the agarose and the buffer are yours to set.</figcaption>
     </figure>
     <figure class="rise wideonly">
       <div class="frame">
-        <video class="wide" data-clip="clip/enzdb.mp4" poster="clip/enzdb.webp" width="1200" height="750"
+        <video class="wide" data-clip="clip/enzdb.mp4" data-poster="clip/enzdb.webp" width="1200" height="750"
                muted loop playsinline preload="none"
                aria-label="The enzyme database searched: a card per enzyme with its cut drawn on both strands, the overhang, who sells it, what a methyl mark does to it, and what one digest costs."></video>
       </div>
@@ -726,7 +749,7 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--s
     </figure>
     <figure class="rise wideonly">
       <div class="frame">
-        <video class="wide" data-clip="clip/methyl.mp4" poster="clip/methyl.webp" width="1200" height="750"
+        <video class="wide" data-clip="clip/methyl.mp4" data-poster="clip/methyl.webp" width="1200" height="750"
                muted loop playsinline preload="none"
                aria-label="The methylation window: the strain the DNA was grown in and the one it is going into, and a row per methylase saying which sites here carry the mark and which enzymes it stops."></video>
       </div>
@@ -751,10 +774,10 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--s
     </div>
     <figure class="rise">
       <div class="frame">
-        <video class="wide" data-clip="clip/sanger.mp4" poster="clip/sanger.webp" width="1200" height="750"
+        <video class="wide" data-clip="clip/sanger.mp4" data-poster="clip/sanger.webp" width="1200" height="750"
                muted loop playsinline preload="none"
                aria-label="Two .ab1 reads attached to the construct: the table gives what each used, where it is good, where it lands and its verdict; the map shows both reads coloured by quality with the differences marked; the pileup carries the chromatogram under the letters."></video>
-        <video class="narrow" data-clip="clip/sanger-phone.mp4" poster="clip/sanger-phone.webp" width="390" height="287"
+        <video class="narrow" data-clip="clip/sanger-phone.mp4" data-poster="clip/sanger-phone.webp" width="390" height="287"
                muted loop playsinline preload="none" aria-label="The Sanger view: a table of reads with quality and verdict, a map of where each read lands, and the pileup with chromatograms."></video>
       </div>
       <figcaption>Two real <code>.ab1</code> files in: 587 of 620 bases used, good over 7–593 at Q38, landing at 247–833 forward — and the difference it found marked on the read where the read is worth believing.</figcaption>
@@ -778,10 +801,10 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--s
     </div>
     <figure class="rise">
       <div class="frame">
-        <video class="wide" data-clip="clip/guides.mp4" poster="clip/guides.webp" width="1200" height="750"
+        <video class="wide" data-clip="clip/guides.mp4" data-poster="clip/guides.webp" width="1200" height="750"
                muted loop playsinline preload="none"
                aria-label="A deletion designed: the region is taken from the construct, Design and then Scan are pressed, and the candidate guides come back grouped by the feature they sit in."></video>
-        <video class="narrow" data-clip="clip/guides-phone.mp4" poster="clip/guides-phone.webp" width="390" height="213"
+        <video class="narrow" data-clip="clip/guides-phone.mp4" data-poster="clip/guides-phone.webp" width="390" height="213"
                muted loop playsinline preload="none" aria-label="The guides view: target and nuclease, the editing vector with its gRNA and homology-arm sites, and the design controls."></video>
       </div>
       <figcaption>Design, then Scan — and 11 guides come back from 35 protospacers, grouped by the feature they sit in, with what each was dropped for said out loud.</figcaption>
@@ -963,7 +986,7 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--s
       </thead>
       <tbody>
         <tr><th scope="row">Where it runs</th><td class="cm us" data-of="Gene Studio"><span>macOS · Windows · Linux</span></td><td class="cm" data-of="SnapGene"><span>Windows · macOS · Ubuntu</span></td><td class="cm" data-of="Benchling"><span>in a browser</span></td><td class="cm" data-of="ApE"><span>macOS · Windows · Linux</span></td></tr>
-        <tr><th scope="row">Works with no network</th><td class="cm us" data-of="Gene Studio"><svg class="tick" aria-label="yes"><use href="#tb-tick"/></svg><span>the licence is checked on your own machine</span></td><td class="cm" data-of="SnapGene"><span>activation and licence checks need it — snapgene.com daily; a network licence lapses after 10 days offline</span></td><td class="cm" data-of="Benchling"><svg class="cross" aria-label="no"><use href="#tb-cross"/></svg><span>“You must be online to access and save data”</span></td><td class="cm" data-of="ApE"><svg class="tick" aria-label="yes"><use href="#tb-tick"/></svg><span>only the NCBI tools need one</span></td></tr>
+        <tr><th scope="row">Works with no network</th><td class="cm us" data-of="Gene Studio"><svg class="tick" aria-label="yes"><use href="#tb-tick"/></svg><span>the licence is checked on your own machine</span></td><td class="cm" data-of="SnapGene"><svg class="cross" aria-label="no"><use href="#tb-cross"/></svg><span>activation and licence checks need it — snapgene.com daily; a network licence lapses after 10 days offline</span></td><td class="cm" data-of="Benchling"><svg class="cross" aria-label="no"><use href="#tb-cross"/></svg><span>“You must be online to access and save data”</span></td><td class="cm" data-of="ApE"><svg class="tick" aria-label="yes"><use href="#tb-tick"/></svg><span>only the NCBI tools need one</span></td></tr>
         <tr><th scope="row">Where your files live</th><td class="cm us" data-of="Gene Studio"><svg class="tick" aria-label="yes"><use href="#tb-tick"/></svg><span>on your machine</span></td><td class="cm" data-of="SnapGene"><svg class="tick" aria-label="yes"><use href="#tb-tick"/></svg><span>on your machine</span></td><td class="cm" data-of="Benchling"><svg class="cross" aria-label="no"><use href="#tb-cross"/></svg><span>in Benchling’s cloud</span></td><td class="cm" data-of="ApE"><svg class="tick" aria-label="yes"><use href="#tb-tick"/></svg><span>on your machine</span></td></tr>
         <tr><th scope="row">Opens SnapGene .dna</th><td class="cm us" data-of="Gene Studio"><svg class="tick" aria-label="yes"><use href="#tb-tick"/></svg></td><td class="cm" data-of="SnapGene"><svg class="tick" aria-label="yes"><use href="#tb-tick"/></svg><span>its own format</span></td><td class="cm" data-of="Benchling"><svg class="tick" aria-label="yes"><use href="#tb-tick"/></svg></td><td class="cm" data-of="ApE"><i class="nostate">not stated</i></td></tr>
         <tr><th scope="row">Reads and writes GenBank</th><td class="cm us" data-of="Gene Studio"><svg class="tick" aria-label="yes"><use href="#tb-tick"/></svg></td><td class="cm" data-of="SnapGene"><svg class="tick" aria-label="yes"><use href="#tb-tick"/></svg></td><td class="cm" data-of="Benchling"><svg class="tick" aria-label="yes"><use href="#tb-tick"/></svg></td><td class="cm" data-of="ApE"><svg class="tick" aria-label="yes"><use href="#tb-tick"/></svg></td></tr>
@@ -1102,7 +1125,17 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
          clip cropped to where the action is rather than a still: a picture is
          the wrong answer to "does it move", and what a phone cannot read is the
          whole window, not the thing happening in it. */
-      if(getComputedStyle(v).display === 'none' || still.matches){
+      /* **A poster is fetched even where the video is not drawn.**
+         `display:none` does not stop it — measured over the network log at a
+         true 390 px, the page asked for all ten desktop posters, 1.28 MB for
+         figures a phone can never show, and a desktop paid the mirror of it in
+         phone posters. The source is already attached here for exactly this
+         reason; the poster goes the same way, and only for the one on screen.
+         Reduced motion still gets it, because there the poster *is* the
+         picture — so it is set before the early return. */
+      const shown = getComputedStyle(v).display !== 'none';
+      if(shown && !v.getAttribute('poster')) v.poster = v.dataset.poster;
+      if(!shown || still.matches){
         v.removeAttribute('autoplay'); v.pause?.(); continue; }
       if(!v.dataset.armed){
         v.dataset.armed = '1';
