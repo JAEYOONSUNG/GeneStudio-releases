@@ -365,6 +365,30 @@ section.plain.onplate .tbcard, .beta .betabox{--faint:#89999C}
 /* ── plain grids ─────────────────────────────────────────────────────────── */
 section.plain{padding:clamp(58px,9vw,110px) 0; border-bottom:1px solid var(--hair)}
 section.plain h2{font-size:clamp(26px,3.4vw,36px); margin-top:14px}
+/* **Half the page was empty to the right of every heading.** Prose keeps its
+   measure — 64 characters is where a line stops being readable and no width
+   makes that untrue — so the head of each section sat in a 660 px column with
+   580 px of nothing beside it, while the cards and the table under it used the
+   whole 1,180. Measured at 1440: the heading block 660, the grid below it
+   1,180. This file already answers that question in the app's own How it works
+   page: past a certain width the answer is a **second column**, not a longer
+   line. So the number and the title take the left and the lede takes the
+   right, each keeping its own measure and the pair filling the width the
+   content below already uses. Below 1080 there is no room for two, and it
+   stacks exactly as before. */
+.plainhead > *{max-width:64ch}
+@media (min-width:1080px){
+  /* the gap belongs to the *column*: given to both, the 57 px between the two
+     columns landed between the number and the title it labels as well */
+  .plainhead{display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);
+             column-gap:clamp(28px,4vw,64px); row-gap:0; align-items:start}
+  .plainhead .num{grid-column:1; margin-bottom:0}
+  .plainhead h2{grid-column:1; grid-row:2}
+  /* the lede starts on the title's own line rather than at the top of the
+     block: level with the number it reads as a caption of it, and the number
+     is 11 px against a 36 px title */
+  .plainhead .lede{grid-column:2; grid-row:2; margin-top:8px}
+}
 .lede{margin:16px 0 0; max-width:64ch; font-size:clamp(16px,1.8vw,18.5px)}
 .cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(258px,1fr)); gap:14px; margin-top:34px}
 .card{border:1px solid var(--hair); border-radius:13px; padding:20px; background:var(--ground)}
@@ -523,6 +547,13 @@ details p{margin:0 0 20px; max-width:70ch; font-size:15.5px; color:var(--slate)}
 .steps{margin:26px 0 0; padding:0; list-style:none; counter-reset:s}
 .steps li{counter-increment:s; position:relative; padding-left:40px; margin:16px 0; max-width:66ch}
 .steps li::before{content:counter(s,decimal-leading-zero); position:absolute; left:0; top:1px; font:500 12px/1.5 var(--mono); color:var(--amber)}
+/* stacked, and full width of the column: three buttons in a row would wrap
+   raggedly in a 380 px column, and here they are a list of platforms rather
+   than a row of choices the way the hero draws them */
+.askdl{display:grid; gap:9px; margin-bottom:24px}
+.askdl .btn{justify-content:flex-start; height:auto; padding:11px 14px}
+.askdl .btn[hidden]{display:none}
+.askdl small{margin-left:auto; padding-left:10px; font:400 12px/1 var(--mono); color:inherit; opacity:.72}
 .mail{
   display:inline-flex; align-items:center; gap:10px; margin-top:26px;
   font:500 15px/1 var(--mono); color:var(--ink); text-decoration:none;
@@ -676,13 +707,13 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--p
     </ul>
 
     <div class="cta">
-      <a class="btn primary" id="dlmac" href="https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/latest">
+      <a class="btn primary" data-dl="mac" href="https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/latest">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M10.8 8.5c0-1.5 1.2-2.2 1.3-2.3-.7-1-1.8-1.2-2.2-1.2-.9-.1-1.8.6-2.3.6-.5 0-1.2-.6-2-.5-1 0-2 .6-2.5 1.5-1.1 1.9-.3 4.7.8 6.2.5.7 1.1 1.6 1.9 1.5.8 0 1.1-.5 2-.5s1.2.5 2 .5c.8 0 1.4-.7 1.9-1.5.6-.8.8-1.7.8-1.8 0 0-1.6-.6-1.7-2.5zM9.4 3.7c.4-.5.7-1.2.6-1.9-.6 0-1.4.4-1.8.9-.4.5-.7 1.2-.6 1.9.7.1 1.4-.3 1.8-.9z"/></svg>
-        Download for Mac <small id="macv">Apple silicon</small>
+        Download for Mac <small data-dlv="mac">Apple silicon</small>
       </a>
-      <a class="btn" id="dlwin" href="https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/latest">
+      <a class="btn" data-dl="win" href="https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/latest">
         <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M0 2.4 6.5 1.5v6.1H0zM7.4 1.4 16 .2v7.4H7.4zM0 8.5h6.5v6.1L0 13.7zM7.4 8.5H16v7.3L7.4 14.6z"/></svg>
-        Download for Windows <small id="winv">64-bit</small>
+        Download for Windows <small data-dlv="win">64-bit</small>
       </a>
       <!-- **Hidden until the feed says there is one.** The page names a version
            it reads from feed.json rather than one written into it, and the same
@@ -690,9 +721,9 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--p
            no release carries is a page pointing at a file that is not there,
            which is the failure this project keeps finding in its own manifests.
            It appears the moment a release ships Linux, with no page change. -->
-      <a class="btn" id="dlnix" href="https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/latest" hidden>
+      <a class="btn" data-dl="nix" href="https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/latest" hidden>
         <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 .6c-1.7 0-2.6 1.3-2.6 3 0 .8.1 1.4.1 2 0 .6-.6 1.2-1.1 2.1-.5.9-1.3 2-1.7 3-.3.8-.2 1.5.1 1.9.3.4.8.6 1.4.6.5 0 1 .2 1.4.5.4.3.8.7 1.6.7h1.6c.8 0 1.2-.4 1.6-.7.4-.3.9-.5 1.4-.5.6 0 1.1-.2 1.4-.6.3-.4.4-1.1.1-1.9-.4-1-1.2-2.1-1.7-3-.5-.9-1.1-1.5-1.1-2.1 0-.6.1-1.2.1-2 0-1.7-.9-3-2.6-3zm-.9 3.1c.3 0 .5.3.5.6s-.2.6-.5.6-.5-.3-.5-.6.2-.6.5-.6zm1.8 0c.3 0 .5.3.5.6s-.2.6-.5.6-.5-.3-.5-.6.2-.6.5-.6z"/></svg>
-        Download for Linux <small id="nixv">AppImage</small>
+        Download for Linux <small data-dlv="nix">AppImage</small>
       </a>
     </div>
     <p class="verline">Free while the beta lasts. A licence is written for one computer and takes a minute — <b><a href="#get" style="color:inherit">ask for one</a></b>.</p>
@@ -918,9 +949,11 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--p
 
 <section class="plain onplate" id="toolbox">
   <div class="wrap">
-    <p class="num">06</p>
-    <h2>And the rest of the toolbox</h2>
-    <p class="lede">60 of them, and none is an add-on: they are all in the one file, on all three platforms, working on the construct you already have open. The figures below are this machine's own measurements.</p>
+    <div class="plainhead">
+      <p class="num">06</p>
+      <h2>And the rest of the toolbox</h2>
+      <p class="lede">60 of them, and none is an add-on: they are all in the one file, on all three platforms, working on the construct you already have open. The figures below are this machine's own measurements.</p>
+    </div>
     <svg class="tbsprite" aria-hidden="true" focusable="false"><defs><symbol id="tb-ring" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.2"/></symbol><symbol id="tb-linear" viewBox="0 0 24 24"><path d="M3 12h18"/><circle cx="8" cy="12" r="2"/><circle cx="16" cy="12" r="2"/></symbol><symbol id="tb-seq" viewBox="0 0 24 24"><path d="M4 8h16"/><path d="M4 16h16"/><path d="M12 8v8"/></symbol><symbol id="tb-nav" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="8" rx="2"/><rect x="7" y="10" width="6" height="4" rx="1" fill="currentColor" stroke="none"/></symbol><symbol id="tb-find" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M15.5 15.5 21 21"/></symbol><symbol id="tb-paint" viewBox="0 0 24 24"><path d="M4 17 14 7l3 3L7 20H4z"/><path d="M14 4l3 3"/></symbol><symbol id="tb-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></symbol><symbol id="tb-card" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 10h6M7 14h10"/></symbol><symbol id="tb-tube" viewBox="0 0 24 24"><path d="M9 3h6M10 3v13a2 2 0 0 0 4 0V3"/><path d="M10 11h4"/></symbol><symbol id="tb-scan" viewBox="0 0 24 24"><path d="M4 8V6a2 2 0 0 1 2-2h2M20 8V6a2 2 0 0 0-2-2h-2M4 16v2a2 2 0 0 0 2 2h2M20 16v2a2 2 0 0 1-2 2h-2"/><path d="M4 12h16"/></symbol><symbol id="tb-pin" viewBox="0 0 24 24"><path d="M12 21s6-5.4 6-10a6 6 0 1 0-12 0c0 4.6 6 10 6 10z"/><circle cx="12" cy="11" r="2"/></symbol><symbol id="tb-strain" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M8 12c2-3 6-3 8 0M8 15c2-2 6-2 8 0"/></symbol><symbol id="tb-univ" viewBox="0 0 24 24"><path d="M4 12h12"/><path d="m12 8 4 4-4 4"/></symbol><symbol id="tb-plan" viewBox="0 0 24 24"><path d="M4 7h16"/><path d="M4 12h11"/><path d="M4 17h6"/></symbol><symbol id="tb-edit" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M14 6l4 4"/></symbol><symbol id="tb-therm" viewBox="0 0 24 24"><path d="M14 14V5a2 2 0 1 0-4 0v9a4 4 0 1 0 4 0z"/></symbol><symbol id="tb-cut" viewBox="0 0 24 24"><path d="M6 4l12 12M18 4 6 16"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/></symbol><symbol id="tb-shop" viewBox="0 0 24 24"><path d="M4 8h16l-1.4 11H5.4z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></symbol><symbol id="tb-methyl" viewBox="0 0 24 24"><circle cx="12" cy="14" r="5"/><path d="M12 9V4"/><circle cx="12" cy="4" r="1.6" fill="currentColor" stroke="none"/></symbol><symbol id="tb-hosts" viewBox="0 0 24 24"><circle cx="8.5" cy="12" r="4.5"/><circle cx="16" cy="12" r="4.5"/></symbol><symbol id="tb-gel" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M8 8h3M14 11h3M8 15h3"/></symbol><symbol id="tb-coin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v8M9.5 10h4a1.5 1.5 0 0 1 0 3h-3a1.5 1.5 0 0 0 0 3h4"/></symbol><symbol id="tb-suggest" viewBox="0 0 24 24"><path d="M9 16a5 5 0 1 1 6 0v2H9z"/><path d="M10 21h4"/></symbol><symbol id="tb-scissors" viewBox="0 0 24 24"><path d="M6 4l12 12M18 4 6 16"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/></symbol><symbol id="tb-gibson" viewBox="0 0 24 24"><path d="M3 12h7"/><path d="M14 12h7"/><path d="M10 8.5v7"/><path d="M14 8.5v7"/></symbol><symbol id="tb-gg" viewBox="0 0 24 24"><rect x="3" y="8" width="8" height="8" rx="1.5"/><rect x="13" y="8" width="8" height="8" rx="1.5"/></symbol><symbol id="tb-guide" viewBox="0 0 24 24"><path d="M3 8c5-4 13 4 18 0"/><path d="M3 16c5-4 13 4 18 0"/></symbol><symbol id="tb-arms" viewBox="0 0 24 24"><path d="M3 12h4"/><path d="M17 12h4"/><rect x="7" y="8" width="10" height="8" rx="2"/></symbol><symbol id="tb-silent" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M8.5 12h7"/></symbol><symbol id="tb-preview" viewBox="0 0 24 24"><path d="M2.5 12S6 6.5 12 6.5 21.5 12 21.5 12 18 17.5 12 17.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="2.2"/></symbol><symbol id="tb-trace" viewBox="0 0 24 24"><path d="M3 17c2.5 0 2.5-10 5-10s2.5 10 5 10 2.5-12 5-12 3 12 3 12"/></symbol><symbol id="tb-ztr" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M7 14c1.5 0 1.5-5 3-5s1.5 5 3 5 1.5-4 2-4"/></symbol><symbol id="tb-pileup" viewBox="0 0 24 24"><path d="M4 8h16"/><path d="M4 13h11"/><path d="M4 18h14"/></symbol><symbol id="tb-indel" viewBox="0 0 24 24"><path d="M4 12h5"/><path d="M15 12h5"/><path d="M12 7v10"/></symbol><symbol id="tb-frame" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="8" rx="1.5"/><path d="M12 8v8"/></symbol><symbol id="tb-tick" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7"/></symbol><symbol id="tb-cross" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol><symbol id="tb-verdict" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="m8.5 12 2.5 2.5 4.5-5"/></symbol><symbol id="tb-term" viewBox="0 0 24 24"><path d="M7 20V11a5 5 0 0 1 10 0v9"/></symbol><symbol id="tb-repeat" viewBox="0 0 24 24"><path d="M5 9h11a3 3 0 0 1 0 6H8"/><path d="m11 12-3 3 3 3"/></symbol><symbol id="tb-fold" viewBox="0 0 24 24"><path d="M12 3v5"/><path d="M12 16v5"/><circle cx="12" cy="12" r="4"/></symbol><symbol id="tb-rbs" viewBox="0 0 24 24"><circle cx="8" cy="12" r="4.5"/><path d="M14 12h7"/></symbol><symbol id="tb-codon" viewBox="0 0 24 24"><path d="M5 19V11"/><path d="M12 19V6"/><path d="M19 19v-5"/></symbol><symbol id="tb-code" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18"/><path d="M9.5 10v9"/></symbol><symbol id="tb-orf" viewBox="0 0 24 24"><path d="M3 15h4l3-7 3 12 3-8h5"/></symbol><symbol id="tb-annot" viewBox="0 0 24 24"><path d="M5 4h9l5 5v11H5z"/><path d="M9 13h6"/><path d="M9 16.5h4"/></symbol><symbol id="tb-file" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></symbol><symbol id="tb-share" viewBox="0 0 24 24"><circle cx="18" cy="6" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="m8.2 10.8 7.6-3.6M8.2 13.2l7.6 3.6"/></symbol><symbol id="tb-stack" viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5z"/><path d="m4 13 8 4.5 8-4.5"/></symbol><symbol id="tb-folder" viewBox="0 0 24 24"><path d="M3 7h6l2 2h10v10H3z"/></symbol><symbol id="tb-xlsx" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18"/><path d="M10 10v9"/></symbol><symbol id="tb-vector" viewBox="0 0 24 24"><path d="M5 19 19 5"/><rect x="3" y="17" width="4" height="4" rx="1"/><rect x="17" y="3" width="4" height="4" rx="1"/></symbol><symbol id="tb-safe" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><circle cx="12" cy="12" r="3.5"/><path d="M12 8.5V6"/></symbol><symbol id="tb-mac" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 21h8"/></symbol><symbol id="tb-phone" viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/></symbol><symbol id="tb-menu" viewBox="0 0 24 24"><path d="M4 8h16"/><path d="M4 12h16"/><path d="M4 16h9"/></symbol><symbol id="tb-update" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-3-6.2"/><path d="M20 4v5h-5"/></symbol><symbol id="tb-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></symbol></defs></svg>
     <div class="toolbox rise">
       <h3 class="tbhead">Maps and the sequence <i>8</i></h3>
@@ -1013,9 +1046,11 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--p
 
 <section class="plain" id="formats">
   <div class="wrap">
-    <p class="num">07</p>
-    <h2>It opens what your lab already has</h2>
-    <p class="lede">And writes it back. Every claim here was checked against somebody else's reader — Biopython and <code>snapgene_reader</code> — over hundreds of this lab's own files, not against a fixture written by whoever wrote the test.</p>
+    <div class="plainhead">
+      <p class="num">07</p>
+      <h2>It opens what your lab already has</h2>
+      <p class="lede">And writes it back. Every claim here was checked against somebody else's reader — Biopython and <code>snapgene_reader</code> — over hundreds of this lab's own files, not against a fixture written by whoever wrote the test.</p>
+    </div>
     <div class="cards rise">
       <div class="card">
         <h3><code>.gb .gbk .gbff</code></h3>
@@ -1047,9 +1082,11 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--p
 
 <section class="plain onplate" id="compare">
   <div class="wrap">
-    <p class="num">08</p>
-    <h2>Next to what people already use</h2>
-    <p class="lede">Every cell below comes from that product's own public page, on the date in the note under the table. This is not a claim that the others are worse — they are older, broader and in several ways better resourced. It is a claim about <em>where the work happens</em>.</p>
+    <div class="plainhead">
+      <p class="num">08</p>
+      <h2>Next to what people already use</h2>
+      <p class="lede">Every cell below comes from that product's own public page, on the date in the note under the table. This is not a claim that the others are worse — they are older, broader and in several ways better resourced. It is a claim about <em>where the work happens</em>.</p>
+    </div>
     <div style="overflow-x:auto">
     <table class="cmp">
       <colgroup><col class="k"><col class="p"><col class="p"><col class="p"><col class="p"></colgroup>
@@ -1139,6 +1176,19 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--p
         <li>Paste the licence that comes back into the same window. It is verified on your machine — nothing is sent anywhere, so it works on a plane.</li>
       </ol>
       <div class="ask">
+        <!-- **Step 01 is "download and open it" and the box had no button.**
+             The right column carried the address and a note — about 150 px of
+             ink against 400 px of steps beside it — so the page's own closing
+             box ended in a hole, which inside a border reads worse than empty
+             page does. The act each step describes belongs where the steps
+             are; the buttons are the hero's own, filled by the same feed read,
+             because a second copy of "which asset is the Mac build" is how the
+             two come to point at different files. -->
+        <div class="askdl">
+          <a class="btn primary" data-dl="mac" href="https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/latest">Download for Mac <small data-dlv="mac">Apple silicon</small></a>
+          <a class="btn" data-dl="win" href="https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/latest">Download for Windows <small data-dlv="win">64-bit</small></a>
+          <a class="btn" data-dl="nix" href="https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/latest" hidden>Download for Linux <small data-dlv="nix">AppImage</small></a>
+        </div>
         <a class="mail" href="mailto:genestudio.help@gmail.com?subject=Gene%20Studio%20beta">genestudio.help@gmail.com</a>
         <p class="note">Bug reports are welcome at the same address — the app writes one for you, with the version, the platform and what it was doing, under the <b>?</b> in the toolbar.</p>
       </div>
@@ -1170,18 +1220,22 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
   const v = f && f.mac && f.mac.version;
   if(!v) return;
   const asset = n => REPO + '/releases/download/v' + v + '/GeneStudio-' + v + '-' + n;
-  document.getElementById('dlmac').href = asset('mac-arm64.dmg');
-  document.getElementById('dlwin').href = asset('win-x64-setup.exe');
-  document.getElementById('macv').textContent = v + ' · Apple silicon';
-  document.getElementById('winv').textContent = v + ' · 64-bit';
+  /* every button that says which build it is, wherever it sits — the hero's
+     and the beta box's — rather than three ids, which is a second description
+     the moment the page carries a second set */
+  const fill = (kind, href, label) => {
+    for(const a of document.querySelectorAll(`[data-dl="${kind}"]`)) a.href = href;
+    for(const e of document.querySelectorAll(`[data-dlv="${kind}"]`)) e.textContent = label;
+  };
+  fill('mac', asset('mac-arm64.dmg'), v + ' · Apple silicon');
+  fill('win', asset('win-x64-setup.exe'), v + ' · 64-bit');
   /* the AppImage rather than the .deb: it is the one Linux build that installs
      its own update, which is what the button beside the other two promises */
   const lv = f && f.linux && f.linux.version;
   if(lv){
-    const nix = document.getElementById('dlnix');
-    nix.href = REPO + '/releases/download/v' + lv + '/GeneStudio-' + lv + '-linux-x86_64.AppImage';
-    document.getElementById('nixv').textContent = lv + ' · AppImage';
-    nix.hidden = false;
+    fill('nix', REPO + '/releases/download/v' + lv + '/GeneStudio-' + lv + '-linux-x86_64.AppImage',
+         lv + ' · AppImage');
+    for(const a of document.querySelectorAll('[data-dl="nix"]')) a.hidden = false;
   }
 }).catch(() => {});
 
