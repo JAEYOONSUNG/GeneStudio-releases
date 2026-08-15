@@ -32,6 +32,18 @@
      clearly quieter than --slate at 6.47, so faint still reads as faint. */
   --ink:#EAF0EE; --body:#C6D2D0; --slate:#8A9B9D; --faint:#75888B;
   --line:#263235; --hair:#1D272A;
+  /* **There is no room below.** The app's three surfaces are tuned for a dense
+     bordered UI where a six-point step plus a hairline is plenty; across a
+     1,000 px block on a page they vanish. Measured against the page: the frame
+     came out **1.023:1**, the stats band 1.023, a card 1.072 — so every plane
+     on the page was the page, and a near-black screenshot sat in a well with no
+     edge at all. And it cannot be fixed by sinking further, because #0D1315 is
+     already near the floor: scaling it to *0.35* still only reaches 1.078.
+     Separation on this palette has to go **up**. `--plate` is that one step,
+     the surface a large block sits on — 1.181 dark, 1.208 light — and the app's
+     own three are untouched, since anything depicting the app must stay in the
+     app's palette. */
+  --plate:#192428;
   --amber:#E8A33D; --amber-soft:rgba(232,163,61,.18); --amber-ink:#1a1205;
   --fwd:#4FB79E; --rev:#A98AD8; --cut:#E1655C;
   --ui:ui-sans-serif,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -98,10 +110,16 @@ header.rail{
 /* ── hero ────────────────────────────────────────────────────────────────── */
 .hero{position:relative; padding:clamp(52px,9vw,112px) 0 0; overflow:hidden}
 .hero::before{
-  content:''; position:absolute; inset:-40% 0 auto 0; height:760px; pointer-events:none;
+  /* **`inset:-40%` put the light above the hero.** The block is over 900 px
+     tall, so −40% lifts the whole 760 px pane clear of the headline it was lit
+     for and the top of the page rendered dead flat — measured, no pixel in the
+     first screen differed from the page's own fill. It sits on the hero now,
+     and the amber is centred on the *left* column where the words are rather
+     than at 50% of a two-column block whose right half is empty. */
+  content:''; position:absolute; inset:0 0 auto 0; height:900px; pointer-events:none;
   background:
-    radial-gradient(58% 46% at 50% 34%, rgba(232,163,61,.16), transparent 70%),
-    radial-gradient(40% 34% at 76% 12%, rgba(79,183,158,.13), transparent 72%);
+    radial-gradient(46% 40% at 26% 30%, rgba(232,163,61,.14), transparent 72%),
+    radial-gradient(44% 38% at 78% 16%, rgba(79,183,158,.11), transparent 74%);
 }
 .hero .wrap{position:relative}
 /* the name, set to be read as the name — heavier than the headline's weight
@@ -233,7 +251,7 @@ figcaption{margin:14px 2px 0; font:400 13px/1.5 var(--mono); color:var(--faint)}
    to 20. */
 .band{
   border-top:1px solid var(--hair); border-bottom:1px solid var(--hair);
-  margin-top:clamp(56px,9vw,104px); background:var(--sunk);
+  margin-top:clamp(56px,9vw,104px); background:var(--plate);
 }
 .stats{
   --gut:clamp(16px,2.2vw,30px);
@@ -285,6 +303,40 @@ figcaption{margin:14px 2px 0; font:400 13px/1.5 var(--mono); color:var(--faint)}
 
 /* ── the numbered sections ───────────────────────────────────────────────── */
 section.feat{padding:clamp(58px,9vw,110px) 0; border-bottom:1px solid var(--hair)}
+/* **Ten sections in a row on one ground.** The page ran hero → band → five
+   feature blocks → four lists → the beta box without a single change of
+   surface, so a reader scrolling had nothing telling them a new subject had
+   started; on a dark page especially it reads as one field rather than as a
+   document. The rhythm is a *distinction* rather than stripes: what **shows the
+   product** keeps the page's own ground, and what **lists or compares** sits on
+   a plate — so the change of surface means "this is a different kind of thing",
+   which is the only reason to have one. */
+section.plain.onplate{background:var(--plate); border-block:1px solid var(--hair)}
+/* A card on the plate has to keep lifting, and `--ground` is *below* the plate
+   — left alone, every card in the toolbox and every row of the comparison read
+   as a well rather than as a card, which is the opposite claim. The tokens are
+   redeclared on the section, the way the light theme already redeclares the
+   frame's, so nothing inside needs a new selector: 1.167 off the plate, the
+   same lift a card has off the page. */
+/* **Raising a surface costs contrast, and it has to be paid rather than
+   noticed later.** `--faint` was measured against the page, the well and a
+   card — the three surfaces that existed — and every one of the new ones is
+   lighter, so it came out **4.27:1 on the plate and 3.66 on a card standing on
+   it**, under the toolbox's own descriptions. The tokens are re-solved for the
+   surface they are actually read on, which is what makes a new plane safe to
+   add at all. */
+section.plain.onplate, .beta, .band, footer{--ground:#223037; --hair:#222E32; --line:#2C3A3F;
+  --faint:#7C8E91}
+/* a card standing on the plate is lighter again, so its own text is solved for
+   that surface — and it is safe on everything darker, which is why the same
+   value serves the beta box, whose gradient ends on the plate */
+section.plain.onplate .tbcard, .beta .betabox{--faint:#89999C}
+/* `.betabox` is a gradient from `--ground` to `--sunk`, and on a plate both of
+   those sit *below* it — so the one box the page ends on would have read as a
+   hole rather than as the thing being offered. The gradient runs from the
+   redeclared ground down to the plate itself. */
+.beta{background:var(--plate); border-top:1px solid var(--hair)}
+.beta .betabox{background:linear-gradient(180deg, var(--ground), var(--plate))}
 .feat .cols{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,.92fr); gap:clamp(20px,4vw,56px); align-items:start}
 @media (max-width:860px){ .feat .cols{grid-template-columns:1fr; gap:20px} }
 .num{margin:0 0 14px; font:500 12px/1 var(--mono); color:var(--amber); letter-spacing:.18em}
@@ -481,7 +533,7 @@ details p{margin:0 0 20px; max-width:70ch; font-size:15.5px; color:var(--slate)}
 .note{margin-top:20px; font-size:14px; color:var(--faint); max-width:66ch}
 
 /* ── footer ──────────────────────────────────────────────────────────────── */
-footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--sunk)}
+footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--plate)}
 .foot{display:flex; flex-wrap:wrap; gap:22px 40px; align-items:flex-start; justify-content:space-between}
 .foot p{margin:0; font-size:13.5px; color:var(--faint); max-width:46ch}
 /* `margin-left:auto` is a row on a desktop and three orphans hard against the
@@ -518,6 +570,8 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--s
     --paper:#F7F9F9; --ground:#FFFFFF; --sunk:#EDF1F1;
     --ink:#0E1618; --body:#33454A; --slate:#556A6E; --faint:#5A6D71;
     --line:#C3D0D1; --hair:#DEE6E6;
+    /* light has room downward, and 1.077 was still too little across a band */
+    --plate:#DEE5E5;
     --amber:#97590A; --amber-soft:rgba(232,163,61,.22); --amber-ink:#FFFFFF;
     --fwd:#0F7D68; --rev:#6A4AA8; --cut:#B62E24;
   }
@@ -538,6 +592,22 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--s
       radial-gradient(58% 46% at 50% 34%, rgba(232,163,61,.20), transparent 70%),
       radial-gradient(40% 34% at 76% 12%, rgba(15,125,104,.07), transparent 72%);
   }
+  /* the dark card-on-plate step above is a dark-theme repair; on light the
+     plate is *below* the page and a white card already lifts off it */
+  /* the light plate is *below* the page, so its text has to go the other way:
+     4.26 / 4.48 / 4.39 measured, all under 4.5 */
+  section.plain.onplate, .beta, .band, footer{--ground:#FFFFFF; --hair:#D3DCDC; --line:#B9C7C8;
+    --faint:#56686B; --slate:#53686C; --amber:#92560A}
+  /* **The base rules are the dark theme, so they reach light too.** Leaving
+     the card's `--faint` unanswered here let the dark `#89999C` apply on a
+     light plate: **2.32:1**, measured, on the beta box's own note. It keeps the
+     plate-safe value rather than the page's — darker on white is always safe,
+     and the box's gradient ends on the plate, where the page's own value fell
+     to 4.26. */
+  section.plain.onplate .tbcard, .beta .betabox{--faint:#56686B}
+  /* the Gene Studio column is amber-soft over the plate, which composites to
+     rgb(224,214,192) — lighter than either, so the column head needs its own */
+  .cmp .us{--amber:#874F09}
   .btn.primary:hover{ background:#7C4806 }
   .tbico{ background:rgba(15,125,104,.10) }
   .brand svg circle:first-of-type{ stroke:var(--amber) }
@@ -846,7 +916,7 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--s
   </div>
 </section>
 
-<section class="plain" id="toolbox">
+<section class="plain onplate" id="toolbox">
   <div class="wrap">
     <p class="num">06</p>
     <h2>And the rest of the toolbox</h2>
@@ -975,7 +1045,7 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--s
   </div>
 </section>
 
-<section class="plain" id="compare">
+<section class="plain onplate" id="compare">
   <div class="wrap">
     <p class="num">08</p>
     <h2>Next to what people already use</h2>
