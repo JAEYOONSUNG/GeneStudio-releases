@@ -176,13 +176,21 @@ section.plain h2{font-size:clamp(26px,3.4vw,36px); margin-top:14px}
 .also span{display:block; margin-top:5px; font-size:13.5px; color:var(--faint); line-height:1.5}
 
 /* ── next to what people already use ─────────────────────────────────────── */
-.cmp{width:100%; border-collapse:collapse; margin-top:30px; font-size:15px}
+/* **One long cell must not decide the whole table.** Left to itself the
+   browser gave the column with "yes — the licence is checked on your own
+   machine" in it half the width and squeezed the other three products until
+   their two-word answers wrapped and the last one ran off the right edge. The
+   four products are the same kind of thing and are given the same room; the
+   row's own heading takes what a heading needs. */
+.cmp{width:100%; border-collapse:collapse; margin-top:30px; font-size:15px; table-layout:fixed}
+.cmp col.k{width:20%}
+.cmp col.p{width:20%}
 .cmp th, .cmp td{padding:15px 16px; text-align:left; border-bottom:1px solid var(--hair); vertical-align:top}
 .cmp thead th{
   font:500 11.5px/1.3 var(--mono); letter-spacing:.1em; text-transform:uppercase;
   color:var(--faint); border-bottom:1px solid var(--line); white-space:nowrap;
 }
-.cmp tbody th{font-weight:500; color:var(--slate); font-size:14.5px; width:26%}
+.cmp tbody th{font-weight:500; color:var(--slate); font-size:14.5px}
 .cmp td{color:var(--slate)}
 /* the column this page is about is the one that is lit */
 .cmp .us{background:var(--amber-soft); color:var(--ink)}
@@ -194,6 +202,8 @@ section.plain h2{font-size:clamp(26px,3.4vw,36px); margin-top:14px}
    is four words a line; each row becomes its own block with the column name in
    front of the cell, which is the same answer the licence desk already gives. */
 @media (max-width:760px){
+  .cmp{table-layout:auto}
+  .cmp colgroup{display:none}
   .cmp, .cmp tbody, .cmp tr, .cmp th, .cmp td{display:block; width:auto}
   .cmp thead{display:none}
   .cmp tr{border:1px solid var(--hair); border-radius:12px; padding:4px 14px 10px; margin:0 0 12px; background:var(--ground)}
@@ -229,10 +239,10 @@ section.plain h2{font-size:clamp(26px,3.4vw,36px); margin-top:14px}
 }
 .tbcard:hover{border-color:var(--line); transform:translateY(-2px)}
 .tbico{
-  display:grid; place-items:center; width:34px; height:34px; border-radius:9px;
+  display:grid; place-items:center; width:36px; height:36px; border-radius:10px;
   background:rgba(79,183,158,.13); margin-bottom:13px;
 }
-.tbico svg{width:17px; height:17px; fill:none; stroke:var(--fwd); stroke-width:1.7;
+.tbico svg{width:19px; height:19px; fill:none; stroke:var(--fwd); stroke-width:1.85;
   stroke-linecap:round; stroke-linejoin:round}
 .tbcard b{display:block; color:var(--ink); font-size:15.5px; font-weight:600; letter-spacing:-.005em}
 .tbcard span{display:block; margin-top:7px; font-size:13.5px; line-height:1.55; color:var(--slate)}
@@ -297,7 +307,7 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--s
 
 <section class="hero">
   <div class="wrap">
-    <p class="eyebrow">Private beta · macOS &amp; Windows</p>
+    <p class="eyebrow">Private beta · macOS, Windows &amp; Linux</p>
     <h1>The plasmid you are holding, drawn from the file you already have.</h1>
     <p class="sub">Circular and linear maps, an annotated sequence, restriction digests with a simulated gel, PCR and cloning, CRISPR guides and Sanger review — over GenBank, SnapGene <code>.dna</code>, FASTA and <code>.ab1</code>, written back without losing what was in them.</p>
     <ul class="chips">
@@ -312,6 +322,16 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--s
       <a class="btn" id="dlwin" href="https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/latest">
         <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M0 2.4 6.5 1.5v6.1H0zM7.4 1.4 16 .2v7.4H7.4zM0 8.5h6.5v6.1L0 13.7zM7.4 8.5H16v7.3L7.4 14.6z"/></svg>
         Download for Windows <small id="winv">64-bit</small>
+      </a>
+      <!-- **Hidden until the feed says there is one.** The page names a version
+           it reads from feed.json rather than one written into it, and the same
+           rule has to hold for a platform: a button offering a Linux build that
+           no release carries is a page pointing at a file that is not there,
+           which is the failure this project keeps finding in its own manifests.
+           It appears the moment a release ships Linux, with no page change. -->
+      <a class="btn" id="dlnix" href="https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/latest" hidden>
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 .6c-1.7 0-2.6 1.3-2.6 3 0 .8.1 1.4.1 2 0 .6-.6 1.2-1.1 2.1-.5.9-1.3 2-1.7 3-.3.8-.2 1.5.1 1.9.3.4.8.6 1.4.6.5 0 1 .2 1.4.5.4.3.8.7 1.6.7h1.6c.8 0 1.2-.4 1.6-.7.4-.3.9-.5 1.4-.5.6 0 1.1-.2 1.4-.6.3-.4.4-1.1.1-1.9-.4-1-1.2-2.1-1.7-3-.5-.9-1.1-1.5-1.1-2.1 0-.6.1-1.2.1-2 0-1.7-.9-3-2.6-3zm-.9 3.1c.3 0 .5.3.5.6s-.2.6-.5.6-.5-.3-.5-.6.2-.6.5-.6zm1.8 0c.3 0 .5.3.5.6s-.2.6-.5.6-.5-.3-.5-.6.2-.6.5-.6z"/></svg>
+        Download for Linux <small id="nixv">AppImage</small>
       </a>
     </div>
     <p class="verline">Free while the beta lasts. A licence is written for one computer and takes a minute — <b><a href="#get" style="color:inherit">ask for one</a></b>.</p>
@@ -459,11 +479,12 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--s
     </div>
     <figure class="rise">
       <div class="frame">
-        <picture>
-          <source media="(max-width:760px)" srcset="shot/san-phone.png">
-          <img src="shot/san.png" width="1600" height="1000" loading="lazy" alt="The Sanger view: a table of reads with quality and verdict, a map of where each read lands, and the pileup with chromatograms.">
-        </picture>
+        <video class="wide" data-clip="clip/sanger.mp4" poster="clip/sanger.png" width="1200" height="750"
+               muted loop playsinline preload="none"
+               aria-label="Two .ab1 reads attached to the construct: the table gives what each used, where it is good, where it lands and its verdict; the map shows both reads coloured by quality with the differences marked; the pileup carries the chromatogram under the letters."></video>
+        <img class="narrow" src="shot/san-phone.png" width="840" height="440" loading="lazy" alt="The Sanger view: a table of reads with quality and verdict, a map of where each read lands, and the pileup with chromatograms.">
       </div>
+      <figcaption>Two real <code>.ab1</code> files in: 587 of 620 bases used, good over 7–593 at Q38, landing at 247–833 forward — and the difference it found marked on the read where the read is worth believing.</figcaption>
     </figure>
   </div>
 </section>
@@ -524,7 +545,7 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--s
     <p class="num">06</p>
     <h2>And the rest of the toolbox</h2>
     <p class="lede">57 of them, and none is an add-on: they are all in the one file, on all three platforms, working on the construct you already have open. The figures below are this machine's own measurements.</p>
-    <svg class="tbsprite" aria-hidden="true" focusable="false"><defs><symbol id="tb-ring" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.2"/></symbol><symbol id="tb-linear" viewBox="0 0 24 24"><path d="M3 12h18"/><path d="M7 9v6M13 9v6M18 10v4"/></symbol><symbol id="tb-seq" viewBox="0 0 24 24"><path d="M4 8h16M4 16h16"/><path d="M8 8v8M12 8v8M16 8v8"/></symbol><symbol id="tb-nav" viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="6" rx="1.5"/><path d="M9 6v12"/></symbol><symbol id="tb-find" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M15.5 15.5 21 21"/></symbol><symbol id="tb-paint" viewBox="0 0 24 24"><path d="M4 17 14 7l3 3L7 20H4z"/><path d="M14 4l3 3"/></symbol><symbol id="tb-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></symbol><symbol id="tb-card" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 10h6M7 14h10"/></symbol><symbol id="tb-tube" viewBox="0 0 24 24"><path d="M9 3h6M10 3v13a2 2 0 0 0 4 0V3"/><path d="M10 11h4"/></symbol><symbol id="tb-scan" viewBox="0 0 24 24"><path d="M4 7V5a1 1 0 0 1 1-1h2M20 7V5a1 1 0 0 0-1-1h-2M4 17v2a1 1 0 0 0 1 1h2M20 17v2a1 1 0 0 1-1 1h-2"/><path d="M4 12h16"/></symbol><symbol id="tb-pin" viewBox="0 0 24 24"><path d="M12 21s6-5.4 6-10a6 6 0 1 0-12 0c0 4.6 6 10 6 10z"/><circle cx="12" cy="11" r="2"/></symbol><symbol id="tb-strain" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M8 12c2-3 6-3 8 0M8 15c2-2 6-2 8 0"/></symbol><symbol id="tb-univ" viewBox="0 0 24 24"><path d="M4 12h11"/><path d="m13 8 4 4-4 4"/><circle cx="20" cy="12" r="1.4"/></symbol><symbol id="tb-plan" viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h13"/></symbol><symbol id="tb-edit" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M14 6l4 4"/></symbol><symbol id="tb-therm" viewBox="0 0 24 24"><path d="M14 14V5a2 2 0 1 0-4 0v9a4 4 0 1 0 4 0z"/></symbol><symbol id="tb-cut" viewBox="0 0 24 24"><path d="M6 4l12 12M18 4 6 16"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/></symbol><symbol id="tb-shop" viewBox="0 0 24 24"><path d="M4 8h16l-1.4 11H5.4z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></symbol><symbol id="tb-methyl" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3v4M12 17v4M3 12h4M17 12h4"/></symbol><symbol id="tb-hosts" viewBox="0 0 24 24"><circle cx="8" cy="12" r="4"/><circle cx="16" cy="12" r="4"/></symbol><symbol id="tb-gel" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M8 8h3M14 11h3M8 15h3"/></symbol><symbol id="tb-coin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v8M9.5 10h4a1.5 1.5 0 0 1 0 3h-3a1.5 1.5 0 0 0 0 3h4"/></symbol><symbol id="tb-suggest" viewBox="0 0 24 24"><path d="M12 3v2M5 8l1.5 1M19 8l-1.5 1"/><path d="M9 17h6M10 20h4"/><path d="M9 14a4 4 0 1 1 6 0z"/></symbol><symbol id="tb-scissors" viewBox="0 0 24 24"><path d="M6 4l12 12M18 4 6 16"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/></symbol><symbol id="tb-gibson" viewBox="0 0 24 24"><path d="M4 12h6M14 12h6"/><path d="M10 9v6M14 9v6"/></symbol><symbol id="tb-gg" viewBox="0 0 24 24"><rect x="3" y="9" width="7" height="6" rx="1"/><rect x="14" y="9" width="7" height="6" rx="1"/><path d="M10 12h4"/></symbol><symbol id="tb-guide" viewBox="0 0 24 24"><path d="M4 9c4-4 12 4 16 0"/><path d="M4 15c4-4 12 4 16 0"/></symbol><symbol id="tb-arms" viewBox="0 0 24 24"><path d="M3 12h5M16 12h5"/><rect x="8" y="8" width="8" height="8" rx="1.5"/></symbol><symbol id="tb-silent" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M8 12h8"/></symbol><symbol id="tb-preview" viewBox="0 0 24 24"><path d="M2 12s4-6 10-6 10 6 10 6-4 6-10 6-10-6-10-6z"/><circle cx="12" cy="12" r="2.5"/></symbol><symbol id="tb-trace" viewBox="0 0 24 24"><path d="M3 16c2 0 2-8 4-8s2 8 4 8 2-10 4-10 2 10 4 10 2-4 2-4"/></symbol><symbol id="tb-ztr" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M6 15c1.5 0 1.5-5 3-5s1.5 5 3 5 1.5-6 3-6"/></symbol><symbol id="tb-pileup" viewBox="0 0 24 24"><path d="M3 7h18M3 12h13M3 17h16"/></symbol><symbol id="tb-indel" viewBox="0 0 24 24"><path d="M3 12h6M15 12h6"/><path d="M12 8v8"/></symbol><symbol id="tb-frame" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="10" rx="1.5"/><path d="M9 7v10M15 7v10"/></symbol><symbol id="tb-verdict" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="m8.5 12 2.5 2.5 4.5-5"/></symbol><symbol id="tb-term" viewBox="0 0 24 24"><path d="M6 20V10a4 4 0 0 1 8 0v10"/><path d="M16 20h4"/></symbol><symbol id="tb-repeat" viewBox="0 0 24 24"><path d="M4 8h12a3 3 0 0 1 0 6H8"/><path d="m10 11-2 3 2 3"/></symbol><symbol id="tb-fold" viewBox="0 0 24 24"><path d="M12 3v6M12 15v6"/><path d="M9 9a3 3 0 1 0 6 0 3 3 0 1 0-6 6"/></symbol><symbol id="tb-rbs" viewBox="0 0 24 24"><circle cx="8" cy="12" r="4"/><path d="M12 12h9"/><path d="M15 9v6"/></symbol><symbol id="tb-codon" viewBox="0 0 24 24"><path d="M4 18V9M9 18v-6M14 18v-9M19 18v-4"/></symbol><symbol id="tb-code" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M9 9v11M15 9v11"/></symbol><symbol id="tb-orf" viewBox="0 0 24 24"><path d="M3 12h4l2-4 3 8 3-6 2 2h4"/></symbol><symbol id="tb-annot" viewBox="0 0 24 24"><path d="M5 4h9l5 5v11H5z"/><path d="M14 4v5h5"/><path d="M8 13h7M8 16h5"/></symbol><symbol id="tb-file" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></symbol><symbol id="tb-share" viewBox="0 0 24 24"><circle cx="18" cy="6" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="m8.2 10.8 7.6-3.6M8.2 13.2l7.6 3.6"/></symbol><symbol id="tb-stack" viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/></symbol><symbol id="tb-folder" viewBox="0 0 24 24"><path d="M3 7h6l2 2h10v10H3z"/></symbol><symbol id="tb-xlsx" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 10v10"/></symbol><symbol id="tb-vector" viewBox="0 0 24 24"><path d="M5 19 19 5"/><rect x="3" y="17" width="4" height="4" rx="1"/><rect x="17" y="3" width="4" height="4" rx="1"/></symbol><symbol id="tb-safe" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><circle cx="12" cy="12" r="3.5"/><path d="M12 8.5V6"/></symbol><symbol id="tb-mac" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 21h8"/></symbol><symbol id="tb-phone" viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/></symbol><symbol id="tb-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/></symbol><symbol id="tb-update" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-3-6.2"/><path d="M20 4v5h-5"/></symbol><symbol id="tb-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></symbol></defs></svg>
+    <svg class="tbsprite" aria-hidden="true" focusable="false"><defs><symbol id="tb-ring" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.2"/></symbol><symbol id="tb-linear" viewBox="0 0 24 24"><path d="M3 12h18"/><circle cx="8" cy="12" r="2"/><circle cx="16" cy="12" r="2"/></symbol><symbol id="tb-seq" viewBox="0 0 24 24"><path d="M4 8h16"/><path d="M4 16h16"/><path d="M12 8v8"/></symbol><symbol id="tb-nav" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="8" rx="2"/><rect x="7" y="10" width="6" height="4" rx="1" fill="currentColor" stroke="none"/></symbol><symbol id="tb-find" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M15.5 15.5 21 21"/></symbol><symbol id="tb-paint" viewBox="0 0 24 24"><path d="M4 17 14 7l3 3L7 20H4z"/><path d="M14 4l3 3"/></symbol><symbol id="tb-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></symbol><symbol id="tb-card" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 10h6M7 14h10"/></symbol><symbol id="tb-tube" viewBox="0 0 24 24"><path d="M9 3h6M10 3v13a2 2 0 0 0 4 0V3"/><path d="M10 11h4"/></symbol><symbol id="tb-scan" viewBox="0 0 24 24"><path d="M4 8V6a2 2 0 0 1 2-2h2M20 8V6a2 2 0 0 0-2-2h-2M4 16v2a2 2 0 0 0 2 2h2M20 16v2a2 2 0 0 1-2 2h-2"/><path d="M4 12h16"/></symbol><symbol id="tb-pin" viewBox="0 0 24 24"><path d="M12 21s6-5.4 6-10a6 6 0 1 0-12 0c0 4.6 6 10 6 10z"/><circle cx="12" cy="11" r="2"/></symbol><symbol id="tb-strain" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M8 12c2-3 6-3 8 0M8 15c2-2 6-2 8 0"/></symbol><symbol id="tb-univ" viewBox="0 0 24 24"><path d="M4 12h12"/><path d="m12 8 4 4-4 4"/></symbol><symbol id="tb-plan" viewBox="0 0 24 24"><path d="M4 7h16"/><path d="M4 12h11"/><path d="M4 17h6"/></symbol><symbol id="tb-edit" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M14 6l4 4"/></symbol><symbol id="tb-therm" viewBox="0 0 24 24"><path d="M14 14V5a2 2 0 1 0-4 0v9a4 4 0 1 0 4 0z"/></symbol><symbol id="tb-cut" viewBox="0 0 24 24"><path d="M6 4l12 12M18 4 6 16"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/></symbol><symbol id="tb-shop" viewBox="0 0 24 24"><path d="M4 8h16l-1.4 11H5.4z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></symbol><symbol id="tb-methyl" viewBox="0 0 24 24"><circle cx="12" cy="14" r="5"/><path d="M12 9V4"/><circle cx="12" cy="4" r="1.6" fill="currentColor" stroke="none"/></symbol><symbol id="tb-hosts" viewBox="0 0 24 24"><circle cx="8.5" cy="12" r="4.5"/><circle cx="16" cy="12" r="4.5"/></symbol><symbol id="tb-gel" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M8 8h3M14 11h3M8 15h3"/></symbol><symbol id="tb-coin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v8M9.5 10h4a1.5 1.5 0 0 1 0 3h-3a1.5 1.5 0 0 0 0 3h4"/></symbol><symbol id="tb-suggest" viewBox="0 0 24 24"><path d="M9 16a5 5 0 1 1 6 0v2H9z"/><path d="M10 21h4"/></symbol><symbol id="tb-scissors" viewBox="0 0 24 24"><path d="M6 4l12 12M18 4 6 16"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/></symbol><symbol id="tb-gibson" viewBox="0 0 24 24"><path d="M3 12h7"/><path d="M14 12h7"/><path d="M10 8.5v7"/><path d="M14 8.5v7"/></symbol><symbol id="tb-gg" viewBox="0 0 24 24"><rect x="3" y="8" width="8" height="8" rx="1.5"/><rect x="13" y="8" width="8" height="8" rx="1.5"/></symbol><symbol id="tb-guide" viewBox="0 0 24 24"><path d="M3 8c5-4 13 4 18 0"/><path d="M3 16c5-4 13 4 18 0"/></symbol><symbol id="tb-arms" viewBox="0 0 24 24"><path d="M3 12h4"/><path d="M17 12h4"/><rect x="7" y="8" width="10" height="8" rx="2"/></symbol><symbol id="tb-silent" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M8.5 12h7"/></symbol><symbol id="tb-preview" viewBox="0 0 24 24"><path d="M2.5 12S6 6.5 12 6.5 21.5 12 21.5 12 18 17.5 12 17.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="2.2"/></symbol><symbol id="tb-trace" viewBox="0 0 24 24"><path d="M3 17c2.5 0 2.5-10 5-10s2.5 10 5 10 2.5-12 5-12 3 12 3 12"/></symbol><symbol id="tb-ztr" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M7 14c1.5 0 1.5-5 3-5s1.5 5 3 5 1.5-4 2-4"/></symbol><symbol id="tb-pileup" viewBox="0 0 24 24"><path d="M4 8h16"/><path d="M4 13h11"/><path d="M4 18h14"/></symbol><symbol id="tb-indel" viewBox="0 0 24 24"><path d="M4 12h5"/><path d="M15 12h5"/><path d="M12 7v10"/></symbol><symbol id="tb-frame" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="8" rx="1.5"/><path d="M12 8v8"/></symbol><symbol id="tb-verdict" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="m8.5 12 2.5 2.5 4.5-5"/></symbol><symbol id="tb-term" viewBox="0 0 24 24"><path d="M7 20V11a5 5 0 0 1 10 0v9"/></symbol><symbol id="tb-repeat" viewBox="0 0 24 24"><path d="M5 9h11a3 3 0 0 1 0 6H8"/><path d="m11 12-3 3 3 3"/></symbol><symbol id="tb-fold" viewBox="0 0 24 24"><path d="M12 3v5"/><path d="M12 16v5"/><circle cx="12" cy="12" r="4"/></symbol><symbol id="tb-rbs" viewBox="0 0 24 24"><circle cx="8" cy="12" r="4.5"/><path d="M14 12h7"/></symbol><symbol id="tb-codon" viewBox="0 0 24 24"><path d="M5 19V11"/><path d="M12 19V6"/><path d="M19 19v-5"/></symbol><symbol id="tb-code" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18"/><path d="M9.5 10v9"/></symbol><symbol id="tb-orf" viewBox="0 0 24 24"><path d="M3 15h4l3-7 3 12 3-8h5"/></symbol><symbol id="tb-annot" viewBox="0 0 24 24"><path d="M5 4h9l5 5v11H5z"/><path d="M9 13h6"/><path d="M9 16.5h4"/></symbol><symbol id="tb-file" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></symbol><symbol id="tb-share" viewBox="0 0 24 24"><circle cx="18" cy="6" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="m8.2 10.8 7.6-3.6M8.2 13.2l7.6 3.6"/></symbol><symbol id="tb-stack" viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5z"/><path d="m4 13 8 4.5 8-4.5"/></symbol><symbol id="tb-folder" viewBox="0 0 24 24"><path d="M3 7h6l2 2h10v10H3z"/></symbol><symbol id="tb-xlsx" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18"/><path d="M10 10v9"/></symbol><symbol id="tb-vector" viewBox="0 0 24 24"><path d="M5 19 19 5"/><rect x="3" y="17" width="4" height="4" rx="1"/><rect x="17" y="3" width="4" height="4" rx="1"/></symbol><symbol id="tb-safe" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><circle cx="12" cy="12" r="3.5"/><path d="M12 8.5V6"/></symbol><symbol id="tb-mac" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 21h8"/></symbol><symbol id="tb-phone" viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/></symbol><symbol id="tb-menu" viewBox="0 0 24 24"><path d="M4 8h16"/><path d="M4 12h16"/><path d="M4 16h9"/></symbol><symbol id="tb-update" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-3-6.2"/><path d="M20 4v5h-5"/></symbol><symbol id="tb-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></symbol></defs></svg>
     <div class="toolbox rise">
       <h3 class="tbhead">Maps and the sequence <i>8</i></h3>
       <div class="tbgrid">
@@ -652,6 +673,7 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--s
     <p class="lede">Every cell below comes from that product's own public page, on the date in the note under the table. This is not a claim that the others are worse — they are older, broader and in several ways better resourced. It is a claim about <em>where the work happens</em>.</p>
     <div style="overflow-x:auto">
     <table class="cmp">
+      <colgroup><col class="k"><col class="p"><col class="p"><col class="p"><col class="p"></colgroup>
       <thead>
         <tr>
           <th scope="col">&nbsp;</th>
@@ -781,6 +803,15 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
   document.getElementById('dlwin').href = asset('win-x64-setup.exe');
   document.getElementById('macv').textContent = v + ' · Apple silicon';
   document.getElementById('winv').textContent = v + ' · 64-bit';
+  /* the AppImage rather than the .deb: it is the one Linux build that installs
+     its own update, which is what the button beside the other two promises */
+  const lv = f && f.linux && f.linux.version;
+  if(lv){
+    const nix = document.getElementById('dlnix');
+    nix.href = REPO + '/releases/download/v' + lv + '/GeneStudio-' + lv + '-linux-x86_64.AppImage';
+    document.getElementById('nixv').textContent = lv + ' · AppImage';
+    nix.hidden = false;
+  }
 }).catch(() => {});
 
 /* ── a clip plays where a clip is worth playing ────────────────────────────
