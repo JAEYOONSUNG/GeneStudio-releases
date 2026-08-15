@@ -121,6 +121,25 @@ figure{margin:0}
 .frame .bar span{margin-left:8px; font:400 11.5px/1 var(--mono); color:var(--faint); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
 figcaption{margin:14px 2px 0; font:400 13px/1.5 var(--mono); color:var(--faint)}
 
+/* ── a clip, where there is one ──────────────────────────────────────────────
+   The clips are the application driven by the screenshot harness, one frame per
+   headless run, so they are the same build as the stills beside them. A video
+   is the *decoration* of a still: the poster is the last frame, so a browser
+   that will not play it, a phone on a slow network and a reader who has asked
+   for less motion all get the picture the clip ends on rather than a grey box. */
+.frame video{display:block; width:100%; height:auto; background:var(--sunk)}
+/* under 760 px the wide clips are a window shrunk into a palm; the phone crop
+   says the same thing legibly, and nothing is downloaded that is not shown */
+.narrow{display:none}
+@media (max-width:760px){
+  .wide{display:none}
+  .narrow{display:block}
+  /* a section carrying two clips shows one of them on a phone: the second
+     would otherwise fall back to the same still as the first, and the same
+     picture printed twice reads as the page having repeated itself */
+  .wideonly{display:none}
+}
+
 /* ── the measured band ───────────────────────────────────────────────────── */
 .band{border-top:1px solid var(--hair); border-bottom:1px solid var(--hair); margin-top:clamp(56px,9vw,104px); background:var(--sunk)}
 .stats{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--hair)}
@@ -155,6 +174,68 @@ section.plain h2{font-size:clamp(26px,3.4vw,36px); margin-top:14px}
 .also div{background:var(--paper); padding:17px 18px}
 .also b{display:block; color:var(--ink); font-size:14.5px; font-weight:600}
 .also span{display:block; margin-top:5px; font-size:13.5px; color:var(--faint); line-height:1.5}
+
+/* ── next to what people already use ─────────────────────────────────────── */
+.cmp{width:100%; border-collapse:collapse; margin-top:30px; font-size:15px}
+.cmp th, .cmp td{padding:15px 16px; text-align:left; border-bottom:1px solid var(--hair); vertical-align:top}
+.cmp thead th{
+  font:500 11.5px/1.3 var(--mono); letter-spacing:.1em; text-transform:uppercase;
+  color:var(--faint); border-bottom:1px solid var(--line); white-space:nowrap;
+}
+.cmp tbody th{font-weight:500; color:var(--slate); font-size:14.5px; width:26%}
+.cmp td{color:var(--slate)}
+/* the column this page is about is the one that is lit */
+.cmp .us{background:var(--amber-soft); color:var(--ink)}
+.cmp thead .us{color:var(--amber); border-bottom-color:var(--amber)}
+.cmp .us b{font-weight:600}
+.cmpnote{margin-top:18px; font-size:13.5px; color:var(--faint); max-width:74ch}
+.cmpnote a{color:var(--slate)}
+/* **A table is a stack of cards on a phone.** Four columns of prose in 350 px
+   is four words a line; each row becomes its own block with the column name in
+   front of the cell, which is the same answer the licence desk already gives. */
+@media (max-width:760px){
+  .cmp, .cmp tbody, .cmp tr, .cmp th, .cmp td{display:block; width:auto}
+  .cmp thead{display:none}
+  .cmp tr{border:1px solid var(--hair); border-radius:12px; padding:4px 14px 10px; margin:0 0 12px; background:var(--ground)}
+  .cmp th, .cmp td{border:0; padding:9px 0}
+  .cmp tbody th{color:var(--ink); font-size:15.5px; font-weight:600; padding-top:14px}
+  .cmp td::before{
+    content:attr(data-of) ' ';
+    font:500 10.5px/1 var(--mono); letter-spacing:.1em; text-transform:uppercase;
+    color:var(--faint); display:block; margin-bottom:5px;
+  }
+  .cmp .us{border-radius:8px; padding-left:10px; padding-right:10px; margin:2px -10px}
+}
+
+/* ── the toolbox ─────────────────────────────────────────── */
+/* Fifty-seven cards is a wall unless it is grouped, so each group says how many
+   it holds and the eye can decide what to read. The icon is a symbol reused from
+   one inline sprite rather than a file per card: the page fetches from nobody. */
+.tbsprite{display:none}
+.toolbox{margin-top:34px}
+.tbhead{
+  display:flex; align-items:baseline; gap:10px; margin:38px 0 14px;
+  font:500 11.5px/1 var(--mono); letter-spacing:.16em; text-transform:uppercase; color:var(--amber);
+}
+.tbhead:first-child{margin-top:0}
+.tbhead::after{content:''; flex:1; height:1px; background:var(--hair)}
+.tbhead i{font:400 11.5px/1 var(--mono); font-style:normal; color:var(--faint); letter-spacing:.1em}
+.tbgrid{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px}
+@media (max-width:1000px){ .tbgrid{grid-template-columns:repeat(2,minmax(0,1fr))} }
+@media (max-width:640px){ .tbgrid{grid-template-columns:1fr} }
+.tbcard{
+  border:1px solid var(--hair); border-radius:14px; background:var(--ground);
+  padding:18px 18px 20px; transition:border-color .15s ease, transform .15s ease;
+}
+.tbcard:hover{border-color:var(--line); transform:translateY(-2px)}
+.tbico{
+  display:grid; place-items:center; width:34px; height:34px; border-radius:9px;
+  background:rgba(79,183,158,.13); margin-bottom:13px;
+}
+.tbico svg{width:17px; height:17px; fill:none; stroke:var(--fwd); stroke-width:1.7;
+  stroke-linecap:round; stroke-linejoin:round}
+.tbcard b{display:block; color:var(--ink); font-size:15.5px; font-weight:600; letter-spacing:-.005em}
+.tbcard span{display:block; margin-top:7px; font-size:13.5px; line-height:1.55; color:var(--slate)}
 
 /* ── questions ───────────────────────────────────────────────────────────── */
 .qs{margin-top:26px; border-top:1px solid var(--hair)}
@@ -204,6 +285,8 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--s
     <nav>
       <a class="hide-s" href="#views">What it does</a>
       <a class="hide-s" href="#formats">Your files</a>
+      <a class="hide-s" href="#toolbox">Toolbox</a>
+      <a class="hide-s" href="#compare">Compare</a>
       <a class="hide-s" href="#questions">Questions</a>
       <a class="get" href="#get">Get it</a>
     </nav>
@@ -238,12 +321,20 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--s
     <figure>
       <div class="frame">
         <div class="bar"><i></i><i></i><i></i><span>pDEMO-T7 · 2,950 bp · circular</span></div>
-        <picture>
-          <source media="(max-width:760px)" srcset="shot/map-phone.png">
-          <img src="shot/map.png" width="1600" height="1000" alt="The circular map of a 2,950 bp plasmid: features on both strands, every restriction site named in the margin, a coordinate ruler inside the ring.">
-        </picture>
+        <video class="wide" data-clip="clip/map.mp4" poster="clip/map.png" width="1200" height="750"
+               muted loop playsinline preload="none"
+               aria-label="The circular map being zoomed out to the whole plasmid, the restriction sites resolving into the margin as there is room for them."></video>
+        <img class="narrow" src="shot/map-phone.png" width="800" height="790" alt="The circular map of a 2,950 bp plasmid: features on both strands, every restriction site named in the margin.">
       </div>
-      <figcaption>The map — every cut named in the margin, features on the strand they are on.</figcaption>
+      <figcaption>The map — every cut named in the margin, features on the strand they are on. Zoom is the same slider you drag.</figcaption>
+    </figure>
+    <figure class="rise wideonly">
+      <div class="frame">
+        <video class="wide" data-clip="clip/measure.mp4" poster="clip/measure.png" width="1200" height="750"
+               muted loop playsinline preload="none"
+               aria-label="Dragging an arc of the ring: the wedge follows the pointer and the length of the stretch is counted out as it grows."></video>
+      </div>
+      <figcaption>And dragging the ring measures it — 146 → 1,756 · 1,610 bp, counted as the wedge grows.</figcaption>
     </figure>
   </div>
 </section>
@@ -271,15 +362,34 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--s
         <li><em>A primer is drawn as it is</em> — the 5′ overhang and any designed mismatch stepped down out of the shaft.</li>
         <li><em>A cut is a stepped mark through both strands</em>, so which strand breaks where, and which way the overhang points, reads off the bases.</li>
         <li><em>Type to edit</em>, with the features carried across the edit and one undo for a run of typing.</li>
+        <li><em>Drag across the bases</em> and the card follows with the three figures a drag is made for — how long, what it melts at, how GC-rich.</li>
+        <li><em>Find</em> reads IUPAC and regular expressions, and marks every hit on all three drawings.</li>
       </ul>
     </div>
     <figure class="rise">
       <div class="frame">
-        <picture>
-          <source media="(max-width:760px)" srcset="shot/seq-phone.png">
-          <img src="shot/seq.png" width="1600" height="1000" loading="lazy" alt="The sequence view: enzyme names above the bases, primers as stepped arrows, both strands, translations under their own codons.">
-        </picture>
+        <video class="wide" data-clip="clip/drag.mp4" poster="clip/drag.png" width="1200" height="750"
+               muted loop playsinline preload="none"
+               aria-label="Someone dragging across the His6 tag: the stretch lights up, a card follows the pointer with its length, melting temperature and GC, and the bar along the bottom spells the residues out."></video>
+        <img class="narrow" src="shot/seq-phone.png" width="840" height="520" loading="lazy" alt="The sequence view: enzyme names above the bases, primers as stepped arrows, both strands, translations under their own codons.">
       </div>
+      <figcaption>Dragging across the His6 tag. Nothing was pressed first — the figures are what a selection says about itself.</figcaption>
+    </figure>
+    <figure class="rise wideonly">
+      <div class="frame">
+        <video class="wide" data-clip="clip/find.mp4" poster="clip/find.png" width="1200" height="750"
+               muted loop playsinline preload="none"
+               aria-label="A motif being typed into the find bar, and every place it matches lighting up along the sequence."></video>
+      </div>
+      <figcaption>And a motif being typed into ⌘F, every match lighting up as the query grows.</figcaption>
+    </figure>
+    <figure class="rise wideonly">
+      <div class="frame">
+        <video class="wide" data-clip="clip/primer.mp4" poster="clip/primer.png" width="1200" height="750"
+               muted loop playsinline preload="none"
+               aria-label="A primer opened by double-clicking it: the dialog draws the construct under the oligo at the site it binds, and the figures move as the sequence is typed."></video>
+      </div>
+      <figcaption>Double-click any primer and it opens against what it binds — the ruler, the genes it sits under, both strands, and the figures moving as you type.</figcaption>
     </figure>
   </div>
 </section>
@@ -296,14 +406,21 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--s
         <li><em>Suggest digests</em> scores every combination for bands the agarose can actually resolve.</li>
         <li><em>Dam, Dcm, CpG, EcoKI and EcoBI</em> — judged against the strain the DNA was grown in and the one it is going into.</li>
         <li><em>2,672 published experiments</em> from REBASE sit behind the verdict, not one word.</li>
+        <li><em>The run is a slider</em> — above, the same digest at 12 % of its run and at the end of it.</li>
       </ul>
     </div>
     <figure class="rise">
       <div class="frame">
-        <picture>
-          <source media="(max-width:760px)" srcset="shot/dig-phone.png">
-          <img src="shot/dig.png" width="1600" height="1000" loading="lazy" alt="The digest view: a simulated agarose gel with a ladder and sample lanes, the fragments listed with their ends, and the methylation table beneath.">
-        </picture>
+        <!-- the gel is cropped to the plate and its ladder, so it is 448 px wide
+             and is not stretched to the column: blown up it is a blurrier gel,
+             not a bigger one, which is the rule tools/clip.mjs cuts it by. The
+             width and height are the clip's own, so the box before it decodes is
+             the shape it will be. -->
+        <video class="wide" data-clip="clip/gel.mp4" poster="clip/gel.png" width="448" height="400"
+               muted loop playsinline preload="none"
+               style="max-width:448px; margin:0 auto"
+               aria-label="The gel running: the fragments of a four-enzyme digest migrating down the lanes as the running time goes up."></video>
+        <img class="narrow" src="shot/dig-phone.png" width="830" height="640" loading="lazy" alt="The digest view: a simulated agarose gel with a ladder and sample lanes, the fragments listed with their ends.">
       </div>
     </figure>
   </div>
@@ -350,11 +467,12 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--s
     </div>
     <figure class="rise">
       <div class="frame">
-        <picture>
-          <source media="(max-width:760px)" srcset="shot/cr-phone.png">
-          <img src="shot/cr.png" width="1600" height="1000" loading="lazy" alt="The guides view: target and nuclease, the editing vector with its gRNA and homology-arm sites, and the design controls.">
-        </picture>
+        <video class="wide" data-clip="clip/guides.mp4" poster="clip/guides.png" width="1200" height="750"
+               muted loop playsinline preload="none"
+               aria-label="A deletion designed: the region is taken from the construct, Design and then Scan are pressed, and the candidate guides come back grouped by the feature they sit in."></video>
+        <img class="narrow" src="shot/cr-phone.png" width="840" height="480" loading="lazy" alt="The guides view: target and nuclease, the editing vector with its gRNA and homology-arm sites, and the design controls.">
       </div>
+      <figcaption>Design, then Scan — and 11 guides come back from 35 protospacers, grouped by the feature they sit in, with what each was dropped for said out loud.</figcaption>
     </figure>
   </div>
 </section>
@@ -384,24 +502,94 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--s
   </div>
 </section>
 
-<section class="plain">
+<section class="plain" id="toolbox">
   <div class="wrap">
     <p class="num">06</p>
-    <h2>Also in the box</h2>
-    <p class="lede">Twelve views, one construct at a time or a dozen in tabs. None of this is an add-on.</p>
-    <div class="also rise">
-      <div><b>PCR</b><span>Primers made from a selection, Tm and hairpins as you type, products with their ends.</span></div>
-      <div><b>Cloning</b><span>Restriction and Gibson, with a region of one construct picked by pointing at it.</span></div>
-      <div><b>Golden Gate</b><span>Assembly with domestication, overhangs read from the enzyme itself.</span></div>
-      <div><b>Enzyme database</b><span>A card per enzyme: cut, overhang, suppliers, isoschizomers, buffer, price per digest.</span></div>
-      <div><b>Find</b><span>DNA (IUPAC or a regular expression), protein, any field, or a coordinate — marked on all three drawings.</span></div>
-      <div><b>Folding</b><span>A region folded and drawn as a structure, plus a profile saying which part of it does anything.</span></div>
-      <div><b>Repeats</b><span>Tandem, imperfect, inverted and palindromic — kept as colours on the DNA, not lost with the panel.</span></div>
-      <div><b>Terminators &amp; RBS</b><span>The hairpin and its T-tract reported apart, and whether a ribosome can reach the start.</span></div>
-      <div><b>Codon usage</b><span>Per amino acid, with the rare codons of the 5′ head counted separately.</span></div>
-      <div><b>Genetic codes</b><span>NCBI's tables as what each differs from the standard one, start codons marked.</span></div>
-      <div><b>History</b><span>Every saved version as its own small map, with the changes that made it laid along the row.</span></div>
-      <div><b>Figures</b><span>Every drawing out as vector PDF or SVG, labels still editable in Illustrator.</span></div>
+    <h2>And the rest of the toolbox</h2>
+    <p class="lede">57 of them, and none is an add-on: they are all in the one file, on all three platforms, working on the construct you already have open. The figures below are this machine's own measurements.</p>
+    <svg class="tbsprite" aria-hidden="true" focusable="false"><defs><symbol id="tb-ring" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.2"/></symbol><symbol id="tb-linear" viewBox="0 0 24 24"><path d="M3 12h18"/><path d="M7 9v6M13 9v6M18 10v4"/></symbol><symbol id="tb-seq" viewBox="0 0 24 24"><path d="M4 8h16M4 16h16"/><path d="M8 8v8M12 8v8M16 8v8"/></symbol><symbol id="tb-nav" viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="6" rx="1.5"/><path d="M9 6v12"/></symbol><symbol id="tb-find" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M15.5 15.5 21 21"/></symbol><symbol id="tb-paint" viewBox="0 0 24 24"><path d="M4 17 14 7l3 3L7 20H4z"/><path d="M14 4l3 3"/></symbol><symbol id="tb-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></symbol><symbol id="tb-card" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 10h6M7 14h10"/></symbol><symbol id="tb-tube" viewBox="0 0 24 24"><path d="M9 3h6M10 3v13a2 2 0 0 0 4 0V3"/><path d="M10 11h4"/></symbol><symbol id="tb-scan" viewBox="0 0 24 24"><path d="M4 7V5a1 1 0 0 1 1-1h2M20 7V5a1 1 0 0 0-1-1h-2M4 17v2a1 1 0 0 0 1 1h2M20 17v2a1 1 0 0 1-1 1h-2"/><path d="M4 12h16"/></symbol><symbol id="tb-pin" viewBox="0 0 24 24"><path d="M12 21s6-5.4 6-10a6 6 0 1 0-12 0c0 4.6 6 10 6 10z"/><circle cx="12" cy="11" r="2"/></symbol><symbol id="tb-strain" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M8 12c2-3 6-3 8 0M8 15c2-2 6-2 8 0"/></symbol><symbol id="tb-univ" viewBox="0 0 24 24"><path d="M4 12h11"/><path d="m13 8 4 4-4 4"/><circle cx="20" cy="12" r="1.4"/></symbol><symbol id="tb-plan" viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h13"/></symbol><symbol id="tb-edit" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M14 6l4 4"/></symbol><symbol id="tb-therm" viewBox="0 0 24 24"><path d="M14 14V5a2 2 0 1 0-4 0v9a4 4 0 1 0 4 0z"/></symbol><symbol id="tb-cut" viewBox="0 0 24 24"><path d="M6 4l12 12M18 4 6 16"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/></symbol><symbol id="tb-shop" viewBox="0 0 24 24"><path d="M4 8h16l-1.4 11H5.4z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></symbol><symbol id="tb-methyl" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3v4M12 17v4M3 12h4M17 12h4"/></symbol><symbol id="tb-hosts" viewBox="0 0 24 24"><circle cx="8" cy="12" r="4"/><circle cx="16" cy="12" r="4"/></symbol><symbol id="tb-gel" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M8 8h3M14 11h3M8 15h3"/></symbol><symbol id="tb-coin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v8M9.5 10h4a1.5 1.5 0 0 1 0 3h-3a1.5 1.5 0 0 0 0 3h4"/></symbol><symbol id="tb-suggest" viewBox="0 0 24 24"><path d="M12 3v2M5 8l1.5 1M19 8l-1.5 1"/><path d="M9 17h6M10 20h4"/><path d="M9 14a4 4 0 1 1 6 0z"/></symbol><symbol id="tb-scissors" viewBox="0 0 24 24"><path d="M6 4l12 12M18 4 6 16"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/></symbol><symbol id="tb-gibson" viewBox="0 0 24 24"><path d="M4 12h6M14 12h6"/><path d="M10 9v6M14 9v6"/></symbol><symbol id="tb-gg" viewBox="0 0 24 24"><rect x="3" y="9" width="7" height="6" rx="1"/><rect x="14" y="9" width="7" height="6" rx="1"/><path d="M10 12h4"/></symbol><symbol id="tb-guide" viewBox="0 0 24 24"><path d="M4 9c4-4 12 4 16 0"/><path d="M4 15c4-4 12 4 16 0"/></symbol><symbol id="tb-arms" viewBox="0 0 24 24"><path d="M3 12h5M16 12h5"/><rect x="8" y="8" width="8" height="8" rx="1.5"/></symbol><symbol id="tb-silent" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M8 12h8"/></symbol><symbol id="tb-preview" viewBox="0 0 24 24"><path d="M2 12s4-6 10-6 10 6 10 6-4 6-10 6-10-6-10-6z"/><circle cx="12" cy="12" r="2.5"/></symbol><symbol id="tb-trace" viewBox="0 0 24 24"><path d="M3 16c2 0 2-8 4-8s2 8 4 8 2-10 4-10 2 10 4 10 2-4 2-4"/></symbol><symbol id="tb-ztr" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M6 15c1.5 0 1.5-5 3-5s1.5 5 3 5 1.5-6 3-6"/></symbol><symbol id="tb-pileup" viewBox="0 0 24 24"><path d="M3 7h18M3 12h13M3 17h16"/></symbol><symbol id="tb-indel" viewBox="0 0 24 24"><path d="M3 12h6M15 12h6"/><path d="M12 8v8"/></symbol><symbol id="tb-frame" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="10" rx="1.5"/><path d="M9 7v10M15 7v10"/></symbol><symbol id="tb-verdict" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="m8.5 12 2.5 2.5 4.5-5"/></symbol><symbol id="tb-term" viewBox="0 0 24 24"><path d="M6 20V10a4 4 0 0 1 8 0v10"/><path d="M16 20h4"/></symbol><symbol id="tb-repeat" viewBox="0 0 24 24"><path d="M4 8h12a3 3 0 0 1 0 6H8"/><path d="m10 11-2 3 2 3"/></symbol><symbol id="tb-fold" viewBox="0 0 24 24"><path d="M12 3v6M12 15v6"/><path d="M9 9a3 3 0 1 0 6 0 3 3 0 1 0-6 6"/></symbol><symbol id="tb-rbs" viewBox="0 0 24 24"><circle cx="8" cy="12" r="4"/><path d="M12 12h9"/><path d="M15 9v6"/></symbol><symbol id="tb-codon" viewBox="0 0 24 24"><path d="M4 18V9M9 18v-6M14 18v-9M19 18v-4"/></symbol><symbol id="tb-code" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M9 9v11M15 9v11"/></symbol><symbol id="tb-orf" viewBox="0 0 24 24"><path d="M3 12h4l2-4 3 8 3-6 2 2h4"/></symbol><symbol id="tb-annot" viewBox="0 0 24 24"><path d="M5 4h9l5 5v11H5z"/><path d="M14 4v5h5"/><path d="M8 13h7M8 16h5"/></symbol><symbol id="tb-file" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></symbol><symbol id="tb-share" viewBox="0 0 24 24"><circle cx="18" cy="6" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="m8.2 10.8 7.6-3.6M8.2 13.2l7.6 3.6"/></symbol><symbol id="tb-stack" viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/></symbol><symbol id="tb-folder" viewBox="0 0 24 24"><path d="M3 7h6l2 2h10v10H3z"/></symbol><symbol id="tb-xlsx" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 10v10"/></symbol><symbol id="tb-vector" viewBox="0 0 24 24"><path d="M5 19 19 5"/><rect x="3" y="17" width="4" height="4" rx="1"/><rect x="17" y="3" width="4" height="4" rx="1"/></symbol><symbol id="tb-safe" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><circle cx="12" cy="12" r="3.5"/><path d="M12 8.5V6"/></symbol><symbol id="tb-mac" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 21h8"/></symbol><symbol id="tb-phone" viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/></symbol><symbol id="tb-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/></symbol><symbol id="tb-update" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-3-6.2"/><path d="M20 4v5h-5"/></symbol><symbol id="tb-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></symbol></defs></svg>
+    <div class="toolbox rise">
+      <h3 class="tbhead">Maps and the sequence <i>8</i></h3>
+      <div class="tbgrid">
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-ring"/></svg></span><b>Circular map</b><span>Double-stranded, on the strand it is really on, cuts named in the margin.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-linear"/></svg></span><b>Linear map</b><span>The molecule unrolled — zoom right down to one gene with its coordinates.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-seq"/></svg></span><b>Sequence</b><span>Enzymes above, primers as arrows, both strands, residues under their codons.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-nav"/></svg></span><b>Navigator</b><span>The whole molecule as a strip. Click to jump, drag to scrub.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-find"/></svg></span><b>Find</b><span>IUPAC, a regular expression, a peptide, a field, or a coordinate.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-paint"/></svg></span><b>Highlights</b><span>A colour on the DNA, per strand, saved with the construct.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-clock"/></svg></span><b>History</b><span>Every saved version as its own map, with the changes that made it.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-card"/></svg></span><b>Record drawer</b><span>Accession, organism, lineage and papers — beside the drawing.</span></div>
+      </div>
+      <h3 class="tbhead">Primers, and the freezer they live in <i>8</i></h3>
+      <div class="tbgrid">
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-tube"/></svg></span><b>Your primer boxes, read for you</b><span>The lab workbook parsed at launch. 5,428 tubes, 85 sheets.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-scan"/></svg></span><b>Every tube scanned against the construct</b><span>One pass over the sequence. 3′ seed exact, overhangs and mismatches measured.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-pin"/></svg></span><b>The shelf position on the drawing</b><span>A tube is labelled #28.G2, where it binds.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-strain"/></svg></span><b>Strains and their genotype</b><span>dam, dcm, CpG and type I per host — plus your own.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-univ"/></svg></span><b>Universal primers</b><span>M13, T7, SP6, from the company you order from.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-plan"/></svg></span><b>Sequencing plan</b><span>A tiling that reads a gene end to end, gaps named.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-edit"/></svg></span><b>Primer editor</b><span>The construct drawn under the oligo, at the site it binds.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-therm"/></svg></span><b>Tm, hairpin, self-dimer</b><span>SantaLucia, your own salt and primer concentrations.</span></div>
+      </div>
+      <h3 class="tbhead">Enzymes, digests and gels <i>8</i></h3>
+      <div class="tbgrid">
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-cut"/></svg></span><b>1,113 enzymes</b><span>REBASE, every enzyme NEB sells, two-sided cutters included.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-shop"/></svg></span><b>Supplier sets</b><span>25 companies, each off its own catalogue, with the date.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-card"/></svg></span><b>Enzyme database</b><span>The cut on both strands, overhang, isoschizomers, buffer.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-methyl"/></svg></span><b>Methylation</b><span>Dam, Dcm, CpG, EcoKI, EcoBI — 2,672 published experiments.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-hosts"/></svg></span><b>Two hosts, not one</b><span>What it carries, and what it will meet.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-gel"/></svg></span><b>The gel</b><span>Your ladder and agarose. Drag the run and the bands move.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-coin"/></svg></span><b>Price per digest</b><span>Your quote, or a catalogue offer with its source.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-suggest"/></svg></span><b>Suggest digests</b><span>Scored for bands the agarose can actually resolve.</span></div>
+      </div>
+      <h3 class="tbhead">Cloning and design <i>7</i></h3>
+      <div class="tbgrid">
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-scissors"/></svg></span><b>Restriction cloning</b><span>Cut, ligate, and see the product as a construct.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-gibson"/></svg></span><b>Gibson</b><span>Pick a region by pointing at it. Two primers, or four.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-gg"/></svg></span><b>Golden Gate</b><span>Domestication, overhangs read from the enzyme itself.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-guide"/></svg></span><b>Guide RNAs</b><span>Nuclease table, PAM either side, scoring from the lab's own package.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-arms"/></svg></span><b>Deletion arms</b><span>Four primers, the junction grown until its Tm is right.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-silent"/></svg></span><b>Silent mutations</b><span>A site made or removed, the protein untouched.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-preview"/></svg></span><b>The product, drawn</b><span>Every design previews the construct that comes out.</span></div>
+      </div>
+      <h3 class="tbhead">Sanger <i>6</i></h3>
+      <div class="tbgrid">
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-trace"/></svg></span><b>Reads an .ab1</b><span>Chromatogram, quality, trim and calls. 60 real traces clean.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-ztr"/></svg></span><b>Traces inside a .dna</b><span>SnapGene's aligned reads decoded from ZTR, in with the file.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-pileup"/></svg></span><b>A pileup, not a list</b><span>Every read against the construct, peaks under the letters.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-indel"/></svg></span><b>Indels aligned, not counted</b><span>Chained seeds, affine gaps — one deletion is one event.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-frame"/></svg></span><b>What it does to the protein</b><span>The residue it changes, or what happens to the frame.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-verdict"/></svg></span><b>A verdict per read</b><span>Pass, low quality, mismatch or split — filtered from the heading.</span></div>
+      </div>
+      <h3 class="tbhead">Analyses <i>8</i></h3>
+      <div class="tbgrid">
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-term"/></svg></span><b>Terminators</b><span>The hairpin and its T-tract apart, behind every gene at once.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-repeat"/></svg></span><b>Repeats</b><span>Tandem, imperfect, inverted, palindromic — kept as colours.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-fold"/></svg></span><b>Folding</b><span>A region folded and drawn, plus which part of it does anything.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-rbs"/></svg></span><b>RBS and rare codons</b><span>The SD from this record's own 16S, and the 5′ head counted apart.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-codon"/></svg></span><b>Codon usage</b><span>Per amino acid as bars, with RSCU and the preferred codon.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-code"/></svg></span><b>Genetic codes</b><span>NCBI's tables as what each differs from the standard one.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-orf"/></svg></span><b>Gene prediction</b><span>Real Prodigal, named as a prediction and never as curation.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-annot"/></svg></span><b>Functional annotation</b><span>eggNOG, InterProScan and DefenseFinder merged onto the genes.</span></div>
+      </div>
+      <h3 class="tbhead">Files, and what leaves the machine <i>7</i></h3>
+      <div class="tbgrid">
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-file"/></svg></span><b>The formats your lab has</b><span>.gb, .gbk, .gbff, FASTA, SnapGene .dna, .ab1.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-share"/></svg></span><b>A copy to hand out</b><span>A GenBank for somebody else's reader — which says what it left.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-stack"/></svg></span><b>Assemblies and multi-record files</b><span>Every contig listed; saving one writes the file.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-folder"/></svg></span><b>A library of folders</b><span>Point at a folder; everything under it is listed and remembered.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-xlsx"/></svg></span><b>Workbooks</b><span>.xlsx written without a library, and read back by openpyxl.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-vector"/></svg></span><b>Figures</b><span>Vector PDF or SVG, labels still editable in Illustrator.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-safe"/></svg></span><b>A save that cannot destroy the file</b><span>Sibling, flush, rename — an interrupted save leaves the original.</span></div>
+      </div>
+      <h3 class="tbhead">The application itself <i>5</i></h3>
+      <div class="tbgrid">
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-mac"/></svg></span><b>Three platforms, one file</b><span>macOS, Windows, Linux — and the phone install is that file again.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-phone"/></svg></span><b>On a phone</b><span>Home screen, own icon, offline. A long press takes over a drag.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-menu"/></svg></span><b>Native menus</b><span>The whole application in the menu bar, findable by reading.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-update"/></svg></span><b>Updates in one press</b><span>It names the version, asks again, and restarts into it.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-lock"/></svg></span><b>Nothing leaves unless asked</b><span>Checked on your machine; every search is one you pressed.</span></div>
+      </div>
     </div>
   </div>
 </section>
@@ -440,9 +628,67 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--s
   </div>
 </section>
 
-<section class="plain" id="questions">
+<section class="plain" id="compare">
   <div class="wrap">
     <p class="num">08</p>
+    <h2>Next to what people already use</h2>
+    <p class="lede">Every cell below comes from that product's own public page, on the date in the note under the table. This is not a claim that the others are worse — they are older, broader and in several ways better resourced. It is a claim about <em>where the work happens</em>.</p>
+    <div style="overflow-x:auto">
+    <table class="cmp">
+      <thead>
+        <tr>
+          <th scope="col">&nbsp;</th>
+          <th scope="col" class="us">Gene Studio</th>
+          <th scope="col">SnapGene</th>
+          <th scope="col">Benchling</th>
+          <th scope="col">ApE</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Where it runs</th>
+          <td class="us" data-of="Gene Studio"><b>macOS · Windows · Linux</b></td>
+          <td data-of="SnapGene">Windows · Mac · Linux</td>
+          <td data-of="Benchling">in a browser</td>
+          <td data-of="ApE">macOS · Windows · Linux</td>
+        </tr>
+        <tr>
+          <th scope="row">Where your files live</th>
+          <td class="us" data-of="Gene Studio"><b>on your machine</b></td>
+          <td data-of="SnapGene">on your machine</td>
+          <td data-of="Benchling">in Benchling's cloud</td>
+          <td data-of="ApE">on your machine</td>
+        </tr>
+        <tr>
+          <th scope="row">Works with no network</th>
+          <td class="us" data-of="Gene Studio"><b>yes — the licence is checked on your own machine</b></td>
+          <td data-of="SnapGene">yes</td>
+          <td data-of="Benchling">no — it is a cloud application</td>
+          <td data-of="ApE">yes</td>
+        </tr>
+        <tr>
+          <th scope="row">One academic seat</th>
+          <td class="us" data-of="Gene Studio"><b>free during the beta</b></td>
+          <td data-of="SnapGene">$350 a year</td>
+          <td data-of="Benchling">free academic plan</td>
+          <td data-of="ApE">free, donations invited</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="cmpnote">
+      Read on 15 August 2026 from
+      <a href="https://www.snapgene.com/pricing">snapgene.com/pricing</a>,
+      <a href="https://www.benchling.com/academic">benchling.com/academic</a> and
+      <a href="https://jorgensen.biology.utah.edu/wayned/ape/">the ApE download page</a>.
+      Prices and platforms change; if a cell here is out of date or wrong, write and it gets fixed.
+    </p>
+  </div>
+</section>
+
+<section class="plain" id="questions">
+  <div class="wrap">
+    <p class="num">09</p>
     <h2>Questions</h2>
     <div class="qs">
       <details>
@@ -476,7 +722,7 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--s
 <section class="beta" id="get">
   <div class="wrap">
     <div class="betabox">
-      <p class="num">09</p>
+      <p class="num">10</p>
       <h2>Getting in during the beta</h2>
       <p style="margin-top:16px; max-width:66ch">Gene Studio is free to use and is not open source: it is given to named people for research. A licence is written for one computer and it takes a minute.</p>
       <ol class="steps">
@@ -519,6 +765,36 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
   document.getElementById('macv').textContent = v + ' · Apple silicon';
   document.getElementById('winv').textContent = v + ' · 64-bit';
 }).catch(() => {});
+
+/* ── a clip plays where a clip is worth playing ────────────────────────────
+   The source is attached in script, not in the markup, so nothing is fetched
+   for a screen that will not show it (under 760 px the still is what is drawn)
+   and nothing plays for a reader who has asked for less motion. Both of those
+   land on the poster, which is the clip's own last frame — the answer, not an
+   empty gel. */
+{
+  const wide = matchMedia('(min-width: 761px)');
+  const still = matchMedia('(prefers-reduced-motion: reduce)');
+  const arm = () => {
+    for(const v of document.querySelectorAll('video[data-clip]')){
+      if(!wide.matches || still.matches){ v.removeAttribute('autoplay'); v.pause?.(); continue; }
+      if(!v.dataset.armed){
+        v.dataset.armed = '1';
+        const src = document.createElement('source');
+        src.type = 'video/mp4'; src.src = v.dataset.clip;
+        v.appendChild(src); v.load();
+      }
+      /* it starts when it is reached, not when the page loads: three clips
+         decoding at once on a laptop is a page that stutters as it opens */
+      new IntersectionObserver((es, io) => {
+        for(const e of es) if(e.isIntersecting){ e.target.play?.().catch(() => {}); io.disconnect(); }
+      }, {rootMargin:'120px'}).observe(v);
+    }
+  };
+  arm();
+  wide.addEventListener?.('change', arm);
+  still.addEventListener?.('change', arm);
+}
 
 /* ── things arrive as they are reached ─────────────────────────────────────
    A browser with no observer, or a reader who has asked for less motion, gets
