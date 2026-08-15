@@ -4,9 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Gene Studio — a plasmid workbench that opens what your lab already has</title>
-<meta name="description" content="Circular and linear maps, an annotated sequence, restriction digests with a simulated gel, PCR and cloning, CRISPR guides and Sanger .ab1 review. Reads GenBank, SnapGene .dna, FASTA and .ab1, and writes them back without losing what was in them. macOS and Windows.">
-<meta name="theme-color" content="#0D1315">
-<meta name="color-scheme" content="dark">
+<meta name="description" content="Circular and linear maps, an annotated sequence, restriction digests with a simulated gel, PCR and cloning, CRISPR guides and Sanger .ab1 review. Reads GenBank, SnapGene .dna, FASTA and .ab1, and writes them back without losing what was in them. macOS, Windows and Linux.">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0D1315">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#F7F9F9">
+<!-- **This one is load-bearing.** Left at `dark` the browser paints its own
+     scrollbars, form chrome and the canvas before any CSS applies dark, under a
+     page that is about to be white — a flash of the wrong theme on every load. -->
+<meta name="color-scheme" content="light dark">
 <meta property="og:title" content="Gene Studio">
 <meta property="og:description" content="A plasmid workbench that opens what your lab already has — GenBank, SnapGene .dna, FASTA and Sanger traces — and writes them back without losing what was in them.">
 <meta property="og:type" content="website">
@@ -46,6 +50,13 @@ a{color:inherit}
    image loads; `height:auto` is what hands the shape back to whichever picture
    actually arrived. */
 img{max-width:100%; height:auto; display:block}
+/* **`hidden` is a UA `display:none`, and any author `display` beats it.** The
+   Linux button is `.btn`, which is `display:inline-flex`, so the attribute did
+   nothing and a button for a build no release carries was on the page —
+   pointing at the releases page, which is exactly the "names a file that is not
+   there" failure it was written to avoid. Found by rendering it, not by reading
+   it. */
+[hidden]{display:none !important}
 code{font-family:var(--mono); font-size:.92em}
 ::selection{background:var(--amber-soft); color:var(--ink)}
 :focus-visible{outline:2px solid var(--amber); outline-offset:3px; border-radius:6px}
@@ -106,11 +117,28 @@ h1{font-size:clamp(36px,6.2vw,66px); font-weight:660; max-width:19ch}
 .btn.primary{background:var(--amber); color:var(--amber-ink); border-color:var(--amber)}
 .btn.primary:hover{background:#f0b055}
 .btn small{font:400 12px/1 var(--mono); opacity:.75}
+/* **The three download buttons were three widths on a phone**, and the amber
+   one broke its own label across two lines with the version chip wrapping
+   beside it — the page's main call to action, and the most broken-looking
+   thing on it. One width, the label on one line, the version under it. */
+@media (max-width:560px){
+  .cta{display:grid; grid-template-columns:1fr; gap:10px}
+  .btn{display:grid; grid-template-columns:auto 1fr; width:100%;
+       column-gap:11px; row-gap:3px; align-items:center; justify-items:start; padding:13px 18px}
+  .btn svg{grid-row:1 / span 2}
+  .btn small{grid-column:2; opacity:.8}
+  .mail{width:100%; justify-content:center}
+}
 .verline{margin:16px 0 0; font:400 13.5px/1.6 var(--ui); color:var(--faint); max-width:56ch}
 .verline b{color:var(--slate); font-weight:600}
 
 /* the screenshot, framed as a window */
-.shot{margin:clamp(36px,6vw,68px) auto 0; max-width:calc(var(--wide) + 140px); padding:0 var(--pad)}
+/* **The hero figure was 140 px wider than everything under it.** A picture
+   that overhangs its own page reads as a picture that got away rather than as
+   emphasis, and it put the drawing's edges out of line with every section
+   below — which is the one thing a column of sections has to get right. One
+   width for the whole page, and it is --wide. */
+.shot{margin:clamp(36px,6vw,68px) auto 0; max-width:var(--wide); padding:0 var(--pad)}
 figure{margin:0}
 .frame{
   border:1px solid var(--line); border-radius:14px; overflow:hidden; background:var(--sunk);
@@ -132,34 +160,128 @@ figcaption{margin:14px 2px 0; font:400 13px/1.5 var(--mono); color:var(--faint)}
    says the same thing legibly, and nothing is downloaded that is not shown */
 .narrow{display:none}
 @media (max-width:760px){
-  .wide{display:none}
+  /* **`!important`, and it is not laziness.** `.frame video` is a class and an
+     element (0,1,1) and `.wide` is one class (0,1,0), so the rule meant to hide
+     the desktop clip lost to the rule that lays it out — measured at 500 px,
+     `wide` and `narrow` were *both* `block`, so every figure on a phone drew
+     twice and pulled a 2400×1500 poster down to do it. This is the second time
+     in this file that an author `display` has beaten a `display:none` (the
+     other was the `hidden` attribute on the Linux button), so the hiding says
+     what it means rather than hoping to out-rank whatever is added later. */
+  .wide{display:none !important}
   .narrow{display:block}
   /* a section carrying two clips shows one of them on a phone: the second
      would otherwise fall back to the same still as the first, and the same
      picture printed twice reads as the page having repeated itself */
-  .wideonly{display:none}
+  .wideonly{display:none !important}
 }
 
-/* ── the measured band ───────────────────────────────────────────────────── */
-.band{border-top:1px solid var(--hair); border-bottom:1px solid var(--hair); margin-top:clamp(56px,9vw,104px); background:var(--sunk)}
-.stats{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--hair)}
-.stats div{background:var(--sunk); padding:26px var(--pad)}
-.stats b{display:block; font:600 26px/1.1 var(--mono); color:var(--ink); letter-spacing:-.02em}
-.stats span{display:block; margin-top:7px; font-size:13.5px; color:var(--slate); line-height:1.45}
-@media (max-width:880px){ .stats{grid-template-columns:repeat(2,1fr)} .stats div{padding:20px var(--pad)} }
+/* ── the measured band ───────────────────────────────────────────────────────
+   The proof strip, and it has to read as one: four figures somebody can go and
+   check. Two things were wrong with it.
+
+   **The grid was not in the page's column.** `.stats` sat straight inside
+   `.band`, which is full bleed — so the dividers fell wherever a quarter of the
+   *viewport* happened to be and lined up with nothing above or below. Measured
+   at 1400: the band ran 0–1400 while every section around it runs 174–1226, so
+   the first figure hung 110 px out into the margin and the last caption 110 px
+   out on the other side. The ground stays full bleed, because it is a band of
+   the page the way the app's own find bar is; the grid goes inside `.wrap`,
+   which is the one thing that knows about --wide and --pad.
+
+   **The cells are pulled out by their own gutter** and given it back as
+   padding, so the first figure starts exactly on the content column's left edge
+   and the last caption ends exactly on its right while every cell keeps the
+   same measure. Splitting the difference — no padding on the outer two — would
+   have given them 30 px more text than the middle two, and four figures being
+   compared against each other have to be four of the same thing.
+
+   **And a figure had no relationship with its own sentence.** The captions run
+   to different numbers of lines, so four ragged blocks of grey sat under four
+   numbers with nothing tying one to the other. Each figure carries a hairline
+   under it now: the figures are one line on equal top padding, so that rule
+   lands at the same y in all four and the eye reads *it* as the alignment
+   rather than the bottoms of four sentences. Its first 26 px is --amber — a
+   measured tick under a measurement. Ragged bottoms went from a 39 px spread
+   to 20. */
+.band{
+  border-top:1px solid var(--hair); border-bottom:1px solid var(--hair);
+  margin-top:clamp(56px,9vw,104px); background:var(--sunk);
+}
+.stats{
+  --gut:clamp(16px,2.2vw,30px);
+  display:grid; grid-template-columns:repeat(4,minmax(0,1fr));
+  margin:0 calc(-1 * var(--gut));
+}
+.stats > div{padding:clamp(24px,3vw,32px) var(--gut) clamp(26px,3.2vw,34px)}
+.stats > div + div{border-left:1px solid var(--hair)}
+.stats b{
+  display:block; position:relative;
+  font:600 clamp(23px,2vw,28px)/1 var(--mono);
+  color:var(--ink); letter-spacing:-.02em;
+  padding-bottom:clamp(12px,1.5vw,17px); border-bottom:1px solid var(--hair);
+}
+/* after the shorthand, which resets every font-variant longhand */
+.stats b{font-variant-numeric:tabular-nums; white-space:nowrap}
+.stats b::after{content:''; position:absolute; left:0; bottom:-1px; width:26px; height:1px; background:var(--amber)}
+.stats span{
+  display:block; margin-top:clamp(12px,1.5vw,17px);
+  font-size:13px; line-height:1.55; color:var(--slate); text-wrap:balance;
+}
+/* Two columns from 980 rather than 880: four cells need about 190 px of text
+   apiece before the captions break after two words, and below 980 the page
+   cannot give them that. Here the cells span the content column exactly, so the
+   rule between the two rows begins and ends on it. */
+@media (max-width:980px){
+  .stats{margin:0; grid-template-columns:repeat(2,minmax(0,1fr))}
+  .stats > div{padding-left:0; padding-right:var(--gut)}
+  .stats > div + div{border-left:0}
+  .stats > div:nth-child(even){padding-left:var(--gut); padding-right:0; border-left:1px solid var(--hair)}
+  .stats > div:nth-child(n+3){border-top:1px solid var(--hair)}
+}
+/* On a phone the four become a ledger: the figures in a column of their own,
+   left-aligned against each other, and the sentence beside each. Stacked
+   figure-over-caption the same four run to 600 px of scrolling and no two
+   numbers can be compared; this is 391. `display:contents` on the cell is what
+   puts the figure and its caption into the *outer* grid, so the figure column
+   is one width for all four rows rather than four different ones. */
+@media (max-width:600px){
+  .stats{display:grid; grid-template-columns:max-content minmax(0,1fr); column-gap:0; margin:0}
+  .stats > div{display:contents}
+  .stats b{
+    font-size:21px; border-bottom:0; align-self:baseline;
+    padding:18px clamp(16px,5vw,26px) 11px 0;
+  }
+  .stats span{margin-top:0; padding:18px 0 20px; align-self:baseline}
+  .stats > div + div b, .stats > div + div span{border-top:1px solid var(--hair)}
+}
 
 /* ── the numbered sections ───────────────────────────────────────────────── */
 section.feat{padding:clamp(58px,9vw,110px) 0; border-bottom:1px solid var(--hair)}
 .feat .cols{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,.92fr); gap:clamp(20px,4vw,56px); align-items:start}
 @media (max-width:860px){ .feat .cols{grid-template-columns:1fr; gap:20px} }
-.num{font:500 12px/1 var(--mono); color:var(--amber); letter-spacing:.18em}
+.num{margin:0 0 14px; font:500 12px/1 var(--mono); color:var(--amber); letter-spacing:.18em}
 .feat h2{font-size:clamp(26px,3.4vw,36px); margin:14px 0 0; max-width:20ch}
 .feat .say p{margin:16px 0 0; max-width:52ch}
+/* **The numbered eyebrow took whatever margin reached it.** `.num` set none of
+   its own, so in the numbered sections `.feat .say p` gave it 16 px and in the
+   plain ones the browser's 1em gave it 12 — the ten section numbers sat at two
+   different heights above their headings. `.feat .say p.num` is what beats the
+   rule that was winning. */
+.feat .say p.num{margin:0 0 14px}
+.feat h2, section.plain h2, .betabox h2{margin-top:0}
 .feat ul{margin:0; padding:0; list-style:none}
 .feat li{position:relative; padding-left:20px; margin:9px 0; font-size:15.5px; color:var(--slate)}
 .feat li::before{content:''; position:absolute; left:2px; top:.62em; width:7px; height:7px; border-radius:2px; background:var(--fwd)}
 .feat li em{font-style:normal; color:var(--ink)}
 .feat figure{margin-top:clamp(26px,4vw,44px)}
+/* **A frame is the window round a drawing, so where the drawing is narrower
+   than the column the frame goes with it.** The gel is cropped to its plate and
+   its ladder — 448 px, deliberately, since blown up it is a blurrier gel and not
+   a bigger one — and the inline cap was put on the video rather than on the
+   frame, so 602 px of a 1,052 px bordered box (57 %) was empty and the caption
+   sat 300 px to the left of what it describes. */
+.feat figure.tight{max-width:450px}
 
 /* ── plain grids ─────────────────────────────────────────────────────────── */
 section.plain{padding:clamp(58px,9vw,110px) 0; border-bottom:1px solid var(--hair)}
@@ -215,6 +337,10 @@ section.plain h2{font-size:clamp(26px,3.4vw,36px); margin-top:14px}
     color:var(--faint); display:block; margin-bottom:5px;
   }
   .cmp .us{border-radius:8px; padding-left:10px; padding-right:10px; margin:2px -10px}
+  /* the column name on the lit cell was --faint over the amber wash — 2.37:1,
+     the worst reading on the page, on the one row the table exists for. The
+     desktop heading already uses the accent for the same label. */
+  .cmp .us::before{color:var(--amber)}
 }
 
 /* ── the toolbox ─────────────────────────────────────────── */
@@ -232,7 +358,18 @@ section.plain h2{font-size:clamp(26px,3.4vw,36px); margin-top:14px}
 .tbhead i{font:400 11.5px/1 var(--mono); font-style:normal; color:var(--faint); letter-spacing:.1em}
 .tbgrid{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px}
 @media (max-width:1000px){ .tbgrid{grid-template-columns:repeat(2,minmax(0,1fr))} }
-@media (max-width:640px){ .tbgrid{grid-template-columns:1fr} }
+/* **On a phone the toolbox was 46 % of the page** — 13 screens of it between
+   Compare and the section where somebody actually asks for a licence. 49 px of
+   each 170 px card was an icon on a line of its own, which is right in a
+   three-column grid and wrong when the card is 350 px wide with two lines of
+   text beside it. Card 170 → 85 px, the section 10,970 → 7,545. */
+@media (max-width:640px){
+  .tbgrid{grid-template-columns:1fr}
+  .tbcard{display:grid; grid-template-columns:auto 1fr; column-gap:13px; row-gap:5px; padding:16px 18px}
+  .tbcard > .tbico{grid-column:1; grid-row:1 / span 2; align-self:start; width:32px; height:32px; margin-bottom:0}
+  .tbcard b{grid-column:2}
+  .tbcard b + span{grid-column:2; margin-top:0}
+}
 .tbcard{
   border:1px solid var(--hair); border-radius:14px; background:var(--ground);
   padding:18px 18px 20px; transition:border-color .15s ease, transform .15s ease;
@@ -245,7 +382,28 @@ section.plain h2{font-size:clamp(26px,3.4vw,36px); margin-top:14px}
 .tbico svg{width:19px; height:19px; fill:none; stroke:var(--fwd); stroke-width:1.85;
   stroke-linecap:round; stroke-linejoin:round}
 .tbcard b{display:block; color:var(--ink); font-size:15.5px; font-weight:600; letter-spacing:-.005em}
-.tbcard span{display:block; margin-top:7px; font-size:13.5px; line-height:1.55; color:var(--slate)}
+/* **All 57 icons sat in the corner of their tile, and it had never rendered
+   otherwise.** `.tbcard span` also matches <span class="tbico">, is one class
+   heavier than `.tbico` and comes later — so it won, the tile computed
+   `display:block`, and the `place-items:center` written to centre the glyph did
+   nothing. Measured: the SVG inset 0,0,17,17 in a 36 px tile; after, 8.5 all
+   round. The description is the span *after* the name. */
+.tbcard b + span{display:block; margin-top:7px; font-size:13.5px; line-height:1.55; color:var(--slate)}
+.tbcard > .tbico{display:grid; place-items:center; margin-top:0}
+
+/* **A third of the box the whole page aims at was empty.** The steps are capped
+   at 66 ch, so at 1400 the widest ink in a 968 px box was 625 px — 343 px of
+   nothing, in the one section where somebody asks for a licence. Every other
+   section fills its width with a second column; this one stopped in the middle.
+   The steps are the instructions and the address is the act, so they go side by
+   side and the address lands where the eye already is. */
+@media (min-width:900px){
+  .betabox{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,.62fr);
+           column-gap:clamp(32px,4vw,56px); align-items:start}
+  .betabox > .num, .betabox > h2, .betabox > p, .betabox > .steps{grid-column:1}
+  .betabox > .ask{grid-column:2; grid-row:3 / span 2}
+  .betabox > .ask .mail{margin-top:0}
+}
 
 /* ── questions ───────────────────────────────────────────────────────────── */
 .qs{margin-top:26px; border-top:1px solid var(--hair)}
@@ -259,7 +417,7 @@ details p{margin:0 0 20px; max-width:70ch; font-size:15.5px; color:var(--slate)}
 /* ── get it ──────────────────────────────────────────────────────────────── */
 .beta{padding:clamp(58px,9vw,104px) 0}
 .betabox{border:1px solid var(--line); border-radius:16px; padding:clamp(24px,4vw,42px); background:linear-gradient(180deg, var(--ground), var(--sunk))}
-.betabox h2{font-size:clamp(24px,3.2vw,32px); margin-top:14px}
+.betabox h2{font-size:clamp(24px,3.2vw,32px); margin-top:0}
 .steps{margin:26px 0 0; padding:0; list-style:none; counter-reset:s}
 .steps li{counter-increment:s; position:relative; padding-left:40px; margin:16px 0; max-width:66ch}
 .steps li::before{content:counter(s,decimal-leading-zero); position:absolute; left:0; top:1px; font:500 12px/1.5 var(--mono); color:var(--amber)}
@@ -274,11 +432,82 @@ details p{margin:0 0 20px; max-width:70ch; font-size:15.5px; color:var(--slate)}
 
 /* ── footer ──────────────────────────────────────────────────────────────── */
 footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--sunk)}
-.foot{display:flex; flex-wrap:wrap; gap:22px 40px; align-items:flex-start}
+.foot{display:flex; flex-wrap:wrap; gap:22px 40px; align-items:flex-start; justify-content:space-between}
 .foot p{margin:0; font-size:13.5px; color:var(--faint); max-width:46ch}
-.foot nav{display:flex; flex-wrap:wrap; gap:18px; margin-left:auto}
-.foot nav a{font-size:13.5px; color:var(--slate); text-decoration:none}
+/* `margin-left:auto` is a row on a desktop and three orphans hard against the
+   right edge the moment the footer wraps. Under space-between a line holding one
+   item puts it at the start, which is right at every width without a breakpoint
+   guessing where the copy happens to wrap. */
+.foot nav{display:flex; flex-wrap:wrap; gap:18px}
+/* 22 px is half a touch target; the padding is given back as margin so nothing
+   on the line moves */
+.foot nav a{font-size:13.5px; color:var(--slate); text-decoration:none; padding:11px 0; margin:-11px 0}
 .foot nav a:hover{color:var(--ink)}
+
+/* ── the same page on a light system ──────────────────────────────────────────
+   Dark is the application's own theme and does not move: the whole of this is
+   the same tokens read on a white ground, and the dark page renders pixel for
+   pixel as it did before.
+
+   Two things had to change rather than be inverted. The **accent** is a colour
+   in the dark and a *reading* in the light — bright #E8A33D on white is 2.0:1,
+   which is decoration, so it is darkened until 11.5 px of it clears 4.5:1 and
+   the primary button's ink flips to white to follow it down. And the **roles
+   are kept, not mirrored**: --ground stays the raised surface and --sunk the
+   recessed one, because a card that sinks on one theme and rises on the other
+   is two different layouts.
+
+   Measured rather than eyeballed, on the ground each is actually used on:
+   ink 17.3, body 9.5, slate 5.4, faint 5.2 (4.8 on the footer's sunk, the
+   tightest in the set), amber 5.3, white on amber 5.6. Three values failed at
+   first and were darkened before they were written down. */
+:root{ color-scheme:light dark }
+
+@media (prefers-color-scheme: light){
+  :root{
+    --paper:#F7F9F9; --ground:#FFFFFF; --sunk:#EDF1F1;
+    --ink:#0E1618; --body:#33454A; --slate:#556A6E; --faint:#5A6D71;
+    --line:#C3D0D1; --hair:#DEE6E6;
+    --amber:#97590A; --amber-soft:rgba(232,163,61,.22); --amber-ink:#FFFFFF;
+    --fwd:#0F7D68; --rev:#6A4AA8; --cut:#B62E24;
+  }
+  /* what was written as a literal rather than as a token, and so could not
+     follow: the rail's own translucency, the hero's two lights, the primary
+     button's hover, the icon wash, and the mark's stroke and dot — which are
+     SVG presentation attributes, so CSS is what reaches them */
+  header.rail{ background:rgba(247,249,249,.78) }
+  .hero::before{
+    background:
+      radial-gradient(58% 46% at 50% 34%, rgba(232,163,61,.20), transparent 70%),
+      radial-gradient(40% 34% at 76% 12%, rgba(15,125,104,.07), transparent 72%);
+  }
+  .btn.primary:hover{ background:#7C4806 }
+  .tbico{ background:rgba(15,125,104,.10) }
+  .brand svg circle:first-of-type{ stroke:var(--amber) }
+  .brand svg circle + circle{ fill:var(--fwd) }
+
+  /* **The clips are the application, and the application is dark.** A dark
+     rectangle on a white page is a hole unless something says it is meant to
+     be one — so the frame keeps the program's own chrome, its title bar and
+     its hairlines, and reads as a window onto it rather than as a picture that
+     failed to load. Lightening the chrome only makes the seam the loudest
+     thing in the figure, and inverting the media is a lie about the product.
+     What changes is how the block is lifted off a page that is now lighter
+     than it is: the dark drop shadow is invisible on white, so it becomes a
+     neutral one with a hairline ring to give the block an edge. Redeclaring
+     the four surface tokens *on the frame itself* re-darkens everything inside
+     it — the bar, its dots, the filename, the video's letterbox — with no new
+     selectors, because all of it was token-driven already. */
+  .frame{
+    --ground:#131B1D; --sunk:#0A1012; --hair:#1D272A; --line:#263235;
+    --ink:#EAF0EE; --faint:#7E9093;
+    border-color:#0A1012;
+    box-shadow:
+      0 0 0 1px rgba(13,19,21,.10),
+      0 2px 4px rgba(13,19,21,.08),
+      0 18px 40px -14px rgba(13,19,21,.34);
+  }
+}
 </style>
 </head>
 <body>
@@ -360,11 +589,13 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--s
 </section>
 
 <div class="band">
-  <div class="stats">
-    <div><b>400 / 400</b><span>real GenBank files opened, written and read back with every header field intact</span></div>
-    <div><b>1,113</b><span>restriction enzymes from REBASE — every enzyme NEB sells, with the methylation each was measured against</span></div>
-    <div><b>1.2 s</b><span>to open a 4.2 Mb genome carrying 8,338 features, map drawn</span></div>
-    <div><b>60 / 60</b><span>of this lab's own Sanger traces parsed, trimmed and aligned with nothing wrong</span></div>
+  <div class="wrap">
+    <div class="stats">
+      <div><b>400 / 400</b><span>real GenBank files opened, written and read back with every header field intact</span></div>
+      <div><b>1,113</b><span>restriction enzymes from REBASE — every enzyme NEB sells, with the methylation measured for each</span></div>
+      <div><b>1.2 s</b><span>to open a 4.2 Mb genome carrying 8,338 features, map drawn</span></div>
+      <div><b>60 / 60</b><span>of this lab's own Sanger traces parsed, trimmed and aligned with nothing wrong</span></div>
+  </div>
   </div>
 </div>
 
@@ -429,7 +660,7 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--s
         <li><em>The run is a slider</em> — above, the same digest at 12 % of its run and at the end of it.</li>
       </ul>
     </div>
-    <figure class="rise">
+    <figure class="rise tight">
       <div class="frame">
         <!-- the gel is cropped to the plate and its ladder, so it is 448 px wide
              and is not stretched to the column: blown up it is a blurrier gel,
@@ -438,7 +669,6 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--s
              the shape it will be. -->
         <video class="wide" data-clip="clip/gel.mp4" poster="clip/gel.png" width="448" height="400"
                muted loop playsinline preload="none"
-               style="max-width:448px; margin:0 auto"
                aria-label="The gel running: the fragments of a four-enzyme digest migrating down the lanes as the running time goes up."></video>
         <img class="narrow" src="shot/dig-phone.png" width="830" height="640" loading="lazy" alt="The digest view: a simulated agarose gel with a ladder and sample lanes, the fragments listed with their ends.">
       </div>
@@ -536,6 +766,7 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--s
           <img src="shot/lin.png" width="1600" height="1000" loading="lazy" alt="The linear map: features above and below the backbone, cut sites and a coordinate ruler, folded into rows.">
         </picture>
       </div>
+      <figcaption>The whole molecule unrolled — features on the strand they are on, every cut ticked, and a coordinate ruler over the rows.</figcaption>
     </figure>
   </div>
 </section>
@@ -769,8 +1000,10 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--s
         <li>Press <b>Ask for a licence</b>. It writes the mail for you, with your name, institution and that id already in it.</li>
         <li>Paste the licence that comes back into the same window. It is verified on your machine — nothing is sent anywhere, so it works on a plane.</li>
       </ol>
-      <a class="mail" href="mailto:genestudio.help@gmail.com?subject=Gene%20Studio%20beta">genestudio.help@gmail.com</a>
-      <p class="note">Bug reports are welcome at the same address — the app writes one for you, with the version, the platform and what it was doing, under the <b>?</b> in the toolbar.</p>
+      <div class="ask">
+        <a class="mail" href="mailto:genestudio.help@gmail.com?subject=Gene%20Studio%20beta">genestudio.help@gmail.com</a>
+        <p class="note">Bug reports are welcome at the same address — the app writes one for you, with the version, the platform and what it was doing, under the <b>?</b> in the toolbar.</p>
+      </div>
     </div>
   </div>
 </section>
