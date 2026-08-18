@@ -10,15 +10,15 @@ source is not here and is not public: Gene Studio is given to named people for
 research, and copying, changing or redistributing it needs written permission.
 The terms ship with the application in `LICENSE`.
 
-**[Download the latest build →](../../releases/latest)**
+**[What Gene Studio is, with pictures →](https://jaeyoonsung.github.io/GeneStudio-releases/)**
+&nbsp;·&nbsp; **[Download the latest build →](../../releases/latest)**
 
 The application opens on a licence window showing a **Machine ID**. Send it to
 **o3wodbs@gmail.com** and paste back the licence you are given; it runs on that
 computer and nowhere else.
 
-*macOS*: open the .dmg, drag Gene Studio to Applications, then **right-click the
-app → Open** the first time — it is not yet signed by Apple, so a plain
-double-click is refused.
+*macOS*: open the .dmg and drag Gene Studio to Applications. It is signed with a
+Developer ID and notarized by Apple, so it opens on a double-click.
 *Windows*: run the setup .exe; if SmartScreen appears, choose **More info → Run
 anyway**.
 
