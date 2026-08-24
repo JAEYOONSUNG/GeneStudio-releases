@@ -15,8 +15,9 @@ application.
 &nbsp;·&nbsp; **[Download the latest build →](../../releases/latest)**
 
 The application opens on a licence window showing a **Machine ID**. Send it to
-**o3wodbs@gmail.com** and paste back the licence you are given; it runs on that
-computer and nowhere else.
+**genestudio.help@gmail.com** and paste back the licence you are given; it runs
+on that computer and nowhere else. The window composes that mail for you — fill
+in your name and institution and it fills in the rest.
 
 *macOS*: open the .dmg and drag Gene Studio to Applications. It is signed with a
 Developer ID and notarized by Apple, so it opens on a double-click.
@@ -124,22 +125,30 @@ the stylesheet resolved, editable in Illustrator.
 
 ## Licence
 
-**Gene Studio is not open source.** The builds published here are covered by the
+**Copyright © 2026 Jae-Yoon Sung. All rights reserved.**
+
+Gene Studio is **not open source**. The builds published here are covered by the
 [Gene Studio Research Use Licence](LICENSE) — the same terms that ship inside the
 application. In short:
 
 - Install and run it on the computer your licence key names, for research,
   teaching and study, including work you publish. Your data, your constructs and
   your findings stay yours.
-- Do **not** pass on the installer, the application or a licence key; do not
-  modify it, take it apart for its source, remove the licence check, or sell,
-  rent or host it — not without written permission from the author.
-- For research use, ask: the answer is usually yes.
+- **Do not modify it, and do not build anything out of it.** That covers a
+  modified build, a repackaged installer, and any other program containing part
+  of this one. Taking it apart to obtain the source — decompiling,
+  disassembling, unpacking the bundle — is not permitted either, nor is removing
+  or altering the licence check, the copyright notices or the attributions.
+- Do not pass on the installer, the application or a licence key; do not sell,
+  rent or host it as a service, or put it inside a commercial product.
+- For research use, ask: the answer is usually yes. Written permission means an
+  email from the author saying so — **genestudio.help@gmail.com**.
 
-Nothing in this repository is offered under an open-source licence, and no
-permission beyond `LICENSE` is granted by the builds being publicly downloadable.
-The third-party components listed below keep their own terms and are not
-restricted by it.
+Authorship and every right in Gene Studio remain with Jae-Yoon Sung. Nothing in
+this repository is offered under an open-source licence, and no permission
+beyond `LICENSE` is granted by the builds being publicly downloadable. The
+third-party components listed below keep their own terms and are not restricted
+by it.
 
 ---
 
