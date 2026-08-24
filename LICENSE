@@ -1,0 +1,87 @@
+Gene Studio — Research Use Licence
+Copyright (c) 2026 Jae-Yoon Sung. All rights reserved.
+
+This is not open-source software. It is given to named people for research, and
+the licence key in the application is the record of who holds a copy.
+
+
+1. WHAT YOU MAY DO
+
+   Install and run Gene Studio on the computer your licence key names, for
+   research, teaching and study, including work that is published. Results you
+   obtain with it are yours: nothing here claims any interest in your data,
+   your constructs or your findings.
+
+   Keep copies for backup, and cite it as you would any tool
+   ("analysed with Gene Studio, J.-Y. Sung").
+
+
+2. WHAT YOU MAY NOT DO WITHOUT WRITTEN PERMISSION
+
+   a. Give it to anyone else — not the installer, not the application, not a
+      licence key, not a part taken out of it.
+
+   b. Change it, or make anything out of it, including a modified build or any
+      other program containing part of this one.
+
+   c. Take it apart to obtain its source — decompiling, disassembling, or
+      unpacking the application bundle — except exactly as far as the law where
+      you are says you may, and no further.
+
+   d. Remove or alter the licence check, the copyright notices, or the
+      attributions.
+
+   e. Sell it, rent it, host it as a service, or put it inside a commercial
+      product or a fee-charging service.
+
+   Written permission means an email from the author saying so. Ask — for
+   research use the answer is usually yes.
+
+
+3. WHAT YOU GET, AND WHAT YOU DO NOT
+
+   The software is provided AS IS, without warranty of any kind, express or
+   implied, including merchantability, fitness for a particular purpose and
+   non-infringement. The author is not liable for any claim, damage or other
+   liability arising from the software or its use.
+
+   Said plainly, because it matters in a laboratory: check what it tells you
+   before you act on it. It reports what it computes from the sequence in front
+   of it. It is a laboratory aid, not a clinical or diagnostic instrument, and
+   a prediction is labelled as a prediction.
+
+
+4. HOW IT ENDS
+
+   The licence runs for the period the key states and ends when the key does.
+   It also ends if clause 2 is broken. When it ends, stop using the software
+   and delete your copies. Nothing you produced with it is affected.
+
+
+5. WHAT THIS LICENCE DOES NOT COVER
+
+   Gene Studio includes and relies on other people's work, which stays under
+   its own terms and is not restricted by anything above:
+
+   - the third-party components listed in THIRD_PARTY_NOTICES.md — MAFFT
+     (BSD 3-Clause), Aioli, SeqFold and its Rust dependencies (MIT), and
+     Electron and its dependencies under their own licences;
+
+   - the REBASE restriction-enzyme data (Roberts, Vincze, Posfai & Macelis,
+     Nucleic Acids Research), which belongs to REBASE and should be cited as
+     theirs;
+
+   - supplier catalogue figures, which belong to the companies that publish
+     them and are recorded here with their source and date.
+
+   The .dna reader was worked out from the bytes of real files for
+   interoperability. Gene Studio contains no SnapGene code and is not connected
+   with, or endorsed by, SnapGene or Dotmatics.
+
+
+6. WHERE
+
+   Governed by the laws of the Republic of Korea.
+
+
+Jae-Yoon Sung — o3wodbs@gmail.com

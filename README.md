@@ -8,7 +8,8 @@ cloning, Golden Gate assembly, guide RNA design and Sanger `.ab1` review — by
 This repository holds **only the released builds and the version feed**. The
 source is not here and is not public: Gene Studio is given to named people for
 research, and copying, changing or redistributing it needs written permission.
-The terms ship with the application in `LICENSE`.
+The terms are in [`LICENSE`](LICENSE), and the same text ships inside the
+application.
 
 **[What Gene Studio is, with pictures →](https://jaeyoonsung.github.io/GeneStudio-releases/)**
 &nbsp;·&nbsp; **[Download the latest build →](../../releases/latest)**
@@ -118,6 +119,27 @@ Every drawing is SVG — paths and text, not pixels — and exports as vector wi
 the stylesheet resolved, editable in Illustrator.
 
 ![Figure settings](screenshots/figures.png)
+
+---
+
+## Licence
+
+**Gene Studio is not open source.** The builds published here are covered by the
+[Gene Studio Research Use Licence](LICENSE) — the same terms that ship inside the
+application. In short:
+
+- Install and run it on the computer your licence key names, for research,
+  teaching and study, including work you publish. Your data, your constructs and
+  your findings stay yours.
+- Do **not** pass on the installer, the application or a licence key; do not
+  modify it, take it apart for its source, remove the licence check, or sell,
+  rent or host it — not without written permission from the author.
+- For research use, ask: the answer is usually yes.
+
+Nothing in this repository is offered under an open-source licence, and no
+permission beyond `LICENSE` is granted by the builds being publicly downloadable.
+The third-party components listed below keep their own terms and are not
+restricted by it.
 
 ---
 
