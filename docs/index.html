@@ -92,56 +92,97 @@ html.js .rise.in{opacity:1; transform:none}
 
 /* ── the strip along the top ─────────────────────────────────────────────── */
 header.rail{
-  position:sticky; top:0; z-index:40;
-  background:rgba(13,19,21,.74); backdrop-filter:blur(14px) saturate(1.4);
-  border-bottom:1px solid var(--hair);
+  /* **A bar across the top is chrome; a capsule floating on the picture is
+     part of it.** The first screen is now one field of colour, and a full-width
+     rule across it cuts that field in half before anybody has read the
+     headline. The capsule sits *on* the hero and carries the same blur, so the
+     colour runs behind it. */
+  position:fixed; top:14px; left:0; right:0; z-index:40;
+  background:none; border:0;
 }
-.rail .wrap{display:flex; align-items:center; gap:18px; height:58px}
+.rail .wrap{display:flex; align-items:center; gap:6px;
+  width:max-content; max-width:calc(100% - 24px); margin:0 auto; padding:7px 8px 7px 17px;
+  background:rgba(9,14,16,.66); backdrop-filter:blur(18px) saturate(1.5);
+  border:1px solid rgba(255,255,255,.09); border-radius:999px;
+  box-shadow:0 12px 34px rgba(0,0,0,.42);}
 .brand{display:flex; align-items:center; gap:9px; font-weight:650; color:var(--ink); text-decoration:none; letter-spacing:-.01em}
 .brand svg{flex:none}
 .brand .tag{font:500 10px/1 var(--mono); color:var(--faint); letter-spacing:.14em; padding-top:2px}
-.rail nav{margin-left:auto; display:flex; align-items:center; gap:2px}
-.rail nav a{font-size:14px; color:var(--slate); text-decoration:none; padding:7px 11px; border-radius:8px; white-space:nowrap}
-.rail nav a:hover{color:var(--ink); background:var(--hair)}
-.rail nav a.get{color:var(--ink); border:1px solid var(--line); margin-left:8px}
-.rail nav a.get:hover{border-color:var(--amber); background:transparent}
+.rail nav{margin-left:14px; display:flex; align-items:center; gap:2px}
+.rail nav a{font-size:14px; color:var(--slate); text-decoration:none; padding:8px 12px; border-radius:999px; white-space:nowrap}
+.rail nav a:hover{color:var(--ink); background:rgba(255,255,255,.07)}
+/* the one thing to press, filled rather than outlined, inside the capsule */
+.rail nav a.get{color:var(--amber-ink); background:var(--amber); border:0; margin-left:6px; font-weight:600}
+.rail nav a.get:hover{background:#f0b055; color:var(--amber-ink)}
 @media (max-width:760px){ .rail nav a.hide-s{display:none} }
 
 /* ── hero ────────────────────────────────────────────────────────────────── */
-.hero{position:relative; padding:clamp(52px,9vw,112px) 0 0; overflow:hidden}
+/* **The first screen is one field, and the words stand in the middle of it.**
+   It was a left column of type on the page's own flat ground with the product
+   nowhere in sight — measured, no pixel of the first screen differed from the
+   page fill until the light was moved onto the hero, and even then it was a
+   wash rather than a picture. The hero is a full screen of colour now, the
+   words are centred in it, and the app rises into the bottom of it.
+
+   The colour is the application's own and not a photograph: the ring's steel
+   blue, its amber and its cyan, laid as one dusk. A stock landscape would look
+   like any other product; this looks like the thing being downloaded, and it
+   costs no asset, which keeps the page one file. */
+.hero{position:relative; overflow:hidden; text-align:center;
+  padding:clamp(100px,12vh,138px) 0 0;}
 .hero::before{
-  /* **`inset:-40%` put the light above the hero.** The block is over 900 px
-     tall, so −40% lifts the whole 760 px pane clear of the headline it was lit
-     for and the top of the page rendered dead flat — measured, no pixel in the
-     first screen differed from the page's own fill. It sits on the hero now,
-     and the amber is centred on the *left* column where the words are rather
-     than at 50% of a two-column block whose right half is empty. */
-  content:''; position:absolute; inset:0 0 auto 0; height:900px; pointer-events:none;
+  content:''; position:absolute; inset:0; pointer-events:none;
   background:
-    radial-gradient(46% 40% at 26% 30%, rgba(232,163,61,.14), transparent 72%),
-    radial-gradient(44% 38% at 78% 16%, rgba(79,183,158,.11), transparent 74%);
+    radial-gradient(62% 52% at 50% 2%,  rgba(146,178,220,.46), transparent 68%),
+    radial-gradient(42% 38% at 12% 26%, rgba(232,163,61,.30),  transparent 70%),
+    radial-gradient(46% 40% at 88% 20%, rgba(79,183,158,.28),  transparent 72%),
+    radial-gradient(84% 56% at 50% 82%, rgba(46,74,102,.42),   transparent 78%),
+    linear-gradient(180deg, #1B2A34 0%, #14212A 38%, #0D171D 70%, var(--paper) 100%);
+}
+/* a vignette so the centred type is read on a settled ground rather than on
+   whichever gradient happens to be under that line */
+.hero::after{
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(66% 46% at 50% 30%, rgba(6,10,12,.26), rgba(6,10,12,0) 72%);
 }
 .hero .wrap{position:relative}
 /* the name, set to be read as the name — heavier than the headline's weight
    at a fraction of its size, so it reads as a mark rather than as a first line
    of the sentence under it */
+/* **The name stays above the fold.** The capsule carries it too, at 15 px of
+   chrome — which is exactly the reading that put this here in the first place,
+   so it is kept and made the mark over the sentence rather than a line of it. */
 .wordmark{
-  margin:0 0 10px; font:700 clamp(26px,3.4vw,38px)/1 var(--ui);
-  letter-spacing:-.03em; color:var(--ink);
+  margin:0 0 14px; font:650 clamp(19px,2.2vw,23px)/1 var(--ui);
+  letter-spacing:-.01em; color:var(--slate);
 }
 .wordmark::after{
   content:''; display:inline-block; width:9px; height:9px; margin-left:9px;
   border-radius:50%; background:var(--amber); vertical-align:.06em;
 }
-.eyebrow{font:500 11.5px/1 var(--mono); letter-spacing:.16em; text-transform:uppercase; color:var(--amber); margin:0 0 20px}
-h1{font-size:clamp(36px,6.2vw,66px); font-weight:660; max-width:19ch}
-.sub{margin:22px 0 0; max-width:60ch; font-size:clamp(17px,2vw,20px)}
-.chips{display:flex; flex-wrap:wrap; gap:7px; margin:26px 0 0; padding:0; list-style:none}
+/* the eyebrow is a chip on the field rather than a line of small capitals —
+   it has to sit on colour now, and a bare tracked line dissolves into it */
+.eyebrow{display:inline-block; margin:0 0 22px; padding:7px 14px; border-radius:999px;
+  font:500 11.5px/1 var(--mono); letter-spacing:.14em; text-transform:uppercase;
+  color:var(--amber); background:rgba(232,163,61,.13);
+  border:1px solid rgba(232,163,61,.28)}
+/* Lighter and tighter than a left column's headline: centred display type is
+   read as a shape before it is read as words, and 660 at 66 px is a wall. */
+h1{font-size:clamp(34px,5.1vw,58px); font-weight:600; letter-spacing:-.03em;
+   line-height:1.06; max-width:24ch; margin-inline:auto; text-wrap:balance}
+/* **Two lines, and the rest of the sentence is the page.** The hero carried the
+   whole description — six lines centred, which is a paragraph standing where a
+   promise goes, and every one of its clauses has its own section below. */
+.sub{margin:22px auto 0; max-width:52ch; font-size:clamp(16.5px,1.75vw,19px);
+     text-wrap:balance}
+.chips{display:flex; flex-wrap:wrap; gap:7px; margin:20px 0 0; padding:0; list-style:none;
+       justify-content:center}
 .chips li{
   font:500 12px/1 var(--mono); color:var(--slate);
   border:1px solid var(--hair); border-radius:7px; padding:7px 9px; background:var(--ground);
 }
-.cta{display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin:28px 0 0}
+.cta{display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin:30px 0 0;
+     justify-content:center}
 .btn{
   display:inline-flex; align-items:center; gap:9px; text-decoration:none;
   font:550 15px/1 var(--ui); padding:13px 20px; border-radius:11px;
@@ -149,6 +190,12 @@ h1{font-size:clamp(36px,6.2vw,66px); font-weight:660; max-width:19ch}
   transition:transform .12s ease, border-color .12s ease, background .12s ease;
 }
 .btn:hover{transform:translateY(-1px); border-color:var(--slate)}
+.hero .btn{border-radius:999px; padding:14px 24px}
+.hero .btn.primary{box-shadow:0 10px 30px rgba(232,163,61,.22)}
+/* the platform this reader is not on is a choice, not a second call to action */
+.hero .cta .btn:not(.primary){background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.14);
+  font-weight:500; padding:14px 20px}
+.hero .cta .btn:not(.primary):hover{background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.24)}
 .btn.primary{background:var(--amber); color:var(--amber-ink); border-color:var(--amber)}
 .btn.primary:hover{background:#f0b055}
 .btn small{font:400 12px/1 var(--mono); opacity:.75}
@@ -164,7 +211,7 @@ h1{font-size:clamp(36px,6.2vw,66px); font-weight:660; max-width:19ch}
   .btn small{grid-column:2; opacity:.8}
   .mail{width:100%; justify-content:center}
 }
-.verline{margin:16px 0 0; font:400 13.5px/1.6 var(--ui); color:var(--faint); max-width:56ch}
+.verline{margin:16px auto 0; font:400 13.5px/1.6 var(--ui); color:var(--faint); max-width:52ch}
 .verline b{color:var(--slate); font-weight:600}
 
 /* the screenshot, framed as a window */
@@ -173,13 +220,41 @@ h1{font-size:clamp(36px,6.2vw,66px); font-weight:660; max-width:19ch}
    emphasis, and it put the drawing's edges out of line with every section
    below — which is the one thing a column of sections has to get right. One
    width for the whole page, and it is --wide. */
-.shot{margin:clamp(36px,6vw,68px) auto 0; max-width:var(--wide); padding:0 var(--pad)}
-figure{margin:0}
-.frame{
-  border:1px solid var(--line); border-radius:14px; overflow:hidden; background:var(--sunk);
-  box-shadow:0 30px 80px rgba(0,0,0,.5), 0 2px 0 rgba(255,255,255,.03) inset;
+/* **The product rises into the picture rather than starting under it.** The
+   figure used to begin below the hero, so the first screen was words and the
+   thing itself was a scroll away. It overlaps the field now and the field runs
+   out behind it. */
+.shot{margin:clamp(44px,7vw,84px) auto 0; max-width:var(--wide); padding:0 var(--pad)}
+/* the window follows the promise rather than sitting a screen below it */
+.hero .shot{position:relative; z-index:1; margin-top:clamp(26px,3.4vw,46px);
+  padding-bottom:clamp(40px,6vw,86px)}
+.hero .shot .frame{
+  border-radius:clamp(16px,1.8vw,26px);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.11),
+    0 2px 4px rgba(0,0,0,.5),
+    0 30px 60px rgba(0,0,0,.45),
+    0 80px 170px rgba(0,0,0,.55),
+    0 1px 0 rgba(255,255,255,.08) inset;
 }
-.frame .bar{display:flex; align-items:center; gap:7px; padding:10px 14px; border-bottom:1px solid var(--hair); background:var(--ground)}
+figure{margin:0}
+/* **A window on a field, not a bordered box on a page.** A hairline rectangle
+   reads as a figure in a document; what the first screen wants is the thing
+   itself sitting in the light — so the corner is a window's corner, the border
+   becomes an inner ring that catches the light rather than a line drawn round
+   the outside, and the shadow is three layers: a contact edge, a lift, and a
+   wide ambient that puts the block *in* the field rather than on top of it. */
+.frame{
+  border:0; border-radius:clamp(14px,1.4vw,20px); overflow:hidden; background:var(--sunk);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.09),
+    0 1px 2px rgba(0,0,0,.5),
+    0 18px 40px rgba(0,0,0,.42),
+    0 54px 120px rgba(0,0,0,.5),
+    0 1px 0 rgba(255,255,255,.06) inset;
+}
+.frame .bar{display:flex; align-items:center; gap:7px; padding:11px 15px;
+  border-bottom:1px solid rgba(255,255,255,.06); background:var(--ground)}
 .frame .bar i{width:10px; height:10px; border-radius:50%; background:var(--line); display:block}
 .frame .bar span{margin-left:8px; font:400 11.5px/1 var(--mono); color:var(--faint); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
 figcaption{margin:14px 2px 0; font:400 13px/1.5 var(--mono); color:var(--faint)}
@@ -436,8 +511,14 @@ section.plain h2{font-size:clamp(26px,3.4vw,36px); margin-top:14px}
 .cmp .cm svg.cross{stroke:var(--cut)}
 .cmp .cm span{display:block; font-size:13px; line-height:1.5; color:var(--slate)}
 .cmp .us span{color:var(--ink)}
+/* **`--faint` is solved for the page, and on a phone this sits on the plate.**
+   The comparison becomes a stack of cards there, and measured at 390 px in the
+   dark theme "not stated" read **3.97** against the 4.5 it needs — the only two
+   readings on the whole page that were short, and they had been for a while.
+   `--slate` is the next step up and is already solved for these surfaces; it is
+   still the quietest thing in its own cell. */
 .cmp .cm .nostate{font-style:normal; font:500 11px/1 var(--mono);
-  letter-spacing:.08em; text-transform:uppercase; color:var(--faint)}
+  letter-spacing:.08em; text-transform:uppercase; color:var(--slate)}
 /* the lit column's own mark, so the eye lands there first */
 .cmp .us svg.tick{stroke:var(--amber)}
 /* the column this page is about is the one that is lit */
@@ -617,12 +698,30 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--p
      links read 3.35:1, the BETA tag 3.19, and the Get it button's outline
      vanished at 1.08. At .95 the composite is rgb(235,237,237): 4.89, 4.65, and
      the outline is back. .93 was tried and leaves the tag at 4.46. */
-  header.rail{ background:rgba(247,249,249,.95) }
+  /* **The capsule is a surface now, so the translucency moved with it.** This
+     rule used to paint `header.rail`, which is the full-width band the capsule
+     replaced — left there it would have painted nothing and the dark capsule
+     would have kept its dark ground under this theme's dark links. The .95 and
+     the reason for it are unchanged; only what it is painted on. */
+  .rail .wrap{ background:rgba(247,249,249,.95); border-color:#C3D0D1;
+               box-shadow:0 12px 30px rgba(20,40,50,.14) }
+  .rail nav a:hover{ background:rgba(14,22,24,.06) }
+  /* the field, in a theme where the page is lighter than the application: the
+     same three lights, laid on the page's own paper rather than on a dusk */
   .hero::before{
     background:
-      radial-gradient(58% 46% at 50% 34%, rgba(232,163,61,.20), transparent 70%),
-      radial-gradient(40% 34% at 76% 12%, rgba(15,125,104,.07), transparent 72%);
+      radial-gradient(60% 48% at 50% 4%,  rgba(120,152,196,.26), transparent 70%),
+      radial-gradient(42% 36% at 12% 26%, rgba(232,163,61,.26),  transparent 70%),
+      radial-gradient(44% 38% at 88% 20%, rgba(15,125,104,.14),  transparent 72%),
+      linear-gradient(180deg, #E9EFF2 0%, #EFF4F5 46%, var(--paper) 100%);
   }
+  /* a vignette darkens a light field into a smudge; the type is dark here and
+     needs no help being read */
+  .hero::after{ background:none }
+  /* white-on-white: the quiet buttons need the page's own line and ground */
+  .hero .cta .btn:not(.primary){ background:var(--ground); border-color:var(--line) }
+  .hero .cta .btn:not(.primary):hover{ background:var(--ground); border-color:var(--slate) }
+  .hero .btn.primary{ box-shadow:0 10px 28px rgba(151,89,10,.20) }
   /* the dark card-on-plate step above is a dark-theme repair; on light the
      plate is *below* the page and a white card already lifts off it */
   /* the light plate is *below* the page, so its text has to go the other way:
@@ -701,11 +800,7 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--p
          leads and the sentence follows it. -->
     <p class="wordmark">Gene Studio</p>
     <h1>The plasmid you are holding, drawn from the file you already have.</h1>
-    <p class="sub">Circular and linear maps, an annotated sequence, restriction digests with a simulated gel, PCR and cloning, CRISPR guides and Sanger review — over GenBank, SnapGene <code>.dna</code>, FASTA and <code>.ab1</code>, written back without losing what was in them.</p>
-    <ul class="chips">
-      <li>.gb</li><li>.gbk</li><li>.gbff</li><li>.dna</li><li>.fa / .fasta / .fna / .faa</li><li>.ab1</li>
-    </ul>
-
+    <p class="sub">Maps, sequence, digests, cloning, guides and Sanger review — over the files you already have, written back without losing what was in them.</p>
     <div class="cta">
       <a class="btn primary" data-dl="mac" href="https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/latest">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M10.8 8.5c0-1.5 1.2-2.2 1.3-2.3-.7-1-1.8-1.2-2.2-1.2-.9-.1-1.8.6-2.3.6-.5 0-1.2-.6-2-.5-1 0-2 .6-2.5 1.5-1.1 1.9-.3 4.7.8 6.2.5.7 1.1 1.6 1.9 1.5.8 0 1.1-.5 2-.5s1.2.5 2 .5c.8 0 1.4-.7 1.9-1.5.6-.8.8-1.7.8-1.8 0 0-1.6-.6-1.7-2.5zM9.4 3.7c.4-.5.7-1.2.6-1.9-.6 0-1.4.4-1.8.9-.4.5-.7 1.2-.6 1.9.7.1 1.4-.3 1.8-.9z"/></svg>
@@ -727,6 +822,11 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--p
       </a>
     </div>
     <p class="verline">Free while the beta lasts. A licence is written for one computer and takes a minute — <b><a href="#get" style="color:inherit">ask for one</a></b>.</p>
+    <!-- what it opens, under the press rather than above it: it is the answer
+         to "will it read mine", which is a second question, not the first -->
+    <ul class="chips">
+      <li>.gb</li><li>.gbk</li><li>.gbff</li><li>.dna</li><li>.fa / .fasta / .fna / .faa</li><li>.ab1</li>
+    </ul>
   </div>
 
   <div class="shot">
