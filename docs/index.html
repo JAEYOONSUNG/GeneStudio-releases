@@ -841,11 +841,13 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--p
       </div>
       <figcaption>The map — every cut named in the margin, features on the strand they are on. Zoom is the same slider you drag.</figcaption>
     </figure>
-    <figure class="rise wideonly">
+    <figure class="rise">
       <div class="frame">
         <video class="wide" data-clip="clip/measure.mp4" data-poster="clip/measure.webp" width="1200" height="750"
                muted loop playsinline preload="none"
                aria-label="Dragging an arc of the ring: the wedge follows the pointer and the length of the stretch is counted out as it grows."></video>
+        <video class="narrow" data-clip="clip/measure-phone.mp4" data-poster="clip/measure-phone.webp" width="390" height="362"
+               muted loop playsinline preload="none" aria-label="Dragging an arc of the ring: the wedge follows the pointer and the length of the stretch is counted out as it grows."></video>
       </div>
       <figcaption>And dragging the ring measures it — 146 → 1,756 · 1,610 bp, counted as the wedge grows.</figcaption>
     </figure>
@@ -891,19 +893,23 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--p
       </div>
       <figcaption>Dragging across the His6 tag. Nothing was pressed first — the figures are what a selection says about itself.</figcaption>
     </figure>
-    <figure class="rise wideonly">
+    <figure class="rise">
       <div class="frame">
         <video class="wide" data-clip="clip/find.mp4" data-poster="clip/find.webp" width="1200" height="750"
                muted loop playsinline preload="none"
                aria-label="A motif being typed into the find bar, and every place it matches lighting up along the sequence."></video>
+        <video class="narrow" data-clip="clip/find-phone.mp4" data-poster="clip/find-phone.webp" width="390" height="287"
+               muted loop playsinline preload="none" aria-label="A motif being typed into the find bar, and every place it matches lighting up along the sequence."></video>
       </div>
       <figcaption>And a motif being typed into ⌘F, every match lighting up as the query grows.</figcaption>
     </figure>
-    <figure class="rise wideonly">
+    <figure class="rise">
       <div class="frame">
         <video class="wide" data-clip="clip/primer.mp4" data-poster="clip/primer.webp" width="1200" height="750"
                muted loop playsinline preload="none"
                aria-label="A primer opened by double-clicking it: the dialog draws the construct under the oligo at the site it binds, and the figures move as the sequence is typed."></video>
+        <video class="narrow" data-clip="clip/primer-phone.mp4" data-poster="clip/primer-phone.webp" width="390" height="287"
+               muted loop playsinline preload="none" aria-label="A primer opened by double-clicking it: the dialog draws the construct under the oligo at the site it binds, and the figures move as the sequence is typed."></video>
       </div>
       <figcaption>Double-click any primer and it opens against what it binds — the ruler, the genes it sits under, both strands, and the figures moving as you type.</figcaption>
     </figure>
@@ -940,27 +946,33 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--p
       </div>
           <figcaption>The gel running — the ladder, the agarose and the buffer are yours to set.</figcaption>
     </figure>
-    <figure class="rise wideonly">
+    <figure class="rise">
       <div class="frame">
         <video class="wide" data-clip="clip/enzdb.mp4" data-poster="clip/enzdb.webp" width="1200" height="750"
                muted loop playsinline preload="none"
                aria-label="The enzyme database searched: a card per enzyme with its cut drawn on both strands, the overhang, who sells it, what a methyl mark does to it, and what one digest costs."></video>
+        <video class="narrow" data-clip="clip/enzdb-phone.mp4" data-poster="clip/enzdb-phone.webp" width="390" height="287"
+               muted loop playsinline preload="none" aria-label="The enzyme database searched: a card per enzyme with its cut drawn on both strands, the overhang, who sells it, what a methyl mark does to it, and what one digest costs."></video>
       </div>
       <figcaption>A card per enzyme — the cut on both strands, the overhang, who sells it, and what one digest costs from the catalogue it was read off.</figcaption>
     </figure>
-    <figure class="rise wideonly">
+    <figure class="rise">
       <div class="frame">
         <video class="wide" data-clip="clip/methyl.mp4" data-poster="clip/methyl.webp" width="1200" height="750"
                muted loop playsinline preload="none"
                aria-label="The methylation window: the strain the DNA was grown in and the one it is going into, and a row per methylase saying which sites here carry the mark and which enzymes it stops."></video>
+        <video class="narrow" data-clip="clip/methyl-phone.mp4" data-poster="clip/methyl-phone.webp" width="390" height="310"
+               muted loop playsinline preload="none" aria-label="The methylation window: the strain the DNA was grown in and the one it is going into, and a row per methylase saying which sites here carry the mark and which enzymes it stops."></video>
       </div>
       <figcaption>And what the host did to it — a row per system, how many sites of <em>this</em> construct carry the mark, and which enzymes in hand it stops.</figcaption>
     </figure>
-    <figure class="rise wideonly">
+    <figure class="rise">
       <div class="frame">
         <video class="wide" data-clip="clip/fold.mp4" data-poster="clip/fold.webp" width="1108" height="824"
                muted loop playsinline preload="none"
                aria-label="A stretch of the construct folded as a transcript: the region grows and the structure is refolded each time, drawn as stems and loops with the free energy, the pair count and the dot-bracket under it."></video>
+        <video class="narrow" data-clip="clip/fold-phone.mp4" data-poster="clip/fold-phone.webp" width="390" height="390"
+               muted loop playsinline preload="none" aria-label="A stretch of the construct folded as a transcript: the region grows and the structure is refolded each time, drawn as stems and loops with the free energy, the pair count and the dot-bracket under it."></video>
       </div>
       <figcaption>And how it folds. Pick a stretch, read it as DNA or as a transcript, and the structure is drawn as a structure — stems straight, loops round — with ΔG, the pairs and the dot-bracket under it. Vector out, editable in Illustrator.</figcaption>
     </figure>
@@ -1375,6 +1387,16 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
         src.type = 'video/mp4'; src.src = v.dataset.clip;
         v.appendChild(src); v.load();
       }
+      /* **A muted inline clip on iOS wants the attribute, not only the call.**
+         Safari will start a muted `playsinline` video from script, and will
+         also decline to — after a dynamically attached source, in Low Power
+         Mode, on a first paint it has not settled. The attribute is the thing
+         it honours, and it is set here rather than in the markup so that a
+         screen which will not show this clip still fetches nothing. */
+      v.setAttribute('autoplay', '');
+      /* and a second go once there are frames to show: the first play() can be
+         refused before the source has loaded, and nothing tries again */
+      v.addEventListener('loadeddata', () => { v.play?.().catch(() => {}); }, {once:true});
       /* it starts when it is reached, not when the page loads: three clips
          decoding at once on a laptop is a page that stutters as it opens */
       new IntersectionObserver((es, io) => {
