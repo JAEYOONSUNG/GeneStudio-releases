@@ -11,6 +11,15 @@
      scrollbars, form chrome and the canvas before any CSS applies dark, under a
      page that is about to be white — a flash of the wrong theme on every load. -->
 <meta name="color-scheme" content="light dark">
+<!-- **Before the first paint, or it is a flash of the wrong page.** The light
+     rules are keyed on this attribute, so it has to be on the root element
+     before any of them can match — which is why this is inline, in the head,
+     and four lines rather than a module. `localStorage` throws in a browser set
+     to block site data, so the read is guarded and the system's own preference
+     is what answers when there is no stored choice. -->
+<script>(function(){var t;try{t=localStorage.getItem('gs-theme')}catch(e){}
+if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';
+document.documentElement.dataset.theme=t;})()</script>
 <meta property="og:title" content="Gene Studio">
 <meta property="og:description" content="A plasmid workbench that opens what your lab already has — GenBank, SnapGene .dna, FASTA and Sanger traces — and writes them back without losing what was in them.">
 <meta property="og:type" content="website">
@@ -46,6 +55,11 @@
   --plate:#192428;
   --amber:#E8A33D; --amber-soft:rgba(232,163,61,.18); --amber-ink:#1a1205;
   --fwd:#4FB79E; --rev:#A98AD8; --cut:#E1655C;
+  /* the app has no blue of its own — its four are the strands, the cut and the
+     accent — and the genome section needed a fifth topic that is none of them.
+     It is a page colour, used for one pill and one wash, and never for text
+     the app itself draws. */
+  --blue:#7BA8DE;
   --ui:ui-sans-serif,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
   --pad:clamp(20px, 5vw, 64px);
@@ -115,6 +129,21 @@ header.rail{
 .rail nav a.get{color:var(--amber-ink); background:var(--amber); border:0; margin-left:6px; font-weight:600}
 .rail nav a.get:hover{background:#f0b055; color:var(--amber-ink)}
 @media (max-width:760px){ .rail nav a.hide-s{display:none} }
+/* the theme control keeps the nav links' own shape — it is one more thing in
+   the capsule, not a widget bolted to it — and it stays on a phone, where the
+   links are the first things to go */
+.themebtn{display:grid; place-items:center; width:32px; height:32px; padding:0; margin-left:2px;
+  border:0; border-radius:999px; background:none; color:var(--slate); cursor:pointer;
+  -webkit-appearance:none; appearance:none}
+.themebtn:hover{color:var(--ink); background:rgba(255,255,255,.07)}
+.themebtn svg{display:block}
+/* one icon, two halves: what is drawn is the theme you would *get*, so the
+   dark page offers a sun and the light page a moon */
+.themebtn .t-moon{display:none}
+:root[data-theme="light"] .themebtn .t-sun{display:none}
+:root[data-theme="light"] .themebtn .t-moon{display:block}
+:root[data-theme="light"] .themebtn:hover{background:rgba(14,22,24,.06)}
+.sr{position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap}
 
 /* ── hero ────────────────────────────────────────────────────────────────── */
 /* **The first screen is one field, and the words stand in the middle of it.**
@@ -414,15 +443,14 @@ section.plain.onplate .tbcard, .beta .betabox{--faint:#89999C}
 .beta .betabox{background:linear-gradient(180deg, var(--ground), var(--plate))}
 .feat .cols{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,.92fr); gap:clamp(20px,4vw,56px); align-items:start}
 @media (max-width:860px){ .feat .cols{grid-template-columns:1fr; gap:20px} }
-.num{margin:0 0 14px; font:500 12px/1 var(--mono); color:var(--amber); letter-spacing:.18em}
 .feat h2{font-size:clamp(26px,3.4vw,36px); margin:14px 0 0; max-width:20ch}
 .feat .say p{margin:16px 0 0; max-width:52ch}
-/* **The numbered eyebrow took whatever margin reached it.** `.num` set none of
-   its own, so in the numbered sections `.feat .say p` gave it 16 px and in the
-   plain ones the browser's 1em gave it 12 — the ten section numbers sat at two
-   different heights above their headings. `.feat .say p.num` is what beats the
-   rule that was winning. */
-.feat .say p.num{margin:0 0 14px}
+/* **The numbered eyebrow took whatever margin reached it.** It set none of its
+   own, so in the numbered sections `.feat .say p` gave it 16 px and in the plain
+   ones the browser's 1em gave it 12 — the ten section numbers sat at two
+   different heights above their headings. This is what beats the rule that was
+   winning; the pill's own margin is set with the rest of it further down. */
+.feat .say p.num{margin:0 0 16px}
 .feat h2, section.plain h2, .betabox h2{margin-top:0}
 .feat ul{margin:0; padding:0; list-style:none}
 .feat li{position:relative; padding-left:20px; margin:9px 0; font-size:15.5px; color:var(--slate)}
@@ -436,6 +464,77 @@ section.plain.onplate .tbcard, .beta .betabox{--faint:#89999C}
    frame, so 602 px of a 1,052 px bordered box (57 %) was empty and the caption
    sat 300 px to the left of what it describes. */
 .feat figure.tight{max-width:450px}
+
+/* ── what a section is about, said before the sentence that says it ──────────
+   The eyebrow was a bare `01`, which numbers the sections and names none of
+   them: a reader scrolling past sees an ordinal and has to read the heading to
+   learn whether this is the part they came for. A tinted pill carrying the
+   number *and* the word is one glance, and the tint is the section's own topic
+   colour — the app's own palette, so the pill above a gel is the cut red the
+   gel's own marks are drawn in and the pill above the sequence is the strand
+   green. `--topic` is set per section and is the only thing that differs.
+
+   It is also what lights the figures below it: the frames sat on a flat field,
+   and a wash of the section's colour behind them puts the block *in* light
+   rather than on a page. It is deliberately behind the frame and very weak —
+   at any strength that reads as a colour it becomes decoration competing with
+   the drawing, which is the thing being shown. */
+/* **A colour that is right as a fill is not right as text**, which is the rule
+   this project already keeps for the strand colours and the accent. Measured on
+   the light theme, the topic colour written on a 15 % tint of itself read 3.39
+   (sequence), 4.13 (digest) and 4.46 (Sanger) — the fill was fine and the word
+   on it was not. The ink is therefore its own answer: the topic taken toward the
+   page's ink, which keeps the hue and moves only the lightness. In dark the
+   topics are already light on a dark tint and measure clean, so there the ink
+   *is* the topic and nothing is spent. */
+/* declared on the section rather than on :root, because `--topic-ink` is
+   computed from `--topic` and a custom property resolves against the element it
+   is declared on — put on :root it would resolve once, against the default, and
+   every section would get the same ink whatever colour its pill was */
+section{--topic:var(--fwd); --topic-ink:var(--topic)}
+.num{display:inline-flex; align-items:center; gap:7px; margin:0 0 16px; justify-self:start;
+  padding:6px 13px 6px 10px; border-radius:999px; letter-spacing:.02em;
+  font:600 12.5px/1 var(--ui); color:var(--topic-ink);
+  background:color-mix(in oklab, var(--topic) 15%, transparent);
+  /* a fill this weak needs an edge, or on the plate it reads as a smudge */
+  box-shadow:0 0 0 1px color-mix(in oklab, var(--topic) 26%, transparent) inset}
+/* **The gap above a heading belongs to the pill, once.** Measured across the
+   ten: 16 px in the numbered sections, 14 in the two-column heads (where the
+   pill's own margin was zeroed and the heading's 14 stood in for it) and 30 in
+   Questions, which got both. So the pill owns it everywhere and the heading
+   after a pill owns none. `section.plain` is named on the front of the second
+   selector to *beat* `section.plain h2{margin-top:14px}` rather than to tie
+   with it — a tie is decided by source order, and that rule is declared in a
+   later block, so the general form alone left four of the ten at 30 px. */
+section .num + h2, section.plain .num + h2{margin-top:0}
+.num svg{display:block; flex:none}
+.num b{font-weight:600; font-family:var(--mono); font-size:11.5px;
+  opacity:.72; letter-spacing:.08em}
+/* the wash, behind the frame rather than round it: an inset ring or a coloured
+   border would be a second edge competing with the frame's own */
+.feat figure{position:relative; isolation:isolate}
+.feat figure .frame{position:relative; z-index:1}
+/* **A blur paints outside its box; a negative inset *is* a bigger box.** Written
+   `left:-8%; right:-8%` to let the wash bleed past the figure, it grew the
+   document instead — measured, the page ran 8 px past a 390 px viewport and 17
+   past 768, which is a horizontal scrollbar on a phone for a decoration. The
+   box stays inside the figure and the spread comes from the blur, which is
+   paint and costs the layout nothing. */
+.feat figure::before{
+  content:''; position:absolute; z-index:0; pointer-events:none;
+  inset:0;
+  background:radial-gradient(62% 58% at 50% 50%,
+    color-mix(in oklab, var(--topic) 34%, transparent), transparent 74%);
+  /* the frame on top is opaque, so what is seen is only what the blur throws
+     past its edges — which is the whole effect, and it costs no layout */
+  filter:blur(58px);
+}
+/* Safari before 16.2 has no `color-mix`; the pill would then have no fill and
+   no ring and read as plain text, so the fallback is the page's own card */
+@supports not (color:color-mix(in oklab, red 10%, transparent)){
+  .num{background:var(--ground); box-shadow:0 0 0 1px var(--line) inset}
+  .feat figure::before{display:none}
+}
 
 /* ── plain grids ─────────────────────────────────────────────────────────── */
 section.plain{padding:clamp(58px,9vw,110px) 0; border-bottom:1px solid var(--hair)}
@@ -457,7 +556,7 @@ section.plain h2{font-size:clamp(26px,3.4vw,36px); margin-top:14px}
      columns landed between the number and the title it labels as well */
   .plainhead{display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);
              column-gap:clamp(28px,4vw,64px); row-gap:0; align-items:start}
-  .plainhead .num{grid-column:1; margin-bottom:0}
+  .plainhead .num{grid-column:1}
   .plainhead h2{grid-column:1; grid-row:2}
   /* the lede starts on the title's own line rather than at the top of the
      block: level with the number it reads as a caption of it, and the number
@@ -677,94 +776,106 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--p
    first and were darkened before they were written down. */
 :root{ color-scheme:light dark }
 
-@media (prefers-color-scheme: light){
-  :root{
-    --paper:#F7F9F9; --ground:#FFFFFF; --sunk:#EDF1F1;
-    --ink:#0E1618; --body:#33454A; --slate:#556A6E; --faint:#5A6D71;
-    --line:#C3D0D1; --hair:#DEE6E6;
-    /* light has room downward, and 1.077 was still too little across a band */
-    --plate:#DEE5E5;
-    --amber:#97590A; --amber-soft:rgba(232,163,61,.22); --amber-ink:#FFFFFF;
-    --fwd:#0F7D68; --rev:#6A4AA8; --cut:#B62E24;
-  }
-  /* what was written as a literal rather than as a token, and so could not
-     follow: the rail's own translucency, the hero's two lights, the primary
-     button's hover, the icon wash, and the mark's stroke and dot — which are
-     SVG presentation attributes, so CSS is what reaches them */
-  /* **.78 was translated from the dark rail's .74 without re-measuring.** In
-     dark the backdrop is dark whatever is under it; on light the rail crosses
-     the figures, which are near-black and are the page's tallest blocks — so
-     sampled over the hero the rail composited to rgb(196,200,200) and the nav
-     links read 3.35:1, the BETA tag 3.19, and the Get it button's outline
-     vanished at 1.08. At .95 the composite is rgb(235,237,237): 4.89, 4.65, and
-     the outline is back. .93 was tried and leaves the tag at 4.46. */
-  /* **The capsule is a surface now, so the translucency moved with it.** This
-     rule used to paint `header.rail`, which is the full-width band the capsule
-     replaced — left there it would have painted nothing and the dark capsule
-     would have kept its dark ground under this theme's dark links. The .95 and
-     the reason for it are unchanged; only what it is painted on. */
-  .rail .wrap{ background:rgba(247,249,249,.95); border-color:#C3D0D1;
-               box-shadow:0 12px 30px rgba(20,40,50,.14) }
-  .rail nav a:hover{ background:rgba(14,22,24,.06) }
-  /* the field, in a theme where the page is lighter than the application: the
-     same three lights, laid on the page's own paper rather than on a dusk */
-  .hero::before{
-    background:
-      radial-gradient(60% 48% at 50% 4%,  rgba(120,152,196,.26), transparent 70%),
-      radial-gradient(42% 36% at 12% 26%, rgba(232,163,61,.26),  transparent 70%),
-      radial-gradient(44% 38% at 88% 20%, rgba(15,125,104,.14),  transparent 72%),
-      linear-gradient(180deg, #E9EFF2 0%, #EFF4F5 46%, var(--paper) 100%);
-  }
-  /* a vignette darkens a light field into a smudge; the type is dark here and
-     needs no help being read */
-  .hero::after{ background:none }
-  /* white-on-white: the quiet buttons need the page's own line and ground */
-  .hero .cta .btn:not(.primary){ background:var(--ground); border-color:var(--line) }
-  .hero .cta .btn:not(.primary):hover{ background:var(--ground); border-color:var(--slate) }
-  .hero .btn.primary{ box-shadow:0 10px 28px rgba(151,89,10,.20) }
-  /* the dark card-on-plate step above is a dark-theme repair; on light the
-     plate is *below* the page and a white card already lifts off it */
-  /* the light plate is *below* the page, so its text has to go the other way:
-     4.26 / 4.48 / 4.39 measured, all under 4.5 */
-  section.plain.onplate, .beta, .band, footer{--ground:#FFFFFF; --hair:#D3DCDC; --line:#B9C7C8;
-    --faint:#56686B; --slate:#53686C; --amber:#92560A}
-  /* **The base rules are the dark theme, so they reach light too.** Leaving
-     the card's `--faint` unanswered here let the dark `#89999C` apply on a
-     light plate: **2.32:1**, measured, on the beta box's own note. It keeps the
-     plate-safe value rather than the page's — darker on white is always safe,
-     and the box's gradient ends on the plate, where the page's own value fell
-     to 4.26. */
-  section.plain.onplate .tbcard, .beta .betabox{--faint:#56686B}
-  /* the Gene Studio column is amber-soft over the plate, which composites to
-     rgb(224,214,192) — lighter than either, so the column head needs its own */
-  .cmp .us{--amber:#874F09}
-  .btn.primary:hover{ background:#7C4806 }
-  .tbico{ background:rgba(15,125,104,.10) }
-  .brand svg circle:first-of-type{ stroke:var(--amber) }
-  .brand svg circle + circle{ fill:var(--fwd) }
-
-  /* **The clips are the application, and the application is dark.** A dark
-     rectangle on a white page is a hole unless something says it is meant to
-     be one — so the frame keeps the program's own chrome, its title bar and
-     its hairlines, and reads as a window onto it rather than as a picture that
-     failed to load. Lightening the chrome only makes the seam the loudest
-     thing in the figure, and inverting the media is a lie about the product.
-     What changes is how the block is lifted off a page that is now lighter
-     than it is: the dark drop shadow is invisible on white, so it becomes a
-     neutral one with a hairline ring to give the block an edge. Redeclaring
-     the four surface tokens *on the frame itself* re-darkens everything inside
-     it — the bar, its dots, the filename, the video's letterbox — with no new
-     selectors, because all of it was token-driven already. */
-  .frame{
-    --ground:#131B1D; --sunk:#0A1012; --hair:#1D272A; --line:#263235;
-    --ink:#EAF0EE; --faint:#7E9093;
-    border-color:#0A1012;
-    box-shadow:
-      0 0 0 1px rgba(13,19,21,.10),
-      0 2px 4px rgba(13,19,21,.08),
-      0 18px 40px -14px rgba(13,19,21,.34);
-  }
+/* ── the light theme ─────────────────────────────────────────────────────────
+   Scoped to an attribute rather than to `prefers-color-scheme`, so a reader can
+   *choose*: an inline script in the head stamps `data-theme` from what they last
+   picked, or from the system where they have not. It runs before the first
+   paint, which is the whole reason it is inline and in the head — a theme
+   applied a frame later is a white flash on a dark page. There is deliberately
+   no media-query fallback: a *partial* light page — a dark capsule over a light
+   field — is worse than a coherent dark one, and dark is this page's own
+   default. Every value below was measured against its composited background. */
+:root[data-theme="light"]{
+  --paper:#F7F9F9; --ground:#FFFFFF; --sunk:#EDF1F1;
+  --ink:#0E1618; --body:#33454A; --slate:#556A6E; --faint:#5A6D71;
+  --line:#C3D0D1; --hair:#DEE6E6;
+  /* light has room downward, and 1.077 was still too little across a band */
+  --plate:#DEE5E5;
+  --amber:#97590A; --amber-soft:rgba(232,163,61,.22); --amber-ink:#FFFFFF;
+  --fwd:#0F7D68; --rev:#6A4AA8; --cut:#B62E24;
+  --blue:#2F5FA0;
 }
+/* what was written as a literal rather than as a token, and so could not
+   follow: the rail's own translucency, the hero's two lights, the primary
+   button's hover, the icon wash, and the mark's stroke and dot — which are
+   SVG presentation attributes, so CSS is what reaches them */
+/* **.78 was translated from the dark rail's .74 without re-measuring.** In
+   dark the backdrop is dark whatever is under it; on light the rail crosses
+   the figures, which are near-black and are the page's tallest blocks — so
+   sampled over the hero the rail composited to rgb(196,200,200) and the nav
+   links read 3.35:1, the BETA tag 3.19, and the Get it button's outline
+   vanished at 1.08. At .95 the composite is rgb(235,237,237): 4.89, 4.65, and
+   the outline is back. .93 was tried and leaves the tag at 4.46. */
+/* **The capsule is a surface now, so the translucency moved with it.** This
+   rule used to paint `header.rail`, which is the full-width band the capsule
+   replaced — left there it would have painted nothing and the dark capsule
+   would have kept its dark ground under this theme's dark links. The .95 and
+   the reason for it are unchanged; only what it is painted on. */
+:root[data-theme="light"] .rail .wrap{ background:rgba(247,249,249,.95); border-color:#C3D0D1;
+             box-shadow:0 12px 30px rgba(20,40,50,.14) }
+:root[data-theme="light"] .rail nav a:hover{ background:rgba(14,22,24,.06) }
+/* the pill's word, solved against the pill's own tint — see the note beside
+   `.feat .num`. The fill and the ring stay the topic itself. */
+:root[data-theme="light"] section{ --topic-ink:color-mix(in oklab, var(--topic) 74%, #0E1618) }
+/* the field, in a theme where the page is lighter than the application: the
+   same three lights, laid on the page's own paper rather than on a dusk */
+:root[data-theme="light"] .hero::before{
+  background:
+    radial-gradient(60% 48% at 50% 4%,  rgba(120,152,196,.26), transparent 70%),
+    radial-gradient(42% 36% at 12% 26%, rgba(232,163,61,.26),  transparent 70%),
+    radial-gradient(44% 38% at 88% 20%, rgba(15,125,104,.14),  transparent 72%),
+    linear-gradient(180deg, #E9EFF2 0%, #EFF4F5 46%, var(--paper) 100%);
+}
+/* a vignette darkens a light field into a smudge; the type is dark here and
+   needs no help being read */
+:root[data-theme="light"] .hero::after{ background:none }
+/* white-on-white: the quiet buttons need the page's own line and ground */
+:root[data-theme="light"] .hero .cta .btn:not(.primary){ background:var(--ground); border-color:var(--line) }
+:root[data-theme="light"] .hero .cta .btn:not(.primary):hover{ background:var(--ground); border-color:var(--slate) }
+:root[data-theme="light"] .hero .btn.primary{ box-shadow:0 10px 28px rgba(151,89,10,.20) }
+/* the dark card-on-plate step above is a dark-theme repair; on light the
+   plate is *below* the page and a white card already lifts off it */
+/* the light plate is *below* the page, so its text has to go the other way:
+   4.26 / 4.48 / 4.39 measured, all under 4.5 */
+:root[data-theme="light"] section.plain.onplate, :root[data-theme="light"] .beta, :root[data-theme="light"] .band, :root[data-theme="light"] footer{--ground:#FFFFFF; --hair:#D3DCDC; --line:#B9C7C8;
+  --faint:#56686B; --slate:#53686C; --amber:#92560A}
+/* **The base rules are the dark theme, so they reach light too.** Leaving
+   the card's `--faint` unanswered here let the dark `#89999C` apply on a
+   light plate: **2.32:1**, measured, on the beta box's own note. It keeps the
+   plate-safe value rather than the page's — darker on white is always safe,
+   and the box's gradient ends on the plate, where the page's own value fell
+   to 4.26. */
+:root[data-theme="light"] section.plain.onplate .tbcard, :root[data-theme="light"] .beta .betabox{--faint:#56686B}
+/* the Gene Studio column is amber-soft over the plate, which composites to
+   rgb(224,214,192) — lighter than either, so the column head needs its own */
+:root[data-theme="light"] .cmp .us{--amber:#874F09}
+:root[data-theme="light"] .btn.primary:hover{ background:#7C4806 }
+:root[data-theme="light"] .tbico{ background:rgba(15,125,104,.10) }
+:root[data-theme="light"] .brand svg circle:first-of-type{ stroke:var(--amber) }
+:root[data-theme="light"] .brand svg circle + circle{ fill:var(--fwd) }
+
+/* **The clips are the application, and the application is dark.** A dark
+   rectangle on a white page is a hole unless something says it is meant to
+   be one — so the frame keeps the program's own chrome, its title bar and
+   its hairlines, and reads as a window onto it rather than as a picture that
+   failed to load. Lightening the chrome only makes the seam the loudest
+   thing in the figure, and inverting the media is a lie about the product.
+   What changes is how the block is lifted off a page that is now lighter
+   than it is: the dark drop shadow is invisible on white, so it becomes a
+   neutral one with a hairline ring to give the block an edge. Redeclaring
+   the four surface tokens *on the frame itself* re-darkens everything inside
+   it — the bar, its dots, the filename, the video's letterbox — with no new
+   selectors, because all of it was token-driven already. */
+:root[data-theme="light"] .frame{
+  --ground:#131B1D; --sunk:#0A1012; --hair:#1D272A; --line:#263235;
+  --ink:#EAF0EE; --faint:#7E9093;
+  border-color:#0A1012;
+  box-shadow:
+    0 0 0 1px rgba(13,19,21,.10),
+    0 2px 4px rgba(13,19,21,.08),
+    0 18px 40px -14px rgba(13,19,21,.34);
+}
+
 </style>
 </head>
 <body>
@@ -784,6 +895,19 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--p
       <a class="hide-s" href="#toolbox">Toolbox</a>
       <a class="hide-s" href="#compare">Compare</a>
       <a class="hide-s" href="#questions">Questions</a>
+      <!-- One control with two states rather than a three-way picker: the
+           script has already resolved "system" into one of the two before this
+           is drawn, so a third option would name a state the page is never in.
+           The label says what pressing it *does*, which is the other theme. -->
+      <button class="themebtn" type="button" aria-pressed="false" title="Switch theme">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="1.9" stroke-linecap="round" aria-hidden="true">
+          <circle class="t-sun" cx="12" cy="12" r="4.1"/>
+          <g class="t-sun"><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6"/></g>
+          <path class="t-moon" d="M20 13.4A8.2 8.2 0 1 1 10.6 4a6.6 6.6 0 0 0 9.4 9.4z"/>
+        </svg>
+        <span class="sr">Switch theme</span>
+      </button>
       <a class="get" href="#get">Get it</a>
     </nav>
   </div>
@@ -867,11 +991,11 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--p
 
 <div id="views"></div>
 
-<section class="feat">
+<section class="feat" style="--topic:var(--fwd)">
   <div class="wrap">
     <div class="cols rise">
       <div class="say">
-        <p class="num">01</p>
+        <p class="num"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h18"/><path d="M3 16h18"/><path d="M8 8v8"/><path d="M15 8v8"/></svg><b>01</b>Sequence</p>
         <h2>The sequence, with everything on it</h2>
         <p>Each stretch is one card: the enzymes above it, the primers that read 5′→3′, both strands, and each translation drawn directly under its own residues.</p>
       </div>
@@ -916,11 +1040,11 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--p
   </div>
 </section>
 
-<section class="feat">
+<section class="feat" style="--topic:var(--cut)">
   <div class="wrap">
     <div class="cols rise">
       <div class="say">
-        <p class="num">02</p>
+        <p class="num"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="1.6"/><path d="M8 8h3M13 12h3M8 16h3"/></svg><b>02</b>Digest</p>
         <h2>A digest you can read before you run it</h2>
         <p>Pick enzymes and the gel redraws as you type. Lanes are loaded by clicking the well, the ladder and the agarose are the ones you actually use, and a fragment that would run off the end is marked on the dye front rather than left out.</p>
       </div>
@@ -979,11 +1103,11 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--p
   </div>
 </section>
 
-<section class="feat">
+<section class="feat" style="--topic:var(--rev)">
   <div class="wrap">
     <div class="cols rise">
       <div class="say">
-        <p class="num">03</p>
+        <p class="num"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17c2.4 0 2.4-10 4.8-10s2.4 10 4.8 10 2.4-12 4.8-12S21 17 21 17"/></svg><b>03</b>Sanger</p>
         <h2>Sanger reads, against the construct they came from</h2>
         <p>Drop the <code>.ab1</code> files from a run and each is trimmed, aligned and laid under the reference as a pileup, with its own chromatogram in the same columns. A real difference is told apart from a decayed tail rather than counted with it.</p>
       </div>
@@ -1006,11 +1130,11 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--p
   </div>
 </section>
 
-<section class="feat">
+<section class="feat" style="--topic:var(--amber)">
   <div class="wrap">
     <div class="cols rise">
       <div class="say">
-        <p class="num">04</p>
+        <p class="num"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4l12 12M18 4 6 16"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/></svg><b>04</b>Design</p>
         <h2>Guides, arms and the oligos to order</h2>
         <p>A port of the lab's own R package: guide scoring, Golden Gate oligos, Gibson inverse-PCR primers and four-primer deletion arms — the thresholds and weights copied rather than reinvented, because they are tuned against real cloning outcomes.</p>
       </div>
@@ -1033,11 +1157,11 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--p
   </div>
 </section>
 
-<section class="feat">
+<section class="feat" style="--topic:var(--blue)">
   <div class="wrap">
     <div class="cols rise">
       <div class="say">
-        <p class="num">05</p>
+        <p class="num"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.4"/><path d="M12 3.6v3M12 17.4v3M3.6 12h3M17.4 12h3"/></svg><b>05</b>Genomes</p>
         <h2>A genome is a construct too</h2>
         <p>The linear map zooms from a whole chromosome down to two genes with a ruler over them, and the sequence scrolls a 4.6 Mb record without pages. An assembly of 186 contigs is listed down the side and read by hopping between its pieces.</p>
       </div>
@@ -1059,10 +1183,10 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--p
   </div>
 </section>
 
-<section class="plain onplate" id="toolbox">
+<section class="plain onplate" id="toolbox" style="--topic:var(--amber)">
   <div class="wrap">
     <div class="plainhead">
-      <p class="num">06</p>
+      <p class="num"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="8" height="8" rx="1.6"/><rect x="13" y="8" width="8" height="8" rx="1.6"/><path d="M7 5.5v2.5M17 5.5v2.5"/></svg><b>06</b>Toolbox</p>
       <h2>And the rest of the toolbox</h2>
       <p class="lede">60 of them, and none is an add-on: they are all in the one file, on all three platforms, working on the construct you already have open. The figures below are this machine's own measurements.</p>
     </div>
@@ -1156,10 +1280,10 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--p
   </div>
 </section>
 
-<section class="plain" id="formats">
+<section class="plain" id="formats" style="--topic:var(--fwd)">
   <div class="wrap">
     <div class="plainhead">
-      <p class="num">07</p>
+      <p class="num"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><path d="M9 13h6M9 16.5h4"/></svg><b>07</b>Files</p>
       <h2>It opens what your lab already has</h2>
       <p class="lede">And writes it back. Every claim here was checked against somebody else's reader — Biopython and <code>snapgene_reader</code> — over hundreds of this lab's own files, not against a fixture written by whoever wrote the test.</p>
     </div>
@@ -1192,10 +1316,10 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--p
   </div>
 </section>
 
-<section class="plain onplate" id="compare">
+<section class="plain onplate" id="compare" style="--topic:var(--blue)">
   <div class="wrap">
     <div class="plainhead">
-      <p class="num">08</p>
+      <p class="num"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v16"/><path d="M4 8h5M15 8h5"/><path d="m6.5 8-2.5 5h5zM17.5 8 15 13h5z"/></svg><b>08</b>Compare</p>
       <h2>Next to what people already use</h2>
       <p class="lede">Every cell below comes from that product's own public page, on the date in the note under the table. This is not a claim that the others are worse — they are older, broader and in several ways better resourced. It is a claim about <em>where the work happens</em>.</p>
     </div>
@@ -1243,9 +1367,9 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--p
   </div>
 </section>
 
-<section class="plain" id="questions">
+<section class="plain" id="questions" style="--topic:var(--slate)">
   <div class="wrap">
-    <p class="num">09</p>
+    <p class="num"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.4"/><path d="M9.7 9.6a2.4 2.4 0 1 1 2.7 3.1v1"/><path d="M12.4 16.4h.01"/></svg><b>09</b>Questions</p>
     <h2>Questions</h2>
     <div class="qs">
       <details>
@@ -1276,10 +1400,10 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--p
   </div>
 </section>
 
-<section class="beta" id="get">
+<section class="beta" id="get" style="--topic:var(--amber)">
   <div class="wrap">
     <div class="betabox">
-      <p class="num">10</p>
+      <p class="num"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.2 14.6 8l5.4.8-3.9 3.8.9 5.3L12 15.4 7 17.9l.9-5.3L4 8.8 9.4 8z"/></svg><b>10</b>Beta</p>
       <h2>Getting in during the beta</h2>
       <p style="margin-top:16px; max-width:66ch">Gene Studio is free to use and is not open source: it is given to named people for research. A licence is written for one computer and it takes a minute.</p>
       <ol class="steps">
@@ -1322,6 +1446,33 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--p
 </footer>
 
 <script>
+/* ── the theme control ──────────────────────────────────────────────────────
+   The head script already resolved the theme; this only flips it and writes the
+   choice down. A choice is *sticky* on purpose — once somebody has said which
+   they want, the system changing at sunset must not overrule them — so the
+   system is followed only while nothing has been stored. */
+(function(){
+  const root = document.documentElement, btn = document.querySelector('.themebtn');
+  if(!btn) return;
+  const say = () => {
+    const light = root.dataset.theme === 'light';
+    btn.setAttribute('aria-pressed', String(light));
+    /* the label is the act, not the state: the button offers the other theme */
+    const to = light ? 'the dark theme' : 'the light theme';
+    btn.title = 'Switch to ' + to;
+    btn.querySelector('.sr').textContent = 'Switch to ' + to;
+    /* the browser paints its own chrome from this, so it has to follow */
+    const m = document.querySelector('meta[name=color-scheme]');
+    if(m) m.content = light ? 'light' : 'dark';
+  };
+  btn.addEventListener('click', () => {
+    root.dataset.theme = root.dataset.theme === 'light' ? 'dark' : 'light';
+    try{ localStorage.setItem('gs-theme', root.dataset.theme); }catch(e){}
+    say();
+  });
+  say();
+})();
+
 /* ── the version, read from the feed the app itself updates ────────────────
    The release script moves feed.json last, after the files are up, so a version
    named here is a version that can be downloaded. Nothing is hard-coded: this
