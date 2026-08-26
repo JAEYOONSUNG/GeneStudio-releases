@@ -46,7 +46,39 @@ document.documentElement.dataset.theme=t;})()</script>
       Gene Studio <span class="tag">BETA</span>
     </a>
     <nav>
-      <a class="hide-s" href="#views">What it does</a>
+      <div class="feature-menu hide-s">
+        <button class="feature-trigger" type="button" aria-expanded="false"
+                aria-controls="featurePopover">
+          What it does
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m5 6 3 3 3-3"/></svg>
+        </button>
+        <div class="feature-popover" id="featurePopover" aria-label="Gene Studio workspaces" hidden>
+          <a class="feature-card sequence" href="#sequence">
+            <span class="feature-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6.5h16M4 12h16M4 17.5h16M8 4.5v4M13 10v4M17 15.5v4"/></svg></span>
+            <b>Sequence</b><span>Bases, primers, translations and every hit.</span>
+          </a>
+          <a class="feature-card digest" href="#digest">
+            <span class="feature-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="7" r="2.5"/><circle cx="6" cy="17" r="2.5"/><path d="m8 8.5 11 7M8 15.5l11-7"/></svg></span>
+            <b>Digest</b><span>Cut sites, methylation and a gel you can tune.</span>
+          </a>
+          <a class="feature-card sanger" href="#sanger">
+            <span class="feature-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 17h2.2c1.5 0 1.6-10 3.4-10s1.8 10 3.5 10 1.8-6.5 3.5-6.5 1.8 6.5 3.5 6.5h2.4"/></svg></span>
+            <b>Sanger</b><span>Traces aligned against the construct they came from.</span>
+          </a>
+          <a class="feature-card design" href="#design">
+            <span class="feature-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4l12 12M18 4 6 16"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/></svg></span>
+            <b>Design</b><span>Guides, cloning and the oligos to order.</span>
+          </a>
+          <a class="feature-card genomes" href="#genomes">
+            <span class="feature-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.4"/><path d="M12 3.6v3M12 17.4v3M3.6 12h3M17.4 12h3"/></svg></span>
+            <b>Genomes</b><span>Large records without turning the page into a wall.</span>
+          </a>
+          <a class="feature-card files" href="#formats">
+            <span class="feature-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h8l4 4v13H7zM15 3.5v4h4M7 6H4.5v14.5H15"/></svg></span>
+            <b>Your files</b><span>GenBank, SnapGene, FASTA and Sanger AB1.</span>
+          </a>
+        </div>
+      </div>
       <a class="hide-s" href="#formats">Your files</a>
       <a class="hide-s" href="#toolbox">Toolbox</a>
       <a class="hide-s" href="#compare">Compare</a>
@@ -148,7 +180,7 @@ document.documentElement.dataset.theme=t;})()</script>
 
 <div id="views"></div>
 
-<section class="feat" style="--topic:var(--fwd)">
+<section class="feat" id="sequence" style="--topic:var(--fwd)">
   <div class="wrap">
     <div class="cols rise">
       <div class="say">
@@ -197,7 +229,7 @@ document.documentElement.dataset.theme=t;})()</script>
   </div>
 </section>
 
-<section class="feat" style="--topic:var(--cut)">
+<section class="feat" id="digest" style="--topic:var(--cut)">
   <div class="wrap">
     <div class="cols rise">
       <div class="say">
@@ -260,7 +292,7 @@ document.documentElement.dataset.theme=t;})()</script>
   </div>
 </section>
 
-<section class="feat" style="--topic:var(--rev)">
+<section class="feat" id="sanger" style="--topic:var(--rev)">
   <div class="wrap">
     <div class="cols rise">
       <div class="say">
@@ -287,7 +319,7 @@ document.documentElement.dataset.theme=t;})()</script>
   </div>
 </section>
 
-<section class="feat" style="--topic:var(--amber)">
+<section class="feat" id="design" style="--topic:var(--amber)">
   <div class="wrap">
     <div class="cols rise">
       <div class="say">
@@ -314,7 +346,7 @@ document.documentElement.dataset.theme=t;})()</script>
   </div>
 </section>
 
-<section class="feat" style="--topic:var(--blue)">
+<section class="feat" id="genomes" style="--topic:var(--blue)">
   <div class="wrap">
     <div class="cols rise">
       <div class="say">
@@ -629,6 +661,55 @@ document.documentElement.dataset.theme=t;})()</script>
     say();
   });
   say();
+})();
+
+/* ── the six-workspace palette ─────────────────────────────────────────────
+   It is navigation, not a hover-only illustration: click/Enter opens it, the
+   links are ordinary anchors, Escape closes and returns focus, and a precise
+   pointer gets the same quick preview the reference menu provides. */
+(function(){
+  const host=document.querySelector('.feature-menu');
+  const trigger=host&&host.querySelector('.feature-trigger');
+  const panel=document.getElementById('featurePopover');
+  if(!host||!trigger||!panel)return;
+  const hover=matchMedia('(hover:hover) and (pointer:fine)');
+  const reduced=matchMedia('(prefers-reduced-motion:reduce)');
+  let hideTimer=0;
+  const open=()=>{
+    clearTimeout(hideTimer);panel.hidden=false;panel.inert=false;
+    trigger.setAttribute('aria-expanded','true');
+    requestAnimationFrame(()=>panel.classList.add('on'));
+  };
+  const close=(restore=false)=>{
+    clearTimeout(hideTimer);panel.classList.remove('on');panel.inert=true;
+    trigger.setAttribute('aria-expanded','false');
+    hideTimer=setTimeout(()=>{if(trigger.getAttribute('aria-expanded')==='false')panel.hidden=true;},
+      reduced.matches?0:170);
+    if(restore)trigger.focus();
+  };
+  /* A fine pointer opens it on hover before the click arrives. Treat that
+     click as confirmation rather than immediately toggling the panel shut;
+     touch/no-hover keeps ordinary button toggle behaviour. */
+  trigger.addEventListener('click',event=>
+    trigger.getAttribute('aria-expanded')==='false'?open():
+      (hover.matches&&event.detail>0?open():close()));
+  host.addEventListener('mouseenter',()=>{if(hover.matches)open();});
+  host.addEventListener('mouseleave',()=>{if(hover.matches){
+    clearTimeout(hideTimer);hideTimer=setTimeout(()=>close(),120);
+  }});
+  panel.addEventListener('click',event=>{
+    const link=event.target.closest('a');if(!link)return;
+    const target=link.hash&&document.querySelector(link.hash);
+    close();
+    requestAnimationFrame(()=>{
+      const heading=target&&(target.querySelector('h2')||target);
+      if(heading){heading.tabIndex=-1;try{heading.focus({preventScroll:true});}catch(_){heading.focus();}}
+    });
+  });
+  document.addEventListener('pointerdown',event=>{if(!panel.hidden&&!host.contains(event.target))close();});
+  document.addEventListener('keydown',event=>{
+    if(event.key==='Escape'&&!panel.hidden){event.preventDefault();event.stopPropagation();close(true);}
+  });
 })();
 
 /* ── the version, read from the feed the app itself updates ────────────────

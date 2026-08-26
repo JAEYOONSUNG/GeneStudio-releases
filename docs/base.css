@@ -89,7 +89,10 @@ section[id], div[id]{scroll-margin-top:74px}
 html.js .rise{opacity:0; transform:translateY(10px); will-change:transform;
   transition:opacity .5s ease, transform .5s ease}
 html.js .rise.in{opacity:1; transform:none}
-@media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} }
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .feature-popover,.feature-trigger svg,.feature-card{transition:none}
+}
 
 /* ── the strip along the top ─────────────────────────────────────────────── */
 header.rail{
@@ -112,10 +115,70 @@ header.rail{
 .rail nav{margin-left:14px; display:flex; align-items:center; gap:2px}
 .rail nav a{font-size:14px; color:var(--slate); text-decoration:none; padding:8px 12px; border-radius:999px; white-space:nowrap}
 .rail nav a:hover{color:var(--ink); background:rgba(255,255,255,.07)}
+.feature-menu{position:relative}
+.feature-trigger{
+  display:inline-flex; align-items:center; gap:4px; padding:8px 12px; border:0;
+  border-radius:999px; background:none; color:var(--slate); cursor:pointer;
+  font:400 14px/1.5 var(--ui); letter-spacing:-.017em; white-space:nowrap;
+  -webkit-appearance:none; appearance:none;
+}
+.feature-trigger:hover,.feature-trigger[aria-expanded="true"]{
+  color:var(--ink); background:rgba(255,255,255,.07)
+}
+.feature-trigger svg{width:14px; height:14px; fill:none; stroke:currentColor;
+  stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round;
+  transition:transform .16s ease}
+.feature-trigger[aria-expanded="true"] svg{transform:rotate(180deg)}
+/* The navigation's one expansive moment. It is deliberately a dark instrument
+   panel in both themes: the six colours belong to six kinds of molecular work,
+   while the rest of the landing page stays quiet and typographic. */
+.feature-popover{
+  --card-bg:#263033; --card-accent:#EAF0EE;
+  position:fixed; z-index:45; top:78px; left:50%; width:min(620px,calc(100vw - 24px));
+  display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:7px;
+  max-height:calc(100dvh - 90px); overflow-y:auto; overscroll-behavior:contain;
+  padding:8px; border:1px solid rgba(255,255,255,.10); border-radius:18px;
+  background:rgba(14,18,20,.97); color:#F4F7F6;
+  box-shadow:0 24px 70px rgba(0,0,0,.48),0 1px 0 rgba(255,255,255,.04) inset;
+  backdrop-filter:blur(20px) saturate(1.25);
+  transform:translate(-50%,-6px) scale(.985); transform-origin:50% 0;
+  opacity:0; transition:opacity .16s ease,transform .16s ease;
+}
+.feature-popover.on{opacity:1; transform:translate(-50%,0) scale(1)}
+.rail nav .feature-card{
+  display:grid; grid-template-columns:38px minmax(0,1fr); grid-template-rows:auto auto;
+  column-gap:10px; align-items:center; min-width:0; min-height:112px;
+  padding:15px 16px; border:1px solid rgba(255,255,255,.045); border-radius:14px;
+  background:var(--card-bg); color:#F5F8F7; text-decoration:none; white-space:normal;
+  transition:transform .14s ease,border-color .14s ease,filter .14s ease;
+}
+.rail nav .feature-card:hover,.rail nav .feature-card:focus-visible{
+  color:#FFFFFF; border-color:rgba(255,255,255,.18); background:var(--card-bg);
+  transform:translateY(-1px); filter:brightness(1.06)
+}
+.feature-icon{
+  grid-row:1 / span 2; display:grid; place-items:center; width:38px; height:38px;
+  border-radius:999px; background:var(--card-accent); color:#101516;
+}
+.feature-icon svg{width:20px; height:20px; fill:none; stroke:currentColor;
+  stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round}
+.feature-card b{align-self:end; color:#F8FAF9; font-size:16px; font-weight:600;
+  letter-spacing:-.015em; line-height:1.2}
+.feature-card > span:last-child{align-self:start; margin-top:4px; color:#BBC5C3;
+  font-size:13.5px; line-height:1.35}
+.feature-card.sequence{--card-bg:#20303B;--card-accent:#6ED5FF}
+.feature-card.digest{--card-bg:#382B20;--card-accent:#FFB86D}
+.feature-card.sanger{--card-bg:#3B2325;--card-accent:#FF939E}
+.feature-card.design{--card-bg:#203524;--card-accent:#8EDB61}
+.feature-card.genomes{--card-bg:#2C2946;--card-accent:#B9A0FF}
+.feature-card.files{--card-bg:#323335;--card-accent:#EDF2F0}
+@media (min-width:761px) and (max-height:500px){
+  .feature-popover{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
 /* the one thing to press, filled rather than outlined, inside the capsule */
 .rail nav a.get{color:var(--amber-ink); background:var(--amber); border:0; margin-left:6px; font-weight:600}
 .rail nav a.get:hover{background:#f0b055; color:var(--amber-ink)}
-@media (max-width:760px){ .rail nav a.hide-s{display:none} }
+@media (max-width:900px){ .rail nav .hide-s{display:none} }
 /* the theme control keeps the nav links' own shape — it is one more thing in
    the capsule, not a widget bolted to it — and it stays on a phone, where the
    links are the first things to go */
@@ -829,6 +892,8 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--p
 :root[data-theme="light"] .rail .wrap{ background:rgba(247,249,249,.95); border-color:#C3D0D1;
              box-shadow:0 12px 30px rgba(20,40,50,.14) }
 :root[data-theme="light"] .rail nav a:hover{ background:rgba(14,22,24,.06) }
+:root[data-theme="light"] .feature-trigger:hover,
+:root[data-theme="light"] .feature-trigger[aria-expanded="true"]{background:rgba(14,22,24,.06)}
 /* the pill's word, solved against the pill's own tint — see the note beside
    `.feat .num`. The fill and the ring stay the topic itself. */
 :root[data-theme="light"] section{ --topic-ink:color-mix(in oklab, var(--topic) 74%, #0E1618) }
