@@ -1,0 +1,188 @@
+/* ── the manual's own layer ───────────────────────────────────────────────────
+   Everything the guide shares with the landing page — tokens, type, the
+   capsule, the buttons, the frames, the pills, the light theme — is in
+   base.css and is not repeated here. What is here is the one thing the guide
+   is and the landing page is not: a **reference**, which is read by jumping to
+   a part rather than by scrolling from the top. So it has a contents column
+   that stays, headings you can link to, and three kinds of block a manual
+   needs and a pitch does not: a step, an example, and a key. */
+
+/* ── the two columns ───────────────────────────────────────────────────────── */
+.doc{max-width:1240px; margin:0 auto; padding:clamp(96px,11vh,132px) var(--pad) 0;
+  display:grid; grid-template-columns:246px minmax(0,1fr);
+  /* the gap belongs to the *column*: given to both axes it lands under the head
+     as well, on top of the margin the head already has — two descriptions of one
+     space, and measured they came to 110 px */
+  column-gap:clamp(28px,4vw,64px); row-gap:0;
+  align-items:start}
+@media (max-width:1000px){ .doc{grid-template-columns:minmax(0,1fr); gap:0} }
+
+/* **The contents has to stay, or a reference is a scroll.** It is sticky under
+   the capsule rather than fixed, so it scrolls with the page until it reaches
+   the top and then holds — and it gets its own scroll, because on a manual this
+   long the list is taller than a laptop screen. */
+.toc{position:sticky; top:86px; max-height:calc(100vh - 108px); overflow:auto;
+  padding-right:8px; scrollbar-width:thin}
+@media (max-width:1000px){
+  .toc{position:static; max-height:none; margin:0 0 30px; padding:16px 18px;
+    border:1px solid var(--hair); border-radius:14px; background:var(--ground)}
+}
+.toc b{display:block; font:600 11px/1 var(--mono); letter-spacing:.16em;
+  text-transform:uppercase; color:var(--faint); margin:0 0 12px}
+.toc ol{list-style:none; margin:0; padding:0; counter-reset:toc}
+.toc > ol > li{counter-increment:toc}
+.toc a{display:block; padding:5px 10px; border-radius:8px; text-decoration:none;
+  color:var(--slate); font-size:13.5px; letter-spacing:-.014em; line-height:1.35}
+.toc a:hover{background:var(--ground); color:var(--ink)}
+/* the part you are in, marked as you scroll — a contents that does not say
+   where you are is a list of links */
+.toc a.here{background:color-mix(in oklab, var(--amber) 14%, transparent);
+  color:var(--amber-text); font-weight:500}
+.toc > ol > li > a::before{content:counter(toc,decimal-leading-zero) '  ';
+  font-family:var(--mono); font-size:11px; opacity:.6}
+.toc ol ol{margin:1px 0 6px 0}
+.toc ol ol a{padding-left:34px; font-size:12.5px; color:var(--faint)}
+
+/* ── a part of the manual ──────────────────────────────────────────────────── */
+.part{padding:0 0 clamp(46px,6vw,78px); scroll-margin-top:92px}
+.part + .part{border-top:1px solid var(--hair); padding-top:clamp(40px,5vw,64px)}
+.part > h2{font-size:clamp(23px,2.6vw,31px); margin:0}
+.part .intro{margin:14px 0 0; max-width:66ch; color:var(--body)}
+.part h3{font-size:clamp(17px,1.6vw,19px); margin:clamp(28px,3.4vw,42px) 0 0;
+  scroll-margin-top:92px}
+.part h4{font-size:15px; font-weight:600; margin:22px 0 0; color:var(--ink)}
+.part p{margin:11px 0 0; max-width:66ch}
+.part ul, .part ol.plain{margin:12px 0 0; padding:0 0 0 20px; max-width:66ch}
+.part li{margin:7px 0; color:var(--body)}
+.part li b, .part p b{color:var(--ink); font-weight:600}
+/* a heading you can hand somebody: the anchor appears on hover and is a real
+   link, so a section of a manual can be cited rather than described */
+.part h2, .part h3{position:relative}
+.anch{position:absolute; left:-22px; top:0; width:22px; text-align:center;
+  color:var(--faint); text-decoration:none; opacity:0; font-weight:400}
+h2:hover .anch, h3:hover .anch, .anch:focus{opacity:1}
+@media (max-width:1000px){ .anch{display:none} }
+
+/* ── a key ─────────────────────────────────────────────────────────────────── */
+/* A shortcut is a *thing on a keyboard*, so it is drawn as one: the top edge
+   catches the light the way the reference's buttons do, which is the same inset
+   highlight and costs nothing here. */
+kbd{display:inline-block; min-width:1.6em; padding:2px 6px; border-radius:6px;
+  border:1px solid var(--line); background:var(--ground); color:var(--ink);
+  font:500 12px/1.5 var(--mono); letter-spacing:0; white-space:nowrap;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.07), 0 1px 0 var(--line)}
+:root[data-theme="light"] kbd{box-shadow:inset 0 1px 0 #fff, 0 1px 0 var(--line)}
+kbd + kbd{margin-left:3px}
+
+/* ── an example ────────────────────────────────────────────────────────────── */
+/* **The one thing a manual is judged on.** A sentence saying a box takes IUPAC
+   is a claim; `GGNRCC` in the box with what comes back under it is the answer.
+   So an example is a labelled block: what you type on top, what happens under
+   it, and the two told apart by ground rather than by a word. */
+.eg{margin:16px 0 0; border:1px solid var(--hair); border-radius:14px;
+  overflow:hidden; background:var(--ground); max-width:66ch}
+.eg-t{display:flex; align-items:center; gap:8px; padding:8px 14px;
+  border-bottom:1px solid var(--hair); background:var(--sunk);
+  font:600 10.5px/1 var(--mono); letter-spacing:.13em; text-transform:uppercase;
+  color:var(--faint)}
+.eg-t i{width:6px; height:6px; border-radius:999px; background:var(--topic); flex:none;
+  font-style:normal}
+.eg-b{padding:13px 15px; font:400 13px/1.65 var(--mono); color:var(--body);
+  overflow-x:auto; white-space:pre-wrap; word-break:break-word; letter-spacing:0}
+.eg-b em{font-style:normal; color:var(--ink); font-weight:500}
+.eg-b s{text-decoration:none; color:var(--faint)}
+/* the answer half, on the surface below the question */
+.eg-out{padding:12px 15px; border-top:1px dashed var(--hair); background:var(--sunk);
+  font:400 12.5px/1.6 var(--mono); color:var(--slate); white-space:pre-wrap;
+  overflow-x:auto; letter-spacing:0}
+.eg-out b{color:var(--ink); font-weight:500}
+
+/* ── steps ─────────────────────────────────────────────────────────────────── */
+/* Numbered, because a procedure has an order and a bullet does not say so. */
+ol.steps{counter-reset:st; list-style:none; margin:16px 0 0; padding:0; max-width:66ch}
+ol.steps > li{counter-increment:st; position:relative; padding:0 0 0 34px; margin:12px 0}
+ol.steps > li::before{content:counter(st); position:absolute; left:0; top:1px;
+  width:22px; height:22px; border-radius:999px; display:grid; place-items:center;
+  font:600 11px/1 var(--mono); color:var(--topic-ink);
+  background:color-mix(in oklab, var(--topic) 15%, transparent);
+  box-shadow:0 0 0 1px color-mix(in oklab, var(--topic) 26%, transparent) inset}
+
+/* ── a note, and a warning ─────────────────────────────────────────────────── */
+/* Two kinds, and they are told apart by colour because they are different
+   claims: one is worth knowing, the other costs you something if you skip it. */
+.note, .warn{margin:16px 0 0; padding:12px 15px; border-radius:12px; max-width:66ch;
+  border-left:3px solid var(--fwd); background:color-mix(in oklab, var(--fwd) 8%, transparent);
+  font-size:14.5px; color:var(--body)}
+.warn{border-left-color:var(--cut);
+  background:color-mix(in oklab, var(--cut) 8%, transparent)}
+.note b, .warn b{color:var(--ink)}
+.note p:first-child, .warn p:first-child{margin-top:0}
+
+/* ── a table of keys or fields ─────────────────────────────────────────────── */
+.dt{width:100%; border-collapse:collapse; margin:16px 0 0; font-size:14px;
+  max-width:66ch}
+.dt th{text-align:left; padding:8px 12px 8px 0; border-bottom:1px solid var(--line);
+  font:600 10.5px/1 var(--mono); letter-spacing:.12em; text-transform:uppercase;
+  color:var(--faint); white-space:nowrap}
+.dt td{padding:9px 12px 9px 0; border-bottom:1px solid var(--hair);
+  vertical-align:top; color:var(--body)}
+.dt td:first-child{white-space:nowrap; color:var(--ink)}
+.dt tr:last-child td{border-bottom:0}
+/* on a phone a table is a stack of cards, which is the rule the licence desk
+   already keeps for the same reason */
+@media (max-width:640px){
+  .dt, .dt tbody, .dt tr, .dt td{display:block; width:100%}
+  .dt thead{display:none}
+  .dt tr{border:1px solid var(--hair); border-radius:12px; padding:10px 13px;
+    margin:0 0 10px; background:var(--ground)}
+  .dt td{border:0; padding:3px 0}
+  .dt td:first-child{font-weight:600}
+  .dt td[data-l]::before{content:attr(data-l) '  '; font:600 10px/1 var(--mono);
+    letter-spacing:.1em; text-transform:uppercase; color:var(--faint)}
+}
+
+/* ── the head of the manual ────────────────────────────────────────────────── */
+/* **Half the page was empty to the right of the heading**, which is the fault
+   the overview already answers: prose keeps its measure, and past a certain
+   width the answer is a *second column* rather than a longer line. Measured at
+   1440 before this: the head 1,112 px wide with the title 512 and the lede 658,
+   both in the left half and 454 px of nothing beside them. Below 1080 there is
+   no room for two and it stacks in the order it is written. */
+.dochead{grid-column:1 / -1; margin:0 0 clamp(30px,4vw,52px)}
+.dochead h1{font-size:clamp(30px,4.2vw,46px); max-width:18ch; margin:14px 0 0;
+  text-align:left; margin-inline:0}
+.dochead .lede{max-width:56ch}
+.dochead .num{margin-bottom:0}
+@media (min-width:1080px){
+  .dochead{display:grid; grid-template-columns:minmax(0,1.02fr) minmax(0,1fr);
+    column-gap:clamp(28px,4vw,64px); row-gap:0; align-items:start}
+  .dochead .num{grid-column:1}
+  .dochead h1{grid-column:1; grid-row:2}
+  /* the lede starts on the title's own line rather than at the top of the
+     block: level with the pill it reads as a caption of it */
+  .dochead .lede{grid-column:2; grid-row:2; margin-top:10px}
+}
+
+/* ── where a picture belongs in a manual ───────────────────────────────────── */
+/* The scene card is the landing page's, and it is right here too: a figure in a
+   reference is still a product shot and still needs to sit on something. What
+   differs is that it is smaller and captioned as evidence rather than as a
+   promise. */
+.docfig{position:relative; margin:18px 0 0; max-width:66ch;
+  padding:clamp(10px,1.4vw,18px); border-radius:clamp(14px,1.6vw,20px);
+  background:color-mix(in oklab, var(--topic) 13%, var(--ground));
+  box-shadow:inset 0 0 28px rgba(255,255,255,.055);
+  --faint:#88999C}
+:root[data-theme="light"] .docfig{
+  background:color-mix(in oklab, var(--topic) 11%, #FFFFFF);
+  box-shadow:inset 0 0 28px #FFFFFF; --faint:#56686B}
+.docfig img, .docfig video{display:block; width:100%; height:auto;
+  border-radius:12px; background:var(--sunk)}
+.docfig figcaption{margin:11px 2px 0; font:400 12.5px/1.5 var(--mono);
+  color:var(--faint)}
+@supports not (color:color-mix(in oklab, red 10%, transparent)){
+  .docfig{background:var(--ground)}
+  ol.steps > li::before{background:var(--ground); color:var(--ink)}
+  .note, .warn{background:var(--ground)}
+  .toc a.here{background:var(--ground)}
+}

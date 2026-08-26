@@ -1,0 +1,1154 @@
+<!doctype html>
+<html lang="en" id="top">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gene Studio — the manual</title>
+<meta name="description" content="How to use Gene Studio: opening files, the three drawings, finding and editing, features and primers, digests and methylation, cloning and guide design, Sanger review, the annotation pipelines, exporting, and every keyboard shortcut — with worked examples.">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0D1315">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#F7F9F9">
+<meta name="color-scheme" content="light dark">
+<!-- before the first paint, or it is a flash of the wrong page — see base.css -->
+<script>(function(){var t;try{t=localStorage.getItem('gs-theme')}catch(e){}
+if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';
+document.documentElement.dataset.theme=t;})()</script>
+<meta property="og:title" content="Gene Studio — the manual">
+<meta property="og:description" content="Every part of the workbench, with worked examples.">
+<meta property="og:type" content="article">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23E8A33D' stroke-width='2.6'/%3E%3Ccircle cx='16' cy='5' r='3.1' fill='%234FB79E'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="base.css">
+<link rel="stylesheet" href="guide.css">
+</head>
+<body>
+
+<header class="rail">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg width="20" height="20" viewBox="0 0 32 32" aria-hidden="true">
+        <circle cx="16" cy="16" r="11" fill="none" stroke="#E8A33D" stroke-width="2.6"/>
+        <circle cx="16" cy="5" r="3.1" fill="#4FB79E"/>
+      </svg>
+      Gene Studio <span class="tag">BETA</span>
+    </a>
+    <nav>
+      <a class="hide-s" href="index.html">Overview</a>
+      <a class="hide-s" href="index.html#toolbox">Toolbox</a>
+      <a class="hide-s" href="index.html#formats">Your files</a>
+      <a class="hide-s" href="#keyboard">Keyboard</a>
+      <button class="themebtn" type="button" aria-pressed="false" title="Switch theme">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="1.9" stroke-linecap="round" aria-hidden="true">
+          <circle class="t-sun" cx="12" cy="12" r="4.1"/>
+          <g class="t-sun"><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6"/></g>
+          <path class="t-moon" d="M20 13.4A8.2 8.2 0 1 1 10.6 4a6.6 6.6 0 0 0 9.4 9.4z"/>
+        </svg>
+        <span class="sr">Switch theme</span>
+      </button>
+      <a class="get" href="index.html#get">Get it</a>
+    </nav>
+  </div>
+</header>
+
+<main class="doc">
+
+  <div class="dochead" style="--topic:var(--amber)">
+    <p class="num">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h9l5 5v11H5z"/><path d="M14 4v5h5"/><path d="M9 13h6M9 16.5h4"/></svg>
+      Manual
+    </p>
+    <h1>Every part of the workbench, with worked examples</h1>
+    <p class="lede">This is the long version. The <a href="index.html">overview</a> says what
+      Gene Studio is; this says how to do each thing in it, in the order you meet
+      them. Every keystroke, menu path and figure below is the one the current
+      build actually has — where a number is quoted it was measured, and where a
+      limit exists it is named rather than left to be discovered.</p>
+  </div>
+
+  <!-- ── contents ─────────────────────────────────────────────────────────── -->
+  <nav class="toc" aria-label="Contents">
+    <b>Contents</b>
+    <ol>
+      <li><a href="#start">Getting started</a>
+        <ol><li><a href="#install">Installing</a></li>
+            <li><a href="#licence">The licence</a></li>
+            <li><a href="#first">The first launch</a></li></ol></li>
+      <li><a href="#files">Your files</a>
+        <ol><li><a href="#formats">What it opens</a></li>
+            <li><a href="#library">The library</a></li>
+            <li><a href="#multi">Assemblies and multi-record files</a></li></ol></li>
+      <li><a href="#drawings">The three drawings</a>
+        <ol><li><a href="#map">The map</a></li>
+            <li><a href="#linear">The linear view</a></li>
+            <li><a href="#sequence">The sequence</a></li></ol></li>
+      <li><a href="#finding">Finding things</a>
+        <ol><li><a href="#find-dna">DNA, IUPAC and patterns</a></li>
+            <li><a href="#find-rest">The other four modes</a></li>
+            <li><a href="#near">When nothing matches</a></li></ol></li>
+      <li><a href="#editing">Selecting and editing</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#primers">Primers</a></li>
+      <li><a href="#digest">Enzymes and the digest</a>
+        <ol><li><a href="#sets">Enzyme sets</a></li>
+            <li><a href="#gel">The gel</a></li>
+            <li><a href="#methyl">Methylation</a></li></ol></li>
+      <li><a href="#cloning">Cloning and design</a></li>
+      <li><a href="#analysis">Analysis</a></li>
+      <li><a href="#sanger">Sanger reads</a></li>
+      <li><a href="#pipelines">Annotation pipelines</a></li>
+      <li><a href="#saving">Saving, exporting, figures</a></li>
+      <li><a href="#keyboard">Keyboard</a></li>
+      <li><a href="#wrong">When something looks wrong</a></li>
+    </ol>
+  </nav>
+
+  <div>
+
+  <!-- ═══ 01 ════════════════════════════════════════════════════════════════ -->
+  <section class="part" id="start" style="--topic:var(--fwd)">
+    <h2><a class="anch" href="#start" aria-label="Link to this section">#</a>Getting started</h2>
+    <p class="intro">Gene Studio is one application on three platforms and one file
+      inside all of them. There is no project to create and nothing to import: you
+      open a construct and it is open.</p>
+
+    <h3 id="install"><a class="anch" href="#install">#</a>Installing</h3>
+    <table class="dt">
+      <thead><tr><th>Platform</th><th>What you get</th><th>Updates</th></tr></thead>
+      <tbody>
+        <tr><td data-l="Platform">macOS</td><td data-l="What">A signed, notarized <code>.dmg</code>. Drag it to Applications.</td><td data-l="Updates">One press, in place.</td></tr>
+        <tr><td data-l="Platform">Windows</td><td data-l="What">An NSIS installer (<code>-setup.exe</code>), or a portable <code>.exe</code>.</td><td data-l="Updates">One press, in place.</td></tr>
+        <tr><td data-l="Platform">Linux</td><td data-l="What"><b>AppImage</b> — one file, run it. Or a <code>.deb</code> for apt.</td><td data-l="Updates">The AppImage updates itself; a <code>.deb</code> belongs to your package manager and says so.</td></tr>
+        <tr><td data-l="Platform">Browser / phone</td><td data-l="What">The same page over https. On iOS: Share → <b>Add to Home Screen</b>.</td><td data-l="Updates">Reload.</td></tr>
+      </tbody>
+    </table>
+    <div class="note"><p>The browser build is a <b>viewer</b>. Everything that reads a
+      construct is there — the three drawings, the digest and its gel, the alignment,
+      find, fold, the enzyme database and every export. What is off is everything that
+      would <em>change</em> the construct, because a browser cannot save the change
+      back to the file it came from, and a viewer that quietly loses an afternoon's
+      edits is worse than one that never offered them.</p></div>
+
+    <h3 id="licence"><a class="anch" href="#licence">#</a>The licence</h3>
+    <p>The app is free during the beta and is given to named people. A licence is a
+      few lines of signed text, verified <b>on your own machine</b> — nothing is sent
+      anywhere, so it works on a plane, and there is no server to be down.</p>
+    <ol class="steps">
+      <li>Open the app. The licence window shows your <b>Machine ID</b> — twelve hex
+        characters that identify the computer to nobody but the licence.</li>
+      <li>Press <b>Ask for a licence</b>. It fills in a message with your name,
+        e-mail, lab and country, copies the whole thing to the clipboard, then tries
+        your mail client. If nothing opens, paste it into any mail — the address is
+        printed as text so it can be typed.</li>
+      <li>Paste the block that comes back between the fenced lines, and press
+        <b>Unlock</b>.</li>
+    </ol>
+    <div class="eg">
+      <div class="eg-t"><i></i>What comes back</div>
+      <div class="eg-b">===== COPY EVERYTHING BETWEEN THESE LINES =====
+----- GENE STUDIO LICENCE -----
+holder: <em>Your Name &lt;you@lab.ac.kr&gt;</em>
+machine: <em>A1B2-C3D4-E5F6</em>
+issued: 2026-08-26
+expires: 2026-09-25
+…
+===== END OF LICENCE =====</div>
+      <div class="eg-out">Paste it whole, fences and all — the window strips them. It also
+puts the line breaks back if your mail client ran them together, drops
+<b>&gt;</b> quote markers, and says which part is missing as you paste.</div>
+    </div>
+    <p>A licence is bound to <b>one computer</b>, so the same file will not run
+      elsewhere. It ends by itself; you are told in the last week, once per launch,
+      with the date and the address to write to. Changing machines means asking again
+      with the new Machine ID.</p>
+
+    <h3 id="first"><a class="anch" href="#first">#</a>The first launch</h3>
+    <p>A demonstration construct opens so there is something to press. It is called
+      <code>pDEMO-T7</code> — 2,950 bp, circular, 13 features — and the regulatory
+      elements in it are real sequences while the stretches marked <em>filler</em> are
+      generated. It is not from any published plasmid, so nothing in it should be
+      cited.</p>
+    <p>After that the app opens whatever you last had open. The <kbd>⌂</kbd> button in
+      the toolbar, or <kbd>⇧</kbd><kbd>⌘</kbd><kbd>H</kbd>, goes back to the library.</p>
+  </section>
+
+  <!-- ═══ 02 ════════════════════════════════════════════════════════════════ -->
+  <section class="part" id="files" style="--topic:var(--fwd)">
+    <h2><a class="anch" href="#files">#</a>Your files</h2>
+    <p class="intro">Nothing is uploaded anywhere. The library is a record of
+      <em>where your files are</em>, not a copy of them, and a construct you open is
+      read off the disk each time so an edit made in Finder is visible at once.</p>
+
+    <h3 id="formats"><a class="anch" href="#formats">#</a>What it opens</h3>
+    <table class="dt">
+      <thead><tr><th>Format</th><th>Read</th><th>Written</th></tr></thead>
+      <tbody>
+        <tr><td data-l="Format">GenBank<br><code>.gb .gbk .gbff .genbank</code></td>
+            <td data-l="Read">Header and all, including the references, DBLINK and the structured comments.</td>
+            <td data-l="Written">Yes — the header is written back <b>verbatim</b>, and only the LOCUS line is rebuilt.</td></tr>
+        <tr><td data-l="Format">SnapGene<br><code>.dna</code></td>
+            <td data-l="Read">Features, colours, primers, notes, the edit history and any aligned Sanger traces inside it.</td>
+            <td data-l="Written">Yes. Packets this reader does not interpret ride along untouched.</td></tr>
+        <tr><td data-l="Format">FASTA<br><code>.fa .fasta .fna .faa</code></td>
+            <td data-l="Read">Every record, with its own description.</td>
+            <td data-l="Written">Yes, keeping the file's own description rather than replacing it.</td></tr>
+        <tr><td data-l="Format">Sanger<br><code>.ab1 .abi</code></td>
+            <td data-l="Read">A <b>read of the open construct</b>, not a construct of its own.</td>
+            <td data-l="Written">Kept with the construct, resampled.</td></tr>
+      </tbody>
+    </table>
+    <p>Anything else that looks like a sequence — a bare stretch of bases pasted from
+      an e-mail, with line numbers and spaces in it — is read as one.</p>
+
+    <h4>Four ways in</h4>
+    <ul>
+      <li><b>Drag and drop</b> onto the window. Several constructs open as several
+        tabs (up to eight; the rest go to the library and it says so). Several traces
+        all attach to the construct in front of you.</li>
+      <li><b>Open a folder</b> and every sequence and trace under it is listed, and
+        stays listed the next time. Scanning attaches and opens <em>nothing</em> —
+        saying where files are is not asking to read them.</li>
+      <li><b>Double-click in the Finder</b>. On Linux the file types are registered by
+        their <em>bytes</em> as well as their names, so a GenBank record saved as
+        <code>.txt</code> still opens here.</li>
+      <li><b>Paste</b> — <kbd>⌘</kbd><kbd>V</kbd> with nothing selected opens a box.
+        Paste bases or a whole record; it becomes its own tab.</li>
+    </ul>
+    <div class="note"><p><b>A cloud file that is not on disk is fetched when you open
+      it.</b> Dropbox leaves a 0-byte placeholder for a file kept online-only — that is
+      not a corrupt file, and the app says so and pulls it down. It only does this for
+      a file you asked for: a folder scan never downloads anything.</p></div>
+
+    <h3 id="library"><a class="anch" href="#library">#</a>The library</h3>
+    <p>The home screen groups the library by folder, newest-used first, with a
+      <b>Recent</b> row of the last four across the top. Right-click a tile for
+      <b>Show in Finder</b>, <b>Rename…</b> (the label here only — the file on disk is
+      untouched) and <b>Remove from library</b>.</p>
+    <p>The search box above it takes four forms, and they combine:</p>
+    <div class="eg">
+      <div class="eg-t"><i></i>Searching the library</div>
+      <div class="eg-b"><em>pG1t + RS15380</em>      both terms must match
+<em>pG1t -Jet</em>          matches pG1t, but not if "Jet" is in it
+<em>"a plain vector"</em>    the phrase, spaces and all
+<em>/v[23]\.gbk$/i</em>      a regular expression</div>
+      <div class="eg-out">A bare space is <b>not</b> a separator — <b>plain vector</b> still finds
+"a plain vector.dna". Only an exclusion is split off, and only at a word
+boundary, so the hyphen inside <b>pG1t-Pgap</b> is not one.</div>
+    </div>
+    <p>Korean filenames work: macOS stores them decomposed and the box folds both
+      sides to one form before they meet, so typing <code>박정수</code> finds
+      <code>Primer Box 박정수</code>.</p>
+
+    <h3 id="multi"><a class="anch" href="#multi">#</a>Assemblies and multi-record files</h3>
+    <p>A draft genome is one file and many molecules. Open a <code>.gbff</code> of 186
+      contigs and they are listed down the side: press one and the map, the sequence,
+      the features and the record drawer are all that contig's. A contig you edited
+      keeps its edits when you switch away and back, and is marked.</p>
+    <div class="warn"><p><b>Saving writes the whole file, not the contig.</b> The record
+      on screen is written in place and every other record is carried through byte for
+      byte, so a three-record file stays three records. Where the file has moved, or no
+      longer holds that record, the save is <b>refused with the reason</b> rather than
+      writing one molecule over an assembly.</p></div>
+  </section>
+
+  <!-- ═══ 03 ════════════════════════════════════════════════════════════════ -->
+  <section class="part" id="drawings" style="--topic:var(--blue)">
+    <h2><a class="anch" href="#drawings">#</a>The three drawings</h2>
+    <p class="intro">One molecule, drawn three ways, and each answers a different
+      question. They do not share their layer switches: what has to go to make a ring
+      legible is not what has to go for a row.</p>
+
+    <h3 id="map"><a class="anch" href="#map">#</a>The map — <kbd>⌘</kbd><kbd>1</kbd></h3>
+    <p>The whole construct at a glance. The backbone is <b>two concentric strands</b>:
+      top-strand features sit outside the pair and bottom-strand ones inside, so which
+      strand a gene is on needs no arrowhead to work out. A cut is a tick <em>through</em>
+      the backbone rather than a mark beside it, and a name that will not fit on its own
+      arc goes out to the margin on a leader.</p>
+    <ul>
+      <li><b>Drag the ring</b> and it measures — the arc, and how many bases it is.</li>
+      <li><b>Click two cut sites</b> and the distance between them is drawn. Click more
+        and every span between consecutive picks is drawn at once. Click bare ring to
+        clear.</li>
+      <li><b>Hover an enzyme name</b> and every cut that enzyme makes lights up.</li>
+      <li><b>Double-click a feature</b> — its arc <em>or</em> its name — to open it.
+        Double-click a primer anywhere it is drawn to edit it.</li>
+      <li><b>Right-click anything</b> for what can be done to it.</li>
+    </ul>
+    <p>A <b>linear</b> molecule is drawn on the same ring with a 20° gap at the top and
+      both ends capped, rather than as a second copy of the linear view.</p>
+    <div class="note"><p>On a genome the ring draws a spread of landmarks rather than
+      every locus, and <b>says so in its own centre</b>: <code>96 of 8,338 features ·
+      zoom in for more</code>. The number it can draw grows with the square of the zoom.
+      Cut sites start <em>off</em> above 400 kb, because a chromosome is cut somewhere
+      by nearly everything and the layer is a red band rather than a reading.</p></div>
+
+    <h3 id="linear"><a class="anch" href="#linear">#</a>The linear view — <kbd>⌘</kbd><kbd>2</kbd></h3>
+    <p>The same molecule unrolled, on one line by default. <b>Zoom is how much of the
+      molecule is on screen</b> — 1 is all of it, and past that the window is held by
+      its centre so zooming closes on what you were looking at. The caption says which
+      stretch is drawn, so a zoomed figure is a figure and not a picture.</p>
+    <div class="eg">
+      <div class="eg-t"><i></i>Taking a figure of one gene out of a chromosome</div>
+      <div class="eg-b">4.67 Mb genome, Linear view
+<em>zoom 1</em>    all of it, 24 rows, 4,647 coordinate labels
+<em>zoom 100</em>  46,715 bases, 68 labels
+<em>zoom 600</em>  <b>2,998,591–3,006,376</b> on one row — rpoB and rpoC as two
+            arrows with a ruler over them</div>
+      <div class="eg-out">Then <b>Export → Map / Linear (.pdf)</b>: vector, text as text,
+editable in Illustrator.</div>
+    </div>
+
+    <h3 id="sequence"><a class="anch" href="#sequence">#</a>The sequence — <kbd>⌘</kbd><kbd>3</kbd></h3>
+    <p>The bases, and this is the view that can be edited. A line reads the way a map
+      does, top to bottom: the enzyme names and their ticks, the primers that read
+      5′→3′, the sequence with its complement, each <b>translation drawn directly under
+      its own residues</b>, and then the primers that read 3′→5′ hanging under the
+      strand they run backwards along.</p>
+    <ul>
+      <li>Each stretch is drawn as <b>one card</b>, so a feature bar inside it belongs
+        to that line and not to the one above.</li>
+      <li>A feature above the top strand is on the top strand; one below the bottom
+        strand is on the bottom strand. There is nothing to work out.</li>
+      <li>A cut is a stepped <code>ㄴㄱ</code> through both strands, so which strand
+        breaks where — and which way the overhang points — reads off the bases.</li>
+      <li>A primer is drawn as <b>what it is</b>: the annealed bases on the line, the
+        5′ overhang and any designed mismatch stepped down out of the shaft, the 3′ end
+        an arrowhead.</li>
+      <li>Residues are <b>one letter or three</b> (<code>A</code> / <code>Ala</code>) —
+        the picker is in the tool strip, and a mutation quoted <code>Ala41Val</code> in
+        a paper needs no converting in your head.</li>
+    </ul>
+    <p>The strip along the bottom of the sequence and linear views is the
+      <b>navigator</b>: the whole molecule as a bar with every feature on it, the picked
+      enzymes as red ticks, and the part you are looking at as a lit box. Click to jump,
+      drag to scrub, wheel to roll, <kbd>⌘</kbd>-wheel to change how much of the molecule
+      it shows.</p>
+  </section>
+
+  <!-- ═══ 04 ════════════════════════════════════════════════════════════════ -->
+  <section class="part" id="finding" style="--topic:var(--rev)">
+    <h2><a class="anch" href="#finding">#</a>Finding things</h2>
+    <p class="intro">Five searches behind one box, docked across the window rather than
+      floating over the drawing. Each mode carries its own key, and the box keeps focus
+      so <kbd>⏎</kbd> walks the hits (<kbd>⇧</kbd><kbd>⏎</kbd> back).</p>
+
+    <table class="dt">
+      <thead><tr><th>Key</th><th>Mode</th><th>What it searches</th></tr></thead>
+      <tbody>
+        <tr><td data-l="Key"><kbd>⌘</kbd><kbd>F</kbd></td><td data-l="Mode">DNA sequence</td><td data-l="Searches">Both strands, IUPAC codes, or a regular expression.</td></tr>
+        <tr><td data-l="Key"><kbd>⌥</kbd><kbd>⌘</kbd><kbd>F</kbd></td><td data-l="Mode">Protein</td><td data-l="Searches">Only where the construct is actually translated.</td></tr>
+        <tr><td data-l="Key"><kbd>⇧</kbd><kbd>⌘</kbd><kbd>F</kbd></td><td data-l="Mode">Anything but the sequence</td><td data-l="Searches">Every field a feature carries, plus primers and cut sites.</td></tr>
+        <tr><td data-l="Key"><kbd>⇧</kbd><kbd>⌘</kbd><kbd>P</kbd></td><td data-l="Mode">Primer</td><td data-l="Searches">Your primers and the freezer.</td></tr>
+        <tr><td data-l="Key"><kbd>⌘</kbd><kbd>G</kbd></td><td data-l="Mode">Go to base / range</td><td data-l="Searches">A position or a stretch.</td></tr>
+      </tbody>
+    </table>
+
+    <h3 id="find-dna"><a class="anch" href="#find-dna">#</a>DNA, IUPAC and patterns</h3>
+    <div class="eg">
+      <div class="eg-t"><i></i>What the DNA box takes</div>
+      <div class="eg-b"><em>GAATTC</em>            plain bases, both strands
+<em>GGNRCC</em>            IUPAC — N is any base, R is A or G
+<em>GG.{3,8}CC</em>        a pattern: GG, three to eight of anything, CC
+<em>(GAATTC|GGATCC)</em>   either site
+<em>[AT]{6,}</em>          six or more A/T in a row
+<em>/gaattc/i</em>         a pattern that happens to be all letters</div>
+      <div class="eg-out">Anything carrying a metacharacter is compiled as a pattern; a query
+that will not compile falls back to a literal search rather than
+throwing the bar away. Hits are marked on <b>all three drawings</b>, faint
+for the ones you could step to and solid for the one you are on — and
+clicking a mark walks the search to it.</div>
+    </div>
+    <p>A hit that straddles the origin is kept as a <b>wrapping selection</b>, which is
+      what the rest of the app already means by <code>end &lt; start</code>. The same
+      stretch found on the other strand is one hit, not two.</p>
+
+    <h3 id="find-rest"><a class="anch" href="#find-rest">#</a>The other four modes</h3>
+    <p><b>Protein</b> is searched only in <em>coding regions</em> — a feature carrying a
+      <code>/translation</code>, a CDS, or any other feature that reads as an open frame.
+      A six-frame scan would answer with peptides from frames nothing is read in, which
+      are not proteins this construct makes. A recorded <code>/translation</code> wins
+      over translating the bases, because it is what the record asked to be believed.
+      <code>X</code> is any residue, <code>*</code> a stop, and a motif works:</p>
+    <div class="eg">
+      <div class="eg-t"><i></i>A peptide motif</div>
+      <div class="eg-b"><em>D..F</em>  or  <em>DXXF</em>  or  <em>D.{2,6}F</em></div>
+      <div class="eg-out">All three answer <b>residues 2–5</b> of MDQAFKL… — and the hit's label
+names the gene and the residues (<b>LacZ alpha · residue 5–10</b>). On a
+construct with nothing translated the bar reads <b>nothing translated</b>,
+which is a different answer from "no hits".</div>
+    </div>
+    <p><b>Anything but the sequence</b> reads name, type, note, product, locus tag, EC
+      number, inference and <em>any qualifier at all</em> — including a qualifier's
+      <em>key</em>, so "which of these has an EC number" is a search. It names the field
+      that matched. The bases and the recorded translation are deliberately left out;
+      that is what the other two modes are for.</p>
+    <p><b>Go to</b> takes <code>1200</code>, <code>1,200</code>,
+      <code>1200..1400</code>, <code>1200-1400</code>. A range that reads
+      <em>backwards</em> crosses the origin — <code>7713..4362</code> selects the way
+      round through base 1 — and on a linear molecule that is refused with the reason.
+      Anything that is not a number is handed to the DNA search.</p>
+    <div class="note"><p>The last five queries of each mode are one arrow away
+      (<kbd>↑</kbd> / <kbd>↓</kbd>), kept <b>per mode</b> and remembered between
+      launches, and what you had half-typed comes back when you walk off the end of the
+      list.</p></div>
+
+    <h3 id="near"><a class="anch" href="#near">#</a>When nothing matches</h3>
+    <p>The bar runs the <b>exact</b> search alone and, finding nothing, says
+      <code>no exact match</code> and offers <b>Find similar</b> beside the count.
+      Widening is a different question from the one you asked — <em>where is this</em>
+      has the answer "nowhere"; <em>what nearly matches it</em> is a second search — so
+      it is offered rather than run, and asked again for every query.</p>
+    <div class="eg">
+      <div class="eg-t"><i></i>A 500 nt fragment that has drifted</div>
+      <div class="eg-b">Paste it into <em>⌘F</em> → <s>no exact match</s>  [ Find similar ]</div>
+      <div class="eg-out">On a 1.88 Mb genome, a 500 nt query with 6% of its bases changed:
+found in <b>3 ms at 95.4% identity</b>. A 20,000 nt query: 29 ms. The
+molecule is indexed once and after that a query costs its own length.
+Gaps are not answered — this is "where does this nearly bind", which is
+an ungapped question.</div>
+    </div>
+    <p>A sequence pasted <b>wrapped</b> — off a paper, with coordinates down the side —
+      is joined into one query rather than searched line by line.</p>
+  </section>
+
+  <!-- ═══ 05 ════════════════════════════════════════════════════════════════ -->
+  <section class="part" id="editing" style="--topic:var(--amber)">
+    <h2><a class="anch" href="#editing">#</a>Selecting and editing</h2>
+    <p class="intro">A selection is one range, and every act below works on it. What is
+      <em>held</em> — a feature, a primer — is a different thing, and the toolbar says
+      which before you press.</p>
+
+    <h4>Making a selection</h4>
+    <ul>
+      <li><b>Drag</b> across the bases, the ring or the linear bar. The hover card
+        follows with the three figures a drag is made for — how long, what it melts at,
+        how GC-rich — up to 70 bp, past which those figures stop describing a primer.</li>
+      <li><b>Click a feature</b> and its span is selected.</li>
+      <li><b>Either side by…</b> in the right-click menu is the one that saves the most
+        time: with a caret it selects N bases either side of it, and with a stretch
+        already selected it <em>grows</em> that stretch by N at both ends. 50 to 5,000
+        in round steps, and the last one used leads the menu.</li>
+    </ul>
+    <div class="eg">
+      <div class="eg-t"><i></i>A gene and its flanks, in two clicks</div>
+      <div class="eg-b">Click the gene (300 bp) → right-click → <em>Either side by 500</em></div>
+      <div class="eg-out">1,300 bp selected. Near the origin on a circle it <b>wraps</b> rather
+than stopping; on a linear molecule it stops at each end.</div>
+    </div>
+
+    <h4>Changing the molecule</h4>
+    <table class="dt">
+      <thead><tr><th>Act</th><th>Where</th><th>Note</th></tr></thead>
+      <tbody>
+        <tr><td data-l="Act">Type a base</td><td data-l="Where">Sequence view, <b>Edit</b> on</td><td data-l="Note">A run of typing is <b>one</b> undo.</td></tr>
+        <tr><td data-l="Act">Insert / Replace</td><td data-l="Where">Type with Edit off, or right-click</td><td data-l="Note">A box opens showing the length and GC as you type.</td></tr>
+        <tr><td data-l="Act">Delete</td><td data-l="Where"><kbd>⌫</kbd>, the toolbar, right-click</td><td data-l="Note">Past 25 bases it asks, and <b>names what it costs</b> — including any feature the cut would consume.</td></tr>
+        <tr><td data-l="Act">Paste over</td><td data-l="Where"><kbd>⌘</kbd><kbd>V</kbd></td><td data-l="Note">The panel previews the junction and says if the bases are the same ones already there.</td></tr>
+        <tr><td data-l="Act">Reverse-complement here</td><td data-l="Where">Right-click a selection</td><td data-l="Note">In place. Distinct from <em>copy the reverse complement</em>.</td></tr>
+        <tr><td data-l="Act">Make this the origin</td><td data-l="Where">Right-click</td><td data-l="Note">Renumbers everything — features, colours and the soft mask move with the bases.</td></tr>
+        <tr><td data-l="Act">Upper / lower case</td><td data-l="Where">Right-click → Edit the molecule</td><td data-l="Note">Case is a <b>mask</b>, not the bases: soft masking survives an edit, a flip and a FASTA round trip.</td></tr>
+      </tbody>
+    </table>
+    <div class="warn"><p><b>Delete acts on what is held, not always on the DNA.</b> With a
+      feature held it removes the annotation and leaves every base; with a primer held it
+      removes the oligo and leaves the sequence; with a freezer tube held it does nothing
+      and says why. Only with nothing held and a stretch selected does it delete bases —
+      and the toolbar button says which of the three it will do <em>before</em> you press
+      it.</p></div>
+
+    <h4>Colour on the DNA</h4>
+    <p>A highlight is a mark on the molecule, not a feature — it never appears in the
+      feature table and is never written as an annotation. Select, right-click, pick a
+      colour, and choose <b>both / top / bottom</b>: a mark can mean something about one
+      strand. It is drawn on all three views, saved with the construct, and carried
+      through GenBank and <code>.dna</code> in a form other readers pass over without
+      complaining.</p>
+    <p><kbd>⌘</kbd><kbd>Z</kbd> undoes; every version is in <b>History</b>, laid out
+      around the saves, with <em>Open a copy</em> and <em>Revert to here</em> as two
+      different acts.</p>
+  </section>
+
+  <!-- ═══ 06 ════════════════════════════════════════════════════════════════ -->
+  <section class="part" id="features" style="--topic:var(--fwd)">
+    <h2><a class="anch" href="#features">#</a>Features</h2>
+    <p class="intro">Double-click a feature anywhere it is drawn. The window's title
+      <em>is</em> its name — type in it — and Type sits beside it, with the figures a
+      feature is judged by in a row underneath.</p>
+
+    <ul>
+      <li><b>Bases or residues.</b> A coding feature reads two ways, and the switch is
+        beside the label: the peptide is translated from the bases in the box, honouring
+        <code>/codon_start</code>, so the two views cannot disagree about which bases
+        they are of. The whole feature is in the box, in blocks of ten with the
+        coordinates of each line either side of it.</li>
+      <li><b>Segments.</b> A <code>join(61..180,241..360)</code> feature is one feature
+        in two pieces, and the dialog reads and edits them: the first segment is in
+        Start and End, the rest are rows under them. Two segments that overlap are legal
+        — that is how GenBank records a programmed ribosomal frameshift.</li>
+      <li><b>Qualifiers</b> keep <b>the record's own order</b>. They are dragged to
+        reorder (or moved with the arrows from the grip), and <em>Sort by name</em> is a
+        button rather than something the dialog does behind your back.</li>
+      <li><b>Ω</b> beside the name opens a palette of the characters a lab actually uses
+        — Δ, σ, ⁵⁴, ×, ′. Δ is the Greek capital letter, which is what a deletion is
+        written with.</li>
+    </ul>
+
+    <h4>Splitting a feature</h4>
+    <p>A gene interrupted by an insertion is <b>still one gene</b>. So what a split takes
+      is the stretch to <em>leave out</em>: select the insertion inside the feature,
+      right-click, and the feature closes over it. <em>Join … back into one</em> is the
+      way back.</p>
+
+    <h4>The Features tab — <kbd>⌘</kbd><kbd>4</kbd></h4>
+    <p>One picker, three depths:</p>
+    <table class="dt">
+      <thead><tr><th>Depth</th><th>Columns</th></tr></thead>
+      <tbody>
+        <tr><td data-l="Depth">Record</td><td data-l="Columns">The ordinary feature table.</td></tr>
+        <tr><td data-l="Depth">Full table</td><td data-l="Columns">Every field, and <b>a column per qualifier in the record</b> — a qualifier that appears once, on one feature of four thousand, still gets a column.</td></tr>
+        <tr><td data-l="Depth">Full + computed</td><td data-l="Columns">And the columns that are in no GenBank: %GC, residues, kDa, pI, GRAVY, and the ribosome binding site with its spacer and score.</td></tr>
+      </tbody>
+    </table>
+    <p>Past twenty columns the identity is <b>pinned</b> — name, and locus tag where the
+      record has one — so scrolling 6,000 px right still says which gene a row is about.
+      <code>Columns · 5</code> hides whole blocks at once. The filter marks the match
+      <em>inside</em> the cell, because filtering alone leaves you hunting a forty-column
+      row for why it matched. All four arrow keys move a cell, not a row.</p>
+    <p><b>Export this table (.xlsx)</b> writes what is on screen — the depth, the filter,
+      the sort, the column order, the blocks that are on — built from the rows rather
+      than scraped from the table, so it is not capped at the thousand rows drawn. A
+      second sheet says which table it was.</p>
+    <div class="note"><p>On a draft genome, <b>Every contig</b> builds one table over the
+      whole assembly with the contig as a column, and a picker narrows it to one. It is
+      built by asking each contig the same question the open one is asked, so the
+      computed columns cannot drift.</p></div>
+
+    <h4>Labelling the drawings</h4>
+    <p>A GenBank record carries several names for one feature. <b>Label the maps by</b>
+      — in the map's layer panel, both tool strips and the Features pane — switches every
+      drawing between <code>/gene</code>, <code>/locus_tag</code>, <code>/product</code>
+      and <code>/label</code>. A record carrying locus tags opens labelled by them,
+      because that is what every table and every BLAST hit uses.</p>
+    <p><b>Choose features…</b> in the map's layer panel is the whole list at once with a
+      preview beside it that follows every tick, plus <code>All</code>, <code>None</code>,
+      <code>Invert</code>, <code>Only these</code> and a chip per type. A construct back
+      from sequencing arrives carrying dozens of one-base variant features named
+      <code>C::G</code>; one press hides them all.</p>
+  </section>
+
+  <!-- ═══ 07 ════════════════════════════════════════════════════════════════ -->
+  <section class="part" id="primers" style="--topic:var(--rev)">
+    <h2><a class="anch" href="#primers">#</a>Primers</h2>
+    <p class="intro">Three sources, three switches, and none speaks for the others: the
+      construct's own primers, the freezer tubes, and the built-in universal set.</p>
+
+    <h4>Making and editing one</h4>
+    <p>Select a stretch, right-click, and take it forward or reverse-complemented — a
+      reverse primer is the other strand, so it is offered as its own item. Double-click
+      any primer, anywhere it is drawn, to edit it.</p>
+    <p>The dialog shows <b>where it lands</b>: a window of the construct drawn the way the
+      Sequence panel draws it — the ruler, the features it sits under, both strands, the
+      translation, and the oligo itself as the stepped arrow. It follows the box as you
+      type, and a primer that binds more than once gets a chip per site. Four tiles carry
+      what a primer is judged by, with the Tm on a fixed blue-to-red scale so 58 °C means
+      the same thing here as in the read-out bar.</p>
+    <div class="eg">
+      <div class="eg-t"><i></i>A primer that binds nowhere</div>
+      <div class="eg-out">It says so <b>once</b>, where the drawing would be, and why: the search
+holds the <b>3′ end exact</b> — that is the end a polymerase extends from —
+allows a couple of mismatches 5′ of it, and prints the bases it looked
+for. A primer designed against another construct binds nowhere here
+however much of its 5′ half matches.</div>
+    </div>
+
+    <h4>The freezer</h4>
+    <p>Point Settings at your primer workbook — folder and a name pattern, both globs —
+      and every tube in it is read at launch and cached until the file changes. The
+      lab's own <code>.xlsx</code> is read in the browser: one sheet per box, a sequence
+      column, a name column and a location column, found <b>by name rather than by
+      position</b>, because the sheet is kept by people.</p>
+    <p>Matching is built on two facts about real primers:</p>
+    <ul>
+      <li><b>A 5′ overhang matches nothing.</b> Restriction sites, Gibson arms and Golden
+        Gate ends are added at the 5′ end, so the <em>3′</em> end is what is searched for
+        and the overhang is measured rather than required.</li>
+      <li><b>Mismatches inside the annealing are the point of a mutagenic primer.</b> The
+        allowance (Settings, default 2) is 5′ of the seed. Stopping at the first mismatch
+        is what used to leave a perfectly good tube looking as though it bound nowhere.</li>
+    </ul>
+    <div class="eg">
+      <div class="eg-t"><i></i>On the demo construct, with the real workbook attached</div>
+      <div class="eg-out"><b>5,436 tubes scanned in 8 ms</b> — 31 bind, where an exact search finds 4.
+26 of them have overhangs and 15 carry mismatches.</div>
+    </div>
+    <p>A tube is <b>attached, not owned</b>: it never reaches a saved file, which is
+      checked on every way out. To keep one, tick it in the stock table and press
+      <b>Keep N with this construct</b>, or right-click the arrow and <b>Keep … with this
+      construct</b>. Where it sits in the freezer travels with it in the note, because
+      the shelf position is the one part of a tube that does not survive being copied.</p>
+    <div class="note"><p>One oligo can be <b>two arrows</b>. A primer is drawn once per
+      binding site, so deleting one that anneals twice takes two arrows and two names off
+      the drawing — which is said with the name, before the press and after it.</p></div>
+
+    <h4>Sequencing a gene</h4>
+    <p>Right-click a gene → <b>Sequence …</b>, or the planner at the foot of the Primers
+      view. It picks a tiling from the construct's own primers <em>and every freezer tube
+      that binds</em> — the freezer is searched even when it is not attached, because a
+      tube you already own is the one to reach for.</p>
+    <div class="eg">
+      <div class="eg-t"><i></i>What a read is assumed to be</div>
+      <div class="eg-out">Mixed for the first <b>25</b> bases, good for about <b>700</b> after that,
+measured from the primer's 3′ end — so a forward primer reads downstream
+and a reverse one upstream. Among primers that reach nearly as far, the
+one nearest <b>55 °C</b> wins. Gaps no primer reaches are <b>reported</b>, since
+that is where a new primer has to be designed.</div>
+    </div>
+  </section>
+
+  <!-- ═══ 08 ════════════════════════════════════════════════════════════════ -->
+  <section class="part" id="digest" style="--topic:var(--cut)">
+    <h2><a class="anch" href="#digest">#</a>Enzymes and the digest</h2>
+    <p class="intro">1,113 enzymes, parsed from REBASE and reconciled against each
+      company's own catalogue. Every enzyme NEB sells is in it.</p>
+
+    <h3 id="sets"><a class="anch" href="#sets">#</a>Enzyme sets</h3>
+    <p>The picker is on the Digest sidebar <em>and</em> on all three drawings — the map
+      is where anyone notices there are too many cuts. The order is the same everywhere:
+      what you pinned, then <b>All</b>, then one set per company, then the sets you
+      saved.</p>
+    <ul>
+      <li><b>A supplier is a set</b>, with the count in the name — Vivantis (240), NEB
+        (239), SibEnzyme (203), Thermo Fisher (183), Enzynomics (122), Takara (97) and
+        twenty more. Half of them were read off the company's own catalogue rather than
+        off REBASE, because REBASE is a mirror of what each company last sent it.</li>
+      <li><b>Your lab's set</b> — type or paste names into Settings, or tick them in
+        <em>Choose enzymes…</em>. What is recognised is said as you type
+        (<code>38 enzymes · not known: FooI</code>), because a typo in the middle of
+        forty pasted names is what cannot be found by reading them back.</li>
+      <li><b>From SnapGene</b> reads your existing custom sets out of SnapGene's own
+        folder. It is read-only; nothing is ever written there.</li>
+    </ul>
+    <p><b>Show</b> filters by cut count, and its default follows the pool: a curated set
+      shows <em>everything in it</em>, while All or a big record shows the single
+      cutters. An enzyme the filter dropped is <b>named</b>, not silently missing —
+      searching for it answers directly: <code>BglI (3×) cuts here, and Show is hiding it
+      because it cuts more than once.</code></p>
+    <div class="note"><p>Enzymes that cut <b>identically</b> are one line, because listing
+      MboI, DpnII, Bsp143I, BssMI, BstMBI and Kzo9I separately says there is a choice
+      where there is none. The line opens, and it carries a ⚠ when the members really
+      disagree about methylation — which is the choice that <em>is</em> real.</p></div>
+
+    <h3 id="gel"><a class="anch" href="#gel">#</a>The gel — <kbd>⇧</kbd><kbd>⌘</kbd><kbd>G</kbd></h3>
+    <ol class="steps">
+      <li>Type enzyme names into the four boxes. The list completes them — what cuts
+        <em>this</em> construct, fewest cuts first — and <kbd>⇥</kbd> takes the one left.
+        The gel redraws as the letters land.</li>
+      <li>Click a well to load into it. Either order works: pick the well then the
+        enzymes, or the enzymes then the well. An empty well you skipped stays empty.</li>
+      <li><b>Suggest digests</b> scores every combination for bands the agarose can
+        actually resolve and loads the best few as lanes.</li>
+    </ol>
+    <p>Beside the gel, the <b>molecule itself</b> is drawn divided at each cut and
+      coloured by fragment, with its genes above it — because the question a digest is
+      planned around is not <em>how big are the pieces</em> but <b>which piece is my gene
+      in</b>. The legend names what each piece carries, and a feature a cut runs through
+      is named as <b>destroyed</b>, in the cut colour.</p>
+    <div class="eg">
+      <div class="eg-t"><i></i>Quoting a digest</div>
+      <div class="eg-b">Right-click the fragment table</div>
+      <div class="eg-out"><b>5655+2723+2249+2005+1340</b> — largest first, the order you read a
+lane top-down. Also as one size a line for a spreadsheet, or the
+whole table as TSV. No thousands separators: this gets pasted into
+a calculation.</div>
+    </div>
+
+    <h3 id="methyl"><a class="anch" href="#methyl">#</a>Methylation</h3>
+    <p>Two hosts, because they answer different questions: what the DNA in hand
+      <b>carries</b> is a property of the strain it was grown in, and what it will
+      <b>meet</b> is a property of the organism it is going into. Pick both and the table
+      reads them — one line per methylase, the site, which base is marked, how many sites
+      are in this construct, which enzymes of the current set that mark stops, and how
+      many of the target's sites the DNA would arrive at unmarked.</p>
+    <p>Behind the verdict sit <b>2,672 published experiments</b> from REBASE over 435
+      enzymes, drawn in REBASE's own colours — green cuts, orange impaired, red not cut —
+      with every reference a link. Where REBASE has measured nothing for a pair, it says
+      that, which is not the same as "cuts".</p>
+    <div class="warn"><p>A blocked cut is called out <b>under the gel</b>, not only in the
+      table below it: the enzymes, the site counts, and a dam−/dcm− host to grow the
+      plasmid in.</p></div>
+    <p><b>Prices.</b> Paste your own quote once (<em>Prices…</em>) and every enzyme row
+      carries a per-unit figure and the cost of one 10 U digest. Built-in catalogue offers
+      carry their vendor, region and the date they were read — a price belongs to an
+      offer, and the same EcoRI is a different number in Seoul and in Boston.</p>
+  </section>
+
+  <!-- ═══ 09 ════════════════════════════════════════════════════════════════ -->
+  <section class="part" id="cloning" style="--topic:var(--amber)">
+    <h2><a class="anch" href="#cloning">#</a>Cloning and design</h2>
+    <p class="intro">Every panel here recomputes on each change and draws the construct
+      that comes out, because a design you have to press a button to see is a design
+      nobody iterates on.</p>
+
+    <h4>A region of one construct into another — Clone, <kbd>⌘</kbd><kbd>8</kbd></h4>
+    <p>Two parents, and a region picked on each <b>by pointing at it</b>: each parent's
+      whole molecule is drawn with its features on it, so clicking a feature makes it the
+      region and dragging makes the region what you dragged over. The from/to boxes stay
+      the truth and stay typeable.</p>
+    <p>The route is chosen by the length of the insert and both are named: <b>two
+      primers</b> up to 60 nt, with the insert riding on the tails; <b>four</b> past that
+      — two amplify the insert with the vector's own flanks as tails, two amplify the
+      vector outwards. That is how NEBuilder designs one, and it is the difference between
+      a design you can order and a 600-mer nobody sells.</p>
+    <div class="eg">
+      <div class="eg-t"><i></i>What comes out</div>
+      <div class="eg-out">A <b>new tab</b>, not the file the vector came from: 6,428 − 76 + 1,158 =
+<b>7,510 bp</b>, carrying the vector's registered primers, the four designed
+ones, and the donor's own features moved with its bases. A vector
+feature lying entirely inside the replaced region is <b>dropped</b> — the
+stuffer this design exists to remove.</div>
+    </div>
+
+    <h4>Golden Gate — Assembly, <kbd>⌘</kbd><kbd>9</kbd></h4>
+    <p>Every Type IIS enzyme in the table is offered, not nine written out by hand; the
+      conventional ones lead and the rest are marked <em>needs a vector</em>, because a
+      published overhang convention exists only for vectors people publish. Cut offsets
+      are derived from the enzyme table.</p>
+
+    <h4>Guides and deletion arms — <kbd>⌘</kbd><kbd>6</kbd></h4>
+    <p>A port of the author's own R package, with the nuclease table, filter thresholds,
+      composite weights and cut patterns copied rather than reinvented. Three products:
+      <b>gRNA only</b>, <b>deletion arms only</b>, and <b>gRNA + arms</b>.</p>
+    <ul>
+      <li>Which side of the spacer the PAM sits on is a property of the nuclease —
+        <code>SpCas9 · NGG · 3′</code> — and can be overridden for an engineered protein.</li>
+      <li>Off-target counts come from the <b>open construct</b>, not from Bowtie against a
+        genome index, and the screen says so. Point it at another open document to count
+        against a genome.</li>
+      <li>The editing vector is a real file you add by path, and starring it writes a
+        complete snapshot — DNA, features, primers, sites — to its own store, so moving or
+        changing the source cannot change your saved vector.</li>
+      <li>Both the gRNA site and the arm site are picked <b>on the template's actual
+        sequence</b>, drawn with the same ruler, feature arrows and translations the
+        Sequence view uses.</li>
+    </ul>
+    <p>After design the comparison is vertical — <b>Original template → exact replacement
+      → Transformed vector</b> — so each version gets the full width for its map and
+      coordinates.</p>
+
+    <h4>Silent mutations</h4>
+    <p>Right-click a selection inside a coding sequence: the restriction sites in the
+      current set that a <em>synonymous</em> change could create or remove there. Only
+      bases inside the recognition window are touched, both orientations are tried, and
+      each row shows the change as point mutations (<code>c123t</code>). Apply leaves the
+      translation identical while the site appears or goes.</p>
+  </section>
+
+  <!-- ═══ 10 ════════════════════════════════════════════════════════════════ -->
+  <section class="part" id="analysis" style="--topic:var(--blue)">
+    <h2><a class="anch" href="#analysis">#</a>Analysis</h2>
+    <p class="intro">Everything here runs on the construct that is open, on this machine,
+      with nothing sent anywhere. Each one can be written onto the construct as a real
+      feature of the format's own type.</p>
+
+    <table class="dt">
+      <thead><tr><th>Tool</th><th>What it answers</th><th>Cost</th></tr></thead>
+      <tbody>
+        <tr><td data-l="Tool">Terminators</td><td data-l="Answers">Does each gene have a terminator behind it — a GC-rich hairpin <em>and</em> a T-run, reported as separate components so you can see which is weak.</td><td data-l="Cost">A genome's 3′ ends, well under a second.</td></tr>
+        <tr><td data-l="Tool">Repeats</td><td data-l="Answers">Short tandem, longer tandem, imperfect (pytrf's own thresholds) and <b>inverted</b> — a hairpin, which no tandem-repeat finder looks for.</td><td data-l="Cost">311 nt in 2 ms.</td></tr>
+        <tr><td data-l="Tool">Palindromes</td><td data-l="Answers">Its own table, because a palindrome has no loop and cannot fold into a hairpin. Only even lengths exist.</td><td data-l="Cost">One pass.</td></tr>
+        <tr><td data-l="Tool">Fold a region</td><td data-l="Answers">The structure, drawn <em>as a structure</em> — helices as ladders, loops as circles — and as arcs, both coloured by helix.</td><td data-l="Cost">Cubic: 100 nt 22 ms, 300 nt 787 ms. Capped at <b>500 nt</b>.</td></tr>
+        <tr><td data-l="Tool">Fold profile</td><td data-l="Answers">Which <em>part</em> of a region does anything — a band under the sequence, base by base, with the construct's genes laid along it.</td><td data-l="Cost">600 nt at window 40, step 5: 100 ms.</td></tr>
+        <tr><td data-l="Tool">RBS &amp; codons</td><td data-l="Answers">The Shine–Dalgarno motif and its spacer, whether the ribosome can <em>reach</em> it, and the rare codons — with the 5′ head counted apart, because that is where a rare run meets the initiation complex.</td><td data-l="Cost">3.9 Mb genome, 6,706 CDS: 0.6 s.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="note"><p><b>DNA or transcript is a choice, not a detail.</b> The folding
+      engine picks its parameters from the letters, and the same 51-mer folds to
+      −10.6 kcal/mol with 10 pairs as DNA and <b>−21.4 with 15 pairs</b> as a transcript —
+      a different energy <em>and</em> a different structure. The panel asks, and re-folds
+      when the answer changes.</p></div>
+
+    <h4>The genetic code</h4>
+    <p>All 18 NCBI tables, written as <em>what each differs from the standard code</em>
+      rather than as sixty-four letters apiece — which is how they are described in the
+      literature and the only form a person can check by eye. The panel is the layout
+      everybody has seen since 1966, with two things a printed table usually leaves out:
+      the <b>start codons are marked</b>, and the <b>reassignments are named</b> in the
+      header.</p>
+    <div class="eg">
+      <div class="eg-t"><i></i>Why the table matters</div>
+      <div class="eg-out">Table 11 has the <b>same sixty-four assignments</b> as table 1 and differs
+only in what may begin a peptide — which is the whole reason a
+bacterial gene is annotated with it. Its starts are seven codons,
+including <b>ATT</b> and <b>ATC</b>; the standard code's are ATG, CTG and TTG.
+The feature panel names the table it judged by.</div>
+    </div>
+
+    <h4>Keeping what you found</h4>
+    <p>A row becomes a real feature — <code>terminator</code>, or
+      <code>repeat_region</code> with <code>/rpt_type</code> and
+      <code>/rpt_unit_seq</code> — with <code>/inference</code> saying what found it,
+      which is what stops a prediction being read later as somebody's curation. Twenty
+      terminators are added as <b>one</b> history entry, and a feature identical to one
+      already there is not added again.</p>
+  </section>
+
+  <!-- ═══ 11 ════════════════════════════════════════════════════════════════ -->
+  <section class="part" id="sanger" style="--topic:var(--rev)">
+    <h2><a class="anch" href="#sanger">#</a>Sanger reads — <kbd>⌘</kbd><kbd>0</kbd></h2>
+    <p class="intro">An <code>.ab1</code> is a <b>read of the open construct</b>, not a
+      construct of its own. Drop one — or twelve — and they attach and take you here.</p>
+
+    <ol class="steps">
+      <li><b>Point at your traces folder</b> (type or paste the path, or Choose…). Every
+        <code>.ab1</code> under it is listed, grouped by folder or by day, newest first.
+        Scanning attaches nothing.</li>
+      <li><b>Tick what you want</b> — a click ticks, a drag draws a band over several,
+        the folder icon takes a whole run — and press <b>Attach N</b>.</li>
+      <li>Read the <b>pileup</b>: the construct's own sequence as the axis, with the
+        feature and primer tracks over it, the consensus, and each read with its
+        chromatogram drawn in the same columns directly beneath its letters.</li>
+    </ol>
+
+    <h4>What the automatic check says</h4>
+    <p>Every read gets one of six verdicts, and the <code>Auto check ▾</code> heading is
+      the filter: tick the verdicts you want to see. <b>Detach shown · N</b> then takes
+      that whole group off in one act.</p>
+    <div class="note"><p><b>A base's own Phred is not enough to call a difference real.</b>
+      The end of a read decays into a stretch where a dozen calls disagree and several
+      still score Q30. So a difference is judged on its <em>neighbourhood's</em> quality
+      and on whether the read otherwise agrees around it. On the read this was built
+      against, <b>46 differences became 2 worth looking at and 44 in the tail</b>.</p></div>
+
+    <h4>Inspect</h4>
+    <p>One row: on the left a card carrying the position, the verdict, the gene, and the
+      <b>codon in the gene's own reading direction</b> with the read's bases under it and
+      the residue before and after — <code>Arg4 → Lys4 · missense</code>. On the right the
+      peaks in the same columns, with the base ruled through every row. <kbd>‹</kbd>
+      <kbd>›</kbd> step between the events worth looking at, substitutions
+      <em>and</em> indels.</p>
+    <p>A read with an indel is aligned <b>with a gap</b>, not read as a wall of
+      mismatches, and the seeds are chained — so a clone carrying a 116 bp tandem
+      duplication comes back as <b>9 mismatches and one insertion at 99.2% identity</b>
+      rather than 111 mismatches at 83%. Where a read runs into another part of the
+      construct entirely, that is said on screen (<code>⇢ 3,675</code>) rather than
+      letters simply stopping.</p>
+    <p><b>Frameshift or not</b> is worked out by translating the edit, so two indels that
+      cancel are reported as cancelling: <em>the frame returns: 2 indels cancel (net
+      0 nt), residues 47–61 differ</em>. No arithmetic on <code>len % 3</code> can tell
+      you that.</p>
+
+    <h4>BLAST a read</h4>
+    <p>The moment a clone comes back as something else, the question changes: what
+      <em>is</em> this. <b>BLAST</b> on the read's row searches the <code>.ab1</code>'s own
+      base calls — the trimmed span by default, because the mixed ends are what make a
+      search answer noise. A submitted job is written down and survives quitting; the
+      panel lists what is still owed and <em>Pick it up</em> fetches a finished one.</p>
+    <div class="warn"><p>BLAST, InterProScan and eggNOG-mapper are the only things here
+      that leave your machine, they run at <b>somebody else's</b> server, and each one has
+      to be ticked before it is sent.</p></div>
+  </section>
+
+  <!-- ═══ 12 ═══════════════════════════════════════════════════════════════ -->
+  <section class="part" id="pipelines" style="--topic:var(--fwd)">
+    <h2><a class="anch" href="#pipelines">#</a>Annotation pipelines</h2>
+    <p class="intro">Desktop only, because a page cannot run a binary.
+      <b>Settings → External Pipelines</b> is the one place that says what this computer
+      has, and the Annotate dialog is where they run.</p>
+
+    <table class="dt">
+      <thead><tr><th>Pipeline</th><th>Answers</th><th>Where it runs</th></tr></thead>
+      <tbody>
+        <tr><td data-l="Pipeline">Prodigal</td><td data-l="Answers">Where the genes are.</td><td data-l="Runs">Your machine, if installed. Found on PATH <em>and</em> in every conda/mamba env, because the base env is not activated in your shell.</td></tr>
+        <tr><td data-l="Pipeline">NCBI PGAP</td><td data-l="Answers">Genes, RNAs and product names in one pass — what RefSeq itself is annotated with.</td><td data-l="Runs">Docker. ~3 GB image, and reference data that <b>occupies 67 GB</b> (NCBI's "about 30 GB" is the download).</td></tr>
+        <tr><td data-l="Pipeline">SignalP 5.0 / 6.0</td><td data-l="Answers">Which proteins leave the cell — written back as <code>sig_peptide</code> and <code>mat_peptide</code>.</td><td data-l="Runs">Your machine. Free for academic use, downloaded from DTU after accepting a licence, so no button can fetch it.</td></tr>
+        <tr><td data-l="Pipeline">InterProScan</td><td data-l="Answers">Domains — five columns per member database, named exactly as the R organiser names them.</td><td data-l="Runs">EBI's REST service, or a local run's TSV dropped in.</td></tr>
+        <tr><td data-l="Pipeline">eggNOG-mapper</td><td data-l="Answers">Orthology and function, thirteen carried fields.</td><td data-l="Runs">Their web form — the app writes the FASTA and reads the result back.</td></tr>
+        <tr><td data-l="Pipeline">DefenseFinder</td><td data-l="Answers">Defence systems, from either of its two result tables.</td><td data-l="Runs">Their web form, or a local run's TSV.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="note"><p><b>Two e-mails, not one.</b> eggNOG-mapper's server does not start
+      the job when you submit the form — it mails a link that has to be <em>clicked</em>
+      to confirm it. That is the step people skip, and then wait a day for a result that
+      was never started. Both are named, in order, and what you sent is written down.</p></div>
+
+    <p>The join is <code>locus_tag</code> first and <code>protein_id</code> only when
+      <em>every</em> locus tag failed — the package's own rule, and not the obvious one: a
+      partial failure is not a reason to switch keys, because two keys matching different
+      subsets of one file is a merge nobody can check.</p>
+    <p><b>What a merge wrote can be taken back off.</b> These columns are somebody else's
+      answer and both services improve between releases, so each panel carries the same
+      line — <em>eggNOG-mapper has already answered for 59 genes here · 15 columns ·
+      Remove them</em> — and it is one history entry to undo. The record's own
+      <code>/product</code>, <code>/note</code> and <code>/gene</code> are never touched.</p>
+    <div class="eg">
+      <div class="eg-t"><i></i>How long an InterProScan really takes</div>
+      <div class="eg-out">A job costs about the same whatever is in it — <b>EBI's queue is the cost
+and the protein count is not</b>. 1 protein 140 s; 25 in one job 83 s;
+120 proteins in 5 jobs <b>215 s</b>. So the panel estimates in <em>rounds</em>,
+not in proteins. A run can be stopped and what came back is kept.</div>
+    </div>
+    <p>A gene whose protein carries an internal stop is left out and counted rather than
+      sent — both services refuse a <code>*</code>, and on a real genome that is 20 genes
+      of 800 spoiling a run.</p>
+  </section>
+
+  <!-- ═══ 13 ═══════════════════════════════════════════════════════════════ -->
+  <section class="part" id="saving" style="--topic:var(--amber)">
+    <h2><a class="anch" href="#saving">#</a>Saving, exporting, figures</h2>
+    <p class="intro">Two jobs and one writer cannot do both: what a <em>save</em> keeps is
+      everything the app knows, and what you <em>publish</em> is a different object.</p>
+
+    <h4>Saving</h4>
+    <p><kbd>⌘</kbd><kbd>S</kbd> writes back over the file the construct came from, through
+      a temporary file and a rename — so a save interrupted half way leaves the original,
+      not a truncated file.</p>
+    <p><b>Save As makes a copy; it does not move the tab you are in.</b> The copy opens as
+      its own tab and becomes active; the original is left exactly as it was, at its own
+      path, with its own unsaved edits if it had any.</p>
+
+    <h4>Export</h4>
+    <p><b>Export</b> in the toolbar opens a dialog rather than downloading at once: the
+      nine formats as rows that say what each is <em>for</em>, the file name as an
+      editable field, and a <b>preview of the real thing</b> — a sequence format shows the
+      file's own first forty lines with its line and byte count, a drawing shows the
+      actual SVG with the export palette applied, and a <code>.dna</code> says what it is
+      rather than showing bytes.</p>
+    <table class="dt">
+      <thead><tr><th>Format</th><th>For</th></tr></thead>
+      <tbody>
+        <tr><td data-l="Format">Same format as opened</td><td data-l="For">The obvious one.</td></tr>
+        <tr><td data-l="Format"><code>.gb</code> / <code>.gbk</code> / <code>.gbff</code></td><td data-l="For">The same writer under the extension your pipeline insists on.</td></tr>
+        <tr><td data-l="Format"><b>GenBank for sharing</b></td><td data-l="For">Everything only this program understands is dropped — and <b>named before the press</b>.</td></tr>
+        <tr><td data-l="Format"><code>.fasta</code></td><td data-l="For">Bases, keeping the file's own description and the soft mask.</td></tr>
+        <tr><td data-l="Format"><code>.dna</code></td><td data-l="For">SnapGene. Read by <code>snapgene_reader</code> and Biopython, and opened in SnapGene 8.2.2 itself.</td></tr>
+        <tr><td data-l="Format"><code>.svg</code> / <code>.pdf</code></td><td data-l="For">The map or the linear view as vector, text as text.</td></tr>
+      </tbody>
+    </table>
+    <div class="eg">
+      <div class="eg-t"><i></i>What the sharing copy says before you press it</div>
+      <div class="eg-out"><b>1 highlight · the oligos as ordered (the primer_bind features stay) ·
+6 of this app's own qualifiers on 1 feature (/Signature accession_Pfam, …)</b>
+
+Kept deliberately: <b>/ApEinfo_fwdcolor</b>, because it is not ours — ApE
+writes it and SnapGene reads it — and <b>/inference</b>, the format's own
+field. Written as <b>&lt;name&gt;_shared.gb</b>, since two downloads under one
+name is how the wrong one gets sent.</div>
+    </div>
+
+    <h4>Figures</h4>
+    <p>The drawing choices are <em>in</em> the export dialog, shown only for a format they
+      describe, and each repaints the preview as it is changed: whether features sit in
+      lanes beside the backbone or <b>on</b> it with a thin line between (the published
+      plasmid figure), the palette, the background, the typeface, the label size, the
+      padding, and whether the text stays text.</p>
+    <p><b>Show this on the map as well</b> puts the export palette on the drawing that is
+      on screen, so a figure is judged before it is a file rather than after.</p>
+    <div class="note"><p>A figure's typeface is part of the figure. Six stacks are offered
+      rather than six names, because a font that is not on the reader's machine falls
+      through to the next. Once a face is chosen it is chosen for <em>all</em> of the
+      drawing — a figure set in Times with Menlo numbers is two typefaces in one
+      picture.</p></div>
+  </section>
+
+  <!-- ═══ 14 ═══════════════════════════════════════════════════════════════ -->
+  <section class="part" id="keyboard" style="--topic:var(--slate)">
+    <h2><a class="anch" href="#keyboard">#</a>Keyboard</h2>
+    <p class="intro">On Windows and Linux read <kbd>Ctrl</kbd> for <kbd>⌘</kbd>. Every one
+      of these is also a menu item, so nothing here has to be memorised to be found.</p>
+
+    <h4>Files and windows</h4>
+    <table class="dt">
+      <tbody>
+        <tr><td data-l="Key"><kbd>⌘</kbd><kbd>N</kbd></td><td data-l="Does">New construct…</td></tr>
+        <tr><td data-l="Key"><kbd>⌘</kbd><kbd>O</kbd></td><td data-l="Does">Open…</td></tr>
+        <tr><td data-l="Key"><kbd>⌘</kbd><kbd>S</kbd></td><td data-l="Does">Save</td></tr>
+        <tr><td data-l="Key"><kbd>⇧</kbd><kbd>⌘</kbd><kbd>S</kbd></td><td data-l="Does">Save As…</td></tr>
+        <tr><td data-l="Key"><kbd>⇧</kbd><kbd>⌘</kbd><kbd>H</kbd></td><td data-l="Does">Home / Library</td></tr>
+        <tr><td data-l="Key"><kbd>⌘</kbd><kbd>,</kbd></td><td data-l="Does">Settings…</td></tr>
+        <tr><td data-l="Key"><kbd>⌘</kbd><kbd>+</kbd> <kbd>⌘</kbd><kbd>−</kbd> <kbd>⌘</kbd><kbd>0</kbd></td><td data-l="Does">Text size — and the rail shows the figure, because a shortcut is not an affordance</td></tr>
+      </tbody>
+    </table>
+
+    <h4>The views</h4>
+    <table class="dt">
+      <tbody>
+        <tr><td data-l="Key"><kbd>⌘</kbd><kbd>1</kbd></td><td data-l="Does">Map</td></tr>
+        <tr><td data-l="Key"><kbd>⌘</kbd><kbd>2</kbd></td><td data-l="Does">Linear</td></tr>
+        <tr><td data-l="Key"><kbd>⌘</kbd><kbd>3</kbd></td><td data-l="Does">Sequence</td></tr>
+        <tr><td data-l="Key"><kbd>⌘</kbd><kbd>4</kbd></td><td data-l="Does">Features</td></tr>
+        <tr><td data-l="Key"><kbd>⌘</kbd><kbd>5</kbd></td><td data-l="Does">Primers</td></tr>
+        <tr><td data-l="Key"><kbd>⌘</kbd><kbd>6</kbd></td><td data-l="Does">Guides</td></tr>
+        <tr><td data-l="Key"><kbd>⌘</kbd><kbd>7</kbd></td><td data-l="Does">Digest</td></tr>
+        <tr><td data-l="Key"><kbd>⌘</kbd><kbd>8</kbd></td><td data-l="Does">Clone</td></tr>
+        <tr><td data-l="Key"><kbd>⌘</kbd><kbd>9</kbd></td><td data-l="Does">Assembly</td></tr>
+        <tr><td data-l="Key"><kbd>⌘</kbd><kbd>0</kbd></td><td data-l="Does">Sanger</td></tr>
+        <tr><td data-l="Key"><kbd>⇧</kbd><kbd>⌘</kbd><kbd>G</kbd></td><td data-l="Does">Digest / Gel</td></tr>
+      </tbody>
+    </table>
+
+    <h4>Finding</h4>
+    <table class="dt">
+      <tbody>
+        <tr><td data-l="Key"><kbd>⌘</kbd><kbd>F</kbd></td><td data-l="Does">Find DNA sequence</td></tr>
+        <tr><td data-l="Key"><kbd>⌥</kbd><kbd>⌘</kbd><kbd>F</kbd></td><td data-l="Does">Find protein sequence</td></tr>
+        <tr><td data-l="Key"><kbd>⇧</kbd><kbd>⌘</kbd><kbd>F</kbd></td><td data-l="Does">Find enzyme or feature</td></tr>
+        <tr><td data-l="Key"><kbd>⇧</kbd><kbd>⌘</kbd><kbd>P</kbd></td><td data-l="Does">Find a primer</td></tr>
+        <tr><td data-l="Key"><kbd>⌘</kbd><kbd>G</kbd></td><td data-l="Does">Go to base / range</td></tr>
+        <tr><td data-l="Key"><kbd>⏎</kbd> / <kbd>⇧</kbd><kbd>⏎</kbd></td><td data-l="Does">Next / previous hit, with the box still focused</td></tr>
+        <tr><td data-l="Key"><kbd>↑</kbd> / <kbd>↓</kbd></td><td data-l="Does">The last five queries of <em>this</em> mode</td></tr>
+      </tbody>
+    </table>
+
+    <h4>On the sequence</h4>
+    <table class="dt">
+      <tbody>
+        <tr><td data-l="Key"><kbd>⌘</kbd><kbd>A</kbd></td><td data-l="Does">Select the whole construct — unless a text field has focus, which the page arbitrates and a global accelerator could not</td></tr>
+        <tr><td data-l="Key"><kbd>⌘</kbd><kbd>C</kbd></td><td data-l="Does">Copy the selection — or the text you dragged over, if there is any</td></tr>
+        <tr><td data-l="Key"><kbd>⌘</kbd><kbd>V</kbd></td><td data-l="Does">Paste — over a selection, or as a new tab with nothing selected</td></tr>
+        <tr><td data-l="Key"><kbd>⌘</kbd><kbd>Z</kbd></td><td data-l="Does">Undo. A run of typing is one step</td></tr>
+        <tr><td data-l="Key"><kbd>⌫</kbd></td><td data-l="Does">Delete the selection — asking past 25 bases</td></tr>
+        <tr><td data-l="Key">A C G T…</td><td data-l="Does">Insert, with <b>Edit</b> on. Any IUPAC letter</td></tr>
+        <tr><td data-l="Key"><kbd>r</kbd></td><td data-l="Does">Copy the reverse complement</td></tr>
+      </tbody>
+    </table>
+    <div class="note"><p><b>The keyboard follows the click.</b> Clicking on the sequence,
+      the map or the linear view takes focus off whatever field had it, so the bare-key
+      shortcuts work — naming a construct and then going to look at it is the commonest
+      way into this app. The find bar is the deliberate exception: its box keeps focus so
+      <kbd>⏎</kbd> steps through hits.</p></div>
+  </section>
+
+  <!-- ═══ 15 ═══════════════════════════════════════════════════════════════ -->
+  <section class="part" id="wrong" style="--topic:var(--cut)">
+    <h2><a class="anch" href="#wrong">#</a>When something looks wrong</h2>
+    <p class="intro">Most of these have been reported at least once, and every one of them
+      has an answer on screen if you know where it is.</p>
+
+    <h4>“An enzyme I know cuts this is missing”</h4>
+    <p><b>Show</b> is hiding it. The default is <em>unique cutters only</em> under a
+      catalogue-sized pool, so an enzyme that cuts three times is dropped. The list
+      <b>names</b> what the filter took out and carries one press back — and searching the
+      enzyme box for the name answers directly.</p>
+
+    <h4>“My primers are not showing”</h4>
+    <p>Three sources, three switches. <code>Primers</code> in the layer panel is the
+      construct's own; the freezer and the universal set have their own toggles. The
+      freezer is <b>off by default</b>, because a construct should open showing its own
+      oligos and not the lab's five thousand tubes.</p>
+
+    <h4>“It deleted two primers at once”</h4>
+    <p>It deleted one oligo that is drawn at <b>two binding sites</b>. The message says so
+      with the name, before the press and after it.</p>
+
+    <h4>“The file will not open — unrecognised format”</h4>
+    <p>Read the sentence. A <b>0-byte</b> file says it has no contents and that
+      downloading it may be what is needed — on Dropbox that is an online-only
+      placeholder, not a corrupt file. A file that really is unreadable says
+      <em>unrecognised</em>.</p>
+
+    <h4>“Opening a big file is slow”</h4>
+    <p>Over 400 kb, or where the scan would cost more than a quarter of a second, the
+      restriction scan is <b>deferred past the first paint</b> and the Scan button owns
+      it. That is the difference between "slow to open" and "opens, then fills in". A
+      4.2 Mb genome with 8,338 features opens in about 1.2 s.</p>
+
+    <h4>“The sequence view keeps jumping”</h4>
+    <p>It should not, and every path that could was closed. If it still does, it is worth
+      reporting with what you were doing — the Sanger panel's own scroll and the folded
+      sequence's window are both restored across a render deliberately.</p>
+
+    <h4>“Check again does nothing” / a pipeline is not found</h4>
+    <p><b>Settings → External Pipelines</b> is the authority, and it names each part
+      separately — the binary, the daemon, the wrapper, the data — rather than answering
+      "not configured", which covers three different problems and helps with none. A
+      Prodigal installed in a conda env no shell has activated <em>is</em> found.</p>
+
+    <h4>Reporting something</h4>
+    <p>There is a bug report in the app that fills in the version, the platform and what
+      was open. Or write to <b>genestudio.help@gmail.com</b> — and a critical bug is worth
+      a month on your licence, which is said in the message where you will read it.</p>
+  </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><b>Gene Studio</b> — a plasmid workbench, by Jae-Yoon Sung.
+      <a href="index.html">Overview</a> ·
+      <a href="index.html#get">Get it</a> ·
+      <a href="mailto:genestudio.help@gmail.com">genestudio.help@gmail.com</a></p>
+    <p class="fine">Free to use for research and not open source; copying, changing or
+      passing it on needs written permission. Third-party components keep their own
+      terms and every one of them is named in the app.</p>
+  </div>
+</footer>
+
+<script>
+/* ── the theme control, the same one the overview carries ──────────────────── */
+(function(){
+  const root = document.documentElement, btn = document.querySelector('.themebtn');
+  if(!btn) return;
+  const say = () => {
+    const light = root.dataset.theme === 'light';
+    btn.setAttribute('aria-pressed', String(light));
+    const to = light ? 'the dark theme' : 'the light theme';
+    btn.title = 'Switch to ' + to;
+    btn.querySelector('.sr').textContent = 'Switch to ' + to;
+    const m = document.querySelector('meta[name=color-scheme]');
+    if(m) m.content = light ? 'light' : 'dark';
+  };
+  btn.addEventListener('click', () => {
+    root.dataset.theme = root.dataset.theme === 'light' ? 'dark' : 'light';
+    try{ localStorage.setItem('gs-theme', root.dataset.theme); }catch(e){}
+    say();
+  });
+  say();
+})();
+
+/* ── which part you are in ──────────────────────────────────────────────────
+   A contents that does not say where you are is a list of links. The section
+   whose top has most recently passed under the capsule is the one you are in —
+   which is what a reader means by "where am I", and is stabler than asking
+   which is most visible, since a long part and a short one are not comparable.
+   IntersectionObserver with a top-heavy margin answers it without a scroll
+   handler that runs on every frame. */
+(function(){
+  const links = new Map();
+  for(const a of document.querySelectorAll('.toc a[href^="#"]'))
+    links.set(a.getAttribute('href').slice(1), a);
+  const parts = [...document.querySelectorAll('.part[id], .part h3[id]')]
+    .filter(el => links.has(el.id));
+  if(!parts.length) return;
+  let current = null;
+  const mark = id => {
+    if(id === current) return;
+    if(current && links.get(current)) links.get(current).classList.remove('here');
+    current = id;
+    const a = links.get(id);
+    if(!a) return;
+    a.classList.add('here');
+    /* keep it in view in its own scroller, but never scroll the page with it */
+    const box = a.closest('.toc');
+    if(box && box.scrollHeight > box.clientHeight){
+      const t = a.offsetTop - box.offsetTop;
+      if(t < box.scrollTop || t > box.scrollTop + box.clientHeight - 40)
+        box.scrollTop = Math.max(0, t - box.clientHeight / 2);
+    }
+  };
+  const seen = new Set();
+  const io = new IntersectionObserver(es => {
+    for(const e of es) e.isIntersecting ? seen.add(e.target) : seen.delete(e.target);
+    /* the last one whose top is above the fold */
+    let best = null;
+    for(const el of parts){
+      if(el.getBoundingClientRect().top <= 140) best = el;
+    }
+    if(best) mark(best.id);
+  }, {rootMargin: '-100px 0px -70% 0px', threshold: 0});
+  parts.forEach(p => io.observe(p));
+})();
+</script>
+
+</body>
+</html>
