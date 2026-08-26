@@ -31,7 +31,16 @@
      It is a page colour, used for one pill and one wash, and never for text
      the app itself draws. */
   --blue:#7BA8DE;
-  --ui:ui-sans-serif,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  /* **`ui-sans-serif` is three different pages.** It is SF on a Mac, Segoe on
+     Windows and whatever Fontconfig answers on Linux, and the tracking below
+     was measured against one of them. Inter is the closest thing to a neutral
+     grotesk that every platform can be given, and **Inter Tight** is what a
+     56 px headline at weight 500 needs: the display cut is drawn tighter, so
+     the −0.03em that makes a light weight hold together at that size does not
+     collide the letters. Both fall back to the old stack, so a reader on a slow
+     line gets the page in the system face and it settles rather than blocking. */
+  --ui:"Inter",ui-sans-serif,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --display:"Inter Tight","Inter",ui-sans-serif,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
   --pad:clamp(20px, 5vw, 64px);
   --wide:1180px;
@@ -58,7 +67,11 @@ body{
   -webkit-font-smoothing:antialiased;
   overflow-x:hidden;
 }
-h1,h2,h3{color:var(--ink); font-weight:500; line-height:1.2; letter-spacing:-.025em; margin:0}
+h1,h2,h3{color:var(--ink); font-family:var(--display); font-weight:500;
+  line-height:1.2; letter-spacing:-.028em; margin:0; text-wrap:balance}
+/* the display cut holds a tighter track the larger it is set; below 20 px it
+   is being used as a label rather than as a headline and wants the prose one */
+h3{letter-spacing:-.015em}
 a{color:inherit}
 /* **`height` is an attribute, and the phone gets a different picture.** Each
    frame carries a wide screenshot and a crop of it for narrow screens; with the
@@ -974,3 +987,462 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--p
     0 8px 19px -7px rgba(13,19,21,.20),
     0 26px 48px -22px rgba(13,19,21,.26);
 }
+
+/* ════════════════════════════════════════════════════════════════════════════
+   The composed page
+   ────────────────────────────────────────────────────────────────────────────
+   Everything below is the second pass over this page, read off two references
+   rather than invented: Shotbase's marketing page for its rhythm, and this
+   project's own two published sites — iLabel Studio and CommonNote — for the
+   parts those already got right. Four things were taken and the rest left:
+
+   **A centred pill, then a two-line display heading.** The reference opens
+   every chapter with a small capsule carrying one word and a headline under it
+   that is allowed to be genuinely large — 52 px at weight 500, tracked in hard
+   — and nothing else. It works because the capsule answers *what is this part
+   about* in one glance, so the headline is free to be a sentence rather than a
+   label.
+
+   **A chapter break that is a different colour of screen.** Feature, feature,
+   feature with nothing between them is a page nobody finds the shape of.
+
+   **A rail, not a list.** Steps collapsed to their titles with one open is how
+   you show a three-part job while somebody reads one part of it.
+
+   **A wall that fades rather than ending.** The point of a wall is that there
+   is more than fits; a tidy last row says the opposite.
+   ════════════════════════════════════════════════════════════════════════════ */
+
+/* ── the capsule, and the head it leads ─────────────────────────────────────
+   `.num` is the numbered sections' own pill and stays what it is: a section
+   ordinal and a topic colour. This is the other kind — a centred chapter head
+   with no number, where the capsule is quiet grey and the heading is the
+   loudest thing on the screen. */
+.kicker{
+  display:inline-block; margin:0 0 clamp(18px,2.4vw,26px);
+  padding:8px 17px; border-radius:999px;
+  font:500 13px/1 var(--ui); letter-spacing:.01em; color:var(--slate);
+  background:var(--ground); box-shadow:0 0 0 1px var(--hair) inset;
+}
+.centrehead{text-align:center; max-width:min(100%,840px); margin:0 auto}
+.centrehead h2{
+  font-family:var(--display); font-weight:500;
+  font-size:clamp(29px,4.6vw,52px); line-height:1.1; letter-spacing:-.032em;
+  margin:0;
+}
+/* the lede under a centred head is a caption of it, so it keeps a measure of
+   its own rather than running to the heading's width */
+.centrehead .lede{margin:18px auto 0; max-width:52ch; text-align:center; color:var(--slate)}
+/* `.centrehead` is capped at 24ch so the heading breaks into two lines rather
+   than one long one — but its own children must not inherit that cap */
+.centrehead > *{max-width:none}
+
+/* ── the row of names it agrees with ────────────────────────────────────────
+   A marquee is a decoration unless it is carrying something that genuinely
+   does not fit, and eleven names do not. It is duplicated in script rather
+   than in the markup: one copy is what a screen reader and a no-JS page get,
+   and the second exists only to make the loop seamless. */
+.agree{padding:clamp(30px,4vw,44px) 0 clamp(26px,3.4vw,38px); background:var(--paper);
+  border-bottom:1px solid var(--hair)}
+.agreetitle{margin:0 0 18px; text-align:center; font-size:13px; color:var(--faint);
+  letter-spacing:.02em}
+.marquee{
+  /* **Two copies side by side, each moved by its own whole width.** A block
+     container stacks the second copy under the first; a flex row puts it after
+     it, and then translating *both* by -100 % lands copy two exactly where copy
+     one started — which is the only form of this that loops with no gap and no
+     jump. The copy is made in script, so the markup carries one list. */
+  position:relative; overflow:hidden; display:flex;
+  /* the ends fade into the page rather than being cut by it, which is what
+     stops a moving row from reading as a strip pasted over the page */
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent);
+}
+.mqrow{display:flex; flex:0 0 auto; align-items:center; gap:clamp(26px,4vw,54px);
+  width:max-content; padding-left:clamp(26px,4vw,54px)}
+.marquee[data-on] .mqrow{animation:mq 42s linear infinite}
+.marquee:hover .mqrow{animation-play-state:paused}
+.mqrow span{
+  font:500 clamp(15px,1.6vw,19px)/1 var(--display); letter-spacing:-.02em;
+  color:var(--faint); white-space:nowrap; opacity:.85;
+  transition:color .2s ease, opacity .2s ease;
+}
+.mqrow span:hover{color:var(--ink); opacity:1}
+@keyframes mq{ from{transform:translateX(0)} to{transform:translateX(-100%)} }
+@media (prefers-reduced-motion:reduce){
+  .marquee[data-on] .mqrow{animation:none}
+  /* stopped, a max-content row would run off the edge; wrapped, it is a list */
+  .marquee{display:block}
+  .mqrow{flex-wrap:wrap; width:auto; justify-content:center; row-gap:14px; padding:0}
+  .marquee{-webkit-mask-image:none; mask-image:none}
+}
+
+/* ── the chapter break ──────────────────────────────────────────────────────
+   The one screen on the page that is not the page's own ground. It is the
+   application's deepest surface rather than a new colour, so it reads as the
+   product's own dark rather than as a black band dropped in. */
+/* **In the light theme this reads at a glance and in the dark one it does
+   not.** `--sunk` is #0A1012 against a #0D1315 page — 1.05:1, which is the
+   whole of the separation, so the break that carries the page's one statement
+   was invisible on the theme most readers see. It cannot go darker (the app's
+   floor is already here) and it must not take a colour of its own, so it is
+   *lit* rather than filled: one weak amber radial where the heading sits, in
+   the accent the page already uses, at a strength that reads as light on a
+   surface rather than as a coloured band. */
+.chapter{
+  position:relative; isolation:isolate;
+  background:var(--sunk); border-bottom:1px solid var(--hair);
+  padding:clamp(64px,10vw,124px) 0; text-align:center;
+  --ink:#EAF0EE; --body:#C6D2D0; --slate:#8A9B9D; --faint:#7B8E91;
+  --ground:#141C1F; --hair:#1E2A2D;
+}
+/* Measured at the light's strongest point, which is where the heading and the
+   eyebrow sit: the ground composites to rgb(32,31,22) and `--faint` reads
+   **4.83** there, `--slate` 5.73 and the eyebrow's amber on its own tint 5.40 —
+   and on the light theme's darker chapter ground 5.57 / 5.84 / 4.88. A wash
+   this weak is what keeps that true; at any strength that reads as a *colour*
+   it would be decoration competing with the sentence. */
+.chapter::before{
+  content:''; position:absolute; inset:0; z-index:-1; pointer-events:none;
+  background:
+    radial-gradient(46% 52% at 50% 26%, rgba(232,163,61,.10), transparent 72%),
+    radial-gradient(60% 60% at 50% 100%, rgba(79,183,158,.055), transparent 74%);
+}
+.chapter .wrap{position:relative}
+.chapter h2{
+  font-family:var(--display); font-weight:500;
+  font-size:clamp(27px,4.2vw,48px); line-height:1.12; letter-spacing:-.032em;
+  /* the line break is written into the heading, so the cap is only a guard for
+     a width the break was not chosen for — in `ch` it was four lines at 1440 */
+  max-width:min(100%,940px); margin:0 auto;
+}
+.chapter-eyebrow{margin-bottom:22px}
+.verbs{
+  display:flex; flex-wrap:wrap; justify-content:center;
+  gap:clamp(10px,2.6vw,44px); margin:clamp(38px,5vw,58px) 0 0; padding:0; list-style:none;
+}
+.verbs a{
+  display:grid; justify-items:center; gap:12px; padding:12px 14px; border-radius:16px;
+  font-size:14.5px; color:var(--slate); text-decoration:none;
+  transition:color .18s ease, background .18s ease, transform .18s ease;
+}
+.verbs a:hover{color:var(--ink); background:rgba(255,255,255,.05); transform:translateY(-2px)}
+.vb{display:grid; place-items:center; width:44px; height:44px}
+.vb svg{width:26px; height:26px; fill:none; stroke:currentColor; stroke-width:1.6;
+  stroke-linecap:round; stroke-linejoin:round; color:var(--faint);
+  transition:color .18s ease, transform .18s ease}
+.verbs a:hover .vb svg{color:var(--amber); transform:scale(1.06)}
+@media (max-width:620px){
+  .verbs{gap:6px}
+  .verbs a{padding:10px 6px; font-size:13px}
+  .vb{width:34px; height:34px}
+  .vb svg{width:21px; height:21px}
+}
+
+/* ── the three-move rail ────────────────────────────────────────────────────
+   Two things make this the reference's shape rather than a list with a picture
+   beside it. The rail carries **one continuous line** with a filled portion
+   that grows as the steps advance — so the whole job's length is visible while
+   one part of it is being read — and a step that is not current keeps its
+   title and loses its paragraph, which is what stops three paragraphs
+   competing for the same attention. */
+.flow{padding:clamp(58px,9vw,110px) 0; border-bottom:1px solid var(--hair)}
+.flowhead{max-width:min(100%,620px)}
+.flowhead h2{font-family:var(--display); font-weight:500;
+  font-size:clamp(27px,3.9vw,44px); line-height:1.12; letter-spacing:-.032em; margin:0}
+.flowhead .lede{max-width:50ch}
+.flowgrid{
+  display:grid; grid-template-columns:minmax(0,.86fr) minmax(0,1.14fr);
+  gap:clamp(26px,4.4vw,64px); align-items:center;
+  margin-top:clamp(34px,5vw,58px);
+}
+@media (max-width:900px){ .flowgrid{grid-template-columns:1fr; gap:30px} }
+.rail{list-style:none; margin:0; padding:0; position:relative}
+/* the line is the rail's own left edge, drawn once behind every step */
+.rail::before{
+  content:''; position:absolute; left:0; top:6px; bottom:6px; width:2px;
+  background:var(--hair); border-radius:2px;
+}
+.step{
+  position:relative; padding:0 0 0 26px; margin:0 0 4px;
+  cursor:pointer; -webkit-tap-highlight-color:transparent;
+}
+/* the filled portion: each step paints its own length of the line, so the fill
+   is exact at any content height rather than a percentage that has to be kept
+   in step with it */
+.step::before{
+  content:''; position:absolute; left:0; top:0; bottom:0; width:2px;
+  background:var(--topic); border-radius:2px;
+  transform:scaleY(0); transform-origin:top;
+  transition:transform .5s cubic-bezier(.2,.7,.2,1);
+}
+.step.done::before{transform:scaleY(1)}
+.step.on::before{transform:scaleY(1); transition-duration:.42s}
+.stepno{
+  display:inline-block; margin:0 0 10px; padding:6px 12px; border-radius:999px;
+  font:600 12px/1 var(--ui); letter-spacing:.02em;
+  color:var(--topic-ink); background:color-mix(in oklab, var(--topic) 16%, transparent);
+  box-shadow:0 0 0 1px color-mix(in oklab, var(--topic) 28%, transparent) inset;
+  opacity:0; height:0; overflow:hidden; padding-block:0; margin-bottom:0;
+  transition:opacity .3s ease;
+}
+.step.on .stepno{opacity:1; height:auto; padding-block:6px; margin-bottom:10px}
+.step b{
+  display:block; font-family:var(--display); font-weight:500;
+  font-size:clamp(18px,2.1vw,22px); letter-spacing:-.024em; color:var(--slate);
+  padding:14px 0; transition:color .25s ease;
+}
+.step.on b{color:var(--ink); padding-bottom:10px}
+.step:hover b{color:var(--ink)}
+/* **Collapsed by `grid-template-rows`, not by height.** A paragraph's height
+   is not knowable from the stylesheet — it depends on the measure, the face
+   and whether the font has arrived — so `height:0 → auto` cannot be
+   transitioned and `max-height` has to guess a number that is wrong at some
+   width. A grid row of `0fr → 1fr` is the one form of this that animates to
+   the content's real height at any measure. The child is what actually gets
+   clipped, so the paragraph's own text is wrapped in a span. */
+.step p{
+  margin:0; display:grid; grid-template-rows:0fr;
+  font-size:15.5px; color:var(--slate); max-width:46ch;
+  opacity:0;
+  transition:grid-template-rows .38s cubic-bezier(.2,.7,.2,1), opacity .3s ease;
+}
+.step p > span{min-height:0; overflow:hidden}
+.step.on p{grid-template-rows:1fr; opacity:1; padding-bottom:22px}
+
+.flowshot{margin:0; position:relative; isolation:isolate;
+  padding:clamp(12px,2vw,26px); border-radius:clamp(18px,2vw,28px);
+  background:color-mix(in oklab, var(--topic) 12%, var(--ground));
+  box-shadow:inset 0 0 28px rgba(255,255,255,.05);
+}
+.flowshot .frame{position:relative; z-index:1}
+/* every step's clip is in the frame at once and only one is drawn: swapping
+   the `src` would re-fetch and show a black box for a beat on every advance.
+   The toggle is on the *pair*, so `.wide`/`.narrow` still decide which of the
+   two inside it a given screen gets. */
+.flowclip{display:none}
+.flowclip.on{display:block}
+
+/* ── the ruled grid ─────────────────────────────────────────────────────────
+   Six cards put five borders between every pair. One grid ruled by its own
+   gaps puts one — the reference's own six-up shape, and the reason its feature
+   grid reads as a table of one thing rather than as a row of tiles. */
+.gridlines{
+  display:grid; grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:1px; margin-top:clamp(30px,4vw,46px);
+  background:var(--hair);
+}
+.gridlines > div{
+  background:var(--paper); padding:clamp(24px,3vw,36px) clamp(20px,2.4vw,32px);
+}
+section.plain.onplate .gridlines > div{background:var(--plate)}
+.gico{display:block; margin-bottom:18px}
+.gico svg{width:24px; height:24px; fill:none; stroke:var(--faint); stroke-width:1.55;
+  stroke-linecap:round; stroke-linejoin:round; transition:stroke .2s ease}
+.gridlines > div:hover .gico svg{stroke:var(--topic)}
+.gridlines h3{font-size:17px; display:flex; align-items:center; gap:9px; flex-wrap:wrap}
+.gridlines h3 code{font:500 12px/1 var(--mono); color:var(--amber);
+  background:var(--amber-soft); padding:5px 8px; border-radius:7px; letter-spacing:0}
+.gridlines p{margin:11px 0 0; font-size:14.5px; color:var(--slate); line-height:1.6}
+@media (max-width:900px){ .gridlines{grid-template-columns:repeat(2,minmax(0,1fr))} }
+@media (max-width:600px){ .gridlines{grid-template-columns:1fr} }
+
+/* ── the wall ───────────────────────────────────────────────────────────────
+   Full bleed, because the columns are what say there is more of this than the
+   page can hold; inside `.wrap` it would be four tidy columns and the point
+   would be gone. It is a **flex row of columns** rather than CSS `columns`:
+   the multi-column algorithm splits a card across a break, and a measurement
+   cut in half at the bottom of the screen is the one thing this section must
+   not do. */
+.wall{
+  position:relative; margin-top:clamp(34px,5vw,54px);
+  max-height:min(680px,86vh); overflow:hidden;
+  -webkit-mask-image:linear-gradient(180deg,#000 58%,transparent 99%);
+  mask-image:linear-gradient(180deg,#000 58%,transparent 99%);
+}
+.wallcols{display:flex; gap:14px; padding:0 var(--pad); align-items:flex-start}
+.wallcol{flex:1 1 0; min-width:0; display:grid; gap:14px}
+/* the second and fourth are dropped, so the row of tops is not a ruled line */
+.wallcol:nth-child(even){margin-top:clamp(20px,3vw,42px)}
+.wall blockquote{
+  margin:0; padding:20px 22px 18px; border-radius:18px;
+  background:var(--ground); box-shadow:0 0 0 1px var(--hair) inset;
+  transition:transform .18s ease, box-shadow .18s ease;
+}
+.wall blockquote:hover{transform:translateY(-2px);
+  box-shadow:0 0 0 1px var(--line) inset, 0 10px 30px -14px rgba(0,0,0,.5)}
+.wall blockquote p{margin:0; font-size:15px; line-height:1.58; color:var(--body)}
+.wall blockquote b{color:var(--ink); font-weight:600; font-variant-numeric:tabular-nums}
+.wall blockquote code{color:var(--amber); font-size:.88em}
+/* **A card on the plate is a fourth ground, and `--faint` was not solved for
+   it.** Measured, the citations read **3.66** on #223037 — the same reading,
+   for the same reason, that `.tbcard` two sections up already carries #89999C
+   for, so it takes the same value rather than a second answer to one question.
+   4.59 there, and still under `--slate`'s 4.69, so faint goes on reading as
+   faint. On light the card is white and the plate-safe #56686B is 5.85. */
+.wall blockquote{--faint:#89999C}
+:root[data-theme="light"] .wall blockquote{--faint:#56686B}
+.wall cite{
+  display:block; margin-top:12px; font:400 12px/1.45 var(--mono);
+  font-style:normal; color:var(--faint); letter-spacing:-.01em;
+}
+@media (max-width:1000px){ .wallcol:nth-child(n+4){display:none} }
+@media (max-width:720px){ .wallcol:nth-child(n+3){display:none} }
+@media (max-width:520px){
+  .wallcol:nth-child(n+2){display:none}
+  .wall{max-height:min(560px,80vh)}
+}
+/* the wall is a sample, so it says so rather than letting the fade imply the
+   list simply stops */
+.wallmore{
+  margin:clamp(20px,3vw,30px) auto 0; text-align:center;
+  font-size:13.5px; color:var(--faint);
+}
+.wallmore a{color:var(--slate); text-underline-offset:3px}
+
+/* ── the questions, beside their own title ──────────────────────────────────
+   The heading column is sticky so the thing being read is always under the
+   thing that says what it is, and each question is a filled row rather than a
+   ruled one: ten hairlines down a column read as a table of contents, and ten
+   soft rows read as ten separate things to open. */
+.qwrap{display:grid; grid-template-columns:minmax(0,.72fr) minmax(0,1.28fr);
+  gap:clamp(28px,5vw,72px); align-items:start}
+@media (max-width:900px){ .qwrap{grid-template-columns:1fr; gap:26px} }
+@media (min-width:901px){
+  .qhead{position:sticky; top:96px}
+}
+.qhead h2{font-family:var(--display); font-size:clamp(26px,3.4vw,38px);
+  letter-spacing:-.03em; margin:0}
+.qhead .lede{margin-top:14px; font-size:16px; max-width:34ch; color:var(--slate)}
+.qs{margin-top:0; border-top:0; display:grid; gap:10px}
+.qs details{
+  border-bottom:0; border-radius:18px; background:var(--ground);
+  box-shadow:0 0 0 1px var(--hair) inset;
+  transition:box-shadow .2s ease, background .2s ease;
+}
+.qs details:hover{box-shadow:0 0 0 1px var(--line) inset}
+.qs details[open]{background:var(--sunk)}
+.qs summary{padding:20px 52px 20px 24px; font-size:16.5px; font-weight:500}
+.qs summary::after{
+  content:''; right:22px; width:11px; height:11px; border-right:2px solid var(--slate);
+  border-bottom:2px solid var(--slate); border-radius:1px;
+  transform:translateY(-70%) rotate(45deg); transition:transform .22s ease;
+}
+.qs details[open] summary::after{content:''; transform:translateY(-30%) rotate(225deg)}
+.qs details p{margin:0; padding:0 26px 22px; font-size:15.5px; max-width:66ch}
+/* it opens rather than appearing: a row that changes height with no motion
+   reads as the page having jumped */
+@media (prefers-reduced-motion:no-preference){
+  .qs details[open] p{animation:qopen .3s cubic-bezier(.2,.7,.2,1) both}
+}
+@keyframes qopen{ from{opacity:0; transform:translateY(-4px)} to{opacity:1; transform:none} }
+
+/* ── the two ways to write ──────────────────────────────────────────────── */
+.contact{padding:clamp(58px,9vw,104px) 0; border-top:1px solid var(--hair)}
+.ccards{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px;
+  margin-top:clamp(34px,5vw,52px)}
+@media (max-width:820px){ .ccards{grid-template-columns:1fr} }
+.ccard{
+  background:var(--ground); border-radius:clamp(20px,2.2vw,28px);
+  box-shadow:0 0 0 1px var(--hair) inset;
+  padding:clamp(26px,3.4vw,40px); display:flex; flex-direction:column; align-items:flex-start;
+}
+.ctile{
+  display:grid; place-items:center; width:56px; height:56px; border-radius:17px;
+  background:var(--paper); box-shadow:0 0 0 1px var(--hair) inset, 0 6px 18px -12px rgba(0,0,0,.6);
+  margin-bottom:22px;
+}
+.ctile svg{width:27px; height:27px; fill:none; stroke:var(--tile); stroke-width:1.7;
+  stroke-linecap:round; stroke-linejoin:round}
+.ccard h3{font-size:clamp(19px,2.1vw,23px); letter-spacing:-.025em}
+.ccard p{margin:12px 0 0; font-size:15px; color:var(--slate); max-width:44ch}
+.ccard .btn{margin-top:26px; border-radius:999px; padding:12px 22px}
+
+/* ── the footer, which is the page's own contents ─────────────────────────── */
+footer{padding:clamp(48px,7vw,76px) 0 0}
+.foot{
+  display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,1.5fr);
+  gap:clamp(30px,5vw,64px); align-items:start;
+}
+@media (max-width:860px){ .foot{grid-template-columns:1fr; gap:34px} }
+.footbrand .brand{font-size:17px; margin-bottom:16px}
+.footbrand p{margin:0; font-size:14.5px; color:var(--slate); max-width:46ch; line-height:1.6}
+.footfine{margin-top:14px !important; font-size:13px !important; color:var(--faint) !important}
+/* **A column of 1fr is mostly the space after its longest word.** Three equal
+   columns holding words of nine characters left the footer's right third empty
+   while every column carried a ragged 130 px of nothing. Sized to their content
+   and spread across the track, the columns end where the page's content column
+   does, which is the edge everything else on the page lines up with. */
+.footcols{display:grid; grid-template-columns:repeat(3,max-content);
+  justify-content:space-between; gap:22px clamp(24px,4vw,56px)}
+@media (max-width:520px){
+  .footcols{grid-template-columns:repeat(2,max-content); justify-content:start; gap:26px 40px}
+}
+.footcol{display:grid; align-content:start; gap:2px}
+.footcol b{margin-bottom:10px; font-size:14px; font-weight:600; color:var(--ink);
+  letter-spacing:-.015em}
+.footcol a{font-size:14px; color:var(--slate); text-decoration:none; padding:6px 0}
+.footcol a:hover{color:var(--ink)}
+.footend{
+  display:flex; flex-wrap:wrap; gap:10px 24px; justify-content:space-between;
+  margin-top:clamp(38px,5vw,58px); padding-top:22px; padding-bottom:34px;
+  border-top:1px solid var(--hair); font-size:13px; color:var(--faint);
+}
+.footver{font-family:var(--mono); font-size:12px; letter-spacing:-.01em}
+
+/* ── the light theme's answers for all of the above ─────────────────────────
+   The rules above are the dark theme and they reach light too, which is the
+   trap this file already names twice: a token left unanswered here applies its
+   dark value on a white ground. Each of these was measured on the surface it
+   is actually composited over. */
+:root[data-theme="light"] .chapter{
+  /* the chapter break is the one screen that stays dark in both themes — it is
+     a picture of the application, which is dark, and a light band between two
+     light sections would separate nothing */
+  background:#101A1D; border-color:#101A1D;
+  --ink:#F3F7F6; --body:#C9D5D3; --slate:#93A5A7; --faint:#8FA1A4;
+  --ground:#18262A; --hair:#243338;
+  /* **And the accent, which is a colour in the dark and a reading in the
+     light.** The light theme darkens `--amber` to #97590A so 11.5 px of it
+     clears 4.5 on white — and this block is the one screen that stays dark, so
+     that value lands on a near-black ground: measured, the eyebrow read
+     **2.52**. The dark theme's own amber is what belongs on a dark ground, and
+     on this one it reads 5.89 over its own tint. */
+  --amber:#E8A33D; --amber-soft:rgba(232,163,61,.18); --amber-ink:#1a1205;
+}
+:root[data-theme="light"] .agree{background:var(--paper)}
+:root[data-theme="light"] .kicker{background:#FFFFFF; box-shadow:0 0 0 1px var(--line) inset}
+:root[data-theme="light"] .wall blockquote{
+  background:#FFFFFF; box-shadow:0 0 0 1px var(--hair) inset;
+}
+:root[data-theme="light"] .wall blockquote:hover{
+  box-shadow:0 0 0 1px var(--line) inset, 0 12px 30px -18px rgba(20,40,50,.4);
+}
+:root[data-theme="light"] .qs details{background:#FFFFFF}
+:root[data-theme="light"] .qs details[open]{background:var(--sunk)}
+:root[data-theme="light"] .ccard{background:#FFFFFF}
+:root[data-theme="light"] .ctile{background:var(--sunk)}
+:root[data-theme="light"] .gridlines > div{background:var(--paper)}
+:root[data-theme="light"] section.plain.onplate .gridlines > div{background:#FFFFFF}
+:root[data-theme="light"] .flowshot{
+  background:color-mix(in oklab, var(--topic) 11%, #FFFFFF);
+  box-shadow:inset 0 0 28px #FFFFFF;
+}
+:root[data-theme="light"] .verbs a:hover{background:rgba(255,255,255,.07)}
+@supports not (color:color-mix(in oklab, red 10%, transparent)){
+  .flowshot{background:var(--ground)}
+  .stepno{background:var(--ground); box-shadow:0 0 0 1px var(--line) inset}
+}
+
+/* The step's title is a real button so the keyboard reaches it, and it is
+   stretched over the whole row rather than sitting inside it — a title you can
+   tab to but whose paragraph is not part of the target is a control with two
+   different sizes depending on which input you are using. */
+.stepbtn{
+  appearance:none; -webkit-appearance:none; background:none; border:0; padding:0;
+  margin:0; font:inherit; color:inherit; letter-spacing:inherit; text-align:left;
+  cursor:pointer; display:block; width:100%;
+}
+.stepbtn::after{content:''; position:absolute; inset:0; border-radius:12px}
+.stepbtn:focus-visible{outline:none}
+.stepbtn:focus-visible::after{outline:2px solid var(--amber); outline-offset:2px}

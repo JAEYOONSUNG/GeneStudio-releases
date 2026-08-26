@@ -1,0 +1,53 @@
+/* Inter and Inter Tight, served from this site rather than from a font CDN.
+
+   **The rule this obeys is `tools/site.mjs`'s own**: nothing on this page may be
+   *loaded* from a host that is not GitHub's — no font CDN, no analytics, no tag
+   manager — and a `<link>` to fonts.googleapis.com is exactly that. It is also
+   the faster answer: a CDN stylesheet is a second round trip to a second host
+   before a single glyph is asked for, and a self-hosted woff2 is one request to
+   the host the page already came from.
+
+   These are the **variable** cuts, so 400, 500 and 600 come out of one file per
+   family rather than three. Both subsets are declared and only the ones a page
+   actually needs are fetched, which is what `unicode-range` is for: an English
+   page pulls the two latin files (93 kB) and never asks for latin-ext.
+
+   Inter and Inter Tight are Rasmus Andersson's, under the SIL Open Font
+   License 1.1 — see THIRD_PARTY_NOTICES.md. `font-display:swap` is deliberate:
+   the stack behind them in base.css is the system's own, so a slow line gets
+   the page immediately and it settles rather than blocking on a face.
+
+   Regenerate with the block at the top of tools/site.mjs if the faces move. */
+
+@font-face{
+  font-family:'Inter';
+  font-style:normal;
+  font-weight:100 900;
+  font-display:swap;
+  src:url(./inter-latin-ext.woff2) format('woff2');
+  unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face{
+  font-family:'Inter';
+  font-style:normal;
+  font-weight:100 900;
+  font-display:swap;
+  src:url(./inter-latin.woff2) format('woff2');
+  unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face{
+  font-family:'Inter Tight';
+  font-style:normal;
+  font-weight:100 900;
+  font-display:swap;
+  src:url(./inter-tight-latin-ext.woff2) format('woff2');
+  unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face{
+  font-family:'Inter Tight';
+  font-style:normal;
+  font-weight:100 900;
+  font-display:swap;
+  src:url(./inter-tight-latin.woff2) format('woff2');
+  unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}

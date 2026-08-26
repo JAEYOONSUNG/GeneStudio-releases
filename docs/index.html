@@ -32,7 +32,23 @@ document.documentElement.dataset.theme=t;})()</script>
      theme are here rather than in either page, because two copies of a design
      is how two pages come to disagree about what the product looks like. Each
      page then adds only what is its own. -->
-<link rel="stylesheet" href="base.css?v=20260827">
+<!-- **The face is part of the design, and the system stack is not one face.**
+     `ui-sans-serif` is SF on a Mac, Segoe on Windows and whatever Fontconfig
+     answers on Linux — three different pages, and none of them the tight
+     grotesk this layout's tracking was measured against. Inter Tight at 500
+     with −0.03em is what carries a 56 px headline at a light weight; Inter
+     carries the prose.
+
+     **Served from here, not from a font CDN.** `tools/site.mjs` refuses to
+     publish a page that loads from any host but GitHub's, and a link to
+     fonts.googleapis.com is exactly that — so the two woff2 files sit beside
+     this page. They are `font-display:swap` behind the system stack, so a
+     reader on a slow line gets the page immediately in the old face and it
+     settles rather than blocking. -->
+<link rel="preload" href="font/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="font/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="font/fonts.css?v=20260828">
+<link rel="stylesheet" href="base.css?v=20260828">
 </head>
 <body>
 
@@ -177,6 +193,114 @@ document.documentElement.dataset.theme=t;})()</script>
   </div>
   </div>
 </div>
+
+<!-- **A row of names it agrees with, not a row of logos it has customers at.**
+     The reference band under its hero is the companies its users work at, which
+     is a claim this beta cannot make and must not imitate. What this app *can*
+     put there is the thing that took the longest to earn: the readers,
+     databases and pipelines its answers were checked against, name for name.
+     It scrolls because eleven of them do not fit a line, and it stops the
+     moment a reader has asked for less motion. -->
+<div class="agree" aria-label="Checked against">
+  <p class="agreetitle">Every answer here was checked against</p>
+  <div class="marquee" data-marquee>
+    <div class="mqrow">
+      <span>Biopython</span><span>snapgene_reader</span><span>SnapGene 8</span><span>REBASE v607</span>
+      <span>NCBI genetic codes</span><span>Prodigal</span><span>InterProScan</span><span>eggNOG-mapper</span>
+      <span>DefenseFinder</span><span>openpyxl</span><span>pytrf</span><span>SantaLucia 1998</span>
+    </div>
+  </div>
+</div>
+
+<!-- **The chapter break.** The page runs feature, feature, feature with nothing
+     between them saying what the thing *is*; the reference answers that with one
+     dark screen carrying a sentence and the verbs under it. Ours are the six
+     acts this application is actually made of, and each is a link into the
+     section that shows it — a statement that is also navigation. -->
+<section class="chapter" aria-labelledby="chapter-title">
+  <div class="wrap">
+    <p class="eyebrow chapter-eyebrow">The workbench</p>
+    <h2 id="chapter-title">Gene Studio isn’t only for drawing<br>a plasmid. It’s for everything after.</h2>
+    <ul class="verbs">
+      <li><a href="#formats"><span class="vb"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><path d="M9 13h6M9 16.5h4"/></svg></span>Open</a></li>
+      <li><a href="#sequence"><span class="vb"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16M4 16h16M9 8v8M15 8v8"/></svg></span>Read</a></li>
+      <li><a href="#digest"><span class="vb"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4l12 12M18 4 6 16"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/></svg></span>Cut</a></li>
+      <li><a href="#design"><span class="vb"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8c5-4 13 4 18 0M3 16c5-4 13 4 18 0"/></svg></span>Design</a></li>
+      <li><a href="#sanger"><span class="vb"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17c2.4 0 2.4-10 4.8-10s2.4 10 4.8 10 2.4-12 4.8-12S21 17 21 17"/></svg></span>Check</a></li>
+      <li><a href="#formats"><span class="vb"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="6" r="2.4"/><circle cx="6" cy="12" r="2.4"/><circle cx="18" cy="18" r="2.4"/><path d="m8.2 10.8 7.6-3.6M8.2 13.2l7.6 3.6"/></svg></span>Share</a></li>
+    </ul>
+  </div>
+</section>
+
+<!-- **Three moves, and the picture follows the one being read.** The reference
+     puts its steps in a rail with the current one open and the rest collapsed to
+     their titles, so the shape of the whole job is visible while only one step
+     is being read. The rail advances by itself and any step can be pressed; the
+     figure beside it swaps to that step's own clip, which is what makes the rail
+     worth having rather than a list with a picture next to it. -->
+<section class="flow" id="flow" style="--topic:var(--amber)">
+  <div class="wrap">
+    <div class="flowhead rise">
+      <span class="kicker">How it goes</span>
+      <h2>From the file on your disk<br>to the figure in the paper.</h2>
+      <p class="lede">No import step, no project to create, no account. The file you already have is the document.</p>
+    </div>
+    <div class="flowgrid rise" data-flow>
+      <ol class="rail">
+        <li class="step on" data-step="0">
+          <span class="stepno">Step 1</span>
+          <b>Open what you already have</b>
+          <p><span>Drag in a <code>.gb</code>, a SnapGene <code>.dna</code>, a FASTA or a folder of them. The record above FEATURES — accession, organism, lineage, the papers — is read and kept, not thrown away.</span></p>
+        </li>
+        <li class="step" data-step="1">
+          <span class="stepno">Step 2</span>
+          <b>Work on the construct</b>
+          <p><span>Map, sequence, digest, guides and cloning are one document and one undo stack. Nothing is a separate project you have to keep in step.</span></p>
+        </li>
+        <li class="step" data-step="2">
+          <span class="stepno">Step 3</span>
+          <b>Write it back, or take the figure out</b>
+          <p><span>Saved as the format it arrived in, byte-identical on the second save — or out as vector, with every label still editable in Illustrator.</span></p>
+        </li>
+      </ol>
+      <figure class="flowshot">
+        <div class="frame">
+          <div class="bar"><i></i><i></i><i></i><span data-flow-name>pDEMO-T7 · 2,950 bp · circular</span></div>
+          <!-- **A step is a pair of clips, not a clip.** Every other figure on
+               this page carries a wide one and a crop of it for a phone, and the
+               rail has to as well or a step's picture is a desktop window shrunk
+               into a palm. The pair is wrapped so the rail toggles one thing and
+               the page's own `.wide`/`.narrow` rules go on deciding which of the
+               two is drawn. -->
+          <div class="flowclip on" data-flow-clip="0">
+            <video class="wide" data-clip="clip/map.mp4" data-poster="clip/map.webp" width="1200" height="750"
+                   muted loop playsinline preload="none"
+                   aria-label="A plasmid opening: the circular map drawn with its features and every cut site named in the margin."></video>
+            <video class="narrow" data-clip="clip/map-phone.mp4" data-poster="clip/map-phone.webp" width="390" height="380"
+                   muted loop playsinline preload="none"
+                   aria-label="A plasmid opening: the circular map drawn with its features and every cut site named in the margin."></video>
+          </div>
+          <div class="flowclip" data-flow-clip="1">
+            <video class="wide" data-clip="clip/drag.mp4" data-poster="clip/drag.webp" width="1200" height="750"
+                   muted loop playsinline preload="none"
+                   aria-label="Dragging across a stretch of the sequence: the figures for the selection follow the pointer."></video>
+            <video class="narrow" data-clip="clip/drag-phone.mp4" data-poster="clip/drag-phone.webp" width="390" height="219"
+                   muted loop playsinline preload="none"
+                   aria-label="Dragging across a stretch of the sequence: the figures for the selection follow the pointer."></video>
+          </div>
+          <div class="flowclip" data-flow-clip="2">
+            <video class="wide" data-clip="clip/fold.mp4" data-poster="clip/fold.webp" width="1108" height="824"
+                   muted loop playsinline preload="none"
+                   aria-label="A region folded and drawn as a structure, ready to be taken out as vector."></video>
+            <video class="narrow" data-clip="clip/fold-phone.mp4" data-poster="clip/fold-phone.webp" width="390" height="390"
+                   muted loop playsinline preload="none"
+                   aria-label="A region folded and drawn as a structure, ready to be taken out as vector."></video>
+          </div>
+        </div>
+      </figure>
+    </div>
+  </div>
+</section>
 
 <div id="views"></div>
 
@@ -476,28 +600,39 @@ document.documentElement.dataset.theme=t;})()</script>
       <h2>It opens what your lab already has</h2>
       <p class="lede">And writes it back. Every claim here was checked against somebody else's reader — Biopython and <code>snapgene_reader</code> — over hundreds of this lab's own files, not against a fixture written by whoever wrote the test.</p>
     </div>
-    <div class="cards rise">
-      <div class="card">
+    <!-- **A card is a box and these are not six boxes.** Six bordered cards
+         put five hairlines between every pair; one grid ruled by its own
+         gaps puts one, which is what the reference does with the same six-up
+         shape and is why its feature grid reads as a table of one thing
+         rather than as a row of tiles. -->
+    <div class="gridlines rise">
+      <div>
+        <span class="gico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><path d="M9 13h6M9 16.5h4"/></svg></span>
         <h3><code>.gb .gbk .gbff</code></h3>
         <p>The record above FEATURES is kept whole — accession, organism, lineage, the papers, the structured comments — and written back as it arrived. Saving twice gives a byte-identical file.</p>
       </div>
-      <div class="card">
+      <div>
+        <span class="gico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5z"/><path d="m4 13 8 4.5 8-4.5"/></svg></span>
         <h3><code>.dna</code></h3>
         <p>SnapGene files are read and written packet for packet: the colours, the edit history, the aligned traces and every packet this reader does not interpret ride through untouched.</p>
       </div>
-      <div class="card">
+      <div>
+        <span class="gico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h11M4 17h6"/></svg></span>
         <h3><code>.fa .fasta .fna</code></h3>
         <p>A file carrying 85,142 records is listed and read a record at a time, in milliseconds — because splitting is cheap and parsing everything is not.</p>
       </div>
-      <div class="card">
+      <div>
+        <span class="gico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17c2.5 0 2.5-10 5-10s2.5 10 5 10 2.5-12 5-12 3 12 3 12"/></svg></span>
         <h3><code>.ab1</code></h3>
         <p>Read as a read <em>of the construct</em>, not as a document of its own: end-trimmed by quality, aligned both ways round, and kept with the plasmid it was read against.</p>
       </div>
-      <div class="card">
+      <div>
+        <span class="gico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5"/><rect x="3" y="17" width="4" height="4" rx="1"/><rect x="17" y="3" width="4" height="4" rx="1"/></svg></span>
         <h3><code>out</code></h3>
         <p>GenBank — and a separate sharing copy that says what it left behind — SnapGene <code>.dna</code>, FASTA, an <code>.xlsx</code> workbook, and every drawing as vector.</p>
       </div>
-      <div class="card">
+      <div>
+        <span class="gico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></span>
         <h3><code>on your machine</code></h3>
         <p>Your files are read from disk and stay there. Nothing is uploaded, and the only outbound requests are the ones you press — BLAST, InterProScan, eggNOG — each named before it is made.</p>
       </div>
@@ -556,11 +691,69 @@ document.documentElement.dataset.theme=t;})()</script>
   </div>
 </section>
 
+<!-- **The reference's wall is what its users said; ours is what the machine
+     said.** A page for a private beta has no testimonials, and inventing the
+     shape by writing some is the one thing this project's own notes call the
+     worst kind of claim. The wall keeps its form — a masonry that runs past the
+     fold and fades rather than ending on a tidy row, because the point of it is
+     that there is more than fits — and fills it with readings anybody can go and
+     reproduce, each naming what it was measured on. -->
+<section class="plain onplate" id="proof" style="--topic:var(--fwd)">
+  <div class="wrap">
+    <div class="centrehead rise">
+      <span class="kicker">Measured</span>
+      <h2>Not a feature list.<br>A list of things that were measured.</h2>
+      <p class="lede">Every figure below came off this machine, on real files, against somebody else’s reader wherever one exists.</p>
+    </div>
+  </div>
+  <div class="wall rise" data-wall>
+    <div class="wallcols">
+      <div class="wallcol">
+        <blockquote><p><b>400 / 400</b> real GenBank files opened, written back and read again with every header field intact — accession, version, keywords, definition, source, organism, lineage, DBLINK, every reference and every structured block.</p><cite>tests/genbank-roundtrip.mjs</cite></blockquote>
+        <blockquote><p>A 13 kb GenBank with 115 features and 79 primers opens in <b>67 ms</b>. It used to be 4,750.</p><cite>measured end to end, map on screen</cite></blockquote>
+        <blockquote><p><b>60 of 60</b> of this lab’s own Sanger traces parsed, trimmed, packed and aligned with nothing wrong. At each called base the channel of the base that was called is the tallest of the four: worst 93.0 %, median 98.6 %.</p><cite>tests/real-traces.mjs</cite></blockquote>
+        <blockquote><p>A construct carrying every extra goes out at 1,766 bytes full and 1,215 shared, and <b>Biopython reads both with no warnings at all</b>.</p><cite>the sharing copy</cite></blockquote>
+      </div>
+      <div class="wallcol">
+        <blockquote><p><b>2,672 published experiments</b> over 435 enzymes sit behind a methylation verdict — REBASE’s own records, in REBASE’s own colours, not one summary word.</p><cite>rebase.neb.com/msget</cite></blockquote>
+        <blockquote><p>Three files written here were opened in <b>SnapGene 8.2.2 itself</b>: a gene crossing the origin drawn as an arc over the join, spliced features drawn with their gap, every colour as written, a linear construct opening linear.</p><cite>the one check the Python readers cannot stand in for</cite></blockquote>
+        <blockquote><p><b>1,113 enzymes</b> from REBASE v607 — every enzyme NEB sells, two-sided cutters and homing endonucleases included, each cut position checked against a second REBASE file.</p><cite>671 of 673 agreed; the two that did not were fixed</cite></blockquote>
+        <blockquote><p>A 4.2 Mb genome with 8,338 features opens in <b>1.2 s</b> with its map drawn. It was 4.0 s, and the restriction scan is no longer in front of the first paint.</p><cite>E. coli K-12 MG1655</cite></blockquote>
+      </div>
+      <div class="wallcol">
+        <blockquote><p><b>60 of 60 cells identical</b> to DNMB’s own R — the same InterProScan TSV through <code>reshape2</code>’s melt and cast, and through ours, name for name over a real genome.</p><cite>checked against the package, not against ourselves</cite></blockquote>
+        <blockquote><p>Attaching a 5,436-tube freezer to a 4.09 Mb genome and saving: GenBank, <code>.dna</code> and the session all <b>byte for byte identical</b> attached and detached. A tube is borrowed, never owned.</p><cite>proved by planting the leak</cite></blockquote>
+        <blockquote><p>Every text node of all twelve views, in both themes, against its <b>composited</b> background: <b>0 contrast failures</b> where it had been 19.</p><cite>19,316 nodes a pass</cite></blockquote>
+        <blockquote><p><b>4,000 restriction sites</b> verified against their own enzyme’s pattern at the position and strand they claim, and three digests summing to the molecule exactly.</p><cite>a seed each</cite></blockquote>
+      </div>
+      <div class="wallcol">
+        <blockquote><p>A <b>.deb installed in Debian under Xvfb</b> and driven by the same smoke every other platform gets: 4,000 bp, 8,808 sites, five views drawn, 5,508 bytes of GenBank out — through the licence gate.</p><cite>a Mac cannot open a Linux window, but it can run a Linux machine</cite></blockquote>
+        <blockquote><p>A misnamed <code>real.gb</code> saved as <code>.txt</code> still resolves to <b>chemical/x-genbank</b> and opens the app — by its bytes, on a stock Debian where <code>*.gb</code> is otherwise a Game Boy ROM.</p><cite>tests/linux-package.mjs</cite></blockquote>
+        <blockquote><p>Updated end to end twice, on this machine: 121 MB in about <b>14 s</b>, installed in place, <code>/Applications</code> coming back as the new version, still signed and notarized.</p><cite>one press</cite></blockquote>
+        <blockquote><p><b>21 harnesses</b> run on every release, and the biggest script in the project is checked by <code>node --check</code> — a syntax error in it arrives as every test failing with “S is not defined”.</p><cite>npm test</cite></blockquote>
+      </div>
+    </div>
+  </div>
+  <div class="wrap">
+    <p class="wallmore">These are a sample. Each is a harness in the repository that runs on every
+      release — the reasoning behind all of them is in <a href="guide.html">the manual</a>.</p>
+  </div>
+</section>
+
 <section class="plain" id="questions" style="--topic:var(--slate)">
   <div class="wrap">
-    <p class="num"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.4"/><path d="M9.7 9.6a2.4 2.4 0 1 1 2.7 3.1v1"/><path d="M12.4 16.4h.01"/></svg><b>09</b>Questions</p>
-    <h2>Questions</h2>
-    <div class="qs">
+    <!-- **A title that scrolls away from the answers it heads.** Ten questions
+         is a screen and a half, and a heading at the top of it is gone by the
+         third. The reference keeps the title and its sentence in a column of
+         their own, sticky, with the questions beside them — so what you are
+         reading is always under the thing that says what it is. -->
+    <div class="qwrap">
+      <div class="qhead">
+        <p class="num"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.4"/><path d="M9.7 9.6a2.4 2.4 0 1 1 2.7 3.1v1"/><path d="M12.4 16.4h.01"/></svg><b>09</b>Questions</p>
+        <h2>Frequently asked</h2>
+        <p class="lede">What it costs, what it sends, what it does to your files, and which machine it runs on.</p>
+      </div>
+      <div class="qs">
       <details>
         <summary>Does it work offline?</summary>
         <p>Yes, and so does the licence check — it is verified on your own machine against a key built into the app, with nothing to ask and no server to be down. The only requests this app makes are the ones you press: a BLAST, an InterProScan or eggNOG submission, and the once-a-launch look for a newer build, which can be switched off.</p>
@@ -585,6 +778,7 @@ document.documentElement.dataset.theme=t;})()</script>
         <summary>How much will it cost after the beta?</summary>
         <p>Nothing is charged during the beta, and not retrospectively for it either. The intention is half of what SnapGene charges for the equivalent seat; the table is in the app under Settings → About.</p>
       </details>
+      </div>
     </div>
   </div>
 </section>
@@ -621,17 +815,89 @@ document.documentElement.dataset.theme=t;})()</script>
   </div>
 </section>
 
+<!-- Two cards rather than one address, because they are two different acts:
+     something is broken and I need it working again, against I want this used
+     in my lab and there is more to say than a bug report. Both go to a person,
+     and the cards say which so nobody has to guess which mail to write. -->
+<section class="contact" id="contact" style="--topic:var(--fwd)">
+  <div class="wrap">
+    <div class="centrehead rise">
+      <span class="kicker">Contact</span>
+      <h2>Write, and a person answers.</h2>
+    </div>
+    <div class="ccards rise">
+      <div class="ccard">
+        <span class="ctile" style="--tile:var(--fwd)">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6"/><path d="M9.7 9.5a2.4 2.4 0 1 1 2.7 3.2v1"/><path d="M12.4 16.5h.01"/></svg>
+        </span>
+        <h3>Something not working?</h3>
+        <p>A crash, a file it would not open, a reading you think is wrong. Send the report the app writes for you — it carries the version, the platform and what it was doing — and the file if you can share it.</p>
+        <a class="btn" href="mailto:genestudio.help@gmail.com?subject=Gene%20Studio%20bug%20report">Report a problem</a>
+      </div>
+      <div class="ccard">
+        <span class="ctile" style="--tile:var(--amber)">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="9.5" r="3.4"/><path d="M3.5 19c.7-3.6 2.9-5.4 5.5-5.4S13.8 15.4 14.5 19"/><circle cx="17" cy="8.4" r="2.7"/><path d="M16 13.8c2.3.3 3.8 2 4.4 5.2"/></svg>
+        </span>
+        <h3>A licence for your lab</h3>
+        <p>A seat is written for one computer and takes a minute. Say who you are and where you work; if a whole group needs them, say how many and they come back together.</p>
+        <a class="btn" href="mailto:genestudio.help@gmail.com?subject=Gene%20Studio%20beta%20licence">Ask for a licence</a>
+      </div>
+    </div>
+  </div>
+</section>
+
 </main>
 
+<!-- **A footer is the site's own table of contents, not a line of small print.**
+     Four links in a row said nothing about what is on the page above them; the
+     reference's is the brand and its one sentence against columns naming every
+     part, which is also the only navigation a reader who has scrolled this far
+     still has. The columns are the page's own sections and the places the work
+     actually lives. -->
 <footer>
   <div class="wrap foot">
-    <p>Gene Studio — by Jae-Yoon Sung. Free to use for research; copying, changing or passing it on needs written permission. Third-party components keep their own terms.</p>
-    <nav>
-      <a href="guide.html">Manual</a>
-      <a href="https://github.com/JAEYOONSUNG/GeneStudio-releases/releases">All releases</a>
-      <a href="https://github.com/JAEYOONSUNG/DNMB">DNMB</a>
-      <a href="mailto:genestudio.help@gmail.com">Contact</a>
+    <div class="footbrand">
+      <a class="brand" href="#top">
+        <svg width="22" height="22" viewBox="0 0 32 32" aria-hidden="true">
+          <circle cx="16" cy="16" r="11" fill="none" stroke="#E8A33D" stroke-width="2.6"/>
+          <circle cx="16" cy="5" r="3.1" fill="#4FB79E"/>
+        </svg>
+        Gene Studio
+      </a>
+      <p>A plasmid workbench that opens what your lab already has — GenBank, SnapGene <code>.dna</code>, FASTA and Sanger traces — and writes them back without losing what was in them.</p>
+      <p class="footfine">Free to use for research; copying, changing or passing it on needs written permission. Third-party components keep their own terms.</p>
+    </div>
+    <nav class="footcols" aria-label="Site">
+      <div class="footcol">
+        <b>Workspaces</b>
+        <a href="#sequence">Sequence</a>
+        <a href="#digest">Digest</a>
+        <a href="#sanger">Sanger</a>
+        <a href="#design">Design</a>
+        <a href="#genomes">Genomes</a>
+        <a href="#toolbox">Toolbox</a>
+      </div>
+      <div class="footcol">
+        <b>The page</b>
+        <a href="#flow">How it goes</a>
+        <a href="#formats">Your files</a>
+        <a href="#proof">Measured</a>
+        <a href="#compare">Compare</a>
+        <a href="#questions">Questions</a>
+      </div>
+      <div class="footcol">
+        <b>Get it</b>
+        <a href="#get">Join the beta</a>
+        <a href="guide.html">The manual</a>
+        <a href="https://github.com/JAEYOONSUNG/GeneStudio-releases/releases">All releases</a>
+        <a href="https://github.com/JAEYOONSUNG/DNMB">DNMB</a>
+        <a href="mailto:genestudio.help@gmail.com">Contact</a>
+      </div>
     </nav>
+  </div>
+  <div class="wrap footend">
+    <span>© 2026 Jae-Yoon Sung</span>
+    <span class="footver">Private beta · macOS, Windows &amp; Linux</span>
   </div>
 </footer>
 
@@ -747,10 +1013,11 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
    and nothing plays for a reader who has asked for less motion. Both of those
    land on the poster, which is the clip's own last frame — the answer, not an
    empty gel. */
+let armClips;   /* the rail advances to a clip that has never been armed */
 {
   const wide = matchMedia('(min-width: 761px)');
   const still = matchMedia('(prefers-reduced-motion: reduce)');
-  const arm = () => {
+  const arm = armClips = () => {
     for(const v of document.querySelectorAll('video[data-clip]')){
       /* **Which of the two is on screen decides, not the width.** There are now
          a wide clip and a phone clip in each frame, and only one of them is
@@ -767,7 +1034,14 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
          reason; the poster goes the same way, and only for the one on screen.
          Reduced motion still gets it, because there the poster *is* the
          picture — so it is set before the early return. */
-      const shown = getComputedStyle(v).display !== 'none';
+      /* **`getComputedStyle` does not ask whether an ancestor is hidden.** For
+         a video inside a folded rail step the computed `display` is still the
+         `block` that `.frame video` gives it, so the display test alone armed
+         and played all three of the rail's steps at once — the exact cost this
+         block exists to avoid, and invisible on screen because only one of them
+         is drawn. `getClientRects()` is empty when *anything* above the element
+         is `display:none`, which is the question actually being asked. */
+      const shown = getComputedStyle(v).display !== 'none' && v.getClientRects().length > 0;
       if(shown && !v.getAttribute('poster')) v.poster = v.dataset.poster;
       if(!shown || still.matches){
         v.removeAttribute('autoplay'); v.pause?.(); continue; }
@@ -817,6 +1091,138 @@ if('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion:redu
       if(r.top < innerHeight) el.classList.add('in');
     }
   }, 300));
+}
+
+/* ── the names it agrees with, running ──────────────────────────────────────
+   The second copy is made here rather than written twice in the markup: a
+   duplicated list is two things for a screen reader to read and one thing for
+   anybody to forget to keep in step. It is `aria-hidden`, and the animation is
+   only switched on once there *is* a second copy — a marquee translated -50 %
+   over a single row would run the names off the edge and leave a gap. */
+{
+  const still = matchMedia('(prefers-reduced-motion: reduce)');
+  for(const m of document.querySelectorAll('[data-marquee]')){
+    const row = m.querySelector('.mqrow');
+    if(!row || still.matches) continue;
+    const copy = row.cloneNode(true);
+    copy.setAttribute('aria-hidden', 'true');
+    m.append(copy);
+    m.dataset.on = '1';
+  }
+}
+
+/* ── the three-move rail ────────────────────────────────────────────────────
+   It advances by itself and any step can be pressed. Three rules make that
+   bearable rather than fidgety: it only runs **while it is on screen** (a page
+   cycling in a tab nobody is looking at is work for nothing), a press stops the
+   advance for good — somebody who has chosen a step is reading it, and moving
+   them off it is the fault this whole page's notes keep naming — and a reader
+   who has asked for less motion gets no advance at all, only the presses.
+
+   A step is a real button rather than a `<li>` with a click handler, so the
+   keyboard reaches it and says what it is; the markup stays a list because
+   three steps in order is what a list is. */
+{
+  const flow = document.querySelector('[data-flow]');
+  if(flow){
+    const steps = [...flow.querySelectorAll('.step')];
+    const clips = [...flow.querySelectorAll('[data-flow-clip]')];
+    const name  = flow.querySelector('[data-flow-name]');
+    const names = ['pDEMO-T7 · 2,950 bp · circular',
+                   'pDEMO-T7 · sequence · 1,204–1,230',
+                   'pDEMO-T7 · fold · 51 nt · −10.6 kcal/mol'];
+    const still = matchMedia('(prefers-reduced-motion: reduce)');
+    let at = 0, timer = 0, stopped = false;
+
+    /* the paragraph is what the button labels, so the button is the title and
+       the paragraph is described by it rather than swallowed into the name */
+    steps.forEach((li, i) => {
+      const b = li.querySelector('b');
+      if(b){
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'stepbtn';
+        btn.append(...b.childNodes);
+        b.append(btn);
+      }
+      li.addEventListener('click', () => { stopped = true; clearTimeout(timer); show(i); });
+    });
+
+    function show(i){
+      at = i;
+      steps.forEach((li, k) => {
+        li.classList.toggle('on', k === i);
+        li.classList.toggle('done', k < i);
+        const btn = li.querySelector('.stepbtn');
+        if(btn) btn.setAttribute('aria-current', k === i ? 'step' : 'false');
+      });
+      clips.forEach((box, k) => {
+        box.classList.toggle('on', k === i);
+        /* a step off screen keeps decoding otherwise, and three clips decoding
+           at once is what the page's own clip armer already exists to avoid */
+        if(k !== i) for(const v of box.querySelectorAll('video')) v.pause?.();
+      });
+      if(name) name.textContent = names[i] || names[0];
+      /* the clip that has just been shown may never have been armed: the armer
+         asks whether a video is *drawn*, and until this moment it was not */
+      armClips?.();
+      if(!stopped && !still.matches) queue();
+    }
+    function queue(){ clearTimeout(timer); timer = setTimeout(() => show((at + 1) % steps.length), 5200); }
+
+    if('IntersectionObserver' in window && !still.matches){
+      new IntersectionObserver(es => {
+        for(const e of es){
+          if(e.isIntersecting && !stopped) queue();
+          else clearTimeout(timer);
+        }
+      }, {threshold:.35}).observe(flow);
+    }
+  }
+}
+
+/* ── the four figures, counted up ───────────────────────────────────────────
+   They are measurements, and a measurement that lands by counting to itself
+   reads as one being taken. It runs once, when the band is reached, and never
+   for a reader who has asked for less motion — and what it counts is the
+   **number tokens inside the text**, so `400 / 400`, `1,113` and `1.2 s` each
+   keep their own separators, decimals and units without any of them being
+   described twice. The final text is restored verbatim at the end rather than
+   rebuilt, since a rebuilt string is a second description of the figure. */
+if('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion:reduce)').matches){
+  const io = new IntersectionObserver(es => {
+    for(const e of es){
+      if(!e.isIntersecting) continue;
+      io.unobserve(e.target);
+      const el = e.target, final = el.textContent;
+      const parts = final.split(/(\d[\d,]*(?:\.\d+)?)/);
+      const nums = parts.map(p => /^\d/.test(p) ? p : null);
+      if(!nums.some(Boolean)) continue;
+      /* the box must not resize as the digits change: a figure that reflows
+         the caption under it while it counts is worse than one that does not
+         count at all. `tabular-nums` is already on these, so reserving the
+         final string's width is enough. */
+      el.style.minWidth = el.getBoundingClientRect().width + 'px';
+      const t0 = performance.now(), dur = 900;
+      const tick = now => {
+        const k = Math.min(1, (now - t0) / dur);
+        /* eased out, so it decelerates onto the answer rather than stopping */
+        const e2 = 1 - Math.pow(1 - k, 3);
+        el.textContent = parts.map((p, i) => {
+          if(!nums[i]) return p;
+          const dec = (p.split('.')[1] || '').length;
+          const v = parseFloat(p.replace(/,/g, '')) * e2;
+          const s = v.toFixed(dec);
+          return p.includes(',') ? Number(s).toLocaleString('en-US',
+                   {minimumFractionDigits:dec, maximumFractionDigits:dec}) : s;
+        }).join('');
+        if(k < 1) requestAnimationFrame(tick);
+        else { el.textContent = final; el.style.minWidth = ''; }
+      };
+      requestAnimationFrame(tick);
+    }
+  }, {threshold:.6});
+  for(const b of document.querySelectorAll('.stats b')) io.observe(b);
 }
 </script>
 </body>
