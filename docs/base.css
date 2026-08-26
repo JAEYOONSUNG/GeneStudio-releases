@@ -24,7 +24,13 @@
      own three are untouched, since anything depicting the app must stay in the
      app's palette. */
   --plate:#192428;
-  --amber:#E8A33D; --amber-soft:rgba(232,163,61,.18); --amber-ink:#1a1205;
+  /* **The accent is blue now, and the token keeps its old name.** `--amber`
+     is written in some two hundred places and renaming it buys nothing but a
+     diff nobody can review; what it *means* is "the page's accent". The warm
+     amber was the application's own and read as brown across a whole page —
+     the accent here is the page's, solved per theme: #5EB1FF is 8.2:1 on this
+     paper as text, and dark ink on it is 8.3:1 as a button. */
+  --amber:#5EB1FF; --amber-soft:rgba(94,177,255,.16); --amber-ink:#06121C;
   --fwd:#4FB79E; --rev:#A98AD8; --cut:#E1655C;
   /* the app has no blue of its own — its four are the strands, the cut and the
      accent — and the genome section needed a fifth topic that is none of them.
@@ -190,7 +196,7 @@ header.rail{
 }
 /* the one thing to press, filled rather than outlined, inside the capsule */
 .rail nav a.get{color:var(--amber-ink); background:var(--amber); border:0; margin-left:6px; font-weight:600}
-.rail nav a.get:hover{background:#f0b055; color:var(--amber-ink)}
+.rail nav a.get:hover{background:color-mix(in oklab, var(--amber) 86%, #fff); color:var(--amber-ink)}
 @media (max-width:900px){ .rail nav .hide-s{display:none} }
 /* the theme control keeps the nav links' own shape — it is one more thing in
    the capsule, not a widget bolted to it — and it stays on a phone, where the
@@ -226,7 +232,7 @@ header.rail{
   content:''; position:absolute; inset:0; pointer-events:none;
   background:
     radial-gradient(62% 52% at 50% 2%,  rgba(146,178,220,.46), transparent 68%),
-    radial-gradient(42% 38% at 12% 26%, rgba(232,163,61,.30),  transparent 70%),
+    radial-gradient(42% 38% at 12% 26%, rgba(94,177,255,.22),  transparent 70%),
     radial-gradient(46% 40% at 88% 20%, rgba(79,183,158,.28),  transparent 72%),
     radial-gradient(84% 56% at 50% 82%, rgba(46,74,102,.42),   transparent 78%),
     linear-gradient(180deg, #1B2A34 0%, #14212A 38%, #0D171D 70%, var(--paper) 100%);
@@ -256,8 +262,8 @@ header.rail{
    it has to sit on colour now, and a bare tracked line dissolves into it */
 .eyebrow{display:inline-block; margin:0 0 22px; padding:7px 14px; border-radius:999px;
   font:500 11.5px/1 var(--mono); letter-spacing:.14em; text-transform:uppercase;
-  color:var(--amber); background:rgba(232,163,61,.13);
-  border:1px solid rgba(232,163,61,.28)}
+  color:var(--amber); background:color-mix(in oklab, var(--amber) 13%, transparent);
+  border:1px solid color-mix(in oklab, var(--amber) 28%, transparent)}
 /* Lighter and tighter than a left column's headline: centred display type is
    read as a shape before it is read as words, and 660 at 66 px is a wall. */
 h1{font-size:clamp(34px,5.1vw,58px); font-weight:500; letter-spacing:-.025em;
@@ -294,14 +300,14 @@ h1{font-size:clamp(34px,5.1vw,58px); font-weight:500; letter-spacing:-.025em;
   box-shadow:
     inset 0 3px 0 rgba(255,255,255,.22),
     0 2px 4px color-mix(in oklab, var(--amber) 34%, transparent),
-    0 10px 30px rgba(232,163,61,.22);
+    0 10px 30px rgba(94,177,255,.22);
 }
 /* the platform this reader is not on is a choice, not a second call to action */
 .hero .cta .btn:not(.primary){background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.14);
   font-weight:500; padding:14px 20px}
 .hero .cta .btn:not(.primary):hover{background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.24)}
 .btn.primary{background:var(--amber); color:var(--amber-ink); border-color:var(--amber)}
-.btn.primary:hover{background:#f0b055}
+.btn.primary:hover{background:color-mix(in oklab, var(--amber) 86%, #fff)}
 .btn small{font:400 12px/1 var(--mono); opacity:.75}
 /* **The three download buttons were three widths on a phone**, and the amber
    one broke its own label across two lines with the version chip wrapping
@@ -877,12 +883,17 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--p
    field — is worse than a coherent dark one, and dark is this page's own
    default. Every value below was measured against its composited background. */
 :root[data-theme="light"]{
-  --paper:#F7F9F9; --ground:#FFFFFF; --sunk:#EDF1F1;
-  --ink:#0E1618; --body:#33454A; --slate:#556A6E; --faint:#5A6D71;
-  --line:#C3D0D1; --hair:#DEE6E6;
-  /* light has room downward, and 1.077 was still too little across a band */
-  --plate:#DEE5E5;
-  --amber:#97590A; --amber-soft:rgba(232,163,61,.22); --amber-ink:#FFFFFF;
+  /* **The reference's ground, not a tinted one.** The light theme used to be
+     a cool green-grey page with white cards — the app's palette read on a light
+     ground. What the reference does is the other way round: the page is
+     *white*, the cards are the grey (#F4F4F5-family), and the page's blocks
+     separate by that one step down rather than by lifting. Every text value
+     below was re-measured against the new grounds in the sweep. */
+  --paper:#FFFFFF; --ground:#F4F5F6; --sunk:#EDEFF1;
+  --ink:#111819; --body:#3E4A4E; --slate:#54666A; --faint:#5A6D71;
+  --line:#D6DDDE; --hair:#E7EAEB;
+  --plate:#F1F3F4;
+  --amber:#0A66C2; --amber-soft:rgba(10,102,194,.12); --amber-ink:#FFFFFF;
   --fwd:#0F7D68; --rev:#6A4AA8; --cut:#B62E24;
   --blue:#2F5FA0;
 }
@@ -927,7 +938,7 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--p
 :root[data-theme="light"] .hero::before{
   background:
     radial-gradient(60% 48% at 50% 4%,  rgba(120,152,196,.26), transparent 70%),
-    radial-gradient(42% 36% at 12% 26%, rgba(232,163,61,.26),  transparent 70%),
+    radial-gradient(42% 36% at 12% 26%, rgba(10,132,255,.14),  transparent 70%),
     radial-gradient(44% 38% at 88% 20%, rgba(15,125,104,.14),  transparent 72%),
     linear-gradient(180deg, #E9EFF2 0%, #EFF4F5 46%, var(--paper) 100%);
 }
@@ -937,13 +948,13 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--p
 /* white-on-white: the quiet buttons need the page's own line and ground */
 :root[data-theme="light"] .hero .cta .btn:not(.primary){ background:var(--ground); border-color:var(--line) }
 :root[data-theme="light"] .hero .cta .btn:not(.primary):hover{ background:var(--ground); border-color:var(--slate) }
-:root[data-theme="light"] .hero .btn.primary{ box-shadow:0 10px 28px rgba(151,89,10,.20) }
+:root[data-theme="light"] .hero .btn.primary{ box-shadow:0 10px 28px rgba(10,102,194,.25) }
 /* the dark card-on-plate step above is a dark-theme repair; on light the
    plate is *below* the page and a white card already lifts off it */
 /* the light plate is *below* the page, so its text has to go the other way:
    4.26 / 4.48 / 4.39 measured, all under 4.5 */
 :root[data-theme="light"] section.plain.onplate, :root[data-theme="light"] .beta, :root[data-theme="light"] .band, :root[data-theme="light"] footer{--ground:#FFFFFF; --hair:#D3DCDC; --line:#B9C7C8;
-  --faint:#56686B; --slate:#53686C; --amber:#92560A}
+  --faint:#56686B; --slate:#53686C; --amber:#0A66C2}
 /* **The base rules are the dark theme, so they reach light too.** Leaving
    the card's `--faint` unanswered here let the dark `#89999C` apply on a
    light plate: **2.32:1**, measured, on the beta box's own note. It keeps the
@@ -953,11 +964,11 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--p
 :root[data-theme="light"] section.plain.onplate .tbcard, :root[data-theme="light"] .beta .betabox{--faint:#56686B}
 /* the Gene Studio column is amber-soft over the plate, which composites to
    rgb(224,214,192) — lighter than either, so the column head needs its own */
-:root[data-theme="light"] .cmp .us{--amber:#874F09}
-:root[data-theme="light"] .btn.primary:hover{ background:#7C4806 }
+:root[data-theme="light"] .cmp .us{--amber:#0956A8}
+:root[data-theme="light"] .btn.primary:hover{ background:#0956A8 }
 :root[data-theme="light"] .tbico{ background:rgba(15,125,104,.10) }
-:root[data-theme="light"] .brand svg circle:first-of-type{ stroke:var(--amber) }
-:root[data-theme="light"] .brand svg circle + circle{ fill:var(--fwd) }
+.brand svg circle:first-of-type{ stroke:var(--amber) }
+.brand svg circle + circle{ fill:var(--fwd) }
 
 /* **The clips are the application, and the application is dark.** A dark
    rectangle on a white page is a hole unless something says it is meant to
@@ -1105,8 +1116,8 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--p
 .chapter::before{
   content:''; position:absolute; inset:0; z-index:-1; pointer-events:none;
   background:
-    radial-gradient(46% 52% at 50% 26%, rgba(232,163,61,.10), transparent 72%),
-    radial-gradient(60% 60% at 50% 100%, rgba(79,183,158,.055), transparent 74%);
+    radial-gradient(46% 52% at 50% 26%, rgba(94,177,255,.09), transparent 72%),
+    radial-gradient(60% 60% at 50% 100%, rgba(79,183,158,.05), transparent 74%);
 }
 .chapter .wrap{position:relative}
 .chapter h2{
@@ -1408,20 +1419,20 @@ footer{padding:clamp(48px,7vw,76px) 0 0}
      that value lands on a near-black ground: measured, the eyebrow read
      **2.52**. The dark theme's own amber is what belongs on a dark ground, and
      on this one it reads 5.89 over its own tint. */
-  --amber:#E8A33D; --amber-soft:rgba(232,163,61,.18); --amber-ink:#1a1205;
+  --amber:#5EB1FF; --amber-soft:rgba(94,177,255,.16); --amber-ink:#06121C;
 }
 :root[data-theme="light"] .agree{background:var(--paper)}
-:root[data-theme="light"] .kicker{background:#FFFFFF; box-shadow:0 0 0 1px var(--line) inset}
+:root[data-theme="light"] .kicker{background:var(--ground); box-shadow:none}
 :root[data-theme="light"] .wall blockquote{
   background:#FFFFFF; box-shadow:0 0 0 1px var(--hair) inset;
 }
 :root[data-theme="light"] .wall blockquote:hover{
   box-shadow:0 0 0 1px var(--line) inset, 0 12px 30px -18px rgba(20,40,50,.4);
 }
-:root[data-theme="light"] .qs details{background:#FFFFFF}
+:root[data-theme="light"] .qs details{background:var(--ground)}
 :root[data-theme="light"] .qs details[open]{background:var(--sunk)}
-:root[data-theme="light"] .ccard{background:#FFFFFF}
-:root[data-theme="light"] .ctile{background:var(--sunk)}
+:root[data-theme="light"] .ccard{background:var(--ground)}
+:root[data-theme="light"] .ctile{background:#FFFFFF}
 :root[data-theme="light"] .gridlines > div{background:var(--paper)}
 :root[data-theme="light"] section.plain.onplate .gridlines > div{background:#FFFFFF}
 :root[data-theme="light"] .flowshot{
@@ -1446,3 +1457,117 @@ footer{padding:clamp(48px,7vw,76px) 0 0}
 .stepbtn::after{content:''; position:absolute; inset:0; border-radius:12px}
 .stepbtn:focus-visible{outline:none}
 .stepbtn:focus-visible::after{outline:2px solid var(--amber); outline-offset:2px}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   The third pass: the reference's scale, not only its parts
+   ────────────────────────────────────────────────────────────────────────────
+   The first borrowing took the reference's *components* — the marquee, the
+   rail, the wall — and left the page's own bones: dark ground, 36 px section
+   headings, left-set two-column heads, 14 px-radius boxes. Looked at side by
+   side that reads as the old page with new furniture, which is exactly what it
+   was. What actually carries the reference is four structural things, and they
+   are all here rather than spread through the file so the pass can be read as
+   one decision:
+
+   - **the page is light and the type is enormous.** A 74 px near-black
+     headline on white is most of the look; everything else is trim.
+   - **every chapter head is centred** — pill, headline, lede, in that order,
+     each on its own line, with the content below running wider than the head.
+   - **one shape for a button (a pill) and one for a card (a big round rect).**
+   - **the footer is the one black band**, whatever the theme, the way the
+     reference closes every page.
+   ════════════════════════════════════════════════════════════════════════════ */
+
+/* ── the scale ─────────────────────────────────────────────────────────────── */
+h1{
+  font-size:clamp(40px,6vw,76px); font-weight:560; letter-spacing:-.036em;
+  line-height:1.04; max-width:17ch;
+}
+.sub{font-size:clamp(17px,1.9vw,20.5px); max-width:50ch}
+.feat h2, section.plain h2{
+  font-size:clamp(30px,4.4vw,52px); font-weight:550; letter-spacing:-.034em;
+  line-height:1.08;
+}
+.centrehead h2, .chapter h2, .flowhead h2{
+  font-size:clamp(30px,4.4vw,54px); font-weight:550; letter-spacing:-.034em;
+}
+.qhead h2{font-size:clamp(28px,3.8vw,44px); font-weight:550}
+.betabox h2{font-size:clamp(26px,3.6vw,38px); font-weight:550}
+/* and the room around them: the reference separates its chapters with space
+   before it separates them with anything else */
+section.feat, section.plain, .flow, .contact{padding-block:clamp(84px,11vw,150px)}
+.beta{padding-block:clamp(84px,10vw,130px)}
+
+/* ── the chapter heads, centred ────────────────────────────────────────────
+   The numbered pill, the headline and the lede stack on the centre line, and
+   the lists, tables and figures below keep their own alignment — a centred
+   *paragraph* column is the one thing the reference never does. The 1080 px
+   two-column head above is overridden whole rather than edited, so this pass
+   stays one block. */
+.feat .cols{grid-template-columns:1fr; justify-items:center; text-align:center; gap:10px}
+.feat .say{display:grid; justify-items:center}
+.feat .say p{max-width:56ch}
+.feat h2{max-width:22ch}
+.feat ul{
+  display:grid; grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px 40px; width:100%; max-width:980px; margin-top:30px; text-align:left;
+}
+@media (max-width:760px){ .feat ul{grid-template-columns:1fr} }
+.plainhead{display:block; text-align:center; max-width:820px; margin:0 auto}
+.plainhead > *{max-width:none}
+.plainhead .num{justify-self:auto}
+.plainhead h2{margin:0 auto}
+.plainhead .lede{margin:18px auto 0; max-width:58ch}
+@media (min-width:1080px){
+  .plainhead{display:block}
+  .plainhead .lede{margin-top:18px}
+}
+#questions .qhead{text-align:left}
+.cards, .gridlines, .toolbox, .cmp{text-align:left}
+
+/* ── one button, and it is a pill ────────────────────────────────────────── */
+.btn{border-radius:999px; padding:12px 24px}
+.askdl .btn{border-radius:14px}
+.mail{border-radius:999px}
+
+/* ── one card, and it is big and round ───────────────────────────────────── */
+.card, .tbcard{border-radius:22px}
+.feat figure, .flowshot{border-radius:clamp(22px,2.4vw,30px)}
+.betabox{border-radius:26px}
+.wall blockquote{border-radius:20px}
+
+/* ── the light page's own furniture, re-answered on white ─────────────────
+   The grey rows and cards do the separating now, so the hairline rings they
+   carried on the tinted page are one line too many there — a grey box on
+   white has its edge already. Dark keeps its rings: a dark card on a dark
+   page has nothing else. */
+:root[data-theme="light"] .qs details{box-shadow:none}
+:root[data-theme="light"] .qs details:hover{box-shadow:0 0 0 1px var(--line) inset}
+:root[data-theme="light"] .ccard{box-shadow:none}
+:root[data-theme="light"] .card, :root[data-theme="light"] .tbcard{border-color:transparent}
+:root[data-theme="light"] .tbcard:hover{border-color:var(--line)}
+:root[data-theme="light"] .wall blockquote{box-shadow:0 1px 2px rgba(17,24,25,.05), 0 0 0 1px var(--hair) inset}
+/* the capsule nav on a white page is the reference's own: white, one hairline */
+:root[data-theme="light"] .rail .wrap{background:rgba(255,255,255,.86); border-color:var(--hair);
+  box-shadow:0 10px 30px rgba(17,24,25,.08)}
+/* the hero field: white, with the faintest cool light where the headline sits */
+:root[data-theme="light"] .hero::before{
+  background:
+    radial-gradient(56% 44% at 50% 0%,  rgba(10,132,255,.10), transparent 70%),
+    radial-gradient(40% 34% at 14% 24%, rgba(79,183,158,.07), transparent 72%),
+    linear-gradient(180deg, #F6F9FC 0%, #FFFFFF 60%, var(--paper) 100%);
+}
+/* the band behind the stats keeps a visible step on white */
+:root[data-theme="light"] .band{background:var(--plate)}
+
+/* ── the footer is the black band, whatever the theme ─────────────────────
+   The reference closes on black in both of its themes because the footer is
+   the site's index, not part of the argument. The tokens are redeclared on the
+   element, so everything inside — the columns, the fine print, the brand —
+   answers with the dark theme's own measured values and no new selectors. */
+footer, :root[data-theme="light"] footer{
+  background:#0D1315; border-top:0;
+  --paper:#0D1315; --ground:#131B1D; --plate:#0D1315;
+  --ink:#EAF0EE; --body:#C6D2D0; --slate:#8A9B9D; --faint:#75888B;
+  --line:#263235; --hair:#1D272A; --amber:#5EB1FF;
+}
