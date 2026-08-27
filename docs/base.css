@@ -657,21 +657,14 @@ section.plain.onplate .tbcard, .beta .betabox{--faint:#89999C}
   display:block; width:100%; height:auto; border-radius:12px;
   box-shadow:0 1px 2px rgba(2,10,14,.05), 0 10px 30px -12px rgba(2,10,14,.16);
 }
-/* **A whole screen is not held to the measure a paragraph wants.** The wrap is
-   1,180 px because prose forty words wide is unreadable; a 1,980 px view scaled
-   into it draws its rows at seven pixels, which is a picture of a screen rather
-   than a screen. This one breaks out of the wrap — as far as the window will
-   give and no further — and the prose above it keeps its own measure. */
-.feat figure.bleed{
-  width:min(96vw, 1680px);
-  margin-inline:calc(50% - min(48vw, 840px));
-}
-@media (max-width:1240px){
-  .feat figure.bleed{width:auto; margin-inline:0}
-}
-/* a clip that breaks out of the prose carries the frame chrome the other
-   product clips do, at the width the figure was given */
-.feat figure.bleed video{display:block; width:100%; height:auto; border-radius:12px}
+/* **A figure that breaks out of the wrap is the figure that looks wrong.** The
+   digest screen was drawn at `min(96vw, 1680px)` while every other figure keeps
+   the 1,180 px measure, and 40 % wider than its neighbours is what reads as out
+   of place whatever it contains. It is the same width as the rest now, and what
+   made that possible is the capture rather than the layout: the pane is taken at
+   1,478 px with its long column wrapped instead of 1,980 with it stretched, so
+   it scales into the column at 0.75 against the other clips' 0.70. */
+.feat figure > video{display:block; width:100%; height:auto; border-radius:12px}
 .fragshot{
   display:block; width:100%; max-width:600px; height:auto;
   border:1px solid var(--hair); border-radius:12px; background:var(--paper);
