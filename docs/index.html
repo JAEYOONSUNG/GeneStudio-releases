@@ -54,7 +54,7 @@ document.documentElement.dataset.theme=t;})()</script>
 <link rel="preload" href="font/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="font/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="font/fonts.css?v=20260828">
-<link rel="stylesheet" href="base.css?v=20260828v">
+<link rel="stylesheet" href="base.css?v=20260828w">
 </head>
 <body>
 
@@ -169,7 +169,7 @@ document.documentElement.dataset.theme=t;})()</script>
         <video class="wide" data-clip="clip/map.mp4" data-poster="clip/map.webp" width="1200" height="750"
                muted loop playsinline preload="none"
                aria-label="The circular map being zoomed out to the whole plasmid, the restriction sites resolving into the margin as there is room for them."></video>
-        <video class="narrow" data-clip="clip/map-phone.mp4" data-poster="clip/map-phone.webp" width="390" height="380"
+        <video class="narrow" data-clip="clip/map-phone.mp4" data-poster="clip/map-phone.webp" width="390" height="317"
                muted loop playsinline preload="none" aria-label="The circular map of a 2,950 bp plasmid: features on both strands, every restriction site named in the margin."></video>
       </div>
       <div class="hero-cinema-focus" aria-hidden="true"></div>
@@ -178,7 +178,7 @@ document.documentElement.dataset.theme=t;})()</script>
         <span>2,950 bp · circular</span>
       </div>
       </div>
-      <figcaption>The map — every cut named in the margin, features on the strand they are on. Zoom is the same slider you drag.</figcaption>
+      <figcaption>The actual Map in Gene Studio’s light workspace — every cut named in the margin, every feature on its strand, and the whole construct resolving as the zoom moves.</figcaption>
     </figure>
     <div class="hero-meta">
       <p class="verline">Free while the beta lasts. A licence is written for one computer and takes a minute — <b><a href="#get" style="color:inherit">ask for one</a></b>.</p>
@@ -186,16 +186,6 @@ document.documentElement.dataset.theme=t;})()</script>
         <li>.gb</li><li>.gbk</li><li>.gbff</li><li>.dna</li><li>.fa / .fasta / .fna / .faa</li><li>.ab1</li>
       </ul>
     </div>
-    <figure class="rise settle">
-      <div class="frame">
-        <video class="wide" data-clip="clip/measure.mp4" data-poster="clip/measure.webp" width="1200" height="750"
-               muted loop playsinline preload="none"
-               aria-label="Dragging an arc of the ring: the wedge follows the pointer and the length of the stretch is counted out as it grows."></video>
-        <video class="narrow" data-clip="clip/measure-phone.mp4" data-poster="clip/measure-phone.webp" width="390" height="362"
-               muted loop playsinline preload="none" aria-label="Dragging an arc of the ring: the wedge follows the pointer and the length of the stretch is counted out as it grows."></video>
-      </div>
-      <figcaption>And dragging the ring measures it — 146 → 1,756 · 1,610 bp, counted as the wedge grows.</figcaption>
-    </figure>
   </div>
 </section>
 
@@ -333,29 +323,29 @@ document.documentElement.dataset.theme=t;})()</script>
     <div class="flowhead rise">
       <span class="kicker">How it goes</span>
       <h2>From the file on your disk<br>to the figure in the paper.</h2>
-      <p class="lede">No import step, no project to create, no account. The file you already have is the document.</p>
+      <p class="lede">No import step, no project to create, no account. Find the file, read everything it carries, and take out exactly what you need.</p>
     </div>
     <div class="flowgrid rise" data-flow>
       <ol class="rail">
         <li class="step on" data-step="0">
           <span class="stepno">Step 1</span>
-          <b>Open what you already have</b>
-          <p><span>Drag in a <code>.gb</code>, a SnapGene <code>.dna</code>, a FASTA or a folder of them. The record above FEATURES — accession, organism, lineage, the papers — is read and kept, not thrown away.</span></p>
+          <b>Find the file — or the site inside it</b>
+          <p><span>Filter every favorite folder by name, or switch to Recognition sequence and press Find. EcoRI, GATC or any exact IUPAC site is counted across the local library, file by file and strand by strand.</span></p>
         </li>
         <li class="step" data-step="1">
           <span class="stepno">Step 2</span>
-          <b>Work on the construct</b>
-          <p><span>Map, sequence, digest, guides and cloning are one document and one undo stack. Nothing is a separate project you have to keep in step.</span></p>
+          <b>Read the whole feature table</b>
+          <p><span>Open <em>Full + computed</em> and the record’s qualifiers sit beside %GC, residues, mass, pI, GRAVY, RBS, eggNOG and InterPro — with identity columns pinned while the table scrolls.</span></p>
         </li>
         <li class="step" data-step="2">
           <span class="stepno">Step 3</span>
-          <b>Write it back, or take the figure out</b>
-          <p><span>Saved as the format it arrived in, byte-identical on the second save — or out as vector, with every label still editable in Illustrator.</span></p>
+          <b>Take the answer out as a figure</b>
+          <p><span>Fold the exact region you selected, or export a map, table or sequence. Vector labels stay editable in Illustrator; the source construct stays a document you can save back.</span></p>
         </li>
       </ol>
       <figure class="flowshot settle">
         <div class="frame">
-          <div class="bar"><i></i><i></i><i></i><span data-flow-name>pDEMO-T7 · 2,950 bp · circular</span></div>
+          <div class="bar"><i></i><i></i><i></i><span data-flow-name>Home · Files / Recognition sequence</span></div>
           <!-- **A step is a pair of clips, not a clip.** Every other figure on
                this page carries a wide one and a crop of it for a phone, and the
                rail has to as well or a step's picture is a desktop window shrunk
@@ -363,20 +353,20 @@ document.documentElement.dataset.theme=t;})()</script>
                the page's own `.wide`/`.narrow` rules go on deciding which of the
                two is drawn. -->
           <div class="flowclip on" data-flow-clip="0">
-            <video class="wide" data-clip="clip/map.mp4" data-poster="clip/map.webp" width="1200" height="750"
+            <video class="wide" data-clip="clip/home.mp4" data-poster="clip/home.webp" width="1200" height="750"
                    muted loop playsinline preload="none"
-                   aria-label="A plasmid opening: the circular map drawn with its features and every cut site named in the margin."></video>
-            <video class="narrow" data-clip="clip/map-phone.mp4" data-poster="clip/map-phone.webp" width="390" height="380"
+                   aria-label="Gene Studio Home filtering the Screening Runs folder, then finding EcoRI and GATC across four local sequence files and reporting 3 exact matching files with forward and reverse counts."></video>
+            <video class="narrow" data-clip="clip/home-phone.mp4" data-poster="clip/home-phone.webp" width="390" height="268"
                    muted loop playsinline preload="none"
-                   aria-label="A plasmid opening: the circular map drawn with its features and every cut site named in the margin."></video>
+                   aria-label="Gene Studio Home filtering a folder, then reporting 3 exact matching files for EcoRI and GATC with forward and reverse counts."></video>
           </div>
           <div class="flowclip" data-flow-clip="1">
-            <video class="wide" data-clip="clip/drag.mp4" data-poster="clip/drag.webp" width="1200" height="750"
+            <video class="wide" data-clip="clip/feature.mp4" data-poster="clip/feature.webp" width="1200" height="750"
                    muted loop playsinline preload="none"
-                   aria-label="Dragging across a stretch of the sequence: the figures for the selection follow the pointer."></video>
-            <video class="narrow" data-clip="clip/drag-phone.mp4" data-poster="clip/drag-phone.webp" width="390" height="219"
+                   aria-label="The real Features view changing from Record to Full plus computed, then scrolling from computed molecular properties to merged Pfam and SUPERFAMILY annotation while Name and locus tag stay pinned."></video>
+            <video class="narrow" data-clip="clip/feature-phone.mp4" data-poster="clip/feature-phone.webp" width="390" height="247"
                    muted loop playsinline preload="none"
-                   aria-label="Dragging across a stretch of the sequence: the figures for the selection follow the pointer."></video>
+                   aria-label="The expanded Features table scrolling through computed values and merged InterPro signatures with identity columns pinned."></video>
           </div>
           <div class="flowclip" data-flow-clip="2">
             <video class="wide" data-clip="clip/fold.mp4" data-poster="clip/fold.webp" width="1108" height="824"
@@ -495,16 +485,6 @@ document.documentElement.dataset.theme=t;})()</script>
                muted loop playsinline preload="none" aria-label="The methylation window: the strain the DNA was grown in and the one it is going into, and a row per methylase saying which sites here carry the mark and which enzymes it stops."></video>
       </div>
       <figcaption>And what the host did to it — a row per system, how many sites of <em>this</em> construct carry the mark, and which enzymes in hand it stops.</figcaption>
-    </figure>
-    <figure class="rise settle">
-      <div class="frame">
-        <video class="wide" data-clip="clip/fold.mp4" data-poster="clip/fold.webp" width="1108" height="824"
-               muted loop playsinline preload="none"
-               aria-label="A stretch of the construct folded as a transcript: the region grows and the structure is refolded each time, drawn as stems and loops with the free energy, the pair count and the dot-bracket under it."></video>
-        <video class="narrow" data-clip="clip/fold-phone.mp4" data-poster="clip/fold-phone.webp" width="390" height="390"
-               muted loop playsinline preload="none" aria-label="A stretch of the construct folded as a transcript: the region grows and the structure is refolded each time, drawn as stems and loops with the free energy, the pair count and the dot-bracket under it."></video>
-      </div>
-      <figcaption>And how it folds. Pick a stretch, read it as DNA or as a transcript, and the structure is drawn as a structure — stems straight, loops round — with ΔG, the pairs and the dot-bracket under it. Vector out, editable in Illustrator.</figcaption>
     </figure>
   </div>
 </section>
@@ -2052,9 +2032,9 @@ if('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion:redu
     const steps = [...flow.querySelectorAll('.step')];
     const clips = [...flow.querySelectorAll('[data-flow-clip]')];
     const name  = flow.querySelector('[data-flow-name]');
-    const names = ['pDEMO-T7 · 2,950 bp · circular',
-                   'pDEMO-T7 · sequence · 1,204–1,230',
-                   'pDEMO-T7 · fold · 51 nt · −10.6 kcal/mol'];
+    const names = ['Home · Files / Recognition sequence',
+                   'annotated_operon.gb · Features · Full + computed',
+                   'pDEMO-T7 · Fold · 51 nt · −10.6 kcal/mol'];
     const still = matchMedia('(prefers-reduced-motion: reduce)');
     /* `driven` is the reader's scroll having taken over from the timer: the
        rail introduces itself on its own until the first scroll actually chooses
