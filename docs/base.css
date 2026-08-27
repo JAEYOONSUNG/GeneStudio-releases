@@ -1814,3 +1814,44 @@ html.js .rise.settle.in{transform:none}
   [data-glyphs].on [class*="g-"]{animation:none !important; stroke-dashoffset:0 !important;
     stroke-dasharray:none !important; transform:none !important; opacity:1}
 }
+
+/* ── an icon that comes alive when it is pointed at ────────────────────────
+   The toolbox is fifty-seven cards and the ruled grid and the palette are a
+   dozen more; every one of them was a still line drawing, which is the one
+   place on this page where pointing at something said nothing back.
+
+   **It is drawn through `<use>`, which cannot be selected into.** Those icons
+   are one inline sprite reused by reference — deliberately, so the page fetches
+   nothing and carries one copy — and CSS cannot reach inside a use element's
+   shadow tree. What *does* reach in is inheritance, and `stroke-dasharray` and
+   `stroke-dashoffset` are inherited properties: set on the outer `<svg>` they
+   land on every path in the symbol. Measured rather than assumed — a symbol
+   used three times, plain, dashed and half-offset, draws plain, dashed and
+   half. So the icon draws itself with one rule and no markup change.
+
+   The dash is in the symbol's own user units (a 24-viewBox), so 52 is longer
+   than any single path in the set: every stroke sweeps in rather than a long
+   one sweeping while a short one blinks. */
+@keyframes tbDraw{
+  0%   {stroke-dasharray:52; stroke-dashoffset:52}
+  100% {stroke-dasharray:52; stroke-dashoffset:0}
+}
+@media (hover:hover) and (pointer:fine){
+  .tbcard:hover .tbico svg,
+  .rail nav .feature-card:hover .feature-icon svg,
+  .rail nav .feature-card:focus-visible .feature-icon svg{
+    animation:tbDraw .62s cubic-bezier(.35,0,.2,1);
+  }
+  /* the tile answers as well as the drawing in it: a 19 px icon redrawing on
+     its own is a flicker, and the two together read as one response */
+  .tbico{transition:transform .22s cubic-bezier(.2,.7,.2,1), background-color .22s ease}
+  .tbcard:hover .tbico{transform:scale(1.09)}
+  /* and the format grid's living glyphs quicken rather than restart — they are
+     already running, and resetting a cycle under the pointer reads as a stutter */
+  .gridlines > div:hover .g-live{animation-duration:1.6s}
+}
+@media (prefers-reduced-motion:reduce){
+  .tbcard:hover .tbico svg,
+  .rail nav .feature-card:hover .feature-icon svg{animation:none}
+  .tbcard:hover .tbico{transform:none}
+}
