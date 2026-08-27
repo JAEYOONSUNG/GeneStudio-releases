@@ -1311,8 +1311,12 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--p
 }
 section.plain.onplate .gridlines > div{background:var(--plate)}
 .gico{display:block; margin-bottom:18px}
-.gico svg{width:24px; height:24px; fill:none; stroke:var(--faint); stroke-width:1.55;
+.gico svg{width:27px; height:27px; fill:none; stroke:var(--faint); stroke-width:1.55;
   stroke-linecap:round; stroke-linejoin:round; transition:stroke .2s ease}
+/* the moving half is the accent, the still half stays the quiet line — the
+   same division the verbs use, so one row of glyphs reads like the other */
+.gico .g-live{stroke:var(--amber); opacity:.92}
+.gridlines > div:hover .gico .g-live{opacity:1}
 .gridlines > div:hover .gico svg{stroke:var(--topic)}
 .gridlines h3{font-size:17px; display:flex; align-items:center; gap:9px; flex-wrap:wrap}
 .gridlines h3 code{font:500 12px/1 var(--mono); color:var(--amber);
@@ -1700,8 +1704,13 @@ html.js .rise.settle.in{transform:none}
 
 /* ── the living glyphs ─────────────────────────────────────────────────────
    `g-still` draws the subject and never moves; `g-live` is the part that does.
-   Everything is keyed on `.on`, which an observer puts on the list, so the
-   glyphs are drawn — complete — before they are ever animated. */
+   Everything is keyed on `.on`, which an observer puts on the group, so the
+   glyphs are drawn — complete — before they are ever animated.
+
+   **Keyed on `[data-glyphs]`, not on `.verbs`.** There are two rows of these
+   now — the six verbs in the chapter break and the six formats in the ruled
+   grid — and a machinery that names one of them is a machinery the second row
+   has to reimplement. The observer arms whatever carries the attribute. */
 .vb svg{width:30px; height:30px; fill:none; stroke:currentColor; stroke-width:1.7;
   stroke-linecap:round; stroke-linejoin:round; color:var(--faint);
   transition:color .18s ease}
@@ -1710,35 +1719,88 @@ html.js .rise.settle.in{transform:none}
 .verbs a:hover .g-live{opacity:1}
 
 /* Open — the ring inside the file turns over */
-.verbs.on .g-open{transform-origin:16px 19.5px; animation:gOpen 3.6s ease-in-out infinite}
+[data-glyphs].on .g-open{transform-origin:16px 19.5px; animation:gOpen 3.6s ease-in-out infinite}
 @keyframes gOpen{
   0%,64%{transform:rotate(0)} 82%{transform:rotate(180deg)} 100%{transform:rotate(360deg)}
 }
 /* Read — a window travels along the two strands */
-.verbs.on .g-win{animation:gRead 3.6s cubic-bezier(.5,0,.5,1) infinite}
+[data-glyphs].on .g-win{animation:gRead 3.6s cubic-bezier(.5,0,.5,1) infinite}
 @keyframes gRead{ 0%,8%{transform:translateX(0)} 50%{transform:translateX(17px)} 92%,100%{transform:translateX(0)} }
 /* Cut — the blades close and the two ends part */
-.verbs.on .g-b1{transform-origin:7.4px 5.2px; animation:gB1 3.2s ease-in-out infinite}
-.verbs.on .g-b2{transform-origin:7.4px 26.8px; animation:gB2 3.2s ease-in-out infinite}
-.verbs.on .g-lhs{animation:gLhs 3.2s ease-in-out infinite}
-.verbs.on .g-rhs{animation:gRhs 3.2s ease-in-out infinite}
+[data-glyphs].on .g-b1{transform-origin:7.4px 5.2px; animation:gB1 3.2s ease-in-out infinite}
+[data-glyphs].on .g-b2{transform-origin:7.4px 26.8px; animation:gB2 3.2s ease-in-out infinite}
+[data-glyphs].on .g-lhs{animation:gLhs 3.2s ease-in-out infinite}
+[data-glyphs].on .g-rhs{animation:gRhs 3.2s ease-in-out infinite}
 @keyframes gB1{ 0%,30%{transform:rotate(0)} 46%,62%{transform:rotate(14deg)} 100%{transform:rotate(0)} }
 @keyframes gB2{ 0%,30%{transform:rotate(0)} 46%,62%{transform:rotate(-14deg)} 100%{transform:rotate(0)} }
 @keyframes gLhs{ 0%,50%{transform:translateX(0)} 70%,86%{transform:translateX(-2.6px)} 100%{transform:translateX(0)} }
 @keyframes gRhs{ 0%,50%{transform:translateX(0)} 70%,86%{transform:translateX(2.6px)} 100%{transform:translateX(0)} }
 /* Design — an oligo grows 5′→3′ along the template */
-.verbs.on .g-grow{stroke-dasharray:17 17; animation:gGrow 3.4s cubic-bezier(.4,0,.3,1) infinite}
-.verbs.on .g-head{animation:gHead 3.4s cubic-bezier(.4,0,.3,1) infinite}
+[data-glyphs].on .g-grow{stroke-dasharray:17 17; animation:gGrow 3.4s cubic-bezier(.4,0,.3,1) infinite}
+[data-glyphs].on .g-head{animation:gHead 3.4s cubic-bezier(.4,0,.3,1) infinite}
 @keyframes gGrow{ 0%{stroke-dashoffset:17} 55%,88%{stroke-dashoffset:0} 100%{stroke-dashoffset:17} }
 @keyframes gHead{ 0%{transform:translateX(-15px); opacity:0} 18%{opacity:1}
   55%,88%{transform:translateX(0); opacity:1} 100%{transform:translateX(-15px); opacity:0} }
 /* Check — the trace draws itself, peak by peak */
-.verbs.on .g-trace{stroke-dasharray:46 46; animation:gTrace 3.8s ease-in-out infinite}
+[data-glyphs].on .g-trace{stroke-dasharray:46 46; animation:gTrace 3.8s ease-in-out infinite}
 @keyframes gTrace{ 0%{stroke-dashoffset:46} 52%,86%{stroke-dashoffset:0} 100%{stroke-dashoffset:46} }
 /* Share — the link lights from the middle outward */
-.verbs.on .g-l1{stroke-dasharray:12 12; animation:gLink 3.2s ease-in-out infinite}
-.verbs.on .g-l2{stroke-dasharray:12 12; animation:gLink 3.2s ease-in-out infinite .26s}
+[data-glyphs].on .g-l1{stroke-dasharray:12 12; animation:gLink 3.2s ease-in-out infinite}
+[data-glyphs].on .g-l2{stroke-dasharray:12 12; animation:gLink 3.2s ease-in-out infinite .26s}
 @keyframes gLink{ 0%{stroke-dashoffset:12} 46%,84%{stroke-dashoffset:0} 100%{stroke-dashoffset:12} }
+
+/* ── and the six formats, in the ruled grid ────────────────────────────────
+   Each is what that format does rather than a picture of a file. They are
+   slower than the verbs (4–4.6 s against 3.2–3.8) and start at different
+   points in their cycles: six icons on one screen animating in step reads as a
+   single blinking row, and the whole reason for a *grid* is that its cells are
+   six separate things. */
+
+/* GenBank — the header writes itself, then the feature arrives under it */
+[data-glyphs].on .g-h1{stroke-dasharray:10 10; animation:gDraw 4.2s ease-in-out infinite}
+[data-glyphs].on .g-h2{stroke-dasharray:7 7; animation:gDraw 4.2s ease-in-out infinite .18s}
+[data-glyphs].on .g-feat{animation:gFeat 4.2s cubic-bezier(.3,0,.3,1) infinite .42s}
+@keyframes gDraw{ 0%{stroke-dashoffset:10} 34%,84%{stroke-dashoffset:0} 100%{stroke-dashoffset:10} }
+@keyframes gFeat{ 0%,10%{transform:translateX(-9px); opacity:0}
+  40%,84%{transform:translateX(0); opacity:1} 100%{transform:translateX(-9px); opacity:0} }
+
+/* .dna — a packet rides down through the stack and comes out untouched */
+[data-glyphs].on .g-lay{animation:gPack 4.4s cubic-bezier(.45,0,.4,1) infinite}
+@keyframes gPack{ 0%,12%{transform:translateY(0); opacity:1}
+  50%{transform:translateY(5.5px); opacity:1} 88%,100%{transform:translateY(0); opacity:1} }
+
+/* FASTA — a mark steps down the records, one at a time */
+[data-glyphs].on .g-mark{animation:gStep 4.6s steps(1,end) infinite}
+@keyframes gStep{ 0%{transform:translateY(0)} 25%{transform:translateY(6.5px)}
+  50%{transform:translateY(13px)} 75%{transform:translateY(19.5px)} 100%{transform:translateY(0)} }
+
+/* .ab1 — four channels rise in the order they were read */
+[data-glyphs].on .g-peaks path{stroke-dasharray:18 18; animation:gPeak 4s ease-in-out infinite}
+[data-glyphs].on .g-peaks .p2{animation-delay:.16s}
+[data-glyphs].on .g-peaks .p3{animation-delay:.32s}
+[data-glyphs].on .g-peaks .p4{animation-delay:.48s}
+@keyframes gPeak{ 0%{stroke-dashoffset:18} 40%,82%{stroke-dashoffset:0} 100%{stroke-dashoffset:18} }
+
+/* out — a copy travels the arrow and leaves; the page and the arrow stay.
+   **The moving part was the arrow itself at first**, and for about a third of
+   the cycle the glyph was then a page with half a line beside it, which reads
+   as a broken icon rather than as an export. What moves is the *copy*; the
+   drawing is complete at every frame. */
+[data-glyphs].on .g-copy{animation:gOut 4.2s cubic-bezier(.45,0,.35,1) infinite}
+@keyframes gOut{ 0%,14%{transform:translateX(0); opacity:0}
+  26%{transform:translateX(0); opacity:1}
+  70%{transform:translateX(10px); opacity:1}
+  84%,100%{transform:translateX(13px); opacity:0} }
+
+/* on your machine — the shackle comes down and the pin sets */
+[data-glyphs].on .g-shk{transform-origin:16px 15.5px; animation:gShackle 4.4s cubic-bezier(.4,0,.3,1) infinite}
+[data-glyphs].on .g-pin{animation:gPin 4.4s ease-in-out infinite .5s}
+@keyframes gShackle{ 0%,8%{transform:translateY(-3.4px)} 42%,86%{transform:translateY(0)}
+  100%{transform:translateY(-3.4px)} }
+@keyframes gPin{ 0%,30%{opacity:0; transform:scale(.4)} 46%,86%{opacity:1; transform:scale(1)}
+  100%{opacity:0; transform:scale(.4)} }
+/* a circle scales about the box's origin unless it is told otherwise */
+.g-pin{transform-origin:16px 21.2px; transform-box:fill-box; transform-origin:center}
 
 /* ── and every one of them stops ───────────────────────────────────────────
    **Stopped in a readable state**, which is the part that is easy to get
@@ -1749,6 +1811,6 @@ html.js .rise.settle.in{transform:none}
   html.js .settle, html.js .rise.settle{opacity:1 !important; transform:none !important; transition:none}
   .wall[data-drift].on .walltrack,
   .wall[data-drift].on .wallcol:nth-child(even) .walltrack{animation:none}
-  .verbs.on [class*="g-"]{animation:none !important; stroke-dashoffset:0 !important;
+  [data-glyphs].on [class*="g-"]{animation:none !important; stroke-dashoffset:0 !important;
     stroke-dasharray:none !important; transform:none !important; opacity:1}
 }
