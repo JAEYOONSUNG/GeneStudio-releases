@@ -467,14 +467,22 @@ figcaption{margin:14px 2px 0; font:400 13px/1.5 var(--mono); color:var(--faint)}
 }
 .stats > div{padding:clamp(24px,3vw,32px) var(--gut) clamp(26px,3.2vw,34px)}
 .stats > div + div{border-left:1px solid var(--hair)}
+/* **Four figures in the monospace face, under a page set in Inter.** The mono
+   is right where digits have to line up in a *column* — a table, a coordinate
+   gutter, a fragment list — and these four are not a column: they are four
+   headlines, each with a sentence under it in the page's own face. Set in the
+   display cut with tabular figures they keep the alignment the mono was there
+   for and stop reading as code. */
 .stats b{
   display:block; position:relative;
-  font:600 clamp(23px,2vw,28px)/1 var(--mono);
-  color:var(--ink); letter-spacing:-.02em;
+  font:600 clamp(26px,2.4vw,34px)/1 var(--display);
+  color:var(--ink); letter-spacing:-.03em;
   padding-bottom:clamp(12px,1.5vw,17px); border-bottom:1px solid var(--hair);
 }
 /* after the shorthand, which resets every font-variant longhand */
 .stats b{font-variant-numeric:tabular-nums; white-space:nowrap}
+/* the separator between two counts is not a figure and must not shout like one */
+.stats b i{font-style:normal; font-weight:400; color:var(--faint); padding:0 .12em}
 .stats b::after{content:''; position:absolute; left:0; bottom:-1px; width:26px; height:1px; background:var(--amber)}
 .stats span{
   display:block; margin-top:clamp(12px,1.5vw,17px);
@@ -501,7 +509,7 @@ figcaption{margin:14px 2px 0; font:400 13px/1.5 var(--mono); color:var(--faint)}
   .stats{display:grid; grid-template-columns:max-content minmax(0,1fr); column-gap:0; margin:0}
   .stats > div{display:contents}
   .stats b{
-    font-size:21px; border-bottom:0; align-self:baseline;
+    font-size:25px; border-bottom:0; align-self:baseline;
     padding:18px clamp(16px,5vw,26px) 11px 0;
   }
   .stats span{margin-top:0; padding:18px 0 20px; align-self:baseline}
@@ -589,25 +597,17 @@ section.plain.onplate .tbcard, .beta .betabox{--faint:#89999C}
 .feat figure.tight figcaption{grid-column:1 / -1; margin:0}
 .fraghead{margin:0 0 14px; font:600 15px/1.4 var(--ui); color:var(--ink); letter-spacing:-.015em}
 .fraghead span{font-weight:400; color:var(--faint)}
-/* A fragment list is read down the bp column, so that column is the fixed one
-   and the ends take what is left. `tabular-nums` is what keeps 1,598 and 6
-   under each other rather than under whatever their glyphs happen to measure. */
-.fragtbl{width:100%; border-collapse:collapse; font-size:13.5px}
-.fragtbl th{
-  text-align:left; padding:0 0 7px; font:500 11px/1 var(--mono);
-  letter-spacing:.14em; text-transform:uppercase; color:var(--faint);
-  border-bottom:1px solid var(--hair);
+/* **The table is the application's, photographed.** It was this page's own
+   markup carrying the app's numbers, which is a rebuild — and a rebuild drifts
+   from the thing it depicts the first time either changes. It is a screenshot
+   now, at the width it was cut at; blown up past that it is a blurrier table
+   rather than a bigger one, which is the rule the gel beside it already keeps.
+   The screenshots are taken in the light theme, so it sits on the page's own
+   ground with a hairline rather than in a dark chrome. */
+.fragshot{
+  display:block; width:100%; max-width:600px; height:auto;
+  border:1px solid var(--hair); border-radius:12px; background:var(--paper);
 }
-.fragtbl th:first-child{text-align:right; padding-right:14px}
-.fragtbl td{padding:8px 0; border-bottom:1px solid var(--hair); color:var(--slate)}
-.fragtbl td:first-child{
-  text-align:right; padding-right:14px; white-space:nowrap;
-  font:600 14.5px/1 var(--mono); font-variant-numeric:tabular-nums; color:var(--ink);
-}
-.fragtbl tbody tr:last-child td{border-bottom:0}
-/* the three that run off the end are the caption's whole point, so they are
-   marked as the thing being talked about rather than left to be counted */
-.fragtbl tr.tiny td:first-child{color:var(--cut)}
 .fragfoot{margin:14px 0 0; font-size:13px; line-height:1.6; color:var(--faint); max-width:44ch}
 @media (max-width:900px){
   .feat figure.tight{grid-template-columns:1fr}
@@ -847,12 +847,32 @@ section.plain h2{font-size:clamp(26px,3.4vw,36px); margin-top:14px}
   padding:18px 18px 20px; transition:border-color .15s ease, transform .15s ease;
 }
 .tbcard:hover{border-color:var(--line); transform:translateY(-2px)}
+/* **The same object the glyph tiles are.** Fifty-seven of these sat beside
+   twelve layered tiles as flat teal washes with a line icon in them, which is
+   why the toolbox read as the un-designed part of the page — one system for
+   the hero rows and another for the bulk. Same gradient, same hairline, same
+   inset pair; smaller, because a toolbox card's icon is a bullet, not a
+   subject. */
 .tbico{
-  display:grid; place-items:center; width:36px; height:36px; border-radius:10px;
-  background:rgba(79,183,158,.13); margin-bottom:13px;
+  display:grid; place-items:center; width:40px; height:40px; border-radius:13px;
+  background:
+    radial-gradient(circle at 29% 20%, rgba(255,255,255,.98) 0 12%, transparent 42%),
+    linear-gradient(145deg, #ffffff 4%, #f7f9fd 58%, #eaf0f8 100%);
+  box-shadow:
+    0 8px 18px rgba(30,44,72,.11), 0 2px 5px rgba(30,44,72,.07),
+    inset 0 1px 0 #fff, inset 0 -1px 0 rgba(60,80,120,.09);
+  margin-bottom:14px;
 }
-.tbico svg{width:19px; height:19px; fill:none; stroke:var(--fwd); stroke-width:1.85;
-  stroke-linecap:round; stroke-linejoin:round}
+.tbico svg{width:20px; height:20px; fill:none; stroke-width:1.85;
+  stroke-linecap:round; stroke-linejoin:round; overflow:visible;
+  filter:drop-shadow(0 2px 2px rgba(45,60,92,.14))}
+/* the sprite cannot be layered the way the drawn glyphs are — a symbol is one
+   set of paths — so the depth the glyph tiles get from a `material` shape
+   these get from a second <use> of the same symbol: a soft copy behind,
+   nudged down-right, and the face in ink over it. Two references, no second
+   sprite. */
+.tbico use.d{stroke:#A9C4E4; transform:translate(1.6px,1.8px); opacity:.6}
+.tbico use.f{stroke:#4A5A74}
 .tbcard b{display:block; color:var(--ink); font-size:15.5px; font-weight:600; letter-spacing:-.005em}
 /* **All 57 icons sat in the corner of their tile, and it had never rendered
    otherwise.** `.tbcard span` also matches <span class="tbico">, is one class
@@ -1050,7 +1070,6 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--p
    rgb(224,214,192) — lighter than either, so the column head needs its own */
 :root[data-theme="light"] .cmp .us{--amber:#0956A8}
 :root[data-theme="light"] .btn.primary:hover{ background:#0956A8 }
-:root[data-theme="light"] .tbico{ background:rgba(15,125,104,.10) }
 
 :root[data-theme="light"] .frame{
   /* the dark-picture re-darkening that used to live here is gone with the dark
@@ -1136,12 +1155,26 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--p
   width:max-content; padding-left:clamp(26px,4vw,54px)}
 .marquee[data-on] .mqrow{animation:mq 42s linear infinite}
 .marquee:hover .mqrow{animation-play-state:paused}
-.mqrow span{
-  font:500 clamp(15px,1.6vw,19px)/1 var(--display); letter-spacing:-.02em;
+/* **A name is a claim; a link is a claim somebody can check.** These are the
+   readers, databases and pipelines this app's answers were measured against,
+   and the strongest thing the row can do for a reader who doubts it is take
+   them to the thing itself — which is the rule the comparison table already
+   keeps for every cell that is not ours. A mark beside each says which *kind*
+   of thing it is: a second reader, a database, a pipeline. */
+.mqrow a{
+  /* **A line box of exactly 1em cannot hold a descender**, and the marquee
+     clips — so `eggNOG-mapper`, `pytrf` and `against` had their tails cut off
+     by the row they sit in. The leading is what gives them the room; the mask
+     fades the ends horizontally and must not be asked to cover for this. */
+  display:inline-flex; align-items:center; gap:9px; text-decoration:none;
+  font:500 clamp(15px,1.6vw,19px)/1.4 var(--display); letter-spacing:-.02em;
   color:var(--faint); white-space:nowrap; opacity:.85;
   transition:color .2s ease, opacity .2s ease;
 }
-.mqrow span:hover{color:var(--ink); opacity:1}
+.mqrow a:hover{color:var(--ink); opacity:1}
+.mqrow svg{width:17px; height:17px; flex:none; fill:none; stroke:currentColor;
+  stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round; opacity:.75}
+.mqrow a:hover svg{opacity:1; stroke:var(--amber)}
 @keyframes mq{ from{transform:translateX(0)} to{transform:translateX(-100%)} }
 @media (prefers-reduced-motion:reduce){
   .marquee[data-on] .mqrow{animation:none}

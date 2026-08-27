@@ -54,7 +54,7 @@ document.documentElement.dataset.theme=t;})()</script>
 <link rel="preload" href="font/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="font/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="font/fonts.css?v=20260828">
-<link rel="stylesheet" href="base.css?v=20260828h">
+<link rel="stylesheet" href="base.css?v=20260828i">
 </head>
 <body>
 
@@ -208,10 +208,31 @@ document.documentElement.dataset.theme=t;})()</script>
 <div class="agree" aria-label="Checked against">
   <p class="agreetitle">Every answer here was checked against</p>
   <div class="marquee" data-marquee>
+    <!-- **A name is a claim; a link is a claim somebody can check.** These are
+         the readers, databases and pipelines the app's answers were measured
+         against, and the strongest thing this row can do for a reader who
+         doubts it is take them to the thing itself — the rule the comparison
+         table already keeps for every cell that is not ours.
+
+         **The marks are ours and are deliberately neutral**: a second reader, a
+         database, a pipeline. Pasting each project's own logo would put other
+         people's trademarks on a page selling something, next to the words
+         "checked against", which reads as endorsement none of them has given.
+         What the page may honestly say is what it did, and link to who it was
+         checked against. -->
     <div class="mqrow">
-      <span>Biopython</span><span>snapgene_reader</span><span>SnapGene 8</span><span>REBASE v607</span>
-      <span>NCBI genetic codes</span><span>Prodigal</span><span>InterProScan</span><span>eggNOG-mapper</span>
-      <span>DefenseFinder</span><span>openpyxl</span><span>pytrf</span><span>SantaLucia 1998</span>
+      <a href="https://biopython.org/" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5h7a3 3 0 0 1 3 3v10a2.4 2.4 0 0 0-2.4-2.4H4z"/><path d="M20 5.5h-3a3 3 0 0 0-3 3v10a2.4 2.4 0 0 1 2.4-2.4H20z"/></svg>Biopython</a>
+      <a href="https://pypi.org/project/snapgene-reader/" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5h7a3 3 0 0 1 3 3v10a2.4 2.4 0 0 0-2.4-2.4H4z"/><path d="M20 5.5h-3a3 3 0 0 0-3 3v10a2.4 2.4 0 0 1 2.4-2.4H20z"/></svg>snapgene_reader</a>
+      <a href="https://www.snapgene.com/" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5h7a3 3 0 0 1 3 3v10a2.4 2.4 0 0 0-2.4-2.4H4z"/><path d="M20 5.5h-3a3 3 0 0 0-3 3v10a2.4 2.4 0 0 1 2.4-2.4H20z"/></svg>SnapGene 8</a>
+      <a href="http://rebase.neb.com/" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="6" rx="7.5" ry="3"/><path d="M4.5 6v12c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3V6"/><path d="M4.5 12c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3"/></svg>REBASE v607</a>
+      <a href="https://www.ncbi.nlm.nih.gov/Taxonomy/Utils/wprintgc.cgi" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="6" rx="7.5" ry="3"/><path d="M4.5 6v12c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3V6"/><path d="M4.5 12c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3"/></svg>NCBI genetic codes</a>
+      <a href="https://github.com/hyattpd/Prodigal" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="9" width="7" height="6" rx="2"/><rect x="14.5" y="9" width="7" height="6" rx="2"/><path d="M9.5 12h5"/></svg>Prodigal</a>
+      <a href="https://www.ebi.ac.uk/interpro/" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="9" width="7" height="6" rx="2"/><rect x="14.5" y="9" width="7" height="6" rx="2"/><path d="M9.5 12h5"/></svg>InterProScan</a>
+      <a href="http://eggnog-mapper.embl.de/" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="9" width="7" height="6" rx="2"/><rect x="14.5" y="9" width="7" height="6" rx="2"/><path d="M9.5 12h5"/></svg>eggNOG-mapper</a>
+      <a href="https://defensefinder.mdmlab.fr/" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="9" width="7" height="6" rx="2"/><rect x="14.5" y="9" width="7" height="6" rx="2"/><path d="M9.5 12h5"/></svg>DefenseFinder</a>
+      <a href="https://openpyxl.readthedocs.io/" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5h7a3 3 0 0 1 3 3v10a2.4 2.4 0 0 0-2.4-2.4H4z"/><path d="M20 5.5h-3a3 3 0 0 0-3 3v10a2.4 2.4 0 0 1 2.4-2.4H20z"/></svg>openpyxl</a>
+      <a href="https://github.com/lmdu/pytrf" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="9" width="7" height="6" rx="2"/><rect x="14.5" y="9" width="7" height="6" rx="2"/><path d="M9.5 12h5"/></svg>pytrf</a>
+      <a href="https://doi.org/10.1073/pnas.95.4.1460" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="6" rx="7.5" ry="3"/><path d="M4.5 6v12c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3V6"/><path d="M4.5 12c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3"/></svg>SantaLucia 1998</a>
     </div>
   </div>
 </div>
@@ -402,25 +423,22 @@ document.documentElement.dataset.theme=t;})()</script>
       <!-- **The space beside the gel is the gel's own answer.** The clip is
            cropped to its plate and must not be blown up, so what fills the
            column is not a bigger picture but the thing the picture is of: the
-           six pieces this digest actually gives. Every figure here came out of
-           the application — `digestFragments(['EcoRI','HindIII','XhoI','BamHI'])`
-           on the demo construct, which is the clip's own fixture — rather than
-           being typed into a marketing page, and they sum to 2,950, which is
-           the molecule. The last three are the reason the caption is worth
-           reading: they are shorter than the ladder's smallest rung. -->
+           six pieces this digest actually gives.
+
+           **And it is the application's table, photographed** — not this page's
+           markup carrying the application's numbers. The numbers were already
+           the app's (`digestFragments(['EcoRI','HindIII','XhoI','BamHI'])` on
+           the demo construct, which is the clip's own fixture); the table
+           around them was still a rebuild, and a rebuild is a thing that drifts
+           from what it depicts. `tools/shoot-frag.mjs` lifts the real table
+           onto a bare page and photographs it, so the columns, the ends in the
+           cut colour and the type are the product's own. They sum to 2,950,
+           which is the molecule; the last three are shorter than the ladder's
+           smallest rung, which is what the note under it is for. -->
       <div class="fragside">
         <p class="fraghead">EcoRI · HindIII · XhoI · BamHI <span>on pDEMO-T7</span></p>
-        <table class="fragtbl">
-          <thead><tr><th scope="col">bp</th><th scope="col">the ends it leaves</th></tr></thead>
-          <tbody>
-            <tr><td>1,598</td><td>EcoRI 5′-AATT · BamHI 5′-GATC</td></tr>
-            <tr><td>868</td><td>BamHI 5′-GATC · EcoRI 5′-AATT</td></tr>
-            <tr><td>445</td><td>XhoI 5′-TCGA · BamHI 5′-GATC</td></tr>
-            <tr class="tiny"><td>18</td><td>EcoRI 5′-AATT · HindIII 5′-AGCT</td></tr>
-            <tr class="tiny"><td>15</td><td>HindIII 5′-AGCT · XhoI 5′-TCGA</td></tr>
-            <tr class="tiny"><td>6</td><td>BamHI 5′-GATC · EcoRI 5′-AATT</td></tr>
-          </tbody>
-        </table>
+        <img class="fragshot" src="shot/frag.webp" width="1193" height="482" loading="lazy" decoding="async"
+             alt="The digest's fragment table: six pieces of 1,598, 868, 445, 18, 15 and 6 bp, each with the base it runs from and to, the ends each enzyme leaves, whether it self-ligates, and its GC.">
         <p class="fragfoot">6 pieces · 2,950 bp — the digest sums to the molecule.
           The last three are below the ladder's smallest rung, so they are marked
           on the dye front rather than left out.</p>
@@ -551,87 +569,87 @@ document.documentElement.dataset.theme=t;})()</script>
     <div class="toolbox rise">
       <h3 class="tbhead">Maps and the sequence <i>8</i></h3>
       <div class="tbgrid">
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-ring"/></svg></span><b>Circular map</b><span>Double-stranded, on the strand it is really on, cuts named in the margin.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-linear"/></svg></span><b>Linear map</b><span>The molecule unrolled — zoom right down to one gene with its coordinates.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-seq"/></svg></span><b>Sequence</b><span>Enzymes above, primers as arrows, both strands, residues under their codons.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-nav"/></svg></span><b>Navigator</b><span>The whole molecule as a strip. Click to jump, drag to scrub.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-find"/></svg></span><b>Find</b><span>IUPAC, a regular expression, a peptide, a field, or a coordinate.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-paint"/></svg></span><b>Highlights</b><span>A colour on the DNA, per strand, saved with the construct.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-clock"/></svg></span><b>History</b><span>Every saved version as its own map, with the changes that made it.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-card"/></svg></span><b>Record drawer</b><span>Accession, organism, lineage and papers — beside the drawing.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-ring"/><use class="f" href="#tb-ring"/></svg></span><b>Circular map</b><span>Double-stranded, on the strand it is really on, cuts named in the margin.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-linear"/><use class="f" href="#tb-linear"/></svg></span><b>Linear map</b><span>The molecule unrolled — zoom right down to one gene with its coordinates.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-seq"/><use class="f" href="#tb-seq"/></svg></span><b>Sequence</b><span>Enzymes above, primers as arrows, both strands, residues under their codons.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-nav"/><use class="f" href="#tb-nav"/></svg></span><b>Navigator</b><span>The whole molecule as a strip. Click to jump, drag to scrub.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-find"/><use class="f" href="#tb-find"/></svg></span><b>Find</b><span>IUPAC, a regular expression, a peptide, a field, or a coordinate.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-paint"/><use class="f" href="#tb-paint"/></svg></span><b>Highlights</b><span>A colour on the DNA, per strand, saved with the construct.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-clock"/><use class="f" href="#tb-clock"/></svg></span><b>History</b><span>Every saved version as its own map, with the changes that made it.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-card"/><use class="f" href="#tb-card"/></svg></span><b>Record drawer</b><span>Accession, organism, lineage and papers — beside the drawing.</span></div>
       </div>
       <h3 class="tbhead">Primers, and the freezer they live in <i>8</i></h3>
       <div class="tbgrid">
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-tube"/></svg></span><b>Your primer boxes, read for you</b><span>The lab workbook parsed at launch. 5,428 tubes, 85 sheets.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-scan"/></svg></span><b>Every tube scanned against the construct</b><span>One pass over the sequence. 3′ seed exact, overhangs and mismatches measured.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-pin"/></svg></span><b>The shelf position on the drawing</b><span>A tube is labelled #28.G2, where it binds.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-strain"/></svg></span><b>Strains and their genotype</b><span>dam, dcm, CpG and type I per host — plus your own.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-univ"/></svg></span><b>Universal primers</b><span>M13, T7, SP6, from the company you order from.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-plan"/></svg></span><b>Sequencing plan</b><span>A tiling that reads a gene end to end, gaps named.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-edit"/></svg></span><b>Primer editor</b><span>The construct drawn under the oligo, at the site it binds.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-therm"/></svg></span><b>Tm, hairpin, self-dimer</b><span>SantaLucia, your own salt and primer concentrations.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-tube"/><use class="f" href="#tb-tube"/></svg></span><b>Your primer boxes, read for you</b><span>The lab workbook parsed at launch. 5,428 tubes, 85 sheets.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-scan"/><use class="f" href="#tb-scan"/></svg></span><b>Every tube scanned against the construct</b><span>One pass over the sequence. 3′ seed exact, overhangs and mismatches measured.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-pin"/><use class="f" href="#tb-pin"/></svg></span><b>The shelf position on the drawing</b><span>A tube is labelled #28.G2, where it binds.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-strain"/><use class="f" href="#tb-strain"/></svg></span><b>Strains and their genotype</b><span>dam, dcm, CpG and type I per host — plus your own.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-univ"/><use class="f" href="#tb-univ"/></svg></span><b>Universal primers</b><span>M13, T7, SP6, from the company you order from.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-plan"/><use class="f" href="#tb-plan"/></svg></span><b>Sequencing plan</b><span>A tiling that reads a gene end to end, gaps named.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-edit"/><use class="f" href="#tb-edit"/></svg></span><b>Primer editor</b><span>The construct drawn under the oligo, at the site it binds.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-therm"/><use class="f" href="#tb-therm"/></svg></span><b>Tm, hairpin, self-dimer</b><span>SantaLucia, your own salt and primer concentrations.</span></div>
       </div>
       <h3 class="tbhead">Enzymes, digests and gels <i>8</i></h3>
       <div class="tbgrid">
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-cut"/></svg></span><b>1,113 enzymes</b><span>REBASE, every enzyme NEB sells, two-sided cutters included.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-shop"/></svg></span><b>Supplier sets</b><span>25 companies, each off its own catalogue, with the date.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-card"/></svg></span><b>Enzyme database</b><span>The cut on both strands, overhang, isoschizomers, buffer.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-methyl"/></svg></span><b>Methylation</b><span>Dam, Dcm, CpG, EcoKI, EcoBI — 2,672 published experiments.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-hosts"/></svg></span><b>Two hosts, not one</b><span>What it carries, and what it will meet.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-gel"/></svg></span><b>The gel</b><span>Your ladder and agarose. Drag the run and the bands move.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-coin"/></svg></span><b>Price per digest</b><span>Your quote, or a catalogue offer with its source.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-suggest"/></svg></span><b>Suggest digests</b><span>Scored for bands the agarose can actually resolve.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-cut"/><use class="f" href="#tb-cut"/></svg></span><b>1,113 enzymes</b><span>REBASE, every enzyme NEB sells, two-sided cutters included.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-shop"/><use class="f" href="#tb-shop"/></svg></span><b>Supplier sets</b><span>25 companies, each off its own catalogue, with the date.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-card"/><use class="f" href="#tb-card"/></svg></span><b>Enzyme database</b><span>The cut on both strands, overhang, isoschizomers, buffer.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-methyl"/><use class="f" href="#tb-methyl"/></svg></span><b>Methylation</b><span>Dam, Dcm, CpG, EcoKI, EcoBI — 2,672 published experiments.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-hosts"/><use class="f" href="#tb-hosts"/></svg></span><b>Two hosts, not one</b><span>What it carries, and what it will meet.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-gel"/><use class="f" href="#tb-gel"/></svg></span><b>The gel</b><span>Your ladder and agarose. Drag the run and the bands move.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-coin"/><use class="f" href="#tb-coin"/></svg></span><b>Price per digest</b><span>Your quote, or a catalogue offer with its source.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-suggest"/><use class="f" href="#tb-suggest"/></svg></span><b>Suggest digests</b><span>Scored for bands the agarose can actually resolve.</span></div>
       </div>
       <h3 class="tbhead">Cloning and design <i>7</i></h3>
       <div class="tbgrid">
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-scissors"/></svg></span><b>Restriction cloning</b><span>Cut, ligate, and see the product as a construct.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-gibson"/></svg></span><b>Gibson</b><span>Pick a region by pointing at it. Two primers, or four.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-gg"/></svg></span><b>Golden Gate</b><span>Domestication, overhangs read from the enzyme itself.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-guide"/></svg></span><b>Guide RNAs</b><span>Nuclease table, PAM either side, scoring from the lab's own package.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-arms"/></svg></span><b>Deletion arms</b><span>Four primers, the junction grown until its Tm is right.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-silent"/></svg></span><b>Silent mutations</b><span>A site made or removed, the protein untouched.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-preview"/></svg></span><b>The product, drawn</b><span>Every design previews the construct that comes out.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-scissors"/><use class="f" href="#tb-scissors"/></svg></span><b>Restriction cloning</b><span>Cut, ligate, and see the product as a construct.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-gibson"/><use class="f" href="#tb-gibson"/></svg></span><b>Gibson</b><span>Pick a region by pointing at it. Two primers, or four.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-gg"/><use class="f" href="#tb-gg"/></svg></span><b>Golden Gate</b><span>Domestication, overhangs read from the enzyme itself.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-guide"/><use class="f" href="#tb-guide"/></svg></span><b>Guide RNAs</b><span>Nuclease table, PAM either side, scoring from the lab's own package.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-arms"/><use class="f" href="#tb-arms"/></svg></span><b>Deletion arms</b><span>Four primers, the junction grown until its Tm is right.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-silent"/><use class="f" href="#tb-silent"/></svg></span><b>Silent mutations</b><span>A site made or removed, the protein untouched.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-preview"/><use class="f" href="#tb-preview"/></svg></span><b>The product, drawn</b><span>Every design previews the construct that comes out.</span></div>
       </div>
       <h3 class="tbhead">Sanger <i>6</i></h3>
       <div class="tbgrid">
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-trace"/></svg></span><b>Reads an .ab1</b><span>Chromatogram, quality, trim and calls. 60 real traces clean.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-ztr"/></svg></span><b>Traces inside a .dna</b><span>SnapGene's aligned reads decoded from ZTR, in with the file.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-pileup"/></svg></span><b>A pileup, not a list</b><span>Every read against the construct, peaks under the letters.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-indel"/></svg></span><b>Indels aligned, not counted</b><span>Chained seeds, affine gaps — one deletion is one event.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-frame"/></svg></span><b>What it does to the protein</b><span>The residue it changes, or what happens to the frame.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-verdict"/></svg></span><b>A verdict per read</b><span>Pass, low quality, mismatch or split — filtered from the heading.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-trace"/><use class="f" href="#tb-trace"/></svg></span><b>Reads an .ab1</b><span>Chromatogram, quality, trim and calls. 60 real traces clean.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-ztr"/><use class="f" href="#tb-ztr"/></svg></span><b>Traces inside a .dna</b><span>SnapGene's aligned reads decoded from ZTR, in with the file.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-pileup"/><use class="f" href="#tb-pileup"/></svg></span><b>A pileup, not a list</b><span>Every read against the construct, peaks under the letters.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-indel"/><use class="f" href="#tb-indel"/></svg></span><b>Indels aligned, not counted</b><span>Chained seeds, affine gaps — one deletion is one event.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-frame"/><use class="f" href="#tb-frame"/></svg></span><b>What it does to the protein</b><span>The residue it changes, or what happens to the frame.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-verdict"/><use class="f" href="#tb-verdict"/></svg></span><b>A verdict per read</b><span>Pass, low quality, mismatch or split — filtered from the heading.</span></div>
       </div>
       <h3 class="tbhead">Analyses <i>11</i></h3>
       <div class="tbgrid">
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-term"/></svg></span><b>Terminators</b><span>The hairpin and its T-tract apart, behind every gene at once.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-repeat"/></svg></span><b>Repeats</b><span>Tandem, imperfect, inverted, palindromic — kept as colours.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-fold"/></svg></span><b>Folding</b><span>A region folded and drawn, plus which part of it does anything.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-rbs"/></svg></span><b>RBS and rare codons</b><span>The SD from this record's own 16S, and the 5′ head counted apart.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-codon"/></svg></span><b>Codon usage</b><span>Per amino acid as bars, with RSCU and the preferred codon.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-code"/></svg></span><b>Genetic codes</b><span>NCBI's tables as what each differs from the standard one.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-orf"/></svg></span><b>Gene prediction</b><span>Real Prodigal, named as a prediction and never as curation.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-annot"/></svg></span><b>Functional annotation</b><span>eggNOG, InterProScan and DefenseFinder, merged onto the genes by DNMB’s own rules.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-share"/></svg></span><b>A run made anywhere comes in</b><span>DNMB’s local InterProScan TSV, a cluster’s emapper file — dragged in and joined.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-silent"/></svg></span><b>And it comes back off</b><span>A better run replaces a worse one — the columns a merge added are removed in one act.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-verdict"/></svg></span><b>Checked against the package</b><span>60 of 60 cells identical to DNMB’s own R over a real genome, name for name.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-term"/><use class="f" href="#tb-term"/></svg></span><b>Terminators</b><span>The hairpin and its T-tract apart, behind every gene at once.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-repeat"/><use class="f" href="#tb-repeat"/></svg></span><b>Repeats</b><span>Tandem, imperfect, inverted, palindromic — kept as colours.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-fold"/><use class="f" href="#tb-fold"/></svg></span><b>Folding</b><span>A region folded and drawn, plus which part of it does anything.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-rbs"/><use class="f" href="#tb-rbs"/></svg></span><b>RBS and rare codons</b><span>The SD from this record's own 16S, and the 5′ head counted apart.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-codon"/><use class="f" href="#tb-codon"/></svg></span><b>Codon usage</b><span>Per amino acid as bars, with RSCU and the preferred codon.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-code"/><use class="f" href="#tb-code"/></svg></span><b>Genetic codes</b><span>NCBI's tables as what each differs from the standard one.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-orf"/><use class="f" href="#tb-orf"/></svg></span><b>Gene prediction</b><span>Real Prodigal, named as a prediction and never as curation.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-annot"/><use class="f" href="#tb-annot"/></svg></span><b>Functional annotation</b><span>eggNOG, InterProScan and DefenseFinder, merged onto the genes by DNMB’s own rules.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-share"/><use class="f" href="#tb-share"/></svg></span><b>A run made anywhere comes in</b><span>DNMB’s local InterProScan TSV, a cluster’s emapper file — dragged in and joined.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-silent"/><use class="f" href="#tb-silent"/></svg></span><b>And it comes back off</b><span>A better run replaces a worse one — the columns a merge added are removed in one act.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-verdict"/><use class="f" href="#tb-verdict"/></svg></span><b>Checked against the package</b><span>60 of 60 cells identical to DNMB’s own R over a real genome, name for name.</span></div>
       </div>
       <h3 class="tbhead">Files, and what leaves the machine <i>7</i></h3>
       <div class="tbgrid">
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-file"/></svg></span><b>The formats your lab has</b><span>.gb, .gbk, .gbff, FASTA, SnapGene .dna, .ab1.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-share"/></svg></span><b>A copy to hand out</b><span>A GenBank for somebody else's reader — which says what it left.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-stack"/></svg></span><b>Assemblies and multi-record files</b><span>Every contig listed; saving one writes the file.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-folder"/></svg></span><b>A library of folders</b><span>Point at a folder; everything under it is listed and remembered.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-xlsx"/></svg></span><b>Workbooks</b><span>.xlsx written without a library, and read back by openpyxl.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-vector"/></svg></span><b>Figures</b><span>Vector PDF or SVG, labels still editable in Illustrator.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-safe"/></svg></span><b>A save that cannot destroy the file</b><span>Sibling, flush, rename — an interrupted save leaves the original.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-file"/><use class="f" href="#tb-file"/></svg></span><b>The formats your lab has</b><span>.gb, .gbk, .gbff, FASTA, SnapGene .dna, .ab1.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-share"/><use class="f" href="#tb-share"/></svg></span><b>A copy to hand out</b><span>A GenBank for somebody else's reader — which says what it left.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-stack"/><use class="f" href="#tb-stack"/></svg></span><b>Assemblies and multi-record files</b><span>Every contig listed; saving one writes the file.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-folder"/><use class="f" href="#tb-folder"/></svg></span><b>A library of folders</b><span>Point at a folder; everything under it is listed and remembered.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-xlsx"/><use class="f" href="#tb-xlsx"/></svg></span><b>Workbooks</b><span>.xlsx written without a library, and read back by openpyxl.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-vector"/><use class="f" href="#tb-vector"/></svg></span><b>Figures</b><span>Vector PDF or SVG, labels still editable in Illustrator.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-safe"/><use class="f" href="#tb-safe"/></svg></span><b>A save that cannot destroy the file</b><span>Sibling, flush, rename — an interrupted save leaves the original.</span></div>
       </div>
       <h3 class="tbhead">The application itself <i>5</i></h3>
       <div class="tbgrid">
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-mac"/></svg></span><b>Three platforms, one file</b><span>macOS, Windows, Linux — and the phone install is that file again.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-phone"/></svg></span><b>On a phone</b><span>Home screen, own icon, offline. A long press takes over a drag.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-menu"/></svg></span><b>Native menus</b><span>The whole application in the menu bar, findable by reading.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-update"/></svg></span><b>Updates in one press</b><span>It names the version, asks again, and restarts into it.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use href="#tb-lock"/></svg></span><b>Nothing leaves unless asked</b><span>Checked on your machine; every search is one you pressed.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-mac"/><use class="f" href="#tb-mac"/></svg></span><b>Three platforms, one file</b><span>macOS, Windows, Linux — and the phone install is that file again.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-phone"/><use class="f" href="#tb-phone"/></svg></span><b>On a phone</b><span>Home screen, own icon, offline. A long press takes over a drag.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-menu"/><use class="f" href="#tb-menu"/></svg></span><b>Native menus</b><span>The whole application in the menu bar, findable by reading.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-update"/><use class="f" href="#tb-update"/></svg></span><b>Updates in one press</b><span>It names the version, asks again, and restarts into it.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-lock"/><use class="f" href="#tb-lock"/></svg></span><b>Nothing leaves unless asked</b><span>Checked on your machine; every search is one you pressed.</span></div>
       </div>
     </div>
   </div>
