@@ -54,7 +54,7 @@ document.documentElement.dataset.theme=t;})()</script>
 <link rel="preload" href="font/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="font/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="font/fonts.css?v=20260828">
-<link rel="stylesheet" href="base.css?v=20260828g">
+<link rel="stylesheet" href="base.css?v=20260828h">
 </head>
 <body>
 
@@ -231,37 +231,21 @@ document.documentElement.dataset.theme=t;})()</script>
          off — reduced motion, or the chapter off screen — what is left is a
          complete drawing rather than half of one. The pattern is CommonNote's
          `living-glyphs.js`; the vocabulary is this application's. -->
+    <!-- **Layered, and finite.** Each is drawn the way CommonNote draws its
+         own: a `depth` shape behind, a `hero` face over it, ink and soft lines
+         on that, and a `mov` piece in the accent — not one weight of grey line
+         with something looping on top of it. They arrive in that order when the
+         chapter is reached and then stop; what answers the reader is the one
+         shot on hover. The vocabulary is this application's: a file that
+         becomes a ring, the two strands under a reading window, the stepped
+         cut this app actually draws through both of them. -->
     <ul class="verbs" data-glyphs>
-      <li><a href="#formats"><span class="vb">
-        <svg viewBox="0 0 32 32" aria-hidden="true">
-          <g class="g-still"><path d="M7 4.5h11l7 7v16H7z"/><path d="M18 4.5v7h7"/></g>
-          <g class="g-live g-open"><circle cx="16" cy="19.5" r="5.2"/><circle class="g-dot" cx="16" cy="14.3" r="1.7"/></g>
-        </svg></span>Open</a></li>
-      <li><a href="#sequence"><span class="vb">
-        <svg viewBox="0 0 32 32" aria-hidden="true">
-          <g class="g-still"><path d="M3 11h26M3 21h26"/><path d="M9 11v10M16 11v10M23 11v10"/></g>
-          <g class="g-live g-read"><rect class="g-win" x="4" y="8.4" width="7" height="15.2" rx="2.2"/></g>
-        </svg></span>Read</a></li>
-      <li><a href="#digest"><span class="vb">
-        <svg viewBox="0 0 32 32" aria-hidden="true">
-          <g class="g-still"><path class="g-lhs" d="M3 16h11"/><path class="g-rhs" d="M18 16h11"/></g>
-          <g class="g-live g-cut"><path class="g-b1" d="M9 6.5 20 16"/><path class="g-b2" d="M9 25.5 20 16"/><circle cx="7.4" cy="5.2" r="2.1"/><circle cx="7.4" cy="26.8" r="2.1"/></g>
-        </svg></span>Cut</a></li>
-      <li><a href="#design"><span class="vb">
-        <svg viewBox="0 0 32 32" aria-hidden="true">
-          <g class="g-still"><path d="M3 21.5h26"/><path d="M5 21.5v-2M9 21.5v-2M13 21.5v-2M17 21.5v-2M21 21.5v-2M25 21.5v-2"/></g>
-          <g class="g-live g-design"><path class="g-grow" d="M4 11.5h17"/><path class="g-head" d="m19 8.2 3.6 3.3-3.6 3.3"/></g>
-        </svg></span>Design</a></li>
-      <li><a href="#sanger"><span class="vb">
-        <svg viewBox="0 0 32 32" aria-hidden="true">
-          <g class="g-still"><path d="M3 26h26"/></g>
-          <g class="g-live g-check"><path class="g-trace" d="M3 24c3.4 0 3.4-13 6.8-13s3.4 13 6.8 13 3.4-16 6.8-16S29 24 29 24"/></g>
-        </svg></span>Check</a></li>
-      <li><a href="#formats"><span class="vb">
-        <svg viewBox="0 0 32 32" aria-hidden="true">
-          <g class="g-still"><circle cx="24" cy="7.5" r="3"/><circle cx="8" cy="16" r="3"/><circle cx="24" cy="24.5" r="3"/></g>
-          <g class="g-live g-share"><path class="g-l1" d="m10.7 14.6 10.6-5.6"/><path class="g-l2" d="m10.7 17.4 10.6 5.6"/></g>
-        </svg></span>Share</a></li>
+      <li><a href="#formats"><span class="vb lg"><svg viewBox="0 0 64 64" aria-hidden="true"><g class="depth"><rect class="m" x="20" y="8" width="34" height="44" rx="12"/></g><g class="hero"><path class="s" d="M12 19c0-5 4-9 9-9h19l11 11v26c0 5-4 9-9 9H21c-5 0-9-4-9-9z"/><path class="i" d="M40 10v12h11"/></g><g class="mov"><circle class="a" cx="31" cy="38" r="12"/><circle class="af" cx="31" cy="26" r="4.2"/></g></svg></span>Open</a></li>
+      <li><a href="#sequence"><span class="vb lg"><svg viewBox="0 0 64 64" aria-hidden="true"><g class="depth"><rect class="m" x="10" y="17" width="46" height="30" rx="10"/></g><g class="hero"><rect class="s" x="6" y="20" width="50" height="24" rx="8"/><path class="i" d="M6 27.5h50M6 36.5h50"/><path class="soft" d="M17 27.5v9M25 27.5v9M33 27.5v9M41 27.5v9M49 27.5v9"/></g><g class="mov"><rect class="a" x="8.5" y="22.5" width="12" height="19" rx="4" fill="none"/></g></svg></span>Read</a></li>
+      <li><a href="#digest"><span class="vb lg"><svg viewBox="0 0 64 64" aria-hidden="true"><g class="depth"><rect class="m" x="7" y="20" width="50" height="26" rx="9"/></g><g class="hero"><rect class="s" x="5" y="22" width="54" height="9" rx="4.5"/><rect class="s" x="5" y="35" width="54" height="9" rx="4.5"/></g><g class="mov"><path class="a" d="M24 18v13h16v13"/><circle class="af" cx="24" cy="16" r="3.4"/><circle class="af" cx="40" cy="46" r="3.4"/></g></svg></span>Cut</a></li>
+      <li><a href="#design"><span class="vb lg"><svg viewBox="0 0 64 64" aria-hidden="true"><g class="depth"><rect class="m" x="7" y="36" width="50" height="16" rx="7"/></g><g class="hero"><rect class="s" x="5" y="38" width="54" height="12" rx="5"/><path class="soft" d="M13 38v12M22 38v12M31 38v12M40 38v12M49 38v12"/></g><g class="mov"><path class="a sweep" d="M9 22h34"/><path class="af" d="m40 15 9 7-9 7z"/></g></svg></span>Design</a></li>
+      <li><a href="#sanger"><span class="vb lg"><svg viewBox="0 0 64 64" aria-hidden="true"><g class="depth"><rect class="m" x="8" y="14" width="48" height="36" rx="11"/></g><g class="hero"><rect class="s" x="5" y="17" width="50" height="30" rx="9"/><path class="i" d="M5 42h50"/></g><g class="mov"><path class="a sweep" d="M9 40c5 0 5-19 10-19s5 19 10 19 5-23 10-23 6 23 12 23"/></g></svg></span>Check</a></li>
+      <li><a href="#formats"><span class="vb lg"><svg viewBox="0 0 64 64" aria-hidden="true"><g class="depth"><circle class="m" cx="46" cy="16" r="10"/><circle class="m" cx="46" cy="48" r="10"/></g><g class="hero"><circle class="s" cx="16" cy="32" r="11"/><circle class="s" cx="47" cy="15" r="9"/><circle class="s" cx="47" cy="49" r="9"/></g><g class="mov"><path class="a" d="m25 27 14-8M25 37l14 8"/><circle class="af" cx="16" cy="32" r="4.5"/></g></svg></span>Share</a></li>
     </ul>
   </div>
 </section>
@@ -675,32 +659,32 @@ document.documentElement.dataset.theme=t;})()</script>
          `g-live` moves. -->
     <div class="gridlines rise" data-glyphs>
       <div>
-        <span class="gico"><svg viewBox="0 0 32 32" aria-hidden="true"><g class="g-still"><path d="M8 4.5h11l6 6v17H8z"/><path d="M19 4.5v6h6"/></g><g class="g-live g-rec"><path class="g-h1" d="M12 14.5h10"/><path class="g-h2" d="M12 18.5h7"/><path class="g-feat" d="M12 23.5h6.5l2.4 2-2.4 2H12z"/></g></svg></span>
+        <span class="gico lg"><svg viewBox="0 0 64 64" aria-hidden="true"><g class="depth"><rect class="m" x="20" y="8" width="34" height="46" rx="11"/></g><g class="hero"><path class="s" d="M11 17c0-5 4-9 9-9h20l12 12v27c0 5-4 9-9 9H20c-5 0-9-4-9-9z"/><path class="i" d="M40 8v12h12"/></g><g class="mov"><path class="a sweep" d="M19 29h20M19 36h14"/><path class="af" d="M19 43h15l4 3.5-4 3.5H19z"/></g></svg></span>
         <h3><code>.gb .gbk .gbff</code></h3>
         <p>The record above FEATURES is kept whole — accession, organism, lineage, the papers, the structured comments — and written back as it arrived. Saving twice gives a byte-identical file.</p>
       </div>
       <div>
-        <span class="gico"><svg viewBox="0 0 32 32" aria-hidden="true"><g class="g-still"><path d="m16 4.5 11 6-11 6-11-6z"/><path d="m5 21 11 6 11-6"/></g><g class="g-live g-pack"><path class="g-lay" d="m5 15.5 11 6 11-6"/></g></svg></span>
+        <span class="gico lg"><svg viewBox="0 0 64 64" aria-hidden="true"><g class="depth"><path class="m" d="m32 6 25 13-25 13-25-13z"/></g><g class="hero"><path class="s" d="m32 11 24 12.5-24 12.5-24-12.5z"/><path class="i" d="m8 39 24 12.5L56 39"/></g><g class="mov"><path class="a" d="m8 31 24 12.5L56 31"/><circle class="af" cx="32" cy="23" r="4.5"/></g></svg></span>
         <h3><code>.dna</code></h3>
         <p>SnapGene files are read and written packet for packet: the colours, the edit history, the aligned traces and every packet this reader does not interpret ride through untouched.</p>
       </div>
       <div>
-        <span class="gico"><svg viewBox="0 0 32 32" aria-hidden="true"><g class="g-still"><path d="M12 7h16M12 13.5h16M12 20h12M12 26.5h16"/></g><g class="g-live g-list"><path class="g-mark" d="M5 7h3.6"/></g></svg></span>
+        <span class="gico lg"><svg viewBox="0 0 64 64" aria-hidden="true"><g class="depth"><rect class="m" x="16" y="9" width="42" height="46" rx="11"/></g><g class="hero"><rect class="s" x="13" y="12" width="42" height="40" rx="9"/><path class="soft" d="M21 22h26M21 32h26M21 42h18"/></g><g class="mov"><rect class="af" x="6" y="27" width="9" height="9" rx="3"/><path class="w" d="m8.6 31.5 1.9 1.9 3.4-3.6"/></g></svg></span>
         <h3><code>.fa .fasta .fna</code></h3>
         <p>A file carrying 85,142 records is listed and read a record at a time, in milliseconds — because splitting is cheap and parsing everything is not.</p>
       </div>
       <div>
-        <span class="gico"><svg viewBox="0 0 32 32" aria-hidden="true"><g class="g-still"><path d="M4 26h24"/></g><g class="g-live g-peaks"><path class="p1" d="M8 26V15"/><path class="p2" d="M14 26V8.5"/><path class="p3" d="M20 26V18"/><path class="p4" d="M26 26V12"/></g></svg></span>
+        <span class="gico lg"><svg viewBox="0 0 64 64" aria-hidden="true"><g class="depth"><rect class="m" x="9" y="15" width="48" height="35" rx="11"/></g><g class="hero"><rect class="s" x="6" y="18" width="50" height="29" rx="9"/><path class="i" d="M6 43h50"/></g><g class="mov"><path class="a" d="M15 43V30"/><path class="a" d="M27 43V22"/><path class="a" d="M39 43V34"/><path class="a" d="M51 43V26"/></g></svg></span>
         <h3><code>.ab1</code></h3>
         <p>Read as a read <em>of the construct</em>, not as a document of its own: end-trimmed by quality, aligned both ways round, and kept with the plasmid it was read against.</p>
       </div>
       <div>
-        <span class="gico"><svg viewBox="0 0 32 32" aria-hidden="true"><g class="g-still"><path d="M6 5.5h9l5 5v5M6 5.5v21h6"/><path d="M15 21.5h11"/><path d="m22.4 18 3.6 3.5-3.6 3.5"/></g><g class="g-live g-out"><rect class="g-copy" x="12.6" y="18.6" width="5.6" height="5.6" rx="1.6"/></g></svg></span>
+        <span class="gico lg"><svg viewBox="0 0 64 64" aria-hidden="true"><g class="depth"><rect class="m" x="9" y="9" width="34" height="46" rx="11"/></g><g class="hero"><path class="s" d="M7 17c0-5 4-9 9-9h17l11 11v11"/><path class="s" d="M7 17v29c0 5 4 9 9 9h10" fill="none"/><path class="i" d="M33 8v12h11"/></g><g class="mov"><path class="a" d="M31 42h20"/><path class="af" d="m45 35 9 7-9 7z"/></g></svg></span>
         <h3><code>out</code></h3>
         <p>GenBank — and a separate sharing copy that says what it left behind — SnapGene <code>.dna</code>, FASTA, an <code>.xlsx</code> workbook, and every drawing as vector.</p>
       </div>
       <div>
-        <span class="gico"><svg viewBox="0 0 32 32" aria-hidden="true"><g class="g-still"><rect x="7.5" y="15" width="17" height="12.5" rx="3.4"/></g><g class="g-live g-lock"><path class="g-shk" d="M11.5 15.5v-3.2a4.5 4.5 0 0 1 9 0v3.2"/><circle class="g-pin" cx="16" cy="21.2" r="1.9"/></g></svg></span>
+        <span class="gico lg"><svg viewBox="0 0 64 64" aria-hidden="true"><g class="depth"><path class="m" d="M32 5 55 14v18c0 14-8 24-23 30C17 56 9 46 9 32V14z"/></g><g class="hero"><path class="s" d="M32 10 50 17v15c0 11-6 19-18 24-12-5-18-13-18-24V17z"/></g><g class="mov"><path class="i" d="M25 32v-4.5a7 7 0 0 1 14 0V32"/><rect class="af" x="22" y="31" width="20" height="15" rx="5.5"/><path class="w" d="m27.5 38.5 3 3 6.5-6.5"/></g></svg></span>
         <h3><code>on your machine</code></h3>
         <p>Your files are read from disk and stay there. Nothing is uploaded, and the only outbound requests are the ones you press — BLAST, InterProScan, eggNOG — each named before it is made.</p>
       </div>

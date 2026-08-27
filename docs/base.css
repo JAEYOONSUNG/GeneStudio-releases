@@ -1313,10 +1313,8 @@ section.plain.onplate .gridlines > div{background:var(--plate)}
 .gico{display:block; margin-bottom:18px}
 .gico svg{width:27px; height:27px; fill:none; stroke:var(--faint); stroke-width:1.55;
   stroke-linecap:round; stroke-linejoin:round; transition:stroke .2s ease}
-/* the moving half is the accent, the still half stays the quiet line — the
-   same division the verbs use, so one row of glyphs reads like the other */
-.gico .g-live{stroke:var(--amber); opacity:.92}
-.gridlines > div:hover .gico .g-live{opacity:1}
+/* the grid's icon is a glyph tile now (`.lg`); the two rules that painted its
+   stroke halves went with the drawings they were written for */
 .gridlines > div:hover .gico svg{stroke:var(--topic)}
 .gridlines h3{font-size:17px; display:flex; align-items:center; gap:9px; flex-wrap:wrap}
 .gridlines h3 code{font:500 12px/1 var(--mono); color:var(--amber);
@@ -1703,104 +1701,14 @@ html.js .rise.settle.in{transform:none}
 @keyframes drift{ from{transform:translateY(0)} to{transform:translateY(-50%)} }
 
 /* ── the living glyphs ─────────────────────────────────────────────────────
-   `g-still` draws the subject and never moves; `g-live` is the part that does.
-   Everything is keyed on `.on`, which an observer puts on the group, so the
-   glyphs are drawn — complete — before they are ever animated.
-
-   **Keyed on `[data-glyphs]`, not on `.verbs`.** There are two rows of these
-   now — the six verbs in the chapter break and the six formats in the ruled
-   grid — and a machinery that names one of them is a machinery the second row
-   has to reimplement. The observer arms whatever carries the attribute. */
-.vb svg{width:30px; height:30px; fill:none; stroke:currentColor; stroke-width:1.7;
-  stroke-linecap:round; stroke-linejoin:round; color:var(--faint);
-  transition:color .18s ease}
-.verbs a:hover .vb svg{color:var(--amber)}
-.g-live{stroke:var(--amber); opacity:.9}
-.verbs a:hover .g-live{opacity:1}
-
-/* Open — the ring inside the file turns over */
-[data-glyphs].on .g-open{transform-origin:16px 19.5px; animation:gOpen 3.6s ease-in-out infinite}
-@keyframes gOpen{
-  0%,64%{transform:rotate(0)} 82%{transform:rotate(180deg)} 100%{transform:rotate(360deg)}
-}
-/* Read — a window travels along the two strands */
-[data-glyphs].on .g-win{animation:gRead 3.6s cubic-bezier(.5,0,.5,1) infinite}
-@keyframes gRead{ 0%,8%{transform:translateX(0)} 50%{transform:translateX(17px)} 92%,100%{transform:translateX(0)} }
-/* Cut — the blades close and the two ends part */
-[data-glyphs].on .g-b1{transform-origin:7.4px 5.2px; animation:gB1 3.2s ease-in-out infinite}
-[data-glyphs].on .g-b2{transform-origin:7.4px 26.8px; animation:gB2 3.2s ease-in-out infinite}
-[data-glyphs].on .g-lhs{animation:gLhs 3.2s ease-in-out infinite}
-[data-glyphs].on .g-rhs{animation:gRhs 3.2s ease-in-out infinite}
-@keyframes gB1{ 0%,30%{transform:rotate(0)} 46%,62%{transform:rotate(14deg)} 100%{transform:rotate(0)} }
-@keyframes gB2{ 0%,30%{transform:rotate(0)} 46%,62%{transform:rotate(-14deg)} 100%{transform:rotate(0)} }
-@keyframes gLhs{ 0%,50%{transform:translateX(0)} 70%,86%{transform:translateX(-2.6px)} 100%{transform:translateX(0)} }
-@keyframes gRhs{ 0%,50%{transform:translateX(0)} 70%,86%{transform:translateX(2.6px)} 100%{transform:translateX(0)} }
-/* Design — an oligo grows 5′→3′ along the template */
-[data-glyphs].on .g-grow{stroke-dasharray:17 17; animation:gGrow 3.4s cubic-bezier(.4,0,.3,1) infinite}
-[data-glyphs].on .g-head{animation:gHead 3.4s cubic-bezier(.4,0,.3,1) infinite}
-@keyframes gGrow{ 0%{stroke-dashoffset:17} 55%,88%{stroke-dashoffset:0} 100%{stroke-dashoffset:17} }
-@keyframes gHead{ 0%{transform:translateX(-15px); opacity:0} 18%{opacity:1}
-  55%,88%{transform:translateX(0); opacity:1} 100%{transform:translateX(-15px); opacity:0} }
-/* Check — the trace draws itself, peak by peak */
-[data-glyphs].on .g-trace{stroke-dasharray:46 46; animation:gTrace 3.8s ease-in-out infinite}
-@keyframes gTrace{ 0%{stroke-dashoffset:46} 52%,86%{stroke-dashoffset:0} 100%{stroke-dashoffset:46} }
-/* Share — the link lights from the middle outward */
-[data-glyphs].on .g-l1{stroke-dasharray:12 12; animation:gLink 3.2s ease-in-out infinite}
-[data-glyphs].on .g-l2{stroke-dasharray:12 12; animation:gLink 3.2s ease-in-out infinite .26s}
-@keyframes gLink{ 0%{stroke-dashoffset:12} 46%,84%{stroke-dashoffset:0} 100%{stroke-dashoffset:12} }
-
-/* ── and the six formats, in the ruled grid ────────────────────────────────
-   Each is what that format does rather than a picture of a file. They are
-   slower than the verbs (4–4.6 s against 3.2–3.8) and start at different
-   points in their cycles: six icons on one screen animating in step reads as a
-   single blinking row, and the whole reason for a *grid* is that its cells are
-   six separate things. */
-
-/* GenBank — the header writes itself, then the feature arrives under it */
-[data-glyphs].on .g-h1{stroke-dasharray:10 10; animation:gDraw 4.2s ease-in-out infinite}
-[data-glyphs].on .g-h2{stroke-dasharray:7 7; animation:gDraw 4.2s ease-in-out infinite .18s}
-[data-glyphs].on .g-feat{animation:gFeat 4.2s cubic-bezier(.3,0,.3,1) infinite .42s}
-@keyframes gDraw{ 0%{stroke-dashoffset:10} 34%,84%{stroke-dashoffset:0} 100%{stroke-dashoffset:10} }
-@keyframes gFeat{ 0%,10%{transform:translateX(-9px); opacity:0}
-  40%,84%{transform:translateX(0); opacity:1} 100%{transform:translateX(-9px); opacity:0} }
-
-/* .dna — a packet rides down through the stack and comes out untouched */
-[data-glyphs].on .g-lay{animation:gPack 4.4s cubic-bezier(.45,0,.4,1) infinite}
-@keyframes gPack{ 0%,12%{transform:translateY(0); opacity:1}
-  50%{transform:translateY(5.5px); opacity:1} 88%,100%{transform:translateY(0); opacity:1} }
-
-/* FASTA — a mark steps down the records, one at a time */
-[data-glyphs].on .g-mark{animation:gStep 4.6s steps(1,end) infinite}
-@keyframes gStep{ 0%{transform:translateY(0)} 25%{transform:translateY(6.5px)}
-  50%{transform:translateY(13px)} 75%{transform:translateY(19.5px)} 100%{transform:translateY(0)} }
-
-/* .ab1 — four channels rise in the order they were read */
-[data-glyphs].on .g-peaks path{stroke-dasharray:18 18; animation:gPeak 4s ease-in-out infinite}
-[data-glyphs].on .g-peaks .p2{animation-delay:.16s}
-[data-glyphs].on .g-peaks .p3{animation-delay:.32s}
-[data-glyphs].on .g-peaks .p4{animation-delay:.48s}
-@keyframes gPeak{ 0%{stroke-dashoffset:18} 40%,82%{stroke-dashoffset:0} 100%{stroke-dashoffset:18} }
-
-/* out — a copy travels the arrow and leaves; the page and the arrow stay.
-   **The moving part was the arrow itself at first**, and for about a third of
-   the cycle the glyph was then a page with half a line beside it, which reads
-   as a broken icon rather than as an export. What moves is the *copy*; the
-   drawing is complete at every frame. */
-[data-glyphs].on .g-copy{animation:gOut 4.2s cubic-bezier(.45,0,.35,1) infinite}
-@keyframes gOut{ 0%,14%{transform:translateX(0); opacity:0}
-  26%{transform:translateX(0); opacity:1}
-  70%{transform:translateX(10px); opacity:1}
-  84%,100%{transform:translateX(13px); opacity:0} }
-
-/* on your machine — the shackle comes down and the pin sets */
-[data-glyphs].on .g-shk{transform-origin:16px 15.5px; animation:gShackle 4.4s cubic-bezier(.4,0,.3,1) infinite}
-[data-glyphs].on .g-pin{animation:gPin 4.4s ease-in-out infinite .5s}
-@keyframes gShackle{ 0%,8%{transform:translateY(-3.4px)} 42%,86%{transform:translateY(0)}
-  100%{transform:translateY(-3.4px)} }
-@keyframes gPin{ 0%,30%{opacity:0; transform:scale(.4)} 46%,86%{opacity:1; transform:scale(1)}
-  100%{opacity:0; transform:scale(.4)} }
-/* a circle scales about the box's origin unless it is told otherwise */
-.g-pin{transform-origin:16px 21.2px; transform-box:fill-box; transform-origin:center}
+   The first version of these lived here: twelve icons of one stroke weight,
+   each with an accent path looping for ever. It is gone — the drawings are
+   layered objects now and the motion is finite, both further down this file
+   under "Living glyphs, the way CommonNote does them". Nothing referenced
+   these rules once the markup changed, and a stylesheet that keeps the pass it
+   replaced is a stylesheet nobody can read. What stays is the pair of colours
+   the two rows share. */
+.vb{display:grid; place-items:center; width:44px; height:44px}
 
 /* ── and every one of them stops ───────────────────────────────────────────
    **Stopped in a readable state**, which is the part that is easy to get
@@ -1846,12 +1754,100 @@ html.js .rise.settle.in{transform:none}
      its own is a flicker, and the two together read as one response */
   .tbico{transition:transform .22s cubic-bezier(.2,.7,.2,1), background-color .22s ease}
   .tbcard:hover .tbico{transform:scale(1.09)}
-  /* and the format grid's living glyphs quicken rather than restart — they are
-     already running, and resetting a cycle under the pointer reads as a stutter */
-  .gridlines > div:hover .g-live{animation-duration:1.6s}
 }
 @media (prefers-reduced-motion:reduce){
   .tbcard:hover .tbico svg,
   .rail nav .feature-card:hover .feature-icon svg{animation:none}
   .tbcard:hover .tbico{transform:none}
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   Living glyphs, the way CommonNote does them
+   ────────────────────────────────────────────────────────────────────────────
+   The first pass at these was twelve icons of one line weight with an accent
+   part looping for ever, and read as cheap. Reading the reference's own
+   stylesheet rather than looking at it says why, and it is three things:
+
+   1. **The tile is an object.** A radial highlight over a diagonal gradient,
+      a hairline, an outer shadow and two inset ones — top white, bottom dark.
+      That is what makes a 26 px drawing read as a thing sitting on the page
+      rather than as a picture printed on it.
+   2. **The drawing is layered, not stroked.** `material` is the depth behind,
+      `surface` the face, `ink` the 2 px line, `accent` the 2.5 px one that
+      carries the colour, `white-line` the mark on a filled shape. One weight
+      of grey line is what an icon font does.
+   3. **The motion is finite.** It *arrives* — depth, then face, then the
+      moving piece, 70 ms apart — and then it stops. A loop that never stops is
+      a page that fidgets; what answers the reader is the one-shot on hover.
+
+   `vector-effect:non-scaling-stroke` throughout, so a 64-unit drawing put in a
+   26 px box keeps the weights it was drawn with.
+   ════════════════════════════════════════════════════════════════════════════ */
+.lg{display:grid; place-items:center; position:relative; isolation:isolate;
+  width:56px; height:56px; border-radius:19px;
+  background:
+    radial-gradient(circle at 29% 20%, rgba(255,255,255,.98) 0 12%, transparent 42%),
+    linear-gradient(145deg, #ffffff 4%, #f7f9fd 58%, #eaf0f8 100%);
+  box-shadow:
+    0 14px 28px rgba(30,44,72,.13), 0 3px 8px rgba(30,44,72,.08),
+    inset 0 1px 0 #fff, inset 0 -1px 0 rgba(60,80,120,.09);
+  transition:transform .24s cubic-bezier(.16,1,.3,1), box-shadow .24s ease;
+}
+.lg svg{width:34px; height:34px; overflow:visible;
+  filter:drop-shadow(0 4px 4px rgba(45,60,92,.13)); shape-rendering:geometricPrecision}
+.lg svg *{vector-effect:non-scaling-stroke}
+.lg .m{fill:#E7EDF6; stroke:rgba(255,255,255,.9); stroke-width:1.2}
+.lg .s{fill:rgba(252,253,255,.96); stroke:rgba(110,128,160,.44); stroke-width:1.35}
+.lg .i,.lg .soft,.lg .a,.lg .w{fill:none; stroke-linecap:round; stroke-linejoin:round}
+.lg .i{stroke:#566278; stroke-width:2}
+.lg .soft{stroke:#8FB3DE; stroke-width:1.8; opacity:.6}
+.lg .a{stroke:#1E7BE0; stroke-width:2.5}
+.lg .w{stroke:#fff; stroke-width:2.25}
+.lg .af{fill:#1E7BE0}
+.lg .bf{fill:#8FB3DE}
+.lg .sf{fill:#E7EDF6}
+.lg .wf{fill:#fff}
+.lg .dot{fill:#C7D1E2}
+
+/* ── it arrives, and then it is still ─────────────────────────────────────── */
+html.js [data-glyphs]:not(.on) .lg svg{opacity:0; transform:translateY(7px) scale(.88)}
+[data-glyphs].on .lg svg{animation:lgIn 760ms cubic-bezier(.16,1,.3,1) both}
+[data-glyphs].on .lg .depth{animation:lgDepth 820ms cubic-bezier(.16,1,.3,1) 70ms both}
+[data-glyphs].on .lg .hero {animation:lgHero  720ms cubic-bezier(.16,1,.3,1) 120ms both}
+[data-glyphs].on .lg .mov  {animation:lgMove  620ms cubic-bezier(.16,1,.3,1) 230ms both}
+@keyframes lgIn{ from{opacity:0; transform:translateY(7px) scale(.88)} to{opacity:1; transform:none} }
+@keyframes lgDepth{ from{opacity:0; transform:translate(3px,3px) scale(.9)} to{opacity:1; transform:none} }
+@keyframes lgHero { from{opacity:0; transform:translateY(4px) scale(.94)} to{opacity:1; transform:none} }
+@keyframes lgMove { from{opacity:0; transform:scale(.72)} to{opacity:1; transform:none} }
+.lg .depth,.lg .hero,.lg .mov{transform-box:fill-box; transform-origin:center}
+
+/* ── and it answers the pointer, once ────────────────────────────────────── */
+@media (hover:hover) and (pointer:fine){
+  .verbs a:hover .lg, .gridlines > div:hover .lg{
+    transform:translateY(-3px) scale(1.03);
+    box-shadow:0 20px 38px rgba(30,44,72,.17), 0 5px 12px rgba(30,44,72,.10), inset 0 1px 0 #fff;
+  }
+  /* each glyph's own piece replays — one shot, `both`, so it settles where it
+     ends rather than snapping back mid-gesture */
+  .verbs a:hover .lg .mov, .gridlines > div:hover .lg .mov{
+    animation:lgPoke 720ms cubic-bezier(.2,.85,.25,1) both;
+  }
+  .verbs a:hover .lg .sweep, .gridlines > div:hover .lg .sweep{
+    animation:lgSweep 760ms cubic-bezier(.3,0,.2,1) both;
+  }
+}
+@keyframes lgPoke{ 0%{transform:scale(.62); opacity:.2} 58%{transform:scale(1.08); opacity:1}
+  100%{transform:none; opacity:1} }
+@keyframes lgSweep{ 0%{stroke-dasharray:64; stroke-dashoffset:64} 100%{stroke-dasharray:64; stroke-dashoffset:0} }
+
+@media (prefers-reduced-motion:reduce){
+  html.js [data-glyphs]:not(.on) .lg svg{opacity:1; transform:none}
+  [data-glyphs].on .lg svg,[data-glyphs].on .lg .depth,
+  [data-glyphs].on .lg .hero,[data-glyphs].on .lg .mov,
+  .verbs a:hover .lg .mov,.gridlines > div:hover .lg .mov,
+  .verbs a:hover .lg .sweep,.gridlines > div:hover .lg .sweep{
+    animation:none !important; opacity:1 !important; transform:none !important;
+    stroke-dasharray:none !important; stroke-dashoffset:0 !important;
+  }
+  .verbs a:hover .lg,.gridlines > div:hover .lg{transform:none}
 }
