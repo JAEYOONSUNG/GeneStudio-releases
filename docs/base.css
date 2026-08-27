@@ -606,13 +606,28 @@ section.plain.onplate .tbcard, .beta .betabox{--faint:#89999C}
    ground with a hairline rather than in a dark chrome. */
 /* **A screenshot of a panel is not a screenshot of the window.** The `.frame`
    chrome is a picture of the application — a title bar round a whole view — and
-   a single card photographed on its own ground needs none of it: what it needs
-   is to sit on the page at the width it was cut at, with the hairline it
-   already carries doing the framing. */
+   a screen photographed on its own ground needs none of it: what it needs is to
+   sit on the page with the hairline it already carries doing the framing. */
 .shotfig{
   display:block; width:100%; height:auto; border-radius:12px;
   box-shadow:0 1px 2px rgba(2,10,14,.05), 0 10px 30px -12px rgba(2,10,14,.16);
 }
+/* **A whole screen is not held to the measure a paragraph wants.** The wrap is
+   1,180 px because prose forty words wide is unreadable; a 1,980 px view scaled
+   into it draws its rows at seven pixels, which is a picture of a screen rather
+   than a screen. This one breaks out of the wrap — as far as the window will
+   give and no further — and the prose above it keeps its own measure. */
+.feat figure.bleed{
+  width:min(96vw, 1680px);
+  margin-inline:calc(50% - min(48vw, 840px));
+}
+@media (max-width:1240px){
+  .feat figure.bleed{width:auto; margin-inline:0}
+}
+/* the gel clip is 448 px and must not be blown up, so its figure is the width
+   of what is in it rather than the width of the column */
+.feat figure.narrowfig{max-width:520px}
+.feat figure.narrowfig .frame{max-width:none}
 .fragshot{
   display:block; width:100%; max-width:600px; height:auto;
   border:1px solid var(--hair); border-radius:12px; background:var(--paper);
@@ -650,7 +665,17 @@ section.plain.onplate .tbcard, .beta .betabox{--faint:#89999C}
    computed from `--topic` and a custom property resolves against the element it
    is declared on — put on :root it would resolve once, against the default, and
    every section would get the same ink whatever colour its pill was */
-section{--topic:var(--fwd); --topic-ink:var(--topic)}
+section{--topic:var(--fwd); --topic-ink:var(--topic);
+  /* **A fixed percentage of five different colours is five different
+     strengths.** The scene cards were the topic mixed at a tenth into the
+     page, and measured in oklab that gave the digest's red a chroma of
+     0.0192 against the sequence's green at 0.0105 — nearly twice, so one
+     section shouted and the rest were tinted. What a large field wants is the
+     *hue* of its topic and almost none of its chroma, so the wash is the topic
+     taken most of the way to the page's own neutral before it is mixed in. The
+     eyebrow chip keeps the topic itself: it is a label, and a label is meant
+     to be seen. */
+  --topic-wash:color-mix(in oklab, var(--topic) 42%, var(--slate))}
 .num{display:inline-flex; align-items:center; gap:7px; margin:0 0 16px; justify-self:start;
   padding:6px 13px 6px 10px; border-radius:999px; letter-spacing:.02em;
   font:600 12.5px/1 var(--ui); color:var(--topic-ink);
@@ -689,7 +714,7 @@ section .num + h2, section.plain .num + h2{margin-top:0}
   position:relative; isolation:isolate;
   padding:clamp(14px,2.2vw,34px);
   border-radius:clamp(18px,2vw,30px);
-  background:color-mix(in oklab, var(--topic) 13%, var(--ground));
+  background:color-mix(in oklab, var(--topic-wash) 13%, var(--ground));
   box-shadow:inset 0 0 28px rgba(255,255,255,.055);
 }
 .feat figure .frame{position:relative; z-index:1}
@@ -1035,10 +1060,10 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--p
    `.feat .num`. The fill and the ring stay the topic itself. */
 :root[data-theme="light"] section{ --topic-ink:color-mix(in oklab, var(--topic) 74%, #0E1618) }
 /* the scene card, on the theme its technique was read from: a real pastel —
-   the topic at about a tenth, mixed into white rather than into the page — and
-   the inner glow at full white, which is the reference's own figure */
+   the washed topic mixed into white rather than into the page — and the inner
+   glow at full white, which is the reference's own figure */
 :root[data-theme="light"] .feat figure{
-  background:color-mix(in oklab, var(--topic) 11%, #FFFFFF);
+  background:color-mix(in oklab, var(--topic-wash) 13%, #FFFFFF);
   box-shadow:inset 0 0 28px #FFFFFF;
   /* the base rules are the dark theme and they reach light too, so the dark
      card's `--faint` would otherwise apply on a pastel. Light passes on its
@@ -1328,7 +1353,7 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--p
 
 .flowshot{margin:0; position:relative; isolation:isolate;
   padding:clamp(12px,2vw,26px); border-radius:clamp(18px,2vw,28px);
-  background:color-mix(in oklab, var(--topic) 12%, var(--ground));
+  background:color-mix(in oklab, var(--topic-wash) 12%, var(--ground));
   box-shadow:inset 0 0 28px rgba(255,255,255,.05);
 }
 .flowshot .frame{position:relative; z-index:1}
@@ -1549,7 +1574,7 @@ footer{padding:clamp(48px,7vw,76px) 0 0}
 :root[data-theme="light"] .gridlines > div{background:var(--paper)}
 :root[data-theme="light"] section.plain.onplate .gridlines > div{background:#FFFFFF}
 :root[data-theme="light"] .flowshot{
-  background:color-mix(in oklab, var(--topic) 11%, #FFFFFF);
+  background:color-mix(in oklab, var(--topic-wash) 13%, #FFFFFF);
   box-shadow:inset 0 0 28px #FFFFFF;
 }
 :root[data-theme="light"] .verbs a:hover{background:rgba(255,255,255,.07)}

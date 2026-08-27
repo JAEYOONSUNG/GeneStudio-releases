@@ -54,7 +54,7 @@ document.documentElement.dataset.theme=t;})()</script>
 <link rel="preload" href="font/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="font/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="font/fonts.css?v=20260828">
-<link rel="stylesheet" href="base.css?v=20260828k">
+<link rel="stylesheet" href="base.css?v=20260828p">
 </head>
 <body>
 
@@ -407,54 +407,35 @@ document.documentElement.dataset.theme=t;})()</script>
         <li><em>2,672 published experiments</em> from REBASE sit behind the verdict, not one word.</li>
       </ul>
     </div>
-    <!-- **The screen this section is about.** It showed the gel and the fragment
-         table — the arithmetic *after* a digest has been chosen — and said
-         nothing about the act that chooses one. This is that act, photographed
-         from the application (`tools/shoot-digest.mjs`): a 717 bp stretch of the
-         demo construct against the Enzynomics catalogue the app ships, 46 of
-         its 122 enzymes with a complete site inside it, nine of them drawn. -->
-    <figure class="rise settle">
-      <img class="shotfig" src="shot/digest.webp" width="2024" height="974" loading="lazy" decoding="async"
-           alt="The selected stretch, 413 to 1,129, 717 bp: the Enzynomics catalogue filtered to the 46 enzymes with a complete recognition site inside it, each row giving the site it recognises, the base it cuts at, the end it leaves and the two pieces the stretch becomes — AclI 664 and 53 bp, ApaLI 624 and 93, AvaI 489 and 228, BalI 604 and 113, BamHI 440 and 277, BglI 566 and 151, BsaWI 606 and 111, BsiWI 473 and 244, BsoBI 489 and 228.">
-      <figcaption>Select a stretch and your own enzyme set is narrowed to what cuts inside it — the site, the base, the end it leaves, and the pieces. <em>Use</em> loads that digest onto the gel.</figcaption>
+    <!-- **The screen, whole.** It was a gel clip beside a table lifted out of the
+         application, which is a picture assembled out of pieces; this is the
+         Digest view as it stands (`tools/shoot-digest.mjs`) — the stretch and
+         the enzymes of your set that cut inside it, the gel and what its ladder
+         resolves, the molecule divided into the pieces, the fragment row, and
+         what the host's methylation does to each enzyme. Nothing is cropped out
+         and nothing is rebuilt here. It is drawn wider than the prose because
+         it is a screen: held to the measure a paragraph wants, its rows are
+         seven pixels. -->
+    <figure class="rise settle bleed">
+      <img class="shotfig" src="shot/digest.webp" width="3960" height="2634" loading="lazy" decoding="async"
+           alt="The whole Digest view. Above, the selected stretch 413 to 1,129 — 717 bp — with the Enzynomics catalogue narrowed to the 46 enzymes that have a complete recognition site inside it, six of them listed with the site they recognise, the base they cut at, the end they leave and the two pieces the stretch becomes. Below left, the simulated gel with its ladder and the note on what this agarose resolves. Below right, the molecule drawn as its fragments with the piece list, the fragment row giving size, span, ends, self-ligation and GC, and the methylation table: Dam, Dcm, CpG, EcoKI and EcoBI against each enzyme, and what each mark does to it on this construct.">
+      <figcaption>The Digest view as it stands — the stretch and the enzymes of your set that cut inside it, the gel, the molecule divided into pieces, and what the host's methylation does to each enzyme.</figcaption>
     </figure>
-    <figure class="rise settle tight">
+    <!-- **The gel keeps a figure of its own, because it moves.** Everything
+         it shows is in the screen above; what a still cannot show is the run
+         being dragged, which is the one control on that view that changes the
+         picture as you hold it. The fragment table that used to sit beside it
+         is in the screen above too, so it is not drawn twice. -->
+    <figure class="rise settle narrowfig">
       <div class="frame">
-        <!-- the gel is cropped to the plate and its ladder, so it is 448 px wide
-             and is not stretched to the column: blown up it is a blurrier gel,
-             not a bigger one, which is the rule tools/clip.mjs cuts it by. The
-             width and height are the clip's own, so the box before it decodes is
-             the shape it will be. -->
-        <video class="wide" data-clip="clip/gel.mp4" data-poster="clip/gel.webp" width="448" height="400"
+        <!-- cropped to the plate and its ladder — 448 px, deliberately: blown up
+             it is a blurrier gel and not a bigger one, which is the rule
+             tools/clip.mjs cuts it by -->
+        <video data-clip="clip/gel.mp4" data-poster="clip/gel.webp" width="448" height="400"
                muted loop playsinline preload="none"
                aria-label="The gel running: the fragments of a four-enzyme digest migrating down the lanes as the running time goes up."></video>
-        <video class="narrow" data-clip="clip/gel.mp4" data-poster="clip/gel.webp" width="448" height="400"
-               muted loop playsinline preload="none" aria-label="The digest view: a simulated agarose gel with a ladder and sample lanes, the fragments listed with their ends."></video>
       </div>
-      <!-- **The space beside the gel is the gel's own answer.** The clip is
-           cropped to its plate and must not be blown up, so what fills the
-           column is not a bigger picture but the thing the picture is of: the
-           six pieces this digest actually gives.
-
-           **And it is the application's table, photographed** — not this page's
-           markup carrying the application's numbers. The numbers were already
-           the app's (`digestFragments(['EcoRI','HindIII','XhoI','BamHI'])` on
-           the demo construct, which is the clip's own fixture); the table
-           around them was still a rebuild, and a rebuild is a thing that drifts
-           from what it depicts. `tools/shoot-frag.mjs` lifts the real table
-           onto a bare page and photographs it, so the columns, the ends in the
-           cut colour and the type are the product's own. They sum to 2,950,
-           which is the molecule; the last three are shorter than the ladder's
-           smallest rung, which is what the note under it is for. -->
-      <div class="fragside">
-        <p class="fraghead">EcoRI · HindIII · XhoI · BamHI <span>on pDEMO-T7</span></p>
-        <img class="fragshot" src="shot/frag.webp" width="1193" height="482" loading="lazy" decoding="async"
-             alt="The digest's fragment table: six pieces of 1,598, 868, 445, 18, 15 and 6 bp, each with the base it runs from and to, the ends each enzyme leaves, whether it self-ligates, and its GC.">
-        <p class="fragfoot">6 pieces · 2,950 bp — the digest sums to the molecule.
-          The last three are below the ladder's smallest rung, so they are marked
-          on the dye front rather than left out.</p>
-      </div>
-          <figcaption>The gel running — the ladder, the agarose and the buffer are yours to set.</figcaption>
+      <figcaption>The run is a slider — the same digest at 12 % of its run and at the end of it. The ladder, the agarose and the buffer are yours to set.</figcaption>
     </figure>
     <figure class="rise settle">
       <div class="frame">
@@ -944,7 +925,7 @@ document.documentElement.dataset.theme=t;})()</script>
         Gene Studio
       </a>
       <p>A plasmid workbench that opens what your lab already has — GenBank, SnapGene <code>.dna</code>, FASTA and Sanger traces — and writes them back without losing what was in them.</p>
-      <p class="footfine">Free to use for research; copying, changing or passing it on needs written permission. Third-party components keep their own terms.</p>
+      <p class="footfine">Free to use for research; copying, changing or passing it on needs written permission. Third-party components keep their own terms, including the <a href="font/OFL.txt">Inter font licence</a>.</p>
     </div>
     <nav class="footcols" aria-label="Site">
       <div class="footcol">
