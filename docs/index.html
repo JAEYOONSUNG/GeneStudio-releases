@@ -54,7 +54,7 @@ document.documentElement.dataset.theme=t;})()</script>
 <link rel="preload" href="font/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="font/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="font/fonts.css?v=20260828">
-<link rel="stylesheet" href="base.css?v=20260828i">
+<link rel="stylesheet" href="base.css?v=20260828k">
 </head>
 <body>
 
@@ -397,16 +397,27 @@ document.documentElement.dataset.theme=t;})()</script>
     <div class="cols rise">
       <div class="say">
         <p class="num"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="1.6"/><path d="M8 8h3M13 12h3M8 16h3"/></svg><b>02</b>Digest</p>
-        <h2>A digest you can read before you run it</h2>
-        <p>Pick enzymes and the gel redraws as you type. Lanes are loaded by clicking the well, the ladder and the agarose are the ones you actually use, and a fragment that would run off the end is marked on the dye front rather than left out.</p>
+        <h2>Mark a stretch, and it tells you which of your enzymes cut it</h2>
+        <p>The question in front of a construct is not <em>what does this digest give</em> — it is <em>which of the enzymes I have will open this piece</em>. Select the stretch and the set you buy from is filtered to the enzymes with a complete recognition site inside it, each with where it cuts, the end it leaves and the pieces the stretch becomes. One press loads that digest onto the gel.</p>
       </div>
       <ul>
+        <li><em>Your set, not the catalogue</em> — a company's list, or the one your lab saved.</li>
         <li><em>Suggest digests</em> scores every combination for bands the agarose can actually resolve.</li>
         <li><em>Dam, Dcm, CpG, EcoKI and EcoBI</em> — judged against the strain the DNA was grown in and the one it is going into.</li>
         <li><em>2,672 published experiments</em> from REBASE sit behind the verdict, not one word.</li>
-        <li><em>The run is a slider</em> — above, the same digest at 12 % of its run and at the end of it.</li>
       </ul>
     </div>
+    <!-- **The screen this section is about.** It showed the gel and the fragment
+         table — the arithmetic *after* a digest has been chosen — and said
+         nothing about the act that chooses one. This is that act, photographed
+         from the application (`tools/shoot-digest.mjs`): a 717 bp stretch of the
+         demo construct against the Enzynomics catalogue the app ships, 46 of
+         its 122 enzymes with a complete site inside it, nine of them drawn. -->
+    <figure class="rise settle">
+      <img class="shotfig" src="shot/digest.webp" width="2024" height="974" loading="lazy" decoding="async"
+           alt="The selected stretch, 413 to 1,129, 717 bp: the Enzynomics catalogue filtered to the 46 enzymes with a complete recognition site inside it, each row giving the site it recognises, the base it cuts at, the end it leaves and the two pieces the stretch becomes — AclI 664 and 53 bp, ApaLI 624 and 93, AvaI 489 and 228, BalI 604 and 113, BamHI 440 and 277, BglI 566 and 151, BsaWI 606 and 111, BsiWI 473 and 244, BsoBI 489 and 228.">
+      <figcaption>Select a stretch and your own enzyme set is narrowed to what cuts inside it — the site, the base, the end it leaves, and the pieces. <em>Use</em> loads that digest onto the gel.</figcaption>
+    </figure>
     <figure class="rise settle tight">
       <div class="frame">
         <!-- the gel is cropped to the plate and its ladder, so it is 448 px wide

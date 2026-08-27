@@ -604,6 +604,15 @@ section.plain.onplate .tbcard, .beta .betabox{--faint:#89999C}
    rather than a bigger one, which is the rule the gel beside it already keeps.
    The screenshots are taken in the light theme, so it sits on the page's own
    ground with a hairline rather than in a dark chrome. */
+/* **A screenshot of a panel is not a screenshot of the window.** The `.frame`
+   chrome is a picture of the application — a title bar round a whole view — and
+   a single card photographed on its own ground needs none of it: what it needs
+   is to sit on the page at the width it was cut at, with the hairline it
+   already carries doing the framing. */
+.shotfig{
+  display:block; width:100%; height:auto; border-radius:12px;
+  box-shadow:0 1px 2px rgba(2,10,14,.05), 0 10px 30px -12px rgba(2,10,14,.16);
+}
 .fragshot{
   display:block; width:100%; max-width:600px; height:auto;
   border:1px solid var(--hair); border-radius:12px; background:var(--paper);
