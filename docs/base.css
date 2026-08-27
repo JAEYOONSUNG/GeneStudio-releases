@@ -246,13 +246,58 @@ header.rail{
     radial-gradient(84% 56% at 50% 82%, rgba(46,74,102,.42),   transparent 78%),
     linear-gradient(180deg, #1B2A34 0%, #14212A 38%, #0D171D 70%, var(--paper) 100%);
 }
+/* **The first screen was the only one that did not move.** Four radial
+   gradients, painted once — and everything below it drifts, rises, draws itself
+   or runs. What the reference does instead is one large, heavily blurred field
+   of colour breathing behind the headline on a very long period, so the screen
+   is alive before anything has been scrolled to and nothing on it is competing
+   for a reading. Two of them here rather than one, on different periods and in
+   opposite directions, so the pair never repeats a shape: 19 s and 27 s are
+   coprime enough that the figure they make together takes minutes to come back.
+
+   It is a **light**, not a shape: blurred past any edge, at a sixth of the
+   opacity the static gradients carry, and behind the vignette that settles the
+   type. The headline is read on `.hero::after`, which does not move, so nothing
+   here can touch what the contrast sweep measures. */
+/* **The size is the first screen, not the section.** The hero runs 2,338 px
+   because the product's own picture is in it, and a light given a share of that
+   is an 843 × 1,634 blob whose colour, spread over `closest-side`, is a tint
+   too faint to see — measured, the first version drifted where the gate could
+   read it and the eye could not. They are the height of a screen and sit where
+   the headline is, which is where the eye is. */
+.hero .aura{position:absolute; top:-6%; height:min(86vh, 880px); pointer-events:none;
+  z-index:0; filter:blur(52px); opacity:0; will-change:transform, opacity}
+.hero .aura.a{
+  background:radial-gradient(closest-side, rgba(94,177,255,.34), rgba(94,177,255,0) 72%);
+  left:2%; width:52%;
+}
+.hero .aura.b{
+  background:radial-gradient(closest-side, rgba(79,183,158,.30), rgba(79,183,158,0) 74%);
+  left:44%; width:50%;
+}
+/* armed by the page's own observer, so a hero scrolled past is not animating */
+.hero[data-lit] .aura.a{animation:auraA 19s ease-in-out infinite alternate}
+.hero[data-lit] .aura.b{animation:auraB 27s ease-in-out infinite alternate}
+@keyframes auraA{
+  from{opacity:.55; transform:translate3d(-4%, -3%, 0) scale(.94)}
+  to  {opacity:1;   transform:translate3d(6%, 4%, 0)   scale(1.12)}
+}
+@keyframes auraB{
+  from{opacity:.9;  transform:translate3d(5%, 3%, 0)  scale(1.1)}
+  to  {opacity:.5;  transform:translate3d(-6%, -4%, 0) scale(.92)}
+}
+@media (prefers-reduced-motion:reduce){
+  /* at rest and still lit: the light is part of the picture, only its drift is
+     the motion — a hero that goes flat is a different design, not a calmer one */
+  .hero[data-lit] .aura{animation:none; opacity:.75}
+}
 /* a vignette so the centred type is read on a settled ground rather than on
    whichever gradient happens to be under that line */
 .hero::after{
-  content:''; position:absolute; inset:0; pointer-events:none;
+  content:''; position:absolute; inset:0; pointer-events:none; z-index:1;
   background:radial-gradient(66% 46% at 50% 30%, rgba(6,10,12,.26), rgba(6,10,12,0) 72%);
 }
-.hero .wrap{position:relative}
+.hero .wrap{position:relative; z-index:2}
 /* the name, set to be read as the name — heavier than the headline's weight
    at a fraction of its size, so it reads as a mark rather than as a first line
    of the sentence under it */
@@ -1082,6 +1127,18 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--p
 /* a vignette darkens a light field into a smudge; the type is dark here and
    needs no help being read */
 :root[data-theme="light"] .hero::after{ background:none }
+/* **A light on a light field has to be a colour, not a brightness.** The dark
+   theme's two lights are pale washes that read as glow; the same opacity on a
+   near-white hero is nothing at all — measured, the first render of this was a
+   drift the gate could see and the eye could not. Here they carry the page's
+   own accent and the forward-strand green at roughly twice the strength, which
+   on #E9EFF2 is a tint that moves rather than a light that shines. */
+:root[data-theme="light"] .hero .aura.a{
+  background:radial-gradient(closest-side, rgba(10,102,194,.30), rgba(10,102,194,0) 72%);
+}
+:root[data-theme="light"] .hero .aura.b{
+  background:radial-gradient(closest-side, rgba(15,125,104,.24), rgba(15,125,104,0) 74%);
+}
 /* white-on-white: the quiet buttons need the page's own line and ground */
 :root[data-theme="light"] .hero .cta .btn:not(.primary){ background:var(--ground); border-color:var(--line) }
 :root[data-theme="light"] .hero .cta .btn:not(.primary):hover{ background:var(--ground); border-color:var(--slate) }

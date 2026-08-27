@@ -54,7 +54,7 @@ document.documentElement.dataset.theme=t;})()</script>
 <link rel="preload" href="font/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="font/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="font/fonts.css?v=20260828">
-<link rel="stylesheet" href="base.css?v=20260828r">
+<link rel="stylesheet" href="base.css?v=20260828t">
 </head>
 <body>
 
@@ -125,6 +125,12 @@ document.documentElement.dataset.theme=t;})()</script>
 <main id="top">
 
 <section class="hero">
+  <!-- two slow lights behind the headline, on different periods and in opposite
+       directions, so the first screen breathes rather than being the one screen
+       on this page that is painted once. They are `aria-hidden` by having no
+       content at all, and the vignette that settles the type sits above them. -->
+  <div class="aura a" aria-hidden="true"></div>
+  <div class="aura b" aria-hidden="true"></div>
   <div class="wrap">
     <p class="eyebrow">Private beta · macOS, Windows &amp; Linux</p>
     <!-- **The product had no name above the fold.** The headline is what the
@@ -1182,7 +1188,10 @@ if('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion:redu
                    'pDEMO-T7 · sequence · 1,204–1,230',
                    'pDEMO-T7 · fold · 51 nt · −10.6 kcal/mol'];
     const still = matchMedia('(prefers-reduced-motion: reduce)');
-    let at = 0, timer = 0, stopped = false;
+    /* `driven` is the reader's scroll having taken over from the timer: the
+       rail introduces itself on its own until the first scroll actually chooses
+       a step, and after that the clock is the reader's. */
+    let at = 0, timer = 0, stopped = false, driven = false;
 
     /* the paragraph is what the button labels, so the button is the title and
        the paragraph is described by it rather than swallowed into the name */
@@ -1218,7 +1227,11 @@ if('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion:redu
       armClips?.();
       if(!stopped && !still.matches) queue();
     }
-    function queue(){ clearTimeout(timer); timer = setTimeout(() => show((at + 1) % steps.length), 5200); }
+    function queue(){
+      clearTimeout(timer);
+      if(stopped || driven) return;
+      timer = setTimeout(() => show((at + 1) % steps.length), 5200);
+    }
 
     if('IntersectionObserver' in window && !still.matches){
       new IntersectionObserver(es => {
@@ -1227,6 +1240,40 @@ if('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion:redu
           else clearTimeout(timer);
         }
       }, {threshold:.35}).observe(flow);
+    }
+
+    /* **Scrolling is what should advance a walkthrough.** It ran on a timer, so
+       the step you were reading changed under you at five seconds whether or
+       not you had finished, and reading it at your own pace meant pressing a
+       button. The reader's own scroll is the better clock: the step whose
+       heading is nearest the middle of the screen is the step being read, which
+       is how the reference drives its own gallery.
+
+       The timer stays as what runs before the section has been scrolled
+       *through* — it is what makes the rail introduce itself — and the first
+       scroll that actually chooses a step takes over for good. A click still
+       stops both, since a press is a decision. */
+    if(!still.matches && matchMedia('(min-width:820px)').matches){
+      let frame = 0;
+      const follow = () => {
+        frame = 0;
+        if(stopped) return;
+        const box = flow.getBoundingClientRect();
+        /* only while the rail is the thing on screen: outside that the nearest
+           heading is whichever one the section ended on, which would drag the
+           step back every time the reader left */
+        if(box.bottom < innerHeight * 0.25 || box.top > innerHeight * 0.75) return;
+        const mid = innerHeight / 2;
+        let best = 0, near = Infinity;
+        steps.forEach((li, i) => {
+          const r = li.getBoundingClientRect();
+          const d = Math.abs(r.top + r.height / 2 - mid);
+          if(d < near){ near = d; best = i; }
+        });
+        if(best !== at){ driven = true; clearTimeout(timer); show(best); }
+      };
+      addEventListener('scroll', () => { if(!frame) frame = requestAnimationFrame(follow); },
+                       {passive:true});
     }
   }
 }
@@ -1279,6 +1326,13 @@ if('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion:redu
       for(const e of es) list.classList.toggle('on', e.isIntersecting);
     }, {rootMargin:'80px'}).observe(list);
   }
+
+  /* the hero's two lights, armed the same way as everything else — a first
+     screen scrolled past should not go on animating behind the reader */
+  const hero = document.querySelector('.hero');
+  if(hero) new IntersectionObserver(es => {
+    for(const e of es) hero.toggleAttribute('data-lit', e.isIntersecting);
+  }, {rootMargin:'40px'}).observe(hero);
 }
 
 /* ── the four figures, counted up ───────────────────────────────────────────
