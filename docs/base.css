@@ -573,21 +573,46 @@ section.plain.onplate .tbcard, .beta .betabox{--faint:#89999C}
    the gel to beside it. The card then spans the column like every other figure
    on the page, and the sentence that says what the gel is has the room to be
    read at the size of a sentence rather than a footnote. */
+/* **A 448 px gel in a 1,180 px column left 737 px of nothing**, and the answer
+   was not to stretch the card: a clip cropped to its own plate is a blurrier
+   gel when it is blown up, which is the rule tools/clip.mjs cuts it by. What
+   fills the space is what the picture is *of* — the six pieces this digest
+   gives, read out of the application rather than written here. The gel takes
+   the width it was cut at, the table takes the rest, and the caption runs under
+   both. */
 .feat figure.tight{
-  /* **As wide as its two things, and centred** — not the full column. Stretched
-     to 1,180 the card had a 500 px hole in it, which is the fault this was
-     meant to fix wearing a bigger card: 450 for the gel, the gap, and the
-     caption's own measure is 880, so that is what it is. */
-  max-width:min(100%,880px); margin-inline:auto;
   display:grid; grid-template-columns:minmax(0,auto) minmax(0,1fr);
-  gap:clamp(18px,3.5vw,48px); align-items:center;
+  column-gap:clamp(20px,3.4vw,44px); row-gap:16px; align-items:start;
 }
-.feat figure.tight .frame{max-width:450px}
-.feat figure.tight figcaption{margin:0; font-size:14.5px; line-height:1.65; max-width:36ch}
-@media (max-width:820px){
+.feat figure.tight .frame{max-width:450px; grid-row:1}
+.feat figure.tight .fragside{grid-row:1; grid-column:2; min-width:0}
+.feat figure.tight figcaption{grid-column:1 / -1; margin:0}
+.fraghead{margin:0 0 14px; font:600 15px/1.4 var(--ui); color:var(--ink); letter-spacing:-.015em}
+.fraghead span{font-weight:400; color:var(--faint)}
+/* A fragment list is read down the bp column, so that column is the fixed one
+   and the ends take what is left. `tabular-nums` is what keeps 1,598 and 6
+   under each other rather than under whatever their glyphs happen to measure. */
+.fragtbl{width:100%; border-collapse:collapse; font-size:13.5px}
+.fragtbl th{
+  text-align:left; padding:0 0 7px; font:500 11px/1 var(--mono);
+  letter-spacing:.14em; text-transform:uppercase; color:var(--faint);
+  border-bottom:1px solid var(--hair);
+}
+.fragtbl th:first-child{text-align:right; padding-right:14px}
+.fragtbl td{padding:8px 0; border-bottom:1px solid var(--hair); color:var(--slate)}
+.fragtbl td:first-child{
+  text-align:right; padding-right:14px; white-space:nowrap;
+  font:600 14.5px/1 var(--mono); font-variant-numeric:tabular-nums; color:var(--ink);
+}
+.fragtbl tbody tr:last-child td{border-bottom:0}
+/* the three that run off the end are the caption's whole point, so they are
+   marked as the thing being talked about rather than left to be counted */
+.fragtbl tr.tiny td:first-child{color:var(--cut)}
+.fragfoot{margin:14px 0 0; font-size:13px; line-height:1.6; color:var(--faint); max-width:44ch}
+@media (max-width:900px){
   .feat figure.tight{grid-template-columns:1fr}
-  .feat figure.tight .frame{max-width:none; margin-inline:auto}
-  .feat figure.tight figcaption{max-width:none}
+  .feat figure.tight .frame{max-width:none; margin-inline:auto; grid-row:auto}
+  .feat figure.tight .fragside{grid-row:auto; grid-column:1}
 }
 
 /* ── what a section is about, said before the sentence that says it ──────────

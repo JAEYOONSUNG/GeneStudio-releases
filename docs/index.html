@@ -54,7 +54,7 @@ document.documentElement.dataset.theme=t;})()</script>
 <link rel="preload" href="font/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="font/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="font/fonts.css?v=20260828">
-<link rel="stylesheet" href="base.css?v=20260828d">
+<link rel="stylesheet" href="base.css?v=20260828e">
 </head>
 <body>
 
@@ -414,6 +414,32 @@ document.documentElement.dataset.theme=t;})()</script>
                aria-label="The gel running: the fragments of a four-enzyme digest migrating down the lanes as the running time goes up."></video>
         <video class="narrow" data-clip="clip/gel.mp4" data-poster="clip/gel.webp" width="448" height="400"
                muted loop playsinline preload="none" aria-label="The digest view: a simulated agarose gel with a ladder and sample lanes, the fragments listed with their ends."></video>
+      </div>
+      <!-- **The space beside the gel is the gel's own answer.** The clip is
+           cropped to its plate and must not be blown up, so what fills the
+           column is not a bigger picture but the thing the picture is of: the
+           six pieces this digest actually gives. Every figure here came out of
+           the application — `digestFragments(['EcoRI','HindIII','XhoI','BamHI'])`
+           on the demo construct, which is the clip's own fixture — rather than
+           being typed into a marketing page, and they sum to 2,950, which is
+           the molecule. The last three are the reason the caption is worth
+           reading: they are shorter than the ladder's smallest rung. -->
+      <div class="fragside">
+        <p class="fraghead">EcoRI · HindIII · XhoI · BamHI <span>on pDEMO-T7</span></p>
+        <table class="fragtbl">
+          <thead><tr><th scope="col">bp</th><th scope="col">the ends it leaves</th></tr></thead>
+          <tbody>
+            <tr><td>1,598</td><td>EcoRI 5′-AATT · BamHI 5′-GATC</td></tr>
+            <tr><td>868</td><td>BamHI 5′-GATC · EcoRI 5′-AATT</td></tr>
+            <tr><td>445</td><td>XhoI 5′-TCGA · BamHI 5′-GATC</td></tr>
+            <tr class="tiny"><td>18</td><td>EcoRI 5′-AATT · HindIII 5′-AGCT</td></tr>
+            <tr class="tiny"><td>15</td><td>HindIII 5′-AGCT · XhoI 5′-TCGA</td></tr>
+            <tr class="tiny"><td>6</td><td>BamHI 5′-GATC · EcoRI 5′-AATT</td></tr>
+          </tbody>
+        </table>
+        <p class="fragfoot">6 pieces · 2,950 bp — the digest sums to the molecule.
+          The last three are below the ladder's smallest rung, so they are marked
+          on the dye front rather than left out.</p>
       </div>
           <figcaption>The gel running — the ladder, the agarose and the buffer are yours to set.</figcaption>
     </figure>
