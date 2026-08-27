@@ -54,7 +54,7 @@ document.documentElement.dataset.theme=t;})()</script>
 <link rel="preload" href="font/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="font/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="font/fonts.css?v=20260828">
-<link rel="stylesheet" href="base.css?v=20260828w">
+<link rel="stylesheet" href="base.css?v=20260828x">
 </head>
 <body>
 
@@ -139,25 +139,26 @@ document.documentElement.dataset.theme=t;})()</script>
     <p class="wordmark">Gene Studio</p>
     <h1>The plasmid you are holding, drawn<br>from the file you already have.</h1>
     <p class="sub">Maps, sequence, digests, cloning, guides and Sanger review — over the files you already have, written back without losing what was in them.</p>
-    <div class="cta">
-      <a class="btn primary" data-dl="mac" href="https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/latest">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M10.8 8.5c0-1.5 1.2-2.2 1.3-2.3-.7-1-1.8-1.2-2.2-1.2-.9-.1-1.8.6-2.3.6-.5 0-1.2-.6-2-.5-1 0-2 .6-2.5 1.5-1.1 1.9-.3 4.7.8 6.2.5.7 1.1 1.6 1.9 1.5.8 0 1.1-.5 2-.5s1.2.5 2 .5c.8 0 1.4-.7 1.9-1.5.6-.8.8-1.7.8-1.8 0 0-1.6-.6-1.7-2.5zM9.4 3.7c.4-.5.7-1.2.6-1.9-.6 0-1.4.4-1.8.9-.4.5-.7 1.2-.6 1.9.7.1 1.4-.3 1.8-.9z"/></svg>
-        Download for Mac <small data-dlv="mac">Apple silicon</small>
-      </a>
-      <a class="btn" data-dl="win" href="https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/latest">
-        <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M0 2.4 6.5 1.5v6.1H0zM7.4 1.4 16 .2v7.4H7.4zM0 8.5h6.5v6.1L0 13.7zM7.4 8.5H16v7.3L7.4 14.6z"/></svg>
-        Download for Windows <small data-dlv="win">64-bit</small>
-      </a>
-      <!-- **Hidden until the feed says there is one.** The page names a version
-           it reads from feed.json rather than one written into it, and the same
-           rule has to hold for a platform: a button offering a Linux build that
-           no release carries is a page pointing at a file that is not there,
-           which is the failure this project keeps finding in its own manifests.
-           It appears the moment a release ships Linux, with no page change. -->
-      <a class="btn" data-dl="nix" href="https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/latest" hidden>
-        <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 .6c-1.7 0-2.6 1.3-2.6 3 0 .8.1 1.4.1 2 0 .6-.6 1.2-1.1 2.1-.5.9-1.3 2-1.7 3-.3.8-.2 1.5.1 1.9.3.4.8.6 1.4.6.5 0 1 .2 1.4.5.4.3.8.7 1.6.7h1.6c.8 0 1.2-.4 1.6-.7.4-.3.9-.5 1.4-.5.6 0 1.1-.2 1.4-.6.3-.4.4-1.1.1-1.9-.4-1-1.2-2.1-1.7-3-.5-.9-1.1-1.5-1.1-2.1 0-.6.1-1.2.1-2 0-1.7-.9-3-2.6-3zm-.9 3.1c.3 0 .5.3.5.6s-.2.6-.5.6-.5-.3-.5-.6.2-.6.5-.6zm1.8 0c.3 0 .5.3.5.6s-.2.6-.5.6-.5-.3-.5-.6.2-.6.5-.6z"/></svg>
-        Download for Linux <small data-dlv="nix">AppImage</small>
-      </a>
+    <div class="download-offer hero-download">
+      <p class="release-once"><span>Current release</span><b data-release-version aria-live="polite">Latest</b></p>
+      <div class="cta platform-rows">
+        <a class="btn primary" data-dl="mac" href="https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/latest">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M10.8 8.5c0-1.5 1.2-2.2 1.3-2.3-.7-1-1.8-1.2-2.2-1.2-.9-.1-1.8.6-2.3.6-.5 0-1.2-.6-2-.5-1 0-2 .6-2.5 1.5-1.1 1.9-.3 4.7.8 6.2.5.7 1.1 1.6 1.9 1.5.8 0 1.1-.5 2-.5s1.2.5 2 .5c.8 0 1.4-.7 1.9-1.5.6-.8.8-1.7.8-1.8 0 0-1.6-.6-1.7-2.5zM9.4 3.7c.4-.5.7-1.2.6-1.9-.6 0-1.4.4-1.8.9-.4.5-.7 1.2-.6 1.9.7.1 1.4-.3 1.8-.9z"/></svg>
+          <span>Download for Mac</span><small data-dlv="mac">Apple silicon</small>
+        </a>
+        <a class="btn" data-dl="win" href="https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/latest">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M0 2.4 6.5 1.5v6.1H0zM7.4 1.4 16 .2v7.4H7.4zM0 8.5h6.5v6.1L0 13.7zM7.4 8.5H16v7.3L7.4 14.6z"/></svg>
+          <span>Download for Windows</span><small data-dlv="win">64-bit</small>
+        </a>
+        <!-- All three supported systems occupy their row from first paint. The
+             public feed turns this generic release link into the exact AppImage;
+             if a future current release omits Linux, the feed handler removes the
+             row rather than attaching a different release to this version. -->
+        <a class="btn" data-dl="nix" href="https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/latest">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 .6c-1.7 0-2.6 1.3-2.6 3 0 .8.1 1.4.1 2 0 .6-.6 1.2-1.1 2.1-.5.9-1.3 2-1.7 3-.3.8-.2 1.5.1 1.9.3.4.8.6 1.4.6.5 0 1 .2 1.4.5.4.3.8.7 1.6.7h1.6c.8 0 1.2-.4 1.6-.7.4-.3.9-.5 1.4-.5.6 0 1.1-.2 1.4-.6.3-.4.4-1.1.1-1.9-.4-1-1.2-2.1-1.7-3-.5-.9-1.1-1.5-1.1-2.1 0-.6.1-1.2.1-2 0-1.7-.9-3-2.6-3zm-.9 3.1c.3 0 .5.3.5.6s-.2.6-.5.6-.5-.3-.5-.6.2-.6.5-.6zm1.8 0c.3 0 .5.3.5.6s-.2.6-.5.6-.5-.3-.5-.6.2-.6.5-.6z"/></svg>
+          <span>Download for Linux</span><small data-dlv="nix">AppImage</small>
+        </a>
+      </div>
     </div>
   </div>
 
@@ -1706,9 +1707,10 @@ document.documentElement.dataset.theme=t;})()</script>
              because a second copy of "which asset is the Mac build" is how the
              two come to point at different files. -->
         <div class="askdl">
-          <a class="btn primary" data-dl="mac" href="https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/latest">Download for Mac <small data-dlv="mac">Apple silicon</small></a>
-          <a class="btn" data-dl="win" href="https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/latest">Download for Windows <small data-dlv="win">64-bit</small></a>
-          <a class="btn" data-dl="nix" href="https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/latest" hidden>Download for Linux <small data-dlv="nix">AppImage</small></a>
+          <p class="release-once"><span>Current release</span><b data-release-version aria-live="polite">Latest</b></p>
+          <a class="btn primary" data-dl="mac" href="https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/latest"><span>Download for Mac</span><small data-dlv="mac">Apple silicon</small></a>
+          <a class="btn" data-dl="win" href="https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/latest"><span>Download for Windows</span><small data-dlv="win">64-bit</small></a>
+          <a class="btn" data-dl="nix" href="https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/latest"><span>Download for Linux</span><small data-dlv="nix">AppImage</small></a>
         </div>
         <a class="mail" href="mailto:genestudio.help@gmail.com?subject=Gene%20Studio%20beta">genestudio.help@gmail.com</a>
         <p class="note">Bug reports are welcome at the same address — the app writes one for you, with the version, the platform and what it was doing, under the <b>?</b> in the toolbar.</p>
@@ -1887,6 +1889,7 @@ const FEED = 'https://raw.githubusercontent.com/JAEYOONSUNG/GeneStudio-releases/
 fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
   const v = f && f.mac && f.mac.version;
   if(!v) return;
+  for(const e of document.querySelectorAll('[data-release-version]')) e.textContent = v;
   const asset = n => REPO + '/releases/download/v' + v + '/GeneStudio-' + v + '-' + n;
   /* every button that says which build it is, wherever it sits — the hero's
      and the beta box's — rather than three ids, which is a second description
@@ -1895,16 +1898,16 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
     for(const a of document.querySelectorAll(`[data-dl="${kind}"]`)) a.href = href;
     for(const e of document.querySelectorAll(`[data-dlv="${kind}"]`)) e.textContent = label;
   };
-  fill('mac', asset('mac-arm64.dmg'), v + ' · Apple silicon');
-  fill('win', asset('win-x64-setup.exe'), v + ' · 64-bit');
+  fill('mac', asset('mac-arm64.dmg'), 'Apple silicon');
+  fill('win', asset('win-x64-setup.exe'), '64-bit');
   /* the AppImage rather than the .deb: it is the one Linux build that installs
      its own update, which is what the button beside the other two promises */
   const lv = f && f.linux && f.linux.version;
-  if(lv){
+  if(lv === v){
     fill('nix', REPO + '/releases/download/v' + lv + '/GeneStudio-' + lv + '-linux-x86_64.AppImage',
-         lv + ' · AppImage');
+         'AppImage');
     for(const a of document.querySelectorAll('[data-dl="nix"]')) a.hidden = false;
-  }
+  }else for(const a of document.querySelectorAll('[data-dl="nix"]')) a.hidden = true;
 }).catch(() => {});
 
 /* ── a clip plays where a clip is worth playing ────────────────────────────

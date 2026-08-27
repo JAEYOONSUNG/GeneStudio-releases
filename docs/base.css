@@ -340,6 +340,21 @@ h1{font-size:clamp(34px,5.1vw,58px); font-weight:500; letter-spacing:-.025em;
 }
 .cta{display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin:24px 0 0;
      justify-content:center}
+.download-offer{width:min(100%,650px); margin:24px auto 0}
+.release-once{display:flex; align-items:baseline; justify-content:center; gap:8px;
+  margin:0; color:var(--slate); font:600 10.5px/1 var(--mono);
+  letter-spacing:.1em; text-transform:uppercase}
+.release-once b{color:var(--ink); font:600 12px/1 var(--mono);
+  letter-spacing:.02em; font-variant-numeric:tabular-nums}
+.hero .platform-rows{display:grid; grid-template-columns:minmax(0,1fr); gap:8px;
+  width:100%; margin:9px 0 0}
+.platform-rows .btn,.askdl .btn{display:grid;
+  grid-template-columns:auto minmax(0,1fr) auto; align-items:center;
+  width:100%; min-width:0; min-height:44px; box-sizing:border-box; text-align:left}
+.platform-rows .btn > span,.askdl .btn > span{min-width:0; white-space:nowrap;
+  overflow:hidden; text-overflow:ellipsis}
+.platform-rows .btn small,.askdl .btn small{grid-column:3; margin:0; padding-left:12px;
+  min-width:0; white-space:nowrap; text-align:right; opacity:.88}
 .btn{
   display:inline-flex; align-items:center; gap:9px; text-decoration:none;
   font:500 15px/1 var(--ui); letter-spacing:-.019em; padding:13px 20px; border-radius:10px;
@@ -368,16 +383,20 @@ h1{font-size:clamp(34px,5.1vw,58px); font-weight:500; letter-spacing:-.025em;
 .btn.primary{background:var(--amber); color:var(--amber-ink); border-color:var(--amber)}
 .btn.primary:hover{background:color-mix(in oklab, var(--amber) 86%, #fff)}
 .btn small{font:400 12px/1 var(--mono); opacity:.75}
-/* **The three download buttons were three widths on a phone**, and the amber
-   one broke its own label across two lines with the version chip wrapping
-   beside it — the page's main call to action, and the most broken-looking
-   thing on it. One width, the label on one line, the version under it. */
+/* One mobile width for all three platforms. The platform name and build detail
+   stay on the same line, using the same three-column rhythm as desktop. */
 @media (max-width:560px){
   .cta{display:grid; grid-template-columns:1fr; gap:10px}
   .btn{display:grid; grid-template-columns:auto 1fr; width:100%;
        column-gap:11px; row-gap:3px; align-items:center; justify-items:start; padding:13px 18px}
   .btn svg{grid-row:1 / span 2}
   .btn small{grid-column:2; opacity:.8}
+  .hero .platform-rows .btn,.askdl .btn{
+    grid-template-columns:auto minmax(0,1fr) auto; row-gap:0; justify-items:stretch}
+  .hero .platform-rows .btn svg,.askdl .btn svg{grid-row:1}
+  .hero .platform-rows .btn small,.askdl .btn small{grid-column:3; align-self:center}
+  .download-offer{width:100%; margin-top:24px}
+  .release-once{justify-content:flex-start; padding-left:4px}
   .mail{width:100%; justify-content:center}
 }
 .verline{margin:16px auto 0; font:400 13.5px/1.6 var(--ui); color:var(--faint); max-width:52ch}
@@ -1087,24 +1106,10 @@ details p{margin:0 0 20px; max-width:70ch; font-size:15.5px; color:var(--slate)}
    raggedly in a 380 px column, and here they are a list of platforms rather
    than a row of choices the way the hero draws them */
 .askdl{display:grid; gap:9px; margin-bottom:24px}
+.askdl .release-once{justify-content:flex-start; margin-bottom:2px}
 .askdl .btn{justify-content:flex-start; height:auto; padding:11px 14px}
 .askdl .btn[hidden]{display:none}
-/* **Right-aligned, the three versions start in three different places.**
-   Measured: the buttons are the same width to a tenth of a pixel and the
-   labels end on the same pixel (1188.0) — what is ragged is where each *begins*
-   (1025.3 / 1073.9 / 1060.0), because the platform words differ in length. All
-   three read `1.3.28 · …`, so the column worth aligning is the left one: the
-   version numbers then line up under each other and only the platform word is
-   ragged, which is how a table of the same figure three times is set. The width
-   is in `ch` of the mono face the label is set in, so it is the longest label's
-   own measure rather than a number somebody typed. */
-.askdl small{margin-left:auto; padding-left:10px; min-width:23ch; text-align:left;
-  font:400 12px/1 var(--mono); color:inherit; opacity:.72}
-@media (max-width:520px){
-  /* below this the button is narrower than name + 23ch, and a fixed column
-     would push the name out; ragged is better than clipped */
-  .askdl small{min-width:0; text-align:right}
-}
+.askdl small{font:400 12px/1 var(--mono); color:inherit}
 .mail{
   display:inline-flex; align-items:center; gap:10px; margin-top:26px;
   font:500 15px/1 var(--mono); color:var(--ink); text-decoration:none;
