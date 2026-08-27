@@ -624,10 +624,9 @@ section.plain.onplate .tbcard, .beta .betabox{--faint:#89999C}
 @media (max-width:1240px){
   .feat figure.bleed{width:auto; margin-inline:0}
 }
-/* the gel clip is 448 px and must not be blown up, so its figure is the width
-   of what is in it rather than the width of the column */
-.feat figure.narrowfig{max-width:520px}
-.feat figure.narrowfig .frame{max-width:none}
+/* a clip that breaks out of the prose carries the frame chrome the other
+   product clips do, at the width the figure was given */
+.feat figure.bleed video{display:block; width:100%; height:auto; border-radius:12px}
 .fragshot{
   display:block; width:100%; max-width:600px; height:auto;
   border:1px solid var(--hair); border-radius:12px; background:var(--paper);

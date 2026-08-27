@@ -54,7 +54,7 @@ document.documentElement.dataset.theme=t;})()</script>
 <link rel="preload" href="font/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="font/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="font/fonts.css?v=20260828">
-<link rel="stylesheet" href="base.css?v=20260828p">
+<link rel="stylesheet" href="base.css?v=20260828r">
 </head>
 <body>
 
@@ -407,35 +407,21 @@ document.documentElement.dataset.theme=t;})()</script>
         <li><em>2,672 published experiments</em> from REBASE sit behind the verdict, not one word.</li>
       </ul>
     </div>
-    <!-- **The screen, whole.** It was a gel clip beside a table lifted out of the
-         application, which is a picture assembled out of pieces; this is the
-         Digest view as it stands (`tools/shoot-digest.mjs`) — the stretch and
-         the enzymes of your set that cut inside it, the gel and what its ladder
-         resolves, the molecule divided into the pieces, the fragment row, and
-         what the host's methylation does to each enzyme. Nothing is cropped out
-         and nothing is rebuilt here. It is drawn wider than the prose because
-         it is a screen: held to the measure a paragraph wants, its rows are
-         seven pixels. -->
+    <!-- **The screen, whole, and running.** It was a still of this view beside a
+         small clip of the gel — the same screen twice, once frozen and once
+         cropped to a corner of itself. The one thing a still cannot show is the
+         run being dragged, and that happens *inside* this view, so the view is
+         the clip (`tools/clip.mjs digest`): the stretch and the enzymes of your
+         set that cut inside it, the gel filling as the run goes up, the
+         molecule divided into its pieces, the fragment table and the
+         methylation verdicts. Nothing is cropped out and nothing is rebuilt
+         here. It is drawn wider than the prose because it is a screen: held to
+         the measure a paragraph wants, its rows are seven pixels. -->
     <figure class="rise settle bleed">
-      <img class="shotfig" src="shot/digest.webp" width="3960" height="2634" loading="lazy" decoding="async"
-           alt="The whole Digest view. Above, the selected stretch 413 to 1,129 — 717 bp — with the Enzynomics catalogue narrowed to the 46 enzymes that have a complete recognition site inside it, six of them listed with the site they recognise, the base they cut at, the end they leave and the two pieces the stretch becomes. Below left, the simulated gel with its ladder and the note on what this agarose resolves. Below right, the molecule drawn as its fragments with the piece list, the fragment row giving size, span, ends, self-ligation and GC, and the methylation table: Dam, Dcm, CpG, EcoKI and EcoBI against each enzyme, and what each mark does to it on this construct.">
-      <figcaption>The Digest view as it stands — the stretch and the enzymes of your set that cut inside it, the gel, the molecule divided into pieces, and what the host's methylation does to each enzyme.</figcaption>
-    </figure>
-    <!-- **The gel keeps a figure of its own, because it moves.** Everything
-         it shows is in the screen above; what a still cannot show is the run
-         being dragged, which is the one control on that view that changes the
-         picture as you hold it. The fragment table that used to sit beside it
-         is in the screen above too, so it is not drawn twice. -->
-    <figure class="rise settle narrowfig">
-      <div class="frame">
-        <!-- cropped to the plate and its ladder — 448 px, deliberately: blown up
-             it is a blurrier gel and not a bigger one, which is the rule
-             tools/clip.mjs cuts it by -->
-        <video data-clip="clip/gel.mp4" data-poster="clip/gel.webp" width="448" height="400"
-               muted loop playsinline preload="none"
-               aria-label="The gel running: the fragments of a four-enzyme digest migrating down the lanes as the running time goes up."></video>
-      </div>
-      <figcaption>The run is a slider — the same digest at 12 % of its run and at the end of it. The ladder, the agarose and the buffer are yours to set.</figcaption>
+      <video data-clip="clip/digest.mp4" data-poster="clip/digest.webp" width="1680" height="1067"
+             muted loop playsinline preload="none"
+             aria-label="The whole Digest view with a digest running. Above, the selected stretch 413 to 1,129 — 717 bp — with the Enzynomics catalogue narrowed to the 46 enzymes that have a complete recognition site inside it, six of them listed with the site they recognise, the base they cut at, the end they leave and the two pieces the stretch becomes. Below left, the gel filling as the running time goes up: EcoRI, HindIII, XhoI and BamHI, six cuts, six fragments against a 1 kb ladder. Below right, the molecule drawn as its six coloured pieces with what each carries, the fragment table giving size, span, ends, self-ligation and GC, the compatible ends, and the methylation table judging each of the four enzymes on this construct."></video>
+      <figcaption>The Digest view, running — the stretch and the enzymes of your set that cut inside it, the gel as the run goes up, the molecule divided into pieces, and what the host's methylation does to each enzyme.</figcaption>
     </figure>
     <figure class="rise settle">
       <div class="frame">
