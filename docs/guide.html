@@ -35,6 +35,648 @@ document.documentElement.dataset.theme=t;})()</script>
 </head>
 <body>
 
+<svg class="tbsprite" aria-hidden="true" focusable="false"><defs>
+<!-- TABLER-SPRITE:START -->
+  <symbol id="ti-activity" data-tabler="activity" viewBox="0 0 24 24">
+    <path d="M3 12h4l3 8l4 -16l3 8h4" />
+  </symbol>
+  <symbol id="ti-adjustments-horizontal" data-tabler="adjustments-horizontal" viewBox="0 0 24 24">
+    <path d="M12 6a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+    <path d="M4 6l8 0" />
+    <path d="M16 6l4 0" />
+    <path d="M6 12a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+    <path d="M4 12l2 0" />
+    <path d="M10 12l10 0" />
+    <path d="M15 18a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+    <path d="M4 18l11 0" />
+    <path d="M19 18l1 0" />
+  </symbol>
+  <symbol id="ti-affiliate" data-tabler="affiliate" viewBox="0 0 24 24">
+    <path d="M5.931 6.936l1.275 4.249m5.607 5.609l4.251 1.275" />
+    <path d="M11.683 12.317l5.759 -5.759" />
+    <path d="M4 5.5a1.5 1.5 0 1 0 3 0a1.5 1.5 0 1 0 -3 0" />
+    <path d="M17 5.5a1.5 1.5 0 1 0 3 0a1.5 1.5 0 1 0 -3 0" />
+    <path d="M17 18.5a1.5 1.5 0 1 0 3 0a1.5 1.5 0 1 0 -3 0" />
+    <path d="M4 15.5a4.5 4.5 0 1 0 9 0a4.5 4.5 0 1 0 -9 0" />
+  </symbol>
+  <symbol id="ti-alert-triangle" data-tabler="alert-triangle" viewBox="0 0 24 24">
+    <path d="M12 9v4" />
+    <path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0" />
+    <path d="M12 16h.01" />
+  </symbol>
+  <symbol id="ti-align-box-left-middle" data-tabler="align-box-left-middle" viewBox="0 0 24 24">
+    <path d="M3 5a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-14" />
+    <path d="M9 15h-2" />
+    <path d="M13 12h-6" />
+    <path d="M11 9h-4" />
+  </symbol>
+  <symbol id="ti-alphabet-greek" data-tabler="alphabet-greek" viewBox="0 0 24 24">
+    <path d="M10 10v7" />
+    <path d="M5 12a2 2 0 0 1 2 -2h1a2 2 0 0 1 2 2v3a2 2 0 0 1 -2 2h-1a2 2 0 0 1 -2 -2l0 -3" />
+    <path d="M14 20v-11a2 2 0 0 1 2 -2h1a2 2 0 0 1 2 2v1a2 2 0 0 1 -2 2a2 2 0 0 1 2 2v1a2 2 0 0 1 -2 2" />
+  </symbol>
+  <symbol id="ti-arrow-back-up" data-tabler="arrow-back-up" viewBox="0 0 24 24">
+    <path d="M9 14l-4 -4l4 -4" />
+    <path d="M5 10h11a4 4 0 1 1 0 8h-1" />
+  </symbol>
+  <symbol id="ti-arrow-down" data-tabler="arrow-down" viewBox="0 0 24 24">
+    <path d="M12 5l0 14" />
+    <path d="M18 13l-6 6" />
+    <path d="M6 13l6 6" />
+  </symbol>
+  <symbol id="ti-arrow-forward-up" data-tabler="arrow-forward-up" viewBox="0 0 24 24">
+    <path d="M15 14l4 -4l-4 -4" />
+    <path d="M19 10h-11a4 4 0 1 0 0 8h1" />
+  </symbol>
+  <symbol id="ti-arrow-right" data-tabler="arrow-right" viewBox="0 0 24 24">
+    <path d="M5 12l14 0" />
+    <path d="M13 18l6 -6" />
+    <path d="M13 6l6 6" />
+  </symbol>
+  <symbol id="ti-arrow-up" data-tabler="arrow-up" viewBox="0 0 24 24">
+    <path d="M12 5l0 14" />
+    <path d="M18 11l-6 -6" />
+    <path d="M6 11l6 -6" />
+  </symbol>
+  <symbol id="ti-arrows-exchange" data-tabler="arrows-exchange" viewBox="0 0 24 24">
+    <path d="M7 10h14l-4 -4" />
+    <path d="M17 14h-14l4 4" />
+  </symbol>
+  <symbol id="ti-arrows-horizontal" data-tabler="arrows-horizontal" viewBox="0 0 24 24">
+    <path d="M7 8l-4 4l4 4" />
+    <path d="M17 8l4 4l-4 4" />
+    <path d="M3 12l18 0" />
+  </symbol>
+  <symbol id="ti-arrows-maximize" data-tabler="arrows-maximize" viewBox="0 0 24 24">
+    <path d="M16 4l4 0l0 4" />
+    <path d="M14 10l6 -6" />
+    <path d="M8 20l-4 0l0 -4" />
+    <path d="M4 20l6 -6" />
+    <path d="M16 20l4 0l0 -4" />
+    <path d="M14 14l6 6" />
+    <path d="M8 4l-4 0l0 4" />
+    <path d="M4 4l6 6" />
+  </symbol>
+  <symbol id="ti-atom-2" data-tabler="atom-2" viewBox="0 0 24 24">
+    <path d="M9 12a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+    <path d="M12 21l0 .01" />
+    <path d="M3 9l0 .01" />
+    <path d="M21 9l0 .01" />
+    <path d="M8 20.1a9 9 0 0 1 -5 -7.1" />
+    <path d="M16 20.1a9 9 0 0 0 5 -7.1" />
+    <path d="M6.2 5a9 9 0 0 1 11.4 0" />
+  </symbol>
+  <symbol id="ti-binary-tree" data-tabler="binary-tree" viewBox="0 0 24 24">
+    <path d="M6 20a2 2 0 1 0 -4 0a2 2 0 0 0 4 0" />
+    <path d="M16 4a2 2 0 1 0 -4 0a2 2 0 0 0 4 0" />
+    <path d="M16 20a2 2 0 1 0 -4 0a2 2 0 0 0 4 0" />
+    <path d="M11 12a2 2 0 1 0 -4 0a2 2 0 0 0 4 0" />
+    <path d="M21 12a2 2 0 1 0 -4 0a2 2 0 0 0 4 0" />
+    <path d="M5.058 18.306l2.88 -4.606" />
+    <path d="M10.061 10.303l2.877 -4.604" />
+    <path d="M10.065 13.705l2.876 4.6" />
+    <path d="M15.063 5.7l2.881 4.61" />
+  </symbol>
+  <symbol id="ti-blocks" data-tabler="blocks" viewBox="0 0 24 24">
+    <path d="M14 4a1 1 0 0 1 1 -1h5a1 1 0 0 1 1 1v5a1 1 0 0 1 -1 1h-5a1 1 0 0 1 -1 -1l0 -5" />
+    <path d="M3 14h12a2 2 0 0 1 2 2v3a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h3a2 2 0 0 1 2 2v12" />
+  </symbol>
+  <symbol id="ti-brackets" data-tabler="brackets" viewBox="0 0 24 24">
+    <path d="M8 4h-3v16h3" />
+    <path d="M16 4h3v16h-3" />
+  </symbol>
+  <symbol id="ti-brackets-contain" data-tabler="brackets-contain" viewBox="0 0 24 24">
+    <path d="M7 4h-4v16h4" />
+    <path d="M17 4h4v16h-4" />
+    <path d="M8 16h.01" />
+    <path d="M12 16h.01" />
+    <path d="M16 16h.01" />
+  </symbol>
+  <symbol id="ti-bulb" data-tabler="bulb" viewBox="0 0 24 24">
+    <path d="M3 12h1m8 -9v1m8 8h1m-15.4 -6.4l.7 .7m12.1 -.7l-.7 .7" />
+    <path d="M9 16a5 5 0 1 1 6 0a3.5 3.5 0 0 0 -1 3a2 2 0 0 1 -4 0a3.5 3.5 0 0 0 -1 -3" />
+    <path d="M9.7 17l4.6 0" />
+  </symbol>
+  <symbol id="ti-chart-dots" data-tabler="chart-dots" viewBox="0 0 24 24">
+    <path d="M3 3v18h18" />
+    <path d="M7 9a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+    <path d="M17 7a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+    <path d="M12 15a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+    <path d="M10.16 10.62l2.34 2.88" />
+    <path d="M15.088 13.328l2.837 -4.586" />
+  </symbol>
+  <symbol id="ti-chart-histogram" data-tabler="chart-histogram" viewBox="0 0 24 24">
+    <path d="M3 3v18h18" />
+    <path d="M20 18v3" />
+    <path d="M16 16v5" />
+    <path d="M12 13v8" />
+    <path d="M8 16v5" />
+    <path d="M3 11c6 0 5 -5 9 -5s3 5 9 5" />
+  </symbol>
+  <symbol id="ti-check" data-tabler="check" viewBox="0 0 24 24">
+    <path d="M5 12l5 5l10 -10" />
+  </symbol>
+  <symbol id="ti-chevron-down" data-tabler="chevron-down" viewBox="0 0 24 24">
+    <path d="M6 9l6 6l6 -6" />
+  </symbol>
+  <symbol id="ti-chevron-left" data-tabler="chevron-left" viewBox="0 0 24 24">
+    <path d="M15 6l-6 6l6 6" />
+  </symbol>
+  <symbol id="ti-chevron-right" data-tabler="chevron-right" viewBox="0 0 24 24">
+    <path d="M9 6l6 6l-6 6" />
+  </symbol>
+  <symbol id="ti-chevron-up" data-tabler="chevron-up" viewBox="0 0 24 24">
+    <path d="M6 15l6 -6l6 6" />
+  </symbol>
+  <symbol id="ti-circle-check" data-tabler="circle-check" viewBox="0 0 24 24">
+    <path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+    <path d="M9 12l2 2l4 -4" />
+  </symbol>
+  <symbol id="ti-circles-relation" data-tabler="circles-relation" viewBox="0 0 24 24">
+    <path d="M9.183 6.117a6 6 0 1 0 4.511 3.986" />
+    <path d="M14.813 17.883a6 6 0 1 0 -4.496 -3.954" />
+  </symbol>
+  <symbol id="ti-code" data-tabler="code" viewBox="0 0 24 24">
+    <path d="M7 8l-4 4l4 4" />
+    <path d="M17 8l4 4l-4 4" />
+    <path d="M14 4l-4 16" />
+  </symbol>
+  <symbol id="ti-coin" data-tabler="coin" viewBox="0 0 24 24">
+    <path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+    <path d="M14.8 9a2 2 0 0 0 -1.8 -1h-2a2 2 0 1 0 0 4h2a2 2 0 1 1 0 4h-2a2 2 0 0 1 -1.8 -1" />
+    <path d="M12 7v10" />
+  </symbol>
+  <symbol id="ti-copy" data-tabler="copy" viewBox="0 0 24 24">
+    <path d="M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667l0 -8.666" />
+    <path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" />
+  </symbol>
+  <symbol id="ti-database" data-tabler="database" viewBox="0 0 24 24">
+    <path d="M4 6a8 3 0 1 0 16 0a8 3 0 1 0 -16 0" />
+    <path d="M4 6v6a8 3 0 0 0 16 0v-6" />
+    <path d="M4 12v6a8 3 0 0 0 16 0v-6" />
+  </symbol>
+  <symbol id="ti-device-floppy" data-tabler="device-floppy" viewBox="0 0 24 24">
+    <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" />
+    <path d="M10 14a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+    <path d="M14 4l0 4l-6 0l0 -4" />
+  </symbol>
+  <symbol id="ti-device-mobile" data-tabler="device-mobile" viewBox="0 0 24 24">
+    <path d="M6 5a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2v-14" />
+    <path d="M11 4h2" />
+    <path d="M12 17v.01" />
+  </symbol>
+  <symbol id="ti-devices" data-tabler="devices" viewBox="0 0 24 24">
+    <path d="M13 9a1 1 0 0 1 1 -1h6a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-6a1 1 0 0 1 -1 -1v-10" />
+    <path d="M18 8v-3a1 1 0 0 0 -1 -1h-13a1 1 0 0 0 -1 1v12a1 1 0 0 0 1 1h9" />
+    <path d="M16 9h2" />
+  </symbol>
+  <symbol id="ti-dna-2" data-tabler="dna-2" viewBox="0 0 24 24">
+    <path d="M17 3v1c-.01 3.352 -1.68 6.023 -5.008 8.014c-3.328 1.99 3.336 -2 .008 -.014c-3.328 1.99 -5 4.662 -5.008 8.014v1" />
+    <path d="M17 21.014v-1c-.01 -3.352 -1.68 -6.023 -5.008 -8.014c-3.328 -1.99 3.336 2 .008 .014c-3.328 -1.991 -5 -4.662 -5.008 -8.014v-1" />
+    <path d="M7 4h10" />
+    <path d="M7 20h10" />
+    <path d="M8 8h8" />
+    <path d="M8 16h8" />
+  </symbol>
+  <symbol id="ti-dots" data-tabler="dots" viewBox="0 0 24 24">
+    <path d="M4 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+    <path d="M11 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+    <path d="M18 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+  </symbol>
+  <symbol id="ti-edit" data-tabler="edit" viewBox="0 0 24 24">
+    <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+    <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415" />
+    <path d="M16 5l3 3" />
+  </symbol>
+  <symbol id="ti-eraser" data-tabler="eraser" viewBox="0 0 24 24">
+    <path d="M19 20h-10.5l-4.21 -4.3a1 1 0 0 1 0 -1.41l10 -10a1 1 0 0 1 1.41 0l5 5a1 1 0 0 1 0 1.41l-9.2 9.3" />
+    <path d="M18 13.3l-6.3 -6.3" />
+  </symbol>
+  <symbol id="ti-eye" data-tabler="eye" viewBox="0 0 24 24">
+    <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+    <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
+  </symbol>
+  <symbol id="ti-eye-off" data-tabler="eye-off" viewBox="0 0 24 24">
+    <path d="M10.585 10.587a2 2 0 0 0 2.829 2.828" />
+    <path d="M16.681 16.673a8.717 8.717 0 0 1 -4.681 1.327c-3.6 0 -6.6 -2 -9 -6c1.272 -2.12 2.712 -3.678 4.32 -4.674m2.86 -1.146a9.055 9.055 0 0 1 1.82 -.18c3.6 0 6.6 2 9 6c-.666 1.11 -1.379 2.067 -2.138 2.87" />
+    <path d="M3 3l18 18" />
+  </symbol>
+  <symbol id="ti-external-link" data-tabler="external-link" viewBox="0 0 24 24">
+    <path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6" />
+    <path d="M11 13l9 -9" />
+    <path d="M15 4h5v5" />
+  </symbol>
+  <symbol id="ti-file-description" data-tabler="file-description" viewBox="0 0 24 24">
+    <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+    <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2" />
+    <path d="M9 17h6" />
+    <path d="M9 13h6" />
+  </symbol>
+  <symbol id="ti-file-export" data-tabler="file-export" viewBox="0 0 24 24">
+    <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+    <path d="M11.5 21h-4.5a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v5m-5 6h7m-3 -3l3 3l-3 3" />
+  </symbol>
+  <symbol id="ti-file-import" data-tabler="file-import" viewBox="0 0 24 24">
+    <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+    <path d="M5 13v-8a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2h-5.5m-9.5 -2h7m-3 -3l3 3l-3 3" />
+  </symbol>
+  <symbol id="ti-file-spreadsheet" data-tabler="file-spreadsheet" viewBox="0 0 24 24">
+    <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+    <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2" />
+    <path d="M8 11h8v7h-8l0 -7" />
+    <path d="M8 15h8" />
+    <path d="M11 11v7" />
+  </symbol>
+  <symbol id="ti-file-text" data-tabler="file-text" viewBox="0 0 24 24">
+    <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+    <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2" />
+    <path d="M9 9l1 0" />
+    <path d="M9 13l6 0" />
+    <path d="M9 17l6 0" />
+  </symbol>
+  <symbol id="ti-files" data-tabler="files" viewBox="0 0 24 24">
+    <path d="M15 3v4a1 1 0 0 0 1 1h4" />
+    <path d="M18 17h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h4l5 5v7a2 2 0 0 1 -2 2" />
+    <path d="M16 17v2a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h2" />
+  </symbol>
+  <symbol id="ti-flag-3" data-tabler="flag-3" viewBox="0 0 24 24">
+    <path d="M5 14h14l-4.5 -4.5l4.5 -4.5h-14v16" />
+  </symbol>
+  <symbol id="ti-flip-vertical" data-tabler="flip-vertical" viewBox="0 0 24 24">
+    <path d="M3 12l18 0" />
+    <path d="M7 16l10 0l-10 5l0 -5" />
+    <path d="M7 8l10 0l-10 -5l0 5" />
+  </symbol>
+  <symbol id="ti-folder" data-tabler="folder" viewBox="0 0 24 24">
+    <path d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2" />
+  </symbol>
+  <symbol id="ti-folder-open" data-tabler="folder-open" viewBox="0 0 24 24">
+    <path d="M5 19l2.757 -7.351a1 1 0 0 1 .936 -.649h12.307a1 1 0 0 1 .986 1.164l-.996 5.211a2 2 0 0 1 -1.964 1.625h-14.026a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2h4l3 3h7a2 2 0 0 1 2 2v2" />
+  </symbol>
+  <symbol id="ti-folders" data-tabler="folders" viewBox="0 0 24 24">
+    <path d="M9 3h3l2 2h5a2 2 0 0 1 2 2v7a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2" />
+    <path d="M17 16v2a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2h2" />
+  </symbol>
+  <symbol id="ti-frame" data-tabler="frame" viewBox="0 0 24 24">
+    <path d="M4 7l16 0" />
+    <path d="M4 17l16 0" />
+    <path d="M7 4l0 16" />
+    <path d="M17 4l0 16" />
+  </symbol>
+  <symbol id="ti-git-branch" data-tabler="git-branch" viewBox="0 0 24 24">
+    <path d="M5 18a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+    <path d="M5 6a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+    <path d="M15 6a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+    <path d="M7 8l0 8" />
+    <path d="M9 18h6a2 2 0 0 0 2 -2v-5" />
+    <path d="M14 14l3 -3l3 3" />
+  </symbol>
+  <symbol id="ti-git-merge" data-tabler="git-merge" viewBox="0 0 24 24">
+    <path d="M5 18a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+    <path d="M5 6a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+    <path d="M15 12a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+    <path d="M7 8l0 8" />
+    <path d="M7 8a4 4 0 0 0 4 4h4" />
+  </symbol>
+  <symbol id="ti-grip-vertical" data-tabler="grip-vertical" viewBox="0 0 24 24">
+    <path d="M8 5a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+    <path d="M8 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+    <path d="M8 19a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+    <path d="M14 5a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+    <path d="M14 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+    <path d="M14 19a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+  </symbol>
+  <symbol id="ti-help-circle" data-tabler="help-circle" viewBox="0 0 24 24">
+    <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
+    <path d="M12 16v.01" />
+    <path d="M12 13a2 2 0 0 0 .914 -3.782a1.98 1.98 0 0 0 -2.414 .483" />
+  </symbol>
+  <symbol id="ti-highlight" data-tabler="highlight" viewBox="0 0 24 24">
+    <path d="M3 19h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+    <path d="M12.5 5.5l4 4" />
+    <path d="M4.5 13.5l4 4" />
+    <path d="M21 15v4h-8l4 -4l4 0" />
+  </symbol>
+  <symbol id="ti-history" data-tabler="history" viewBox="0 0 24 24">
+    <path d="M12 8l0 4l2 2" />
+    <path d="M3.05 11a9 9 0 1 1 .5 4m-.5 5v-5h5" />
+  </symbol>
+  <symbol id="ti-home" data-tabler="home" viewBox="0 0 24 24">
+    <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
+    <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+    <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+  </symbol>
+  <symbol id="ti-info-circle" data-tabler="info-circle" viewBox="0 0 24 24">
+    <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
+    <path d="M12 9h.01" />
+    <path d="M11 12h1v4h1" />
+  </symbol>
+  <symbol id="ti-layout-navbar" data-tabler="layout-navbar" viewBox="0 0 24 24">
+    <path d="M4 6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2l0 -12" />
+    <path d="M4 9l16 0" />
+  </symbol>
+  <symbol id="ti-layout-sidebar" data-tabler="layout-sidebar" viewBox="0 0 24 24">
+    <path d="M4 6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2l0 -12" />
+    <path d="M9 4l0 16" />
+  </symbol>
+  <symbol id="ti-link" data-tabler="link" viewBox="0 0 24 24">
+    <path d="M9 15l6 -6" />
+    <path d="M11 6l.463 -.536a5 5 0 0 1 7.071 7.072l-.534 .464" />
+    <path d="M13 18l-.397 .534a5.068 5.068 0 0 1 -7.127 0a4.972 4.972 0 0 1 0 -7.071l.524 -.463" />
+  </symbol>
+  <symbol id="ti-list-check" data-tabler="list-check" viewBox="0 0 24 24">
+    <path d="M3.5 5.5l1.5 1.5l2.5 -2.5" />
+    <path d="M3.5 11.5l1.5 1.5l2.5 -2.5" />
+    <path d="M3.5 17.5l1.5 1.5l2.5 -2.5" />
+    <path d="M11 6l9 0" />
+    <path d="M11 12l9 0" />
+    <path d="M11 18l9 0" />
+  </symbol>
+  <symbol id="ti-lock" data-tabler="lock" viewBox="0 0 24 24">
+    <path d="M5 13a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-6" />
+    <path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0" />
+    <path d="M8 11v-4a4 4 0 1 1 8 0v4" />
+  </symbol>
+  <symbol id="ti-map-2" data-tabler="map-2" viewBox="0 0 24 24">
+    <path d="M12 18.5l-3 -1.5l-6 3v-13l6 -3l6 3l6 -3v7.5" />
+    <path d="M9 4v13" />
+    <path d="M15 7v5.5" />
+    <path d="M21.121 20.121a3 3 0 1 0 -4.242 0c.418 .419 1.125 1.045 2.121 1.879c1.051 -.89 1.759 -1.516 2.121 -1.879" />
+    <path d="M19 18v.01" />
+  </symbol>
+  <symbol id="ti-map-pin" data-tabler="map-pin" viewBox="0 0 24 24">
+    <path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+    <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0" />
+  </symbol>
+  <symbol id="ti-menu-2" data-tabler="menu-2" viewBox="0 0 24 24">
+    <path d="M4 6l16 0" />
+    <path d="M4 12l16 0" />
+    <path d="M4 18l16 0" />
+  </symbol>
+  <symbol id="ti-microscope" data-tabler="microscope" viewBox="0 0 24 24">
+    <path d="M5 21h14" />
+    <path d="M6 18h2" />
+    <path d="M7 18v3" />
+    <path d="M9 11l3 3l6 -6l-3 -3l-6 6" />
+    <path d="M10.5 12.5l-1.5 1.5" />
+    <path d="M17 3l3 3" />
+    <path d="M12 21a6 6 0 0 0 3.715 -10.712" />
+  </symbol>
+  <symbol id="ti-minus" data-tabler="minus" viewBox="0 0 24 24">
+    <path d="M5 12l14 0" />
+  </symbol>
+  <symbol id="ti-moon" data-tabler="moon" viewBox="0 0 24 24">
+    <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454l0 .008" />
+  </symbol>
+  <symbol id="ti-navigation" data-tabler="navigation" viewBox="0 0 24 24">
+    <path d="M12 18.5l7.265 2.463c.196 .077 .42 .032 .57 -.116a.548 .548 0 0 0 .134 -.572l-7.969 -17.275l-7.97 17.275c-.07 .2 -.017 .424 .135 .572c.15 .148 .374 .193 .57 .116l7.265 -2.463" />
+  </symbol>
+  <symbol id="ti-package" data-tabler="package" viewBox="0 0 24 24">
+    <path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" />
+    <path d="M12 12l8 -4.5" />
+    <path d="M12 12l0 9" />
+    <path d="M12 12l-8 -4.5" />
+    <path d="M16 5.25l-8 4.5" />
+  </symbol>
+  <symbol id="ti-palette" data-tabler="palette" viewBox="0 0 24 24">
+    <path d="M12 21a9 9 0 0 1 0 -18c4.97 0 9 3.582 9 8c0 1.06 -.474 2.078 -1.318 2.828c-.844 .75 -1.989 1.172 -3.182 1.172h-2.5a2 2 0 0 0 -1 3.75a1.3 1.3 0 0 1 -1 2.25" />
+    <path d="M7.5 10.5a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+    <path d="M11.5 7.5a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+    <path d="M15.5 10.5a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+  </symbol>
+  <symbol id="ti-palette-off" data-tabler="palette-off" viewBox="0 0 24 24">
+    <path d="M15 15h-1a2 2 0 0 0 -1 3.75a1.3 1.3 0 0 1 -1 2.25a9 9 0 0 1 -6.372 -15.356" />
+    <path d="M8 4c1.236 -.623 2.569 -1 4 -1c4.97 0 9 3.582 9 8c0 1.06 -.474 2.078 -1.318 2.828a4.516 4.516 0 0 1 -1.127 .73" />
+    <path d="M7.5 10.5a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+    <path d="M11.5 7.5a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+    <path d="M15.5 10.5a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+    <path d="M3 3l18 18" />
+  </symbol>
+  <symbol id="ti-pencil" data-tabler="pencil" viewBox="0 0 24 24">
+    <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+    <path d="M13.5 6.5l4 4" />
+  </symbol>
+  <symbol id="ti-pin" data-tabler="pin" viewBox="0 0 24 24">
+    <path d="M15 4.5l-4 4l-4 1.5l-1.5 1.5l7 7l1.5 -1.5l1.5 -4l4 -4" />
+    <path d="M9 15l-4.5 4.5" />
+    <path d="M14.5 4l5.5 5.5" />
+  </symbol>
+  <symbol id="ti-pinned" data-tabler="pinned" viewBox="0 0 24 24">
+    <path d="M9 4v6l-2 4v2h10v-2l-2 -4v-6" />
+    <path d="M12 16l0 5" />
+    <path d="M8 4l8 0" />
+  </symbol>
+  <symbol id="ti-player-stop" data-tabler="player-stop" viewBox="0 0 24 24">
+    <path d="M5 7a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2l0 -10" />
+  </symbol>
+  <symbol id="ti-plus" data-tabler="plus" viewBox="0 0 24 24">
+    <path d="M12 5l0 14" />
+    <path d="M5 12l14 0" />
+  </symbol>
+  <symbol id="ti-question-mark" data-tabler="question-mark" viewBox="0 0 24 24">
+    <path d="M8 8a3.5 3 0 0 1 3.5 -3h1a3.5 3 0 0 1 3.5 3a3 3 0 0 1 -2 3a3 4 0 0 0 -2 4" />
+    <path d="M12 19l0 .01" />
+  </symbol>
+  <symbol id="ti-rectangle" data-tabler="rectangle" viewBox="0 0 24 24">
+    <path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10" />
+  </symbol>
+  <symbol id="ti-refresh" data-tabler="refresh" viewBox="0 0 24 24">
+    <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4" />
+    <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" />
+  </symbol>
+  <symbol id="ti-repeat" data-tabler="repeat" viewBox="0 0 24 24">
+    <path d="M4 12v-3a3 3 0 0 1 3 -3h13m-3 -3l3 3l-3 3" />
+    <path d="M20 12v3a3 3 0 0 1 -3 3h-13m3 3l-3 -3l3 -3" />
+  </symbol>
+  <symbol id="ti-rotate-clockwise-2" data-tabler="rotate-clockwise-2" viewBox="0 0 24 24">
+    <path d="M9 4.55a8 8 0 0 1 6 14.9m0 -4.45v5h5" />
+    <path d="M5.63 7.16l0 .01" />
+    <path d="M4.06 11l0 .01" />
+    <path d="M4.63 15.1l0 .01" />
+    <path d="M7.16 18.37l0 .01" />
+    <path d="M11 19.94l0 .01" />
+  </symbol>
+  <symbol id="ti-scan" data-tabler="scan" viewBox="0 0 24 24">
+    <path d="M5 12h14" />
+    <path d="M3 7v-2a2 2 0 0 1 2 -2h2" />
+    <path d="M3 17v2a2 2 0 0 0 2 2h2" />
+    <path d="M17 3h2a2 2 0 0 1 2 2v2" />
+    <path d="M17 21h2a2 2 0 0 0 2 -2v-2" />
+  </symbol>
+  <symbol id="ti-scissors" data-tabler="scissors" viewBox="0 0 24 24">
+    <path d="M3 7a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+    <path d="M3 17a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+    <path d="M8.6 8.6l10.4 10.4" />
+    <path d="M8.6 15.4l10.4 -10.4" />
+  </symbol>
+  <symbol id="ti-search" data-tabler="search" viewBox="0 0 24 24">
+    <path d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+    <path d="M21 21l-6 -6" />
+  </symbol>
+  <symbol id="ti-settings" data-tabler="settings" viewBox="0 0 24 24">
+    <path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065" />
+    <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+  </symbol>
+  <symbol id="ti-share" data-tabler="share" viewBox="0 0 24 24">
+    <path d="M3 12a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+    <path d="M15 6a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+    <path d="M15 18a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+    <path d="M8.7 10.7l6.6 -3.4" />
+    <path d="M8.7 13.3l6.6 3.4" />
+  </symbol>
+  <symbol id="ti-shield-check" data-tabler="shield-check" viewBox="0 0 24 24">
+    <path d="M11.46 20.846a12 12 0 0 1 -7.96 -14.846a12 12 0 0 0 8.5 -3a12 12 0 0 0 8.5 3a12 12 0 0 1 -.09 7.06" />
+    <path d="M15 19l2 2l4 -4" />
+  </symbol>
+  <symbol id="ti-shopping-bag" data-tabler="shopping-bag" viewBox="0 0 24 24">
+    <path d="M6.331 8h11.339a2 2 0 0 1 1.977 2.304l-1.255 8.152a3 3 0 0 1 -2.966 2.544h-6.852a3 3 0 0 1 -2.965 -2.544l-1.255 -8.152a2 2 0 0 1 1.977 -2.304" />
+    <path d="M9 11v-5a3 3 0 0 1 6 0v5" />
+  </symbol>
+  <symbol id="ti-sort-ascending-letters" data-tabler="sort-ascending-letters" viewBox="0 0 24 24">
+    <path d="M15 10v-5c0 -1.38 .62 -2 2 -2s2 .62 2 2v5m0 -3h-4" />
+    <path d="M19 21h-4l4 -7h-4" />
+    <path d="M4 15l3 3l3 -3" />
+    <path d="M7 6v12" />
+  </symbol>
+  <symbol id="ti-spacing-horizontal" data-tabler="spacing-horizontal" viewBox="0 0 24 24">
+    <path d="M20 20h-2a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h2" />
+    <path d="M4 20h2a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" />
+    <path d="M12 8v8" />
+  </symbol>
+  <symbol id="ti-sparkle" data-tabler="sparkle" viewBox="0 0 24 24">
+    <path d="M21 12c-6.597 0 -9 2.403 -9 9c0 -6.597 -2.403 -9 -9 -9c6.597 0 9 -2.403 9 -9c0 6.597 2.403 9 9 9" />
+  </symbol>
+  <symbol id="ti-stack-2" data-tabler="stack-2" viewBox="0 0 24 24">
+    <path d="M12 4l-8 4l8 4l8 -4l-8 -4" />
+    <path d="M4 12l8 4l8 -4" />
+    <path d="M4 16l8 4l8 -4" />
+  </symbol>
+  <symbol id="ti-star" data-tabler="star" viewBox="0 0 24 24">
+    <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873l-6.158 -3.245" />
+  </symbol>
+  <symbol id="ti-sun" data-tabler="sun" viewBox="0 0 24 24">
+    <path d="M8 12a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
+    <path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7" />
+  </symbol>
+  <symbol id="ti-tags" data-tabler="tags" viewBox="0 0 24 24">
+    <path d="M3 8v4.172a2 2 0 0 0 .586 1.414l5.71 5.71a2.41 2.41 0 0 0 3.408 0l3.592 -3.592a2.41 2.41 0 0 0 0 -3.408l-5.71 -5.71a2 2 0 0 0 -1.414 -.586h-4.172a2 2 0 0 0 -2 2" />
+    <path d="M18 19l1.592 -1.592a4.82 4.82 0 0 0 0 -6.816l-4.592 -4.592" />
+    <path d="M7 10h-.01" />
+  </symbol>
+  <symbol id="ti-target" data-tabler="target" viewBox="0 0 24 24">
+    <path d="M11 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+    <path d="M7 12a5 5 0 1 0 10 0a5 5 0 1 0 -10 0" />
+    <path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+  </symbol>
+  <symbol id="ti-target-arrow" data-tabler="target-arrow" viewBox="0 0 24 24">
+    <path d="M11 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+    <path d="M12 7a5 5 0 1 0 5 5" />
+    <path d="M13 3.055a9 9 0 1 0 7.941 7.945" />
+    <path d="M15 6v3h3l3 -3h-3v-3l-3 3" />
+    <path d="M15 9l-3 3" />
+  </symbol>
+  <symbol id="ti-test-pipe" data-tabler="test-pipe" viewBox="0 0 24 24">
+    <path d="M20 8.04l-12.122 12.124a2.857 2.857 0 1 1 -4.041 -4.04l12.122 -12.124" />
+    <path d="M7 13h8" />
+    <path d="M19 15l1.5 1.6a2 2 0 1 1 -3 0l1.5 -1.6" />
+    <path d="M15 3l6 6" />
+  </symbol>
+  <symbol id="ti-test-pipe-2" data-tabler="test-pipe-2" viewBox="0 0 24 24">
+    <path d="M15 3v15a3 3 0 0 1 -6 0v-15" />
+    <path d="M9 12h6" />
+    <path d="M8 3h8" />
+  </symbol>
+  <symbol id="ti-thermometer" data-tabler="thermometer" viewBox="0 0 24 24">
+    <path d="M19 5a2.828 2.828 0 0 1 0 4l-8 8h-4v-4l8 -8a2.828 2.828 0 0 1 4 0" />
+    <path d="M16 7l-1.5 -1.5" />
+    <path d="M13 10l-1.5 -1.5" />
+    <path d="M10 13l-1.5 -1.5" />
+    <path d="M7 17l-3 3" />
+  </symbol>
+  <symbol id="ti-trash" data-tabler="trash" viewBox="0 0 24 24">
+    <path d="M4 7l16 0" />
+    <path d="M10 11l0 6" />
+    <path d="M14 11l0 6" />
+    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+  </symbol>
+  <symbol id="ti-upload" data-tabler="upload" viewBox="0 0 24 24">
+    <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" />
+    <path d="M7 9l5 -5l5 5" />
+    <path d="M12 4l0 12" />
+  </symbol>
+  <symbol id="ti-users-group" data-tabler="users-group" viewBox="0 0 24 24">
+    <path d="M10 13a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+    <path d="M8 21v-1a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v1" />
+    <path d="M15 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+    <path d="M17 10h2a2 2 0 0 1 2 2v1" />
+    <path d="M5 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+    <path d="M3 13v-1a2 2 0 0 1 2 -2h2" />
+  </symbol>
+  <symbol id="ti-vector" data-tabler="vector" viewBox="0 0 24 24">
+    <path d="M3 4a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1l0 -2" />
+    <path d="M17 4a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1l0 -2" />
+    <path d="M17 18a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1l0 -2" />
+    <path d="M3 18a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1l0 -2" />
+    <path d="M5 7l0 10" />
+    <path d="M19 7l0 10" />
+    <path d="M7 5l10 0" />
+    <path d="M7 19l10 0" />
+  </symbol>
+  <symbol id="ti-wave-sine" data-tabler="wave-sine" viewBox="0 0 24 24">
+    <path d="M21 12h-2c-.894 0 -1.662 -.857 -1.761 -2c-.296 -3.45 -.749 -6 -2.749 -6s-2.5 3.582 -2.5 8s-.5 8 -2.5 8s-2.452 -2.547 -2.749 -6c-.1 -1.147 -.867 -2 -1.763 -2h-2" />
+  </symbol>
+  <symbol id="ti-route" data-tabler="route" viewBox="0 0 24 24">
+    <path d="M3 19a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+    <path d="M19 7a2 2 0 1 0 0 -4a2 2 0 0 0 0 4" />
+    <path d="M11 19h5.5a3.5 3.5 0 0 0 0 -7h-8a3.5 3.5 0 0 1 0 -7h4.5" />
+  </symbol>
+  <symbol id="ti-world" data-tabler="world" viewBox="0 0 24 24">
+    <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
+    <path d="M3.6 9h16.8" />
+    <path d="M3.6 15h16.8" />
+    <path d="M11.5 3a17 17 0 0 0 0 18" />
+    <path d="M12.5 3a17 17 0 0 1 0 18" />
+  </symbol>
+  <symbol id="ti-x" data-tabler="x" viewBox="0 0 24 24">
+    <path d="M18 6l-12 12" />
+    <path d="M6 6l12 12" />
+  </symbol>
+  <symbol id="ti-zoom-in" data-tabler="zoom-in" viewBox="0 0 24 24">
+    <path d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+    <path d="M7 10l6 0" />
+    <path d="M10 7l0 6" />
+    <path d="M21 21l-6 -6" />
+  </symbol>
+  <symbol id="ti-zoom-in-area" data-tabler="zoom-in-area" viewBox="0 0 24 24">
+    <path d="M15 13v4" />
+    <path d="M13 15h4" />
+    <path d="M10 15a5 5 0 1 0 10 0a5 5 0 1 0 -10 0" />
+    <path d="M22 22l-3 -3" />
+    <path d="M6 18h-1a2 2 0 0 1 -2 -2v-1" />
+    <path d="M3 11v-1" />
+    <path d="M3 6v-1a2 2 0 0 1 2 -2h1" />
+    <path d="M10 3h1" />
+    <path d="M15 3h1a2 2 0 0 1 2 2v1" />
+  </symbol>
+  <symbol id="ti-zoom-out" data-tabler="zoom-out" viewBox="0 0 24 24">
+    <path d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+    <path d="M7 10l6 0" />
+    <path d="M21 21l-6 -6" />
+  </symbol>
+  <symbol id="ti-zoom-out-area" data-tabler="zoom-out-area" viewBox="0 0 24 24">
+    <path d="M13 15h4" />
+    <path d="M10 15a5 5 0 1 0 10 0a5 5 0 1 0 -10 0" />
+    <path d="M22 22l-3 -3" />
+    <path d="M6 18h-1a2 2 0 0 1 -2 -2v-1" />
+    <path d="M3 11v-1" />
+    <path d="M3 6v-1a2 2 0 0 1 2 -2h1" />
+    <path d="M10 3h1" />
+    <path d="M15 3h1a2 2 0 0 1 2 2v1" />
+  </symbol>
+<!-- TABLER-SPRITE:END -->
+</defs></svg>
+
 <header class="rail">
   <div class="wrap">
     <a class="brand" href="index.html">
@@ -49,10 +691,9 @@ document.documentElement.dataset.theme=t;})()</script>
       <a class="hide-s" href="#keyboard">Keyboard</a>
       <button class="themebtn" type="button" aria-pressed="false" title="Switch theme">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-             stroke-width="1.9" stroke-linecap="round" aria-hidden="true">
-          <circle class="t-sun" cx="12" cy="12" r="4.1"/>
-          <g class="t-sun"><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6"/></g>
-          <path class="t-moon" d="M20 13.4A8.2 8.2 0 1 1 10.6 4a6.6 6.6 0 0 0 9.4 9.4z"/>
+             stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <use class="t-sun" href="#ti-sun"/>
+          <use class="t-moon" href="#ti-moon"/>
         </svg>
         <span class="sr">Switch theme</span>
       </button>
@@ -65,7 +706,7 @@ document.documentElement.dataset.theme=t;})()</script>
 
   <div class="dochead" style="--topic:var(--amber)">
     <p class="num">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h9l5 5v11H5z"/><path d="M14 4v5h5"/><path d="M9 13h6M9 16.5h4"/></svg>
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#ti-file-description"/></svg>
       Manual
     </p>
     <h1>Every part of the workbench, with worked examples</h1>
@@ -645,7 +1286,7 @@ that is where a new primer has to be designed.</div>
       because it cuts more than once.</code></p>
     <div class="note"><p>Enzymes that cut <b>identically</b> are one line, because listing
       MboI, DpnII, Bsp143I, BssMI, BstMBI and Kzo9I separately says there is a choice
-      where there is none. The line opens, and it carries a ⚠ when the members really
+      where there is none. The line opens, and it carries a warning mark when the members really
       disagree about methylation — which is the choice that <em>is</em> real.</p></div>
 
     <h3 id="gel"><a class="anch" href="#gel">#</a>The gel — <kbd>⇧</kbd><kbd>⌘</kbd><kbd>G</kbd></h3>
@@ -821,7 +1462,7 @@ The feature panel names the table it judged by.</div>
     </ol>
 
     <h4>What the automatic check says</h4>
-    <p>Every read gets one of six verdicts, and the <code>Auto check ▾</code> heading is
+    <p>Every read gets one of six verdicts, and the <code>Auto check</code> menu is
       the filter: tick the verdicts you want to see. <b>Detach shown · N</b> then takes
       that whole group off in one act.</p>
     <div class="note"><p><b>A base's own Phred is not enough to call a difference real.</b>
@@ -834,8 +1475,8 @@ The feature panel names the table it judged by.</div>
     <p>One row: on the left a card carrying the position, the verdict, the gene, and the
       <b>codon in the gene's own reading direction</b> with the read's bases under it and
       the residue before and after — <code>Arg4 → Lys4 · missense</code>. On the right the
-      peaks in the same columns, with the base ruled through every row. <kbd>‹</kbd>
-      <kbd>›</kbd> step between the events worth looking at, substitutions
+      peaks in the same columns, with the base ruled through every row. The
+      <b>Previous</b> and <b>Next</b> arrow buttons step between the events worth looking at, substitutions
       <em>and</em> indels.</p>
     <p>A read with an indel is aligned <b>with a gap</b>, not read as a wall of
       mismatches, and the seeds are chained — so a clone carrying a 116 bp tandem

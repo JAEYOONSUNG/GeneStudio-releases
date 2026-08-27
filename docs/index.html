@@ -70,31 +70,31 @@ document.documentElement.dataset.theme=t;})()</script>
         <button class="feature-trigger" type="button" aria-expanded="false"
                 aria-controls="featurePopover">
           What it does
-          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m5 6 3 3 3-3"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ti-chevron-down"/></svg>
         </button>
         <div class="feature-popover" id="featurePopover" aria-label="Gene Studio workspaces" hidden>
           <a class="feature-card sequence" href="#sequence">
-            <span class="feature-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6.5h16M4 12h16M4 17.5h16M8 4.5v4M13 10v4M17 15.5v4"/></svg></span>
+            <span class="feature-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ti-dna-2"/></svg></span>
             <b>Sequence</b><span>Bases, primers, translations and every hit.</span>
           </a>
           <a class="feature-card digest" href="#digest">
-            <span class="feature-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="7" r="2.5"/><circle cx="6" cy="17" r="2.5"/><path d="m8 8.5 11 7M8 15.5l11-7"/></svg></span>
+            <span class="feature-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ti-scissors"/></svg></span>
             <b>Digest</b><span>Cut sites, methylation and a gel you can tune.</span>
           </a>
           <a class="feature-card sanger" href="#sanger">
-            <span class="feature-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 17h2.2c1.5 0 1.6-10 3.4-10s1.8 10 3.5 10 1.8-6.5 3.5-6.5 1.8 6.5 3.5 6.5h2.4"/></svg></span>
+            <span class="feature-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ti-chart-dots"/></svg></span>
             <b>Sanger</b><span>Traces aligned against the construct they came from.</span>
           </a>
           <a class="feature-card design" href="#design">
-            <span class="feature-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4l12 12M18 4 6 16"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/></svg></span>
+            <span class="feature-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ti-git-merge"/></svg></span>
             <b>Design</b><span>Guides, cloning and the oligos to order.</span>
           </a>
           <a class="feature-card genomes" href="#genomes">
-            <span class="feature-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.4"/><path d="M12 3.6v3M12 17.4v3M3.6 12h3M17.4 12h3"/></svg></span>
+            <span class="feature-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ti-microscope"/></svg></span>
             <b>Genomes</b><span>Large records without turning the page into a wall.</span>
           </a>
           <a class="feature-card files" href="#formats">
-            <span class="feature-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h8l4 4v13H7zM15 3.5v4h4M7 6H4.5v14.5H15"/></svg></span>
+            <span class="feature-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ti-files"/></svg></span>
             <b>Your files</b><span>GenBank, SnapGene, FASTA and Sanger AB1.</span>
           </a>
         </div>
@@ -110,10 +110,9 @@ document.documentElement.dataset.theme=t;})()</script>
            The label says what pressing it *does*, which is the other theme. -->
       <button class="themebtn" type="button" aria-pressed="false" title="Switch theme">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-             stroke-width="1.9" stroke-linecap="round" aria-hidden="true">
-          <circle class="t-sun" cx="12" cy="12" r="4.1"/>
-          <g class="t-sun"><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6"/></g>
-          <path class="t-moon" d="M20 13.4A8.2 8.2 0 1 1 10.6 4a6.6 6.6 0 0 0 9.4 9.4z"/>
+             stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <use class="t-sun" href="#ti-sun"/>
+          <use class="t-moon" href="#ti-moon"/>
         </svg>
         <span class="sr">Switch theme</span>
       </button>
@@ -227,18 +226,18 @@ document.documentElement.dataset.theme=t;})()</script>
          What the page may honestly say is what it did, and link to who it was
          checked against. -->
     <div class="mqrow">
-      <a href="https://biopython.org/" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5h7a3 3 0 0 1 3 3v10a2.4 2.4 0 0 0-2.4-2.4H4z"/><path d="M20 5.5h-3a3 3 0 0 0-3 3v10a2.4 2.4 0 0 1 2.4-2.4H20z"/></svg>Biopython</a>
-      <a href="https://pypi.org/project/snapgene-reader/" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5h7a3 3 0 0 1 3 3v10a2.4 2.4 0 0 0-2.4-2.4H4z"/><path d="M20 5.5h-3a3 3 0 0 0-3 3v10a2.4 2.4 0 0 1 2.4-2.4H20z"/></svg>snapgene_reader</a>
-      <a href="https://www.snapgene.com/" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5h7a3 3 0 0 1 3 3v10a2.4 2.4 0 0 0-2.4-2.4H4z"/><path d="M20 5.5h-3a3 3 0 0 0-3 3v10a2.4 2.4 0 0 1 2.4-2.4H20z"/></svg>SnapGene 8</a>
-      <a href="http://rebase.neb.com/" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="6" rx="7.5" ry="3"/><path d="M4.5 6v12c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3V6"/><path d="M4.5 12c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3"/></svg>REBASE v607</a>
-      <a href="https://www.ncbi.nlm.nih.gov/Taxonomy/Utils/wprintgc.cgi" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="6" rx="7.5" ry="3"/><path d="M4.5 6v12c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3V6"/><path d="M4.5 12c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3"/></svg>NCBI genetic codes</a>
-      <a href="https://github.com/hyattpd/Prodigal" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="9" width="7" height="6" rx="2"/><rect x="14.5" y="9" width="7" height="6" rx="2"/><path d="M9.5 12h5"/></svg>Prodigal</a>
-      <a href="https://www.ebi.ac.uk/interpro/" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="9" width="7" height="6" rx="2"/><rect x="14.5" y="9" width="7" height="6" rx="2"/><path d="M9.5 12h5"/></svg>InterProScan</a>
-      <a href="http://eggnog-mapper.embl.de/" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="9" width="7" height="6" rx="2"/><rect x="14.5" y="9" width="7" height="6" rx="2"/><path d="M9.5 12h5"/></svg>eggNOG-mapper</a>
-      <a href="https://defensefinder.mdmlab.fr/" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="9" width="7" height="6" rx="2"/><rect x="14.5" y="9" width="7" height="6" rx="2"/><path d="M9.5 12h5"/></svg>DefenseFinder</a>
-      <a href="https://openpyxl.readthedocs.io/" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5h7a3 3 0 0 1 3 3v10a2.4 2.4 0 0 0-2.4-2.4H4z"/><path d="M20 5.5h-3a3 3 0 0 0-3 3v10a2.4 2.4 0 0 1 2.4-2.4H20z"/></svg>openpyxl</a>
-      <a href="https://github.com/lmdu/pytrf" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="9" width="7" height="6" rx="2"/><rect x="14.5" y="9" width="7" height="6" rx="2"/><path d="M9.5 12h5"/></svg>pytrf</a>
-      <a href="https://doi.org/10.1073/pnas.95.4.1460" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="6" rx="7.5" ry="3"/><path d="M4.5 6v12c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3V6"/><path d="M4.5 12c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3"/></svg>SantaLucia 1998</a>
+      <a href="https://biopython.org/" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ti-code"/></svg>Biopython</a>
+      <a href="https://pypi.org/project/snapgene-reader/" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ti-code"/></svg>snapgene_reader</a>
+      <a href="https://www.snapgene.com/" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ti-file-text"/></svg>SnapGene 8</a>
+      <a href="http://rebase.neb.com/" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ti-database"/></svg>REBASE v607</a>
+      <a href="https://www.ncbi.nlm.nih.gov/Taxonomy/Utils/wprintgc.cgi" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ti-database"/></svg>NCBI genetic codes</a>
+      <a href="https://github.com/hyattpd/Prodigal" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ti-code"/></svg>Prodigal</a>
+      <a href="https://www.ebi.ac.uk/interpro/" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ti-database"/></svg>InterProScan</a>
+      <a href="http://eggnog-mapper.embl.de/" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ti-database"/></svg>eggNOG-mapper</a>
+      <a href="https://defensefinder.mdmlab.fr/" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ti-shield-check"/></svg>DefenseFinder</a>
+      <a href="https://openpyxl.readthedocs.io/" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ti-file-spreadsheet"/></svg>openpyxl</a>
+      <a href="https://github.com/lmdu/pytrf" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ti-repeat"/></svg>pytrf</a>
+      <a href="https://doi.org/10.1073/pnas.95.4.1460" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ti-file-text"/></svg>SantaLucia 1998</a>
     </div>
   </div>
 </div>
@@ -353,7 +352,7 @@ document.documentElement.dataset.theme=t;})()</script>
   <div class="wrap">
     <div class="cols rise">
       <div class="say">
-        <p class="num"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h18"/><path d="M3 16h18"/><path d="M8 8v8"/><path d="M15 8v8"/></svg><b>01</b>Sequence</p>
+        <p class="num"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#ti-dna-2"/></svg><b>01</b>Sequence</p>
         <h2>The sequence, with everything on it</h2>
         <p>Each stretch is one card: the enzymes above it, the primers that read 5′→3′, both strands, and each translation drawn directly under its own residues.</p>
       </div>
@@ -402,7 +401,7 @@ document.documentElement.dataset.theme=t;})()</script>
   <div class="wrap">
     <div class="cols rise">
       <div class="say">
-        <p class="num"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="1.6"/><path d="M8 8h3M13 12h3M8 16h3"/></svg><b>02</b>Digest</p>
+        <p class="num"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#ti-scissors"/></svg><b>02</b>Digest</p>
         <h2>Mark a stretch, and it tells you which of your enzymes cut it</h2>
         <p>The question in front of a construct is not <em>what does this digest give</em> — it is <em>which of the enzymes I have will open this piece</em>. Select the stretch and the set you buy from is filtered to the enzymes with a complete recognition site inside it, each with where it cuts, the end it leaves and the pieces the stretch becomes. One press loads that digest onto the gel.</p>
       </div>
@@ -468,7 +467,7 @@ document.documentElement.dataset.theme=t;})()</script>
   <div class="wrap">
     <div class="cols rise">
       <div class="say">
-        <p class="num"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17c2.4 0 2.4-10 4.8-10s2.4 10 4.8 10 2.4-12 4.8-12S21 17 21 17"/></svg><b>03</b>Sanger</p>
+        <p class="num"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#ti-chart-dots"/></svg><b>03</b>Sanger</p>
         <h2>Sanger reads, against the construct they came from</h2>
         <p>Drop the <code>.ab1</code> files from a run and each is trimmed, aligned and laid under the reference as a pileup, with its own chromatogram in the same columns. A real difference is told apart from a decayed tail rather than counted with it.</p>
       </div>
@@ -495,7 +494,7 @@ document.documentElement.dataset.theme=t;})()</script>
   <div class="wrap">
     <div class="cols rise">
       <div class="say">
-        <p class="num"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4l12 12M18 4 6 16"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/></svg><b>04</b>Design</p>
+        <p class="num"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#ti-git-merge"/></svg><b>04</b>Design</p>
         <h2>Guides, arms and the oligos to order</h2>
         <p>A port of the lab's own R package: guide scoring, Golden Gate oligos, Gibson inverse-PCR primers and four-primer deletion arms — the thresholds and weights copied rather than reinvented, because they are tuned against real cloning outcomes.</p>
       </div>
@@ -522,7 +521,7 @@ document.documentElement.dataset.theme=t;})()</script>
   <div class="wrap">
     <div class="cols rise">
       <div class="say">
-        <p class="num"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.4"/><path d="M12 3.6v3M12 17.4v3M3.6 12h3M17.4 12h3"/></svg><b>05</b>Genomes</p>
+        <p class="num"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#ti-world"/></svg><b>05</b>Genomes</p>
         <h2>A genome is a construct too</h2>
         <p>The linear map zooms from a whole chromosome down to two genes with a ruler over them, and the sequence scrolls a 4.6 Mb record without pages. An assembly of 186 contigs is listed down the side and read by hopping between its pieces.</p>
       </div>
@@ -547,7 +546,7 @@ document.documentElement.dataset.theme=t;})()</script>
 <section class="plain onplate" id="toolbox" style="--topic:var(--amber)">
   <div class="wrap">
     <div class="plainhead">
-      <p class="num"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="8" height="8" rx="1.6"/><rect x="13" y="8" width="8" height="8" rx="1.6"/><path d="M7 5.5v2.5M17 5.5v2.5"/></svg><b>06</b>Toolbox</p>
+      <p class="num"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#ti-blocks"/></svg><b>06</b>Toolbox</p>
       <h2>And the rest of the toolbox</h2>
       <p class="lede">60 of them, and none is an add-on: they are all in the one file, on all three platforms, working on the construct you already have open. The figures below are this machine's own measurements.</p>
     </div>
@@ -575,11 +574,21 @@ document.documentElement.dataset.theme=t;})()</script>
     <path d="M17 18.5a1.5 1.5 0 1 0 3 0a1.5 1.5 0 1 0 -3 0" />
     <path d="M4 15.5a4.5 4.5 0 1 0 9 0a4.5 4.5 0 1 0 -9 0" />
   </symbol>
+  <symbol id="ti-alert-triangle" data-tabler="alert-triangle" viewBox="0 0 24 24">
+    <path d="M12 9v4" />
+    <path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0" />
+    <path d="M12 16h.01" />
+  </symbol>
   <symbol id="ti-align-box-left-middle" data-tabler="align-box-left-middle" viewBox="0 0 24 24">
     <path d="M3 5a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-14" />
     <path d="M9 15h-2" />
     <path d="M13 12h-6" />
     <path d="M11 9h-4" />
+  </symbol>
+  <symbol id="ti-alphabet-greek" data-tabler="alphabet-greek" viewBox="0 0 24 24">
+    <path d="M10 10v7" />
+    <path d="M5 12a2 2 0 0 1 2 -2h1a2 2 0 0 1 2 2v3a2 2 0 0 1 -2 2h-1a2 2 0 0 1 -2 -2l0 -3" />
+    <path d="M14 20v-11a2 2 0 0 1 2 -2h1a2 2 0 0 1 2 2v1a2 2 0 0 1 -2 2a2 2 0 0 1 2 2v1a2 2 0 0 1 -2 2" />
   </symbol>
   <symbol id="ti-arrow-back-up" data-tabler="arrow-back-up" viewBox="0 0 24 24">
     <path d="M9 14l-4 -4l4 -4" />
@@ -872,6 +881,11 @@ document.documentElement.dataset.theme=t;})()</script>
     <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
     <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
   </symbol>
+  <symbol id="ti-info-circle" data-tabler="info-circle" viewBox="0 0 24 24">
+    <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
+    <path d="M12 9h.01" />
+    <path d="M11 12h1v4h1" />
+  </symbol>
   <symbol id="ti-layout-navbar" data-tabler="layout-navbar" viewBox="0 0 24 24">
     <path d="M4 6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2l0 -12" />
     <path d="M4 9l16 0" />
@@ -944,6 +958,14 @@ document.documentElement.dataset.theme=t;})()</script>
     <path d="M7.5 10.5a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
     <path d="M11.5 7.5a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
     <path d="M15.5 10.5a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+  </symbol>
+  <symbol id="ti-palette-off" data-tabler="palette-off" viewBox="0 0 24 24">
+    <path d="M15 15h-1a2 2 0 0 0 -1 3.75a1.3 1.3 0 0 1 -1 2.25a9 9 0 0 1 -6.372 -15.356" />
+    <path d="M8 4c1.236 -.623 2.569 -1 4 -1c4.97 0 9 3.582 9 8c0 1.06 -.474 2.078 -1.318 2.828a4.516 4.516 0 0 1 -1.127 .73" />
+    <path d="M7.5 10.5a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+    <path d="M11.5 7.5a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+    <path d="M15.5 10.5a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+    <path d="M3 3l18 18" />
   </symbol>
   <symbol id="ti-pencil" data-tabler="pencil" viewBox="0 0 24 24">
     <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
@@ -1025,6 +1047,12 @@ document.documentElement.dataset.theme=t;})()</script>
     <path d="M6.331 8h11.339a2 2 0 0 1 1.977 2.304l-1.255 8.152a3 3 0 0 1 -2.966 2.544h-6.852a3 3 0 0 1 -2.965 -2.544l-1.255 -8.152a2 2 0 0 1 1.977 -2.304" />
     <path d="M9 11v-5a3 3 0 0 1 6 0v5" />
   </symbol>
+  <symbol id="ti-sort-ascending-letters" data-tabler="sort-ascending-letters" viewBox="0 0 24 24">
+    <path d="M15 10v-5c0 -1.38 .62 -2 2 -2s2 .62 2 2v5m0 -3h-4" />
+    <path d="M19 21h-4l4 -7h-4" />
+    <path d="M4 15l3 3l3 -3" />
+    <path d="M7 6v12" />
+  </symbol>
   <symbol id="ti-spacing-horizontal" data-tabler="spacing-horizontal" viewBox="0 0 24 24">
     <path d="M20 20h-2a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h2" />
     <path d="M4 20h2a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" />
@@ -1092,6 +1120,14 @@ document.documentElement.dataset.theme=t;})()</script>
     <path d="M7 9l5 -5l5 5" />
     <path d="M12 4l0 12" />
   </symbol>
+  <symbol id="ti-users-group" data-tabler="users-group" viewBox="0 0 24 24">
+    <path d="M10 13a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+    <path d="M8 21v-1a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v1" />
+    <path d="M15 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+    <path d="M17 10h2a2 2 0 0 1 2 2v1" />
+    <path d="M5 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+    <path d="M3 13v-1a2 2 0 0 1 2 -2h2" />
+  </symbol>
   <symbol id="ti-vector" data-tabler="vector" viewBox="0 0 24 24">
     <path d="M3 4a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1l0 -2" />
     <path d="M17 4a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1l0 -2" />
@@ -1154,7 +1190,150 @@ document.documentElement.dataset.theme=t;})()</script>
     <path d="M15 3h1a2 2 0 0 1 2 2v1" />
   </symbol>
 <!-- TABLER-SPRITE:END -->
-<symbol id="tb-ring" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.2"/></symbol><symbol id="tb-linear" viewBox="0 0 24 24"><path d="M3 12h18"/><circle cx="8" cy="12" r="2"/><circle cx="16" cy="12" r="2"/></symbol><symbol id="tb-seq" viewBox="0 0 24 24"><path d="M4 8h16"/><path d="M4 16h16"/><path d="M12 8v8"/></symbol><symbol id="tb-nav" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="8" rx="2"/><rect x="7" y="10" width="6" height="4" rx="1" fill="currentColor" stroke="none"/></symbol><symbol id="tb-find" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M15.5 15.5 21 21"/></symbol><symbol id="tb-paint" viewBox="0 0 24 24"><path d="M4 17 14 7l3 3L7 20H4z"/><path d="M14 4l3 3"/></symbol><symbol id="tb-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></symbol><symbol id="tb-card" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 10h6M7 14h10"/></symbol><symbol id="tb-tube" viewBox="0 0 24 24"><path d="M9 3h6M10 3v13a2 2 0 0 0 4 0V3"/><path d="M10 11h4"/></symbol><symbol id="tb-scan" viewBox="0 0 24 24"><path d="M4 8V6a2 2 0 0 1 2-2h2M20 8V6a2 2 0 0 0-2-2h-2M4 16v2a2 2 0 0 0 2 2h2M20 16v2a2 2 0 0 1-2 2h-2"/><path d="M4 12h16"/></symbol><symbol id="tb-pin" viewBox="0 0 24 24"><path d="M12 21s6-5.4 6-10a6 6 0 1 0-12 0c0 4.6 6 10 6 10z"/><circle cx="12" cy="11" r="2"/></symbol><symbol id="tb-strain" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M8 12c2-3 6-3 8 0M8 15c2-2 6-2 8 0"/></symbol><symbol id="tb-univ" viewBox="0 0 24 24"><path d="M4 12h12"/><path d="m12 8 4 4-4 4"/></symbol><symbol id="tb-plan" viewBox="0 0 24 24"><path d="M4 7h16"/><path d="M4 12h11"/><path d="M4 17h6"/></symbol><symbol id="tb-edit" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M14 6l4 4"/></symbol><symbol id="tb-therm" viewBox="0 0 24 24"><path d="M14 14V5a2 2 0 1 0-4 0v9a4 4 0 1 0 4 0z"/></symbol><symbol id="tb-cut" viewBox="0 0 24 24"><path d="M6 4l12 12M18 4 6 16"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/></symbol><symbol id="tb-shop" viewBox="0 0 24 24"><path d="M4 8h16l-1.4 11H5.4z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></symbol><symbol id="tb-methyl" viewBox="0 0 24 24"><circle cx="12" cy="14" r="5"/><path d="M12 9V4"/><circle cx="12" cy="4" r="1.6" fill="currentColor" stroke="none"/></symbol><symbol id="tb-hosts" viewBox="0 0 24 24"><circle cx="8.5" cy="12" r="4.5"/><circle cx="16" cy="12" r="4.5"/></symbol><symbol id="tb-gel" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M8 8h3M14 11h3M8 15h3"/></symbol><symbol id="tb-coin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v8M9.5 10h4a1.5 1.5 0 0 1 0 3h-3a1.5 1.5 0 0 0 0 3h4"/></symbol><symbol id="tb-suggest" viewBox="0 0 24 24"><path d="M9 16a5 5 0 1 1 6 0v2H9z"/><path d="M10 21h4"/></symbol><symbol id="tb-scissors" viewBox="0 0 24 24"><path d="M6 4l12 12M18 4 6 16"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/></symbol><symbol id="tb-gibson" viewBox="0 0 24 24"><path d="M3 12h7"/><path d="M14 12h7"/><path d="M10 8.5v7"/><path d="M14 8.5v7"/></symbol><symbol id="tb-gg" viewBox="0 0 24 24"><rect x="3" y="8" width="8" height="8" rx="1.5"/><rect x="13" y="8" width="8" height="8" rx="1.5"/></symbol><symbol id="tb-guide" viewBox="0 0 24 24"><path d="M3 8c5-4 13 4 18 0"/><path d="M3 16c5-4 13 4 18 0"/></symbol><symbol id="tb-arms" viewBox="0 0 24 24"><path d="M3 12h4"/><path d="M17 12h4"/><rect x="7" y="8" width="10" height="8" rx="2"/></symbol><symbol id="tb-silent" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M8.5 12h7"/></symbol><symbol id="tb-preview" viewBox="0 0 24 24"><path d="M2.5 12S6 6.5 12 6.5 21.5 12 21.5 12 18 17.5 12 17.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="2.2"/></symbol><symbol id="tb-trace" viewBox="0 0 24 24"><path d="M3 17c2.5 0 2.5-10 5-10s2.5 10 5 10 2.5-12 5-12 3 12 3 12"/></symbol><symbol id="tb-ztr" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M7 14c1.5 0 1.5-5 3-5s1.5 5 3 5 1.5-4 2-4"/></symbol><symbol id="tb-pileup" viewBox="0 0 24 24"><path d="M4 8h16"/><path d="M4 13h11"/><path d="M4 18h14"/></symbol><symbol id="tb-indel" viewBox="0 0 24 24"><path d="M4 12h5"/><path d="M15 12h5"/><path d="M12 7v10"/></symbol><symbol id="tb-frame" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="8" rx="1.5"/><path d="M12 8v8"/></symbol><symbol id="tb-tick" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7"/></symbol><symbol id="tb-cross" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol><symbol id="tb-verdict" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="m8.5 12 2.5 2.5 4.5-5"/></symbol><symbol id="tb-term" viewBox="0 0 24 24"><path d="M7 20V11a5 5 0 0 1 10 0v9"/></symbol><symbol id="tb-repeat" viewBox="0 0 24 24"><path d="M5 9h11a3 3 0 0 1 0 6H8"/><path d="m11 12-3 3 3 3"/></symbol><symbol id="tb-fold" viewBox="0 0 24 24"><path d="M12 3v5"/><path d="M12 16v5"/><circle cx="12" cy="12" r="4"/></symbol><symbol id="tb-rbs" viewBox="0 0 24 24"><circle cx="8" cy="12" r="4.5"/><path d="M14 12h7"/></symbol><symbol id="tb-codon" viewBox="0 0 24 24"><path d="M5 19V11"/><path d="M12 19V6"/><path d="M19 19v-5"/></symbol><symbol id="tb-code" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18"/><path d="M9.5 10v9"/></symbol><symbol id="tb-orf" viewBox="0 0 24 24"><path d="M3 15h4l3-7 3 12 3-8h5"/></symbol><symbol id="tb-annot" viewBox="0 0 24 24"><path d="M5 4h9l5 5v11H5z"/><path d="M9 13h6"/><path d="M9 16.5h4"/></symbol><symbol id="tb-file" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></symbol><symbol id="tb-share" viewBox="0 0 24 24"><circle cx="18" cy="6" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="m8.2 10.8 7.6-3.6M8.2 13.2l7.6 3.6"/></symbol><symbol id="tb-stack" viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5z"/><path d="m4 13 8 4.5 8-4.5"/></symbol><symbol id="tb-folder" viewBox="0 0 24 24"><path d="M3 7h6l2 2h10v10H3z"/></symbol><symbol id="tb-xlsx" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18"/><path d="M10 10v9"/></symbol><symbol id="tb-vector" viewBox="0 0 24 24"><path d="M5 19 19 5"/><rect x="3" y="17" width="4" height="4" rx="1"/><rect x="17" y="3" width="4" height="4" rx="1"/></symbol><symbol id="tb-safe" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><circle cx="12" cy="12" r="3.5"/><path d="M12 8.5V6"/></symbol><symbol id="tb-mac" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 21h8"/></symbol><symbol id="tb-phone" viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/></symbol><symbol id="tb-menu" viewBox="0 0 24 24"><path d="M4 8h16"/><path d="M4 12h16"/><path d="M4 16h9"/></symbol><symbol id="tb-update" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-3-6.2"/><path d="M20 4v5h-5"/></symbol><symbol id="tb-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></symbol></defs></svg>
+<symbol id="tb-ring" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.2"/></symbol><symbol id="tb-linear" data-tabler="arrows-horizontal" viewBox="0 0 24 24"><path d="M7 8l-4 4l4 4" />
+    <path d="M17 8l4 4l-4 4" />
+    <path d="M3 12l18 0" /></symbol><symbol id="tb-seq" data-tabler="dna-2" viewBox="0 0 24 24"><path d="M17 3v1c-.01 3.352 -1.68 6.023 -5.008 8.014c-3.328 1.99 3.336 -2 .008 -.014c-3.328 1.99 -5 4.662 -5.008 8.014v1" />
+    <path d="M17 21.014v-1c-.01 -3.352 -1.68 -6.023 -5.008 -8.014c-3.328 -1.99 3.336 2 .008 .014c-3.328 -1.991 -5 -4.662 -5.008 -8.014v-1" />
+    <path d="M7 4h10" />
+    <path d="M7 20h10" />
+    <path d="M8 8h8" />
+    <path d="M8 16h8" /></symbol><symbol id="tb-nav" data-tabler="navigation" viewBox="0 0 24 24"><path d="M12 18.5l7.265 2.463c.196 .077 .42 .032 .57 -.116a.548 .548 0 0 0 .134 -.572l-7.969 -17.275l-7.97 17.275c-.07 .2 -.017 .424 .135 .572c.15 .148 .374 .193 .57 .116l7.265 -2.463" /></symbol><symbol id="tb-find" data-tabler="search" viewBox="0 0 24 24"><path d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+    <path d="M21 21l-6 -6" /></symbol><symbol id="tb-paint" data-tabler="highlight" viewBox="0 0 24 24"><path d="M3 19h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+    <path d="M12.5 5.5l4 4" />
+    <path d="M4.5 13.5l4 4" />
+    <path d="M21 15v4h-8l4 -4l4 0" /></symbol><symbol id="tb-clock" data-tabler="history" viewBox="0 0 24 24"><path d="M12 8l0 4l2 2" />
+    <path d="M3.05 11a9 9 0 1 1 .5 4m-.5 5v-5h5" /></symbol><symbol id="tb-card" data-tabler="file-description" viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4" />
+    <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2" />
+    <path d="M9 17h6" />
+    <path d="M9 13h6" /></symbol><symbol id="tb-tube" data-tabler="test-pipe" viewBox="0 0 24 24"><path d="M20 8.04l-12.122 12.124a2.857 2.857 0 1 1 -4.041 -4.04l12.122 -12.124" />
+    <path d="M7 13h8" />
+    <path d="M19 15l1.5 1.6a2 2 0 1 1 -3 0l1.5 -1.6" />
+    <path d="M15 3l6 6" /></symbol><symbol id="tb-scan" data-tabler="scan" viewBox="0 0 24 24"><path d="M5 12h14" />
+    <path d="M3 7v-2a2 2 0 0 1 2 -2h2" />
+    <path d="M3 17v2a2 2 0 0 0 2 2h2" />
+    <path d="M17 3h2a2 2 0 0 1 2 2v2" />
+    <path d="M17 21h2a2 2 0 0 0 2 -2v-2" /></symbol><symbol id="tb-pin" data-tabler="map-pin" viewBox="0 0 24 24"><path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+    <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0" /></symbol><symbol id="tb-strain" data-tabler="microscope" viewBox="0 0 24 24"><path d="M5 21h14" />
+    <path d="M6 18h2" />
+    <path d="M7 18v3" />
+    <path d="M9 11l3 3l6 -6l-3 -3l-6 6" />
+    <path d="M10.5 12.5l-1.5 1.5" />
+    <path d="M17 3l3 3" />
+    <path d="M12 21a6 6 0 0 0 3.715 -10.712" /></symbol><symbol id="tb-univ" data-tabler="arrow-right" viewBox="0 0 24 24"><path d="M5 12l14 0" />
+    <path d="M13 18l6 -6" />
+    <path d="M13 6l6 6" /></symbol><symbol id="tb-plan" data-tabler="list-check" viewBox="0 0 24 24"><path d="M3.5 5.5l1.5 1.5l2.5 -2.5" />
+    <path d="M3.5 11.5l1.5 1.5l2.5 -2.5" />
+    <path d="M3.5 17.5l1.5 1.5l2.5 -2.5" />
+    <path d="M11 6l9 0" />
+    <path d="M11 12l9 0" />
+    <path d="M11 18l9 0" /></symbol><symbol id="tb-edit" data-tabler="pencil" viewBox="0 0 24 24"><path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+    <path d="M13.5 6.5l4 4" /></symbol><symbol id="tb-therm" data-tabler="thermometer" viewBox="0 0 24 24"><path d="M19 5a2.828 2.828 0 0 1 0 4l-8 8h-4v-4l8 -8a2.828 2.828 0 0 1 4 0" />
+    <path d="M16 7l-1.5 -1.5" />
+    <path d="M13 10l-1.5 -1.5" />
+    <path d="M10 13l-1.5 -1.5" />
+    <path d="M7 17l-3 3" /></symbol><symbol id="tb-cut" data-tabler="scissors" viewBox="0 0 24 24"><path d="M3 7a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+    <path d="M3 17a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+    <path d="M8.6 8.6l10.4 10.4" />
+    <path d="M8.6 15.4l10.4 -10.4" /></symbol><symbol id="tb-shop" data-tabler="shopping-bag" viewBox="0 0 24 24"><path d="M6.331 8h11.339a2 2 0 0 1 1.977 2.304l-1.255 8.152a3 3 0 0 1 -2.966 2.544h-6.852a3 3 0 0 1 -2.965 -2.544l-1.255 -8.152a2 2 0 0 1 1.977 -2.304" />
+    <path d="M9 11v-5a3 3 0 0 1 6 0v5" /></symbol><symbol id="tb-methyl" data-tabler="atom-2" viewBox="0 0 24 24"><path d="M9 12a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+    <path d="M12 21l0 .01" />
+    <path d="M3 9l0 .01" />
+    <path d="M21 9l0 .01" />
+    <path d="M8 20.1a9 9 0 0 1 -5 -7.1" />
+    <path d="M16 20.1a9 9 0 0 0 5 -7.1" />
+    <path d="M6.2 5a9 9 0 0 1 11.4 0" /></symbol><symbol id="tb-hosts" data-tabler="circles-relation" viewBox="0 0 24 24"><path d="M9.183 6.117a6 6 0 1 0 4.511 3.986" />
+    <path d="M14.813 17.883a6 6 0 1 0 -4.496 -3.954" /></symbol><symbol id="tb-gel" data-tabler="chart-histogram" viewBox="0 0 24 24"><path d="M3 3v18h18" />
+    <path d="M20 18v3" />
+    <path d="M16 16v5" />
+    <path d="M12 13v8" />
+    <path d="M8 16v5" />
+    <path d="M3 11c6 0 5 -5 9 -5s3 5 9 5" /></symbol><symbol id="tb-coin" data-tabler="coin" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+    <path d="M14.8 9a2 2 0 0 0 -1.8 -1h-2a2 2 0 1 0 0 4h2a2 2 0 1 1 0 4h-2a2 2 0 0 1 -1.8 -1" />
+    <path d="M12 7v10" /></symbol><symbol id="tb-suggest" data-tabler="bulb" viewBox="0 0 24 24"><path d="M3 12h1m8 -9v1m8 8h1m-15.4 -6.4l.7 .7m12.1 -.7l-.7 .7" />
+    <path d="M9 16a5 5 0 1 1 6 0a3.5 3.5 0 0 0 -1 3a2 2 0 0 1 -4 0a3.5 3.5 0 0 0 -1 -3" />
+    <path d="M9.7 17l4.6 0" /></symbol><symbol id="tb-scissors" data-tabler="scissors" viewBox="0 0 24 24"><path d="M3 7a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+    <path d="M3 17a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+    <path d="M8.6 8.6l10.4 10.4" />
+    <path d="M8.6 15.4l10.4 -10.4" /></symbol><symbol id="tb-gibson" data-tabler="link" viewBox="0 0 24 24"><path d="M9 15l6 -6" />
+    <path d="M11 6l.463 -.536a5 5 0 0 1 7.071 7.072l-.534 .464" />
+    <path d="M13 18l-.397 .534a5.068 5.068 0 0 1 -7.127 0a4.972 4.972 0 0 1 0 -7.071l.524 -.463" /></symbol><symbol id="tb-gg" data-tabler="blocks" viewBox="0 0 24 24"><path d="M14 4a1 1 0 0 1 1 -1h5a1 1 0 0 1 1 1v5a1 1 0 0 1 -1 1h-5a1 1 0 0 1 -1 -1l0 -5" />
+    <path d="M3 14h12a2 2 0 0 1 2 2v3a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h3a2 2 0 0 1 2 2v12" /></symbol><symbol id="tb-guide" data-tabler="target-arrow" viewBox="0 0 24 24"><path d="M11 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+    <path d="M12 7a5 5 0 1 0 5 5" />
+    <path d="M13 3.055a9 9 0 1 0 7.941 7.945" />
+    <path d="M15 6v3h3l3 -3h-3v-3l-3 3" />
+    <path d="M15 9l-3 3" /></symbol><symbol id="tb-arms" data-tabler="brackets" viewBox="0 0 24 24"><path d="M8 4h-3v16h3" />
+    <path d="M16 4h3v16h-3" /></symbol><symbol id="tb-silent" data-tabler="minus" viewBox="0 0 24 24"><path d="M5 12l14 0" /></symbol><symbol id="tb-preview" data-tabler="eye" viewBox="0 0 24 24"><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+    <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></symbol><symbol id="tb-trace" data-tabler="wave-sine" viewBox="0 0 24 24"><path d="M21 12h-2c-.894 0 -1.662 -.857 -1.761 -2c-.296 -3.45 -.749 -6 -2.749 -6s-2.5 3.582 -2.5 8s-.5 8 -2.5 8s-2.452 -2.547 -2.749 -6c-.1 -1.147 -.867 -2 -1.763 -2h-2" /></symbol><symbol id="tb-ztr" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M7 14c1.5 0 1.5-5 3-5s1.5 5 3 5 1.5-4 2-4"/></symbol><symbol id="tb-pileup" data-tabler="align-box-left-middle" viewBox="0 0 24 24"><path d="M3 5a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-14" />
+    <path d="M9 15h-2" />
+    <path d="M13 12h-6" />
+    <path d="M11 9h-4" /></symbol><symbol id="tb-indel" data-tabler="spacing-horizontal" viewBox="0 0 24 24"><path d="M20 20h-2a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h2" />
+    <path d="M4 20h2a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" />
+    <path d="M12 8v8" /></symbol><symbol id="tb-frame" data-tabler="brackets-contain" viewBox="0 0 24 24"><path d="M7 4h-4v16h4" />
+    <path d="M17 4h4v16h-4" />
+    <path d="M8 16h.01" />
+    <path d="M12 16h.01" />
+    <path d="M16 16h.01" /></symbol><symbol id="tb-tick" data-tabler="check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10" /></symbol><symbol id="tb-cross" data-tabler="x" viewBox="0 0 24 24"><path d="M18 6l-12 12" />
+    <path d="M6 6l12 12" /></symbol><symbol id="tb-verdict" data-tabler="circle-check" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+    <path d="M9 12l2 2l4 -4" /></symbol><symbol id="tb-term" data-tabler="player-stop" viewBox="0 0 24 24"><path d="M5 7a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2l0 -10" /></symbol><symbol id="tb-repeat" data-tabler="repeat" viewBox="0 0 24 24"><path d="M4 12v-3a3 3 0 0 1 3 -3h13m-3 -3l3 3l-3 3" />
+    <path d="M20 12v3a3 3 0 0 1 -3 3h-13m3 3l-3 -3l3 -3" /></symbol><symbol id="tb-fold" data-tabler="binary-tree" viewBox="0 0 24 24"><path d="M6 20a2 2 0 1 0 -4 0a2 2 0 0 0 4 0" />
+    <path d="M16 4a2 2 0 1 0 -4 0a2 2 0 0 0 4 0" />
+    <path d="M16 20a2 2 0 1 0 -4 0a2 2 0 0 0 4 0" />
+    <path d="M11 12a2 2 0 1 0 -4 0a2 2 0 0 0 4 0" />
+    <path d="M21 12a2 2 0 1 0 -4 0a2 2 0 0 0 4 0" />
+    <path d="M5.058 18.306l2.88 -4.606" />
+    <path d="M10.061 10.303l2.877 -4.604" />
+    <path d="M10.065 13.705l2.876 4.6" />
+    <path d="M15.063 5.7l2.881 4.61" /></symbol><symbol id="tb-rbs" viewBox="0 0 24 24"><circle cx="8" cy="12" r="4.5"/><path d="M14 12h7"/></symbol><symbol id="tb-codon" data-tabler="chart-dots" viewBox="0 0 24 24"><path d="M3 3v18h18" />
+    <path d="M7 9a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+    <path d="M17 7a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+    <path d="M12 15a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+    <path d="M10.16 10.62l2.34 2.88" />
+    <path d="M15.088 13.328l2.837 -4.586" /></symbol><symbol id="tb-code" data-tabler="code" viewBox="0 0 24 24"><path d="M7 8l-4 4l4 4" />
+    <path d="M17 8l4 4l-4 4" />
+    <path d="M14 4l-4 16" /></symbol><symbol id="tb-orf" data-tabler="frame" viewBox="0 0 24 24"><path d="M4 7l16 0" />
+    <path d="M4 17l16 0" />
+    <path d="M7 4l0 16" />
+    <path d="M17 4l0 16" /></symbol><symbol id="tb-annot" data-tabler="tags" viewBox="0 0 24 24"><path d="M3 8v4.172a2 2 0 0 0 .586 1.414l5.71 5.71a2.41 2.41 0 0 0 3.408 0l3.592 -3.592a2.41 2.41 0 0 0 0 -3.408l-5.71 -5.71a2 2 0 0 0 -1.414 -.586h-4.172a2 2 0 0 0 -2 2" />
+    <path d="M18 19l1.592 -1.592a4.82 4.82 0 0 0 0 -6.816l-4.592 -4.592" />
+    <path d="M7 10h-.01" /></symbol><symbol id="tb-file" data-tabler="files" viewBox="0 0 24 24"><path d="M15 3v4a1 1 0 0 0 1 1h4" />
+    <path d="M18 17h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h4l5 5v7a2 2 0 0 1 -2 2" />
+    <path d="M16 17v2a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h2" /></symbol><symbol id="tb-share" data-tabler="share" viewBox="0 0 24 24"><path d="M3 12a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+    <path d="M15 6a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+    <path d="M15 18a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+    <path d="M8.7 10.7l6.6 -3.4" />
+    <path d="M8.7 13.3l6.6 3.4" /></symbol><symbol id="tb-stack" data-tabler="stack-2" viewBox="0 0 24 24"><path d="M12 4l-8 4l8 4l8 -4l-8 -4" />
+    <path d="M4 12l8 4l8 -4" />
+    <path d="M4 16l8 4l8 -4" /></symbol><symbol id="tb-folder" data-tabler="folders" viewBox="0 0 24 24"><path d="M9 3h3l2 2h5a2 2 0 0 1 2 2v7a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2" />
+    <path d="M17 16v2a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2h2" /></symbol><symbol id="tb-xlsx" data-tabler="file-spreadsheet" viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4" />
+    <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2" />
+    <path d="M8 11h8v7h-8l0 -7" />
+    <path d="M8 15h8" />
+    <path d="M11 11v7" /></symbol><symbol id="tb-vector" data-tabler="vector" viewBox="0 0 24 24"><path d="M3 4a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1l0 -2" />
+    <path d="M17 4a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1l0 -2" />
+    <path d="M17 18a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1l0 -2" />
+    <path d="M3 18a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1l0 -2" />
+    <path d="M5 7l0 10" />
+    <path d="M19 7l0 10" />
+    <path d="M7 5l10 0" />
+    <path d="M7 19l10 0" /></symbol><symbol id="tb-safe" data-tabler="shield-check" viewBox="0 0 24 24"><path d="M11.46 20.846a12 12 0 0 1 -7.96 -14.846a12 12 0 0 0 8.5 -3a12 12 0 0 0 8.5 3a12 12 0 0 1 -.09 7.06" />
+    <path d="M15 19l2 2l4 -4" /></symbol><symbol id="tb-mac" data-tabler="devices" viewBox="0 0 24 24"><path d="M13 9a1 1 0 0 1 1 -1h6a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-6a1 1 0 0 1 -1 -1v-10" />
+    <path d="M18 8v-3a1 1 0 0 0 -1 -1h-13a1 1 0 0 0 -1 1v12a1 1 0 0 0 1 1h9" />
+    <path d="M16 9h2" /></symbol><symbol id="tb-phone" data-tabler="device-mobile" viewBox="0 0 24 24"><path d="M6 5a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2v-14" />
+    <path d="M11 4h2" />
+    <path d="M12 17v.01" /></symbol><symbol id="tb-menu" data-tabler="menu-2" viewBox="0 0 24 24"><path d="M4 6l16 0" />
+    <path d="M4 12l16 0" />
+    <path d="M4 18l16 0" /></symbol><symbol id="tb-update" data-tabler="refresh" viewBox="0 0 24 24"><path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4" />
+    <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" /></symbol><symbol id="tb-lock" data-tabler="lock" viewBox="0 0 24 24"><path d="M5 13a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-6" />
+    <path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0" />
+    <path d="M8 11v-4a4 4 0 1 1 8 0v4" /></symbol><symbol id="tb-database" data-tabler="database" viewBox="0 0 24 24"><path d="M4 6a8 3 0 1 0 16 0a8 3 0 1 0 -16 0" />
+    <path d="M4 6v6a8 3 0 0 0 16 0v-6" />
+    <path d="M4 12v6a8 3 0 0 0 16 0v-6" /></symbol><symbol id="tb-erase" data-tabler="eraser" viewBox="0 0 24 24"><path d="M19 20h-10.5l-4.21 -4.3a1 1 0 0 1 0 -1.41l10 -10a1 1 0 0 1 1.41 0l5 5a1 1 0 0 1 0 1.41l-9.2 9.3" />
+    <path d="M18 13.3l-6.3 -6.3" /></symbol><symbol id="tb-package" data-tabler="package" viewBox="0 0 24 24"><path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" />
+    <path d="M12 12l8 -4.5" />
+    <path d="M12 12l0 9" />
+    <path d="M12 12l-8 -4.5" />
+    <path d="M16 5.25l-8 4.5" /></symbol><symbol id="tb-import" data-tabler="file-import" viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4" />
+    <path d="M5 13v-8a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2h-5.5m-9.5 -2h7m-3 -3l3 3l-3 3" /></symbol></defs></svg>
     <div class="toolbox rise">
       <h3 class="tbhead">Maps and the sequence <i>8</i></h3>
       <div class="tbgrid">
@@ -1182,7 +1361,7 @@ document.documentElement.dataset.theme=t;})()</script>
       <div class="tbgrid">
         <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-cut"/><use class="f" href="#tb-cut"/></svg></span><b>1,113 enzymes</b><span>REBASE, every enzyme NEB sells, two-sided cutters included.</span></div>
         <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-shop"/><use class="f" href="#tb-shop"/></svg></span><b>Supplier sets</b><span>25 companies, each off its own catalogue, with the date.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-card"/><use class="f" href="#tb-card"/></svg></span><b>Enzyme database</b><span>The cut on both strands, overhang, isoschizomers, buffer.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-database"/><use class="f" href="#tb-database"/></svg></span><b>Enzyme database</b><span>The cut on both strands, overhang, isoschizomers, buffer.</span></div>
         <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-methyl"/><use class="f" href="#tb-methyl"/></svg></span><b>Methylation</b><span>Dam, Dcm, CpG, EcoKI, EcoBI — 2,672 published experiments.</span></div>
         <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-hosts"/><use class="f" href="#tb-hosts"/></svg></span><b>Two hosts, not one</b><span>What it carries, and what it will meet.</span></div>
         <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-gel"/><use class="f" href="#tb-gel"/></svg></span><b>The gel</b><span>Your ladder and agarose. Drag the run and the bands move.</span></div>
@@ -1218,9 +1397,9 @@ document.documentElement.dataset.theme=t;})()</script>
         <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-code"/><use class="f" href="#tb-code"/></svg></span><b>Genetic codes</b><span>NCBI's tables as what each differs from the standard one.</span></div>
         <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-orf"/><use class="f" href="#tb-orf"/></svg></span><b>Gene prediction</b><span>Real Prodigal, named as a prediction and never as curation.</span></div>
         <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-annot"/><use class="f" href="#tb-annot"/></svg></span><b>Functional annotation</b><span>eggNOG, InterProScan and DefenseFinder, merged onto the genes by DNMB’s own rules.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-share"/><use class="f" href="#tb-share"/></svg></span><b>A run made anywhere comes in</b><span>DNMB’s local InterProScan TSV, a cluster’s emapper file — dragged in and joined.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-silent"/><use class="f" href="#tb-silent"/></svg></span><b>And it comes back off</b><span>A better run replaces a worse one — the columns a merge added are removed in one act.</span></div>
-        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-verdict"/><use class="f" href="#tb-verdict"/></svg></span><b>Checked against the package</b><span>60 of 60 cells identical to DNMB’s own R over a real genome, name for name.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-import"/><use class="f" href="#tb-import"/></svg></span><b>A run made anywhere comes in</b><span>DNMB’s local InterProScan TSV, a cluster’s emapper file — dragged in and joined.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-erase"/><use class="f" href="#tb-erase"/></svg></span><b>And it comes back off</b><span>A better run replaces a worse one — the columns a merge added are removed in one act.</span></div>
+        <div class="tbcard"><span class="tbico"><svg aria-hidden="true"><use class="d" href="#tb-package"/><use class="f" href="#tb-package"/></svg></span><b>Checked against the package</b><span>60 of 60 cells identical to DNMB’s own R over a real genome, name for name.</span></div>
       </div>
       <h3 class="tbhead">Files, and what leaves the machine <i>7</i></h3>
       <div class="tbgrid">
@@ -1247,7 +1426,7 @@ document.documentElement.dataset.theme=t;})()</script>
 <section class="plain" id="formats" style="--topic:var(--fwd)">
   <div class="wrap">
     <div class="plainhead">
-      <p class="num"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><path d="M9 13h6M9 16.5h4"/></svg><b>07</b>Files</p>
+      <p class="num"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#ti-files"/></svg><b>07</b>Files</p>
       <h2>It opens what your lab already has</h2>
       <p class="lede">And writes it back. Every claim here was checked against somebody else's reader — Biopython and <code>snapgene_reader</code> — over hundreds of this lab's own files, not against a fixture written by whoever wrote the test.</p>
     </div>
@@ -1302,7 +1481,7 @@ document.documentElement.dataset.theme=t;})()</script>
 <section class="plain onplate" id="compare" style="--topic:var(--blue)">
   <div class="wrap">
     <div class="plainhead">
-      <p class="num"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v16"/><path d="M4 8h5M15 8h5"/><path d="m6.5 8-2.5 5h5zM17.5 8 15 13h5z"/></svg><b>08</b>Compare</p>
+      <p class="num"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#ti-arrows-exchange"/></svg><b>08</b>Compare</p>
       <h2>Next to what people already use</h2>
       <p class="lede">Every cell below comes from that product's own public page, on the date in the note under the table. This is not a claim that the others are worse — they are older, broader and in several ways better resourced. It is a claim about <em>where the work happens</em>.</p>
     </div>
@@ -1320,15 +1499,15 @@ document.documentElement.dataset.theme=t;})()</script>
       </thead>
       <tbody>
         <tr><th scope="row">Where it runs</th><td class="cm us" data-of="Gene Studio"><span>macOS · Windows · Linux</span></td><td class="cm" data-of="SnapGene"><span>Windows · macOS · Ubuntu</span></td><td class="cm" data-of="Benchling"><span>in a browser</span></td><td class="cm" data-of="ApE"><span>macOS · Windows · Linux</span></td></tr>
-        <tr><th scope="row">Works with no network</th><td class="cm us" data-of="Gene Studio"><svg class="tick" aria-label="yes"><use href="#tb-tick"/></svg><span>the licence is checked on your own machine</span></td><td class="cm" data-of="SnapGene"><svg class="cross" aria-label="no"><use href="#tb-cross"/></svg><span>activation and licence checks need it — snapgene.com daily; a network licence lapses after 10 days offline</span></td><td class="cm" data-of="Benchling"><svg class="cross" aria-label="no"><use href="#tb-cross"/></svg><span>“You must be online to access and save data”</span></td><td class="cm" data-of="ApE"><svg class="tick" aria-label="yes"><use href="#tb-tick"/></svg><span>only the NCBI tools need one</span></td></tr>
-        <tr><th scope="row">Where your files live</th><td class="cm us" data-of="Gene Studio"><svg class="tick" aria-label="yes"><use href="#tb-tick"/></svg><span>on your machine</span></td><td class="cm" data-of="SnapGene"><svg class="tick" aria-label="yes"><use href="#tb-tick"/></svg><span>on your machine</span></td><td class="cm" data-of="Benchling"><svg class="cross" aria-label="no"><use href="#tb-cross"/></svg><span>in Benchling’s cloud</span></td><td class="cm" data-of="ApE"><svg class="tick" aria-label="yes"><use href="#tb-tick"/></svg><span>on your machine</span></td></tr>
-        <tr><th scope="row">Opens SnapGene .dna</th><td class="cm us" data-of="Gene Studio"><svg class="tick" aria-label="yes"><use href="#tb-tick"/></svg></td><td class="cm" data-of="SnapGene"><svg class="tick" aria-label="yes"><use href="#tb-tick"/></svg><span>its own format</span></td><td class="cm" data-of="Benchling"><svg class="tick" aria-label="yes"><use href="#tb-tick"/></svg></td><td class="cm" data-of="ApE"><i class="nostate">not stated</i></td></tr>
-        <tr><th scope="row">Reads and writes GenBank</th><td class="cm us" data-of="Gene Studio"><svg class="tick" aria-label="yes"><use href="#tb-tick"/></svg></td><td class="cm" data-of="SnapGene"><svg class="tick" aria-label="yes"><use href="#tb-tick"/></svg></td><td class="cm" data-of="Benchling"><svg class="tick" aria-label="yes"><use href="#tb-tick"/></svg></td><td class="cm" data-of="ApE"><svg class="tick" aria-label="yes"><use href="#tb-tick"/></svg></td></tr>
-        <tr><th scope="row">Sanger .ab1 against the construct</th><td class="cm us" data-of="Gene Studio"><svg class="tick" aria-label="yes"><use href="#tb-tick"/></svg></td><td class="cm" data-of="SnapGene"><svg class="tick" aria-label="yes"><use href="#tb-tick"/></svg></td><td class="cm" data-of="Benchling"><svg class="tick" aria-label="yes"><use href="#tb-tick"/></svg></td><td class="cm" data-of="ApE"><svg class="tick" aria-label="yes"><use href="#tb-tick"/></svg></td></tr>
-        <tr><th scope="row">Restriction digest with a simulated gel</th><td class="cm us" data-of="Gene Studio"><svg class="tick" aria-label="yes"><use href="#tb-tick"/></svg></td><td class="cm" data-of="SnapGene"><svg class="tick" aria-label="yes"><use href="#tb-tick"/></svg></td><td class="cm" data-of="Benchling"><svg class="tick" aria-label="yes"><use href="#tb-tick"/></svg></td><td class="cm" data-of="ApE"><svg class="tick" aria-label="yes"><use href="#tb-tick"/></svg></td></tr>
-        <tr><th scope="row">CRISPR guide design</th><td class="cm us" data-of="Gene Studio"><svg class="tick" aria-label="yes"><use href="#tb-tick"/></svg></td><td class="cm" data-of="SnapGene"><svg class="cross" aria-label="no"><use href="#tb-cross"/></svg><span>its own guide sends you to E-CRISP and Cas-OFFinder</span></td><td class="cm" data-of="Benchling"><svg class="tick" aria-label="yes"><use href="#tb-tick"/></svg></td><td class="cm" data-of="ApE"><i class="nostate">not stated</i></td></tr>
-        <tr><th scope="row">Gibson and Golden Gate design</th><td class="cm us" data-of="Gene Studio"><svg class="tick" aria-label="yes"><use href="#tb-tick"/></svg></td><td class="cm" data-of="SnapGene"><svg class="tick" aria-label="yes"><use href="#tb-tick"/></svg></td><td class="cm" data-of="Benchling"><svg class="tick" aria-label="yes"><use href="#tb-tick"/></svg></td><td class="cm" data-of="ApE"><svg class="tick" aria-label="yes"><use href="#tb-tick"/></svg></td></tr>
-        <tr><th scope="row">Primer design</th><td class="cm us" data-of="Gene Studio"><svg class="tick" aria-label="yes"><use href="#tb-tick"/></svg></td><td class="cm" data-of="SnapGene"><svg class="tick" aria-label="yes"><use href="#tb-tick"/></svg></td><td class="cm" data-of="Benchling"><svg class="tick" aria-label="yes"><use href="#tb-tick"/></svg></td><td class="cm" data-of="ApE"><svg class="tick" aria-label="yes"><use href="#tb-tick"/></svg></td></tr>
+        <tr><th scope="row">Works with no network</th><td class="cm us" data-of="Gene Studio"><svg class="tick" role="img" aria-label="yes"><use href="#tb-tick"/></svg><span>the licence is checked on your own machine</span></td><td class="cm" data-of="SnapGene"><svg class="cross" role="img" aria-label="no"><use href="#tb-cross"/></svg><span>activation and licence checks need it — snapgene.com daily; a network licence lapses after 10 days offline</span></td><td class="cm" data-of="Benchling"><svg class="cross" role="img" aria-label="no"><use href="#tb-cross"/></svg><span>“You must be online to access and save data”</span></td><td class="cm" data-of="ApE"><svg class="tick" role="img" aria-label="yes"><use href="#tb-tick"/></svg><span>only the NCBI tools need one</span></td></tr>
+        <tr><th scope="row">Where your files live</th><td class="cm us" data-of="Gene Studio"><svg class="tick" role="img" aria-label="yes"><use href="#tb-tick"/></svg><span>on your machine</span></td><td class="cm" data-of="SnapGene"><svg class="tick" role="img" aria-label="yes"><use href="#tb-tick"/></svg><span>on your machine</span></td><td class="cm" data-of="Benchling"><svg class="cross" role="img" aria-label="no"><use href="#tb-cross"/></svg><span>in Benchling’s cloud</span></td><td class="cm" data-of="ApE"><svg class="tick" role="img" aria-label="yes"><use href="#tb-tick"/></svg><span>on your machine</span></td></tr>
+        <tr><th scope="row">Opens SnapGene .dna</th><td class="cm us" data-of="Gene Studio"><svg class="tick" role="img" aria-label="yes"><use href="#tb-tick"/></svg></td><td class="cm" data-of="SnapGene"><svg class="tick" role="img" aria-label="yes"><use href="#tb-tick"/></svg><span>its own format</span></td><td class="cm" data-of="Benchling"><svg class="tick" role="img" aria-label="yes"><use href="#tb-tick"/></svg></td><td class="cm" data-of="ApE"><i class="nostate">not stated</i></td></tr>
+        <tr><th scope="row">Reads and writes GenBank</th><td class="cm us" data-of="Gene Studio"><svg class="tick" role="img" aria-label="yes"><use href="#tb-tick"/></svg></td><td class="cm" data-of="SnapGene"><svg class="tick" role="img" aria-label="yes"><use href="#tb-tick"/></svg></td><td class="cm" data-of="Benchling"><svg class="tick" role="img" aria-label="yes"><use href="#tb-tick"/></svg></td><td class="cm" data-of="ApE"><svg class="tick" role="img" aria-label="yes"><use href="#tb-tick"/></svg></td></tr>
+        <tr><th scope="row">Sanger .ab1 against the construct</th><td class="cm us" data-of="Gene Studio"><svg class="tick" role="img" aria-label="yes"><use href="#tb-tick"/></svg></td><td class="cm" data-of="SnapGene"><svg class="tick" role="img" aria-label="yes"><use href="#tb-tick"/></svg></td><td class="cm" data-of="Benchling"><svg class="tick" role="img" aria-label="yes"><use href="#tb-tick"/></svg></td><td class="cm" data-of="ApE"><svg class="tick" role="img" aria-label="yes"><use href="#tb-tick"/></svg></td></tr>
+        <tr><th scope="row">Restriction digest with a simulated gel</th><td class="cm us" data-of="Gene Studio"><svg class="tick" role="img" aria-label="yes"><use href="#tb-tick"/></svg></td><td class="cm" data-of="SnapGene"><svg class="tick" role="img" aria-label="yes"><use href="#tb-tick"/></svg></td><td class="cm" data-of="Benchling"><svg class="tick" role="img" aria-label="yes"><use href="#tb-tick"/></svg></td><td class="cm" data-of="ApE"><svg class="tick" role="img" aria-label="yes"><use href="#tb-tick"/></svg></td></tr>
+        <tr><th scope="row">CRISPR guide design</th><td class="cm us" data-of="Gene Studio"><svg class="tick" role="img" aria-label="yes"><use href="#tb-tick"/></svg></td><td class="cm" data-of="SnapGene"><svg class="cross" role="img" aria-label="no"><use href="#tb-cross"/></svg><span>its own guide sends you to E-CRISP and Cas-OFFinder</span></td><td class="cm" data-of="Benchling"><svg class="tick" role="img" aria-label="yes"><use href="#tb-tick"/></svg></td><td class="cm" data-of="ApE"><i class="nostate">not stated</i></td></tr>
+        <tr><th scope="row">Gibson and Golden Gate design</th><td class="cm us" data-of="Gene Studio"><svg class="tick" role="img" aria-label="yes"><use href="#tb-tick"/></svg></td><td class="cm" data-of="SnapGene"><svg class="tick" role="img" aria-label="yes"><use href="#tb-tick"/></svg></td><td class="cm" data-of="Benchling"><svg class="tick" role="img" aria-label="yes"><use href="#tb-tick"/></svg></td><td class="cm" data-of="ApE"><svg class="tick" role="img" aria-label="yes"><use href="#tb-tick"/></svg></td></tr>
+        <tr><th scope="row">Primer design</th><td class="cm us" data-of="Gene Studio"><svg class="tick" role="img" aria-label="yes"><use href="#tb-tick"/></svg></td><td class="cm" data-of="SnapGene"><svg class="tick" role="img" aria-label="yes"><use href="#tb-tick"/></svg></td><td class="cm" data-of="Benchling"><svg class="tick" role="img" aria-label="yes"><use href="#tb-tick"/></svg></td><td class="cm" data-of="ApE"><svg class="tick" role="img" aria-label="yes"><use href="#tb-tick"/></svg></td></tr>
         <tr><th scope="row">One academic seat</th><td class="cm us" data-of="Gene Studio"><span>free during the beta</span></td><td class="cm" data-of="SnapGene"><span>$350 a year · $149 student · $3,000 permanent</span></td><td class="cm" data-of="Benchling"><span>free academic plan — Notebook and Molecular Biology; Inventory and Registry are not in it</span></td><td class="cm" data-of="ApE"><span>free, donations invited</span></td></tr>
       </tbody>
     </table>
@@ -1408,7 +1587,7 @@ document.documentElement.dataset.theme=t;})()</script>
          reading is always under the thing that says what it is. -->
     <div class="qwrap">
       <div class="qhead">
-        <p class="num"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.4"/><path d="M9.7 9.6a2.4 2.4 0 1 1 2.7 3.1v1"/><path d="M12.4 16.4h.01"/></svg><b>09</b>Questions</p>
+        <p class="num"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#ti-help-circle"/></svg><b>09</b>Questions</p>
         <h2>Frequently asked</h2>
         <p class="lede">What it costs, what it sends, what it does to your files, and which machine it runs on.</p>
       </div>
@@ -1445,7 +1624,7 @@ document.documentElement.dataset.theme=t;})()</script>
 <section class="beta" id="get" style="--topic:var(--amber)">
   <div class="wrap">
     <div class="betabox">
-      <p class="num"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.2 14.6 8l5.4.8-3.9 3.8.9 5.3L12 15.4 7 17.9l.9-5.3L4 8.8 9.4 8z"/></svg><b>10</b>Beta</p>
+      <p class="num"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#ti-star"/></svg><b>10</b>Beta</p>
       <h2>Getting in during the beta</h2>
       <p style="margin-top:16px; max-width:66ch">Gene Studio is free to use and is not open source: it is given to named people for research. A licence is written for one computer and it takes a minute.</p>
       <ol class="steps">
@@ -1487,7 +1666,7 @@ document.documentElement.dataset.theme=t;})()</script>
     <div class="ccards rise">
       <div class="ccard">
         <span class="ctile" style="--tile:var(--fwd)">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6"/><path d="M9.7 9.5a2.4 2.4 0 1 1 2.7 3.2v1"/><path d="M12.4 16.5h.01"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ti-help-circle"/></svg>
         </span>
         <h3>Something not working?</h3>
         <p>A crash, a file it would not open, a reading you think is wrong. Send the report the app writes for you — it carries the version, the platform and what it was doing — and the file if you can share it.</p>
@@ -1495,7 +1674,7 @@ document.documentElement.dataset.theme=t;})()</script>
       </div>
       <div class="ccard">
         <span class="ctile" style="--tile:var(--amber)">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="9.5" r="3.4"/><path d="M3.5 19c.7-3.6 2.9-5.4 5.5-5.4S13.8 15.4 14.5 19"/><circle cx="17" cy="8.4" r="2.7"/><path d="M16 13.8c2.3.3 3.8 2 4.4 5.2"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ti-users-group"/></svg>
         </span>
         <h3>A licence for your lab</h3>
         <p>A seat is written for one computer and takes a minute. Say who you are and where you work; if a whole group needs them, say how many and they come back together.</p>
