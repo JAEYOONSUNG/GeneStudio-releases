@@ -25,7 +25,13 @@ document.documentElement.dataset.theme=t;})()</script>
 <meta property="og:type" content="website">
 <meta property="og:image" content="shot/map.png">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%231B7FE0' stroke-width='2.5'/%3E%3Ccircle cx='16' cy='5' r='3' fill='%234FB79E'/%3E%3C/svg%3E">
+<!-- **The favicon is the application's own icon, not a second drawing of it.**
+     The macOS and Windows icon is this render (`build/ring.png` -> `build/icon.png`),
+     so a page whose tab carries a different mark looks like a different product.
+     32 is the floor: a 3-D render at 16 px is mush. -->
+<link rel="icon" type="image/png" sizes="32x32" href="asset/ring-32.png">
+<link rel="icon" type="image/png" sizes="180x180" href="asset/ring-180.png">
+<link rel="apple-touch-icon" href="asset/ring-180.png">
 <!-- **One stylesheet, two pages.** The guide is the same application
      described at length, so it has to be the same page: the tokens, the type
      scale, the capsule, the buttons, the frames, the pills and the whole light
@@ -48,17 +54,15 @@ document.documentElement.dataset.theme=t;})()</script>
 <link rel="preload" href="font/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="font/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="font/fonts.css?v=20260828">
-<link rel="stylesheet" href="base.css?v=20260828b">
+<link rel="stylesheet" href="base.css?v=20260828c">
 </head>
 <body>
 
 <header class="rail">
   <div class="wrap">
     <a class="brand" href="#top">
-      <svg width="20" height="20" viewBox="0 0 32 32" aria-hidden="true">
-        <circle cx="16" cy="16" r="11" fill="none" stroke="#1B7FE0" stroke-width="2.6"/>
-        <circle cx="16" cy="5" r="3.1" fill="#4FB79E"/>
-      </svg>
+      <img class="mark" src="asset/ring-128.png" width="128" height="128"
+           alt="" decoding="async">
       Gene Studio <span class="tag">BETA</span>
     </a>
     <nav>
@@ -170,7 +174,7 @@ document.documentElement.dataset.theme=t;})()</script>
       </div>
       <figcaption>The map — every cut named in the margin, features on the strand they are on. Zoom is the same slider you drag.</figcaption>
     </figure>
-    <figure class="rise">
+    <figure class="rise settle">
       <div class="frame">
         <video class="wide" data-clip="clip/measure.mp4" data-poster="clip/measure.webp" width="1200" height="750"
                muted loop playsinline preload="none"
@@ -221,13 +225,43 @@ document.documentElement.dataset.theme=t;})()</script>
   <div class="wrap">
     <p class="eyebrow chapter-eyebrow">The workbench</p>
     <h2 id="chapter-title">Gene Studio isn’t only for drawing<br>a plasmid. It’s for everything after.</h2>
-    <ul class="verbs">
-      <li><a href="#formats"><span class="vb"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><path d="M9 13h6M9 16.5h4"/></svg></span>Open</a></li>
-      <li><a href="#sequence"><span class="vb"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16M4 16h16M9 8v8M15 8v8"/></svg></span>Read</a></li>
-      <li><a href="#digest"><span class="vb"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4l12 12M18 4 6 16"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/></svg></span>Cut</a></li>
-      <li><a href="#design"><span class="vb"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8c5-4 13 4 18 0M3 16c5-4 13 4 18 0"/></svg></span>Design</a></li>
-      <li><a href="#sanger"><span class="vb"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17c2.4 0 2.4-10 4.8-10s2.4 10 4.8 10 2.4-12 4.8-12S21 17 21 17"/></svg></span>Check</a></li>
-      <li><a href="#formats"><span class="vb"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="6" r="2.4"/><circle cx="6" cy="12" r="2.4"/><circle cx="18" cy="18" r="2.4"/><path d="m8.2 10.8 7.6-3.6M8.2 13.2l7.6 3.6"/></svg></span>Share</a></li>
+    <!-- **A living glyph, not an icon with a wiggle.** Each is what that verb
+         does to DNA, and each is drawn in two parts: `g-still` is the subject
+         and is always there, `g-live` is the part that moves. With the motion
+         off — reduced motion, or the chapter off screen — what is left is a
+         complete drawing rather than half of one. The pattern is CommonNote's
+         `living-glyphs.js`; the vocabulary is this application's. -->
+    <ul class="verbs" data-glyphs>
+      <li><a href="#formats"><span class="vb">
+        <svg viewBox="0 0 32 32" aria-hidden="true">
+          <g class="g-still"><path d="M7 4.5h11l7 7v16H7z"/><path d="M18 4.5v7h7"/></g>
+          <g class="g-live g-open"><circle cx="16" cy="19.5" r="5.2"/><circle class="g-dot" cx="16" cy="14.3" r="1.7"/></g>
+        </svg></span>Open</a></li>
+      <li><a href="#sequence"><span class="vb">
+        <svg viewBox="0 0 32 32" aria-hidden="true">
+          <g class="g-still"><path d="M3 11h26M3 21h26"/><path d="M9 11v10M16 11v10M23 11v10"/></g>
+          <g class="g-live g-read"><rect class="g-win" x="4" y="8.4" width="7" height="15.2" rx="2.2"/></g>
+        </svg></span>Read</a></li>
+      <li><a href="#digest"><span class="vb">
+        <svg viewBox="0 0 32 32" aria-hidden="true">
+          <g class="g-still"><path class="g-lhs" d="M3 16h11"/><path class="g-rhs" d="M18 16h11"/></g>
+          <g class="g-live g-cut"><path class="g-b1" d="M9 6.5 20 16"/><path class="g-b2" d="M9 25.5 20 16"/><circle cx="7.4" cy="5.2" r="2.1"/><circle cx="7.4" cy="26.8" r="2.1"/></g>
+        </svg></span>Cut</a></li>
+      <li><a href="#design"><span class="vb">
+        <svg viewBox="0 0 32 32" aria-hidden="true">
+          <g class="g-still"><path d="M3 21.5h26"/><path d="M5 21.5v-2M9 21.5v-2M13 21.5v-2M17 21.5v-2M21 21.5v-2M25 21.5v-2"/></g>
+          <g class="g-live g-design"><path class="g-grow" d="M4 11.5h17"/><path class="g-head" d="m19 8.2 3.6 3.3-3.6 3.3"/></g>
+        </svg></span>Design</a></li>
+      <li><a href="#sanger"><span class="vb">
+        <svg viewBox="0 0 32 32" aria-hidden="true">
+          <g class="g-still"><path d="M3 26h26"/></g>
+          <g class="g-live g-check"><path class="g-trace" d="M3 24c3.4 0 3.4-13 6.8-13s3.4 13 6.8 13 3.4-16 6.8-16S29 24 29 24"/></g>
+        </svg></span>Check</a></li>
+      <li><a href="#formats"><span class="vb">
+        <svg viewBox="0 0 32 32" aria-hidden="true">
+          <g class="g-still"><circle cx="24" cy="7.5" r="3"/><circle cx="8" cy="16" r="3"/><circle cx="24" cy="24.5" r="3"/></g>
+          <g class="g-live g-share"><path class="g-l1" d="m10.7 14.6 10.6-5.6"/><path class="g-l2" d="m10.7 17.4 10.6 5.6"/></g>
+        </svg></span>Share</a></li>
     </ul>
   </div>
 </section>
@@ -263,7 +297,7 @@ document.documentElement.dataset.theme=t;})()</script>
           <p><span>Saved as the format it arrived in, byte-identical on the second save — or out as vector, with every label still editable in Illustrator.</span></p>
         </li>
       </ol>
-      <figure class="flowshot">
+      <figure class="flowshot settle">
         <div class="frame">
           <div class="bar"><i></i><i></i><i></i><span data-flow-name>pDEMO-T7 · 2,950 bp · circular</span></div>
           <!-- **A step is a pair of clips, not a clip.** Every other figure on
@@ -320,7 +354,7 @@ document.documentElement.dataset.theme=t;})()</script>
         <li><em>Find</em> reads IUPAC and regular expressions, and marks every hit on all three drawings.</li>
       </ul>
     </div>
-    <figure class="rise">
+    <figure class="rise settle">
       <div class="frame">
         <video class="wide" data-clip="clip/drag.mp4" data-poster="clip/drag.webp" width="1200" height="750"
                muted loop playsinline preload="none"
@@ -330,7 +364,7 @@ document.documentElement.dataset.theme=t;})()</script>
       </div>
       <figcaption>Dragging across the His6 tag. Nothing was pressed first — the figures are what a selection says about itself.</figcaption>
     </figure>
-    <figure class="rise">
+    <figure class="rise settle">
       <div class="frame">
         <video class="wide" data-clip="clip/find.mp4" data-poster="clip/find.webp" width="1200" height="750"
                muted loop playsinline preload="none"
@@ -340,7 +374,7 @@ document.documentElement.dataset.theme=t;})()</script>
       </div>
       <figcaption>And a motif being typed into ⌘F, every match lighting up as the query grows.</figcaption>
     </figure>
-    <figure class="rise">
+    <figure class="rise settle">
       <div class="frame">
         <video class="wide" data-clip="clip/primer.mp4" data-poster="clip/primer.webp" width="1200" height="750"
                muted loop playsinline preload="none"
@@ -368,7 +402,7 @@ document.documentElement.dataset.theme=t;})()</script>
         <li><em>The run is a slider</em> — above, the same digest at 12 % of its run and at the end of it.</li>
       </ul>
     </div>
-    <figure class="rise tight">
+    <figure class="rise settle tight">
       <div class="frame">
         <!-- the gel is cropped to the plate and its ladder, so it is 448 px wide
              and is not stretched to the column: blown up it is a blurrier gel,
@@ -383,7 +417,7 @@ document.documentElement.dataset.theme=t;})()</script>
       </div>
           <figcaption>The gel running — the ladder, the agarose and the buffer are yours to set.</figcaption>
     </figure>
-    <figure class="rise">
+    <figure class="rise settle">
       <div class="frame">
         <video class="wide" data-clip="clip/enzdb.mp4" data-poster="clip/enzdb.webp" width="1200" height="750"
                muted loop playsinline preload="none"
@@ -393,7 +427,7 @@ document.documentElement.dataset.theme=t;})()</script>
       </div>
       <figcaption>A card per enzyme — the cut on both strands, the overhang, who sells it, and what one digest costs from the catalogue it was read off.</figcaption>
     </figure>
-    <figure class="rise">
+    <figure class="rise settle">
       <div class="frame">
         <video class="wide" data-clip="clip/methyl.mp4" data-poster="clip/methyl.webp" width="1200" height="750"
                muted loop playsinline preload="none"
@@ -403,7 +437,7 @@ document.documentElement.dataset.theme=t;})()</script>
       </div>
       <figcaption>And what the host did to it — a row per system, how many sites of <em>this</em> construct carry the mark, and which enzymes in hand it stops.</figcaption>
     </figure>
-    <figure class="rise">
+    <figure class="rise settle">
       <div class="frame">
         <video class="wide" data-clip="clip/fold.mp4" data-poster="clip/fold.webp" width="1108" height="824"
                muted loop playsinline preload="none"
@@ -430,7 +464,7 @@ document.documentElement.dataset.theme=t;})()</script>
         <li><em>A .dna carrying aligned traces</em> brings them in — SnapGene keeps them inside the file, and they are read.</li>
       </ul>
     </div>
-    <figure class="rise">
+    <figure class="rise settle">
       <div class="frame">
         <video class="wide" data-clip="clip/sanger.mp4" data-poster="clip/sanger.webp" width="1200" height="750"
                muted loop playsinline preload="none"
@@ -457,7 +491,7 @@ document.documentElement.dataset.theme=t;})()</script>
         <li><em>The product opens as its own tab</em> — original, the exact replacement, and the transformed vector, one under the other.</li>
       </ul>
     </div>
-    <figure class="rise">
+    <figure class="rise settle">
       <div class="frame">
         <video class="wide" data-clip="clip/guides.mp4" data-poster="clip/guides.webp" width="1200" height="750"
                muted loop playsinline preload="none"
@@ -484,7 +518,7 @@ document.documentElement.dataset.theme=t;})()</script>
         <li><em>Terminators, RBS and rare codons</em> for every gene at once — the 3′ ends of a whole genome in under a second.</li>
       </ul>
     </div>
-    <figure class="rise">
+    <figure class="rise settle">
       <div class="frame">
         <picture>
           <source media="(max-width:760px)" srcset="shot/lin-phone.webp">
@@ -706,7 +740,7 @@ document.documentElement.dataset.theme=t;})()</script>
       <p class="lede">Every figure below came off this machine, on real files, against somebody else’s reader wherever one exists.</p>
     </div>
   </div>
-  <div class="wall rise" data-wall>
+  <div class="wall rise" data-wall data-drift>
     <div class="wallcols">
       <div class="wallcol">
         <blockquote><p><b>400 / 400</b> real GenBank files opened, written back and read again with every header field intact — accession, version, keywords, definition, source, organism, lineage, DBLINK, every reference and every structured block.</p><cite>tests/genbank-roundtrip.mjs</cite></blockquote>
@@ -858,10 +892,8 @@ document.documentElement.dataset.theme=t;})()</script>
   <div class="wrap foot">
     <div class="footbrand">
       <a class="brand" href="#top">
-        <svg width="22" height="22" viewBox="0 0 32 32" aria-hidden="true">
-          <circle cx="16" cy="16" r="11" fill="none" stroke="#1B7FE0" stroke-width="2.6"/>
-          <circle cx="16" cy="5" r="3.1" fill="#4FB79E"/>
-        </svg>
+        <img class="mark" src="asset/ring-128.png" width="128" height="128"
+           alt="" decoding="async">
         Gene Studio
       </a>
       <p>A plasmid workbench that opens what your lab already has — GenBank, SnapGene <code>.dna</code>, FASTA and Sanger traces — and writes them back without losing what was in them.</p>
@@ -1082,11 +1114,15 @@ if('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion:redu
   const io = new IntersectionObserver(es => {
     for(const e of es) if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
   }, {rootMargin:'0px 0px -8% 0px'});
-  for(const el of document.querySelectorAll('.rise')) io.observe(el);
+  /* **`.settle` is revealed by the same observer, and it is not always a
+     `.rise`.** The rail's figure carries `.settle` alone — its parent grid is
+     the `.rise` — so a selector of `.rise` only would leave it at `opacity:0`
+     for ever, which is a blank card where the product is. */
+  for(const el of document.querySelectorAll('.rise, .settle')) io.observe(el);
   /* and a belt: anything still unrevealed a moment after load is shown anyway,
      since a picture nobody can see is worse than one that did not slide in */
   addEventListener('load', () => setTimeout(() => {
-    for(const el of document.querySelectorAll('.rise:not(.in)')){
+    for(const el of document.querySelectorAll('.rise:not(.in), .settle:not(.in)')){
       const r = el.getBoundingClientRect();
       if(r.top < innerHeight) el.classList.add('in');
     }
@@ -1178,6 +1214,56 @@ if('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion:redu
         }
       }, {threshold:.35}).observe(flow);
     }
+  }
+}
+
+/* ── what may move, and only while it is on screen ─────────────────────────
+   One observer arms the wall's drift and the glyphs' animations when their
+   section is reached and disarms them when it leaves, which is what keeps a
+   page in a background tab from running six animations for nobody. The class
+   is the whole switch — every keyframe in the stylesheet is keyed on it — so
+   nothing here knows what any of the animations are.
+
+   **A reader who has asked for less motion is never armed at all.** The
+   stylesheet stops them anyway, and this stops them being started. */
+if('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion:reduce)').matches){
+  /* the wall's track is the column's own contents twice: -50 % then lands the
+     copy exactly where the original started, and the loop has no seam. The
+     copy is made here rather than written twice in the markup — a duplicated
+     list is two things for a screen reader to read and one to forget to keep
+     in step — and each column is given a length of its own, or four columns
+     drifting at one speed read as a single sliding block. */
+  for(const wall of document.querySelectorAll('[data-drift]')){
+    const cols = [...wall.querySelectorAll('.wallcol')];
+    cols.forEach((col, i) => {
+      const track = document.createElement('div');
+      track.className = 'walltrack';
+      while(col.firstChild) track.append(col.firstChild);
+      /* **The second half is hidden from a reader, card by card.** Cloning the
+         track and moving its children in loses the `aria-hidden` that was on
+         the wrapper — and then every claim on this wall is read out twice,
+         which is worse than not having the motion. Each clone carries its own,
+         and both halves live in the one track so the -50 % is exact whatever
+         the cards happen to measure. */
+      for(const card of [...track.children]){
+        const copy = card.cloneNode(true);
+        copy.setAttribute('aria-hidden', 'true');
+        track.append(copy);
+      }
+      col.append(track);
+      track.style.setProperty('--dur', (58 + i * 9) + 's');
+    });
+    /* the wall is taller than the screen, so a threshold is the wrong test:
+       it is on screen when any of it is */
+    new IntersectionObserver(es => {
+      for(const e of es) wall.classList.toggle('on', e.isIntersecting);
+    }, {rootMargin:'80px'}).observe(wall);
+  }
+
+  for(const list of document.querySelectorAll('[data-glyphs]')){
+    new IntersectionObserver(es => {
+      for(const e of es) list.classList.toggle('on', e.isIntersecting);
+    }, {rootMargin:'80px'}).observe(list);
   }
 }
 

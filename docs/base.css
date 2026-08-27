@@ -130,6 +130,15 @@ header.rail{
   box-shadow:0 12px 34px rgba(0,0,0,.42);}
 .brand{display:flex; align-items:center; gap:9px; font-weight:650; color:var(--ink); text-decoration:none; letter-spacing:-.01em}
 .brand svg{flex:none}
+/* **The mark is the application's own icon, drawn at the size it is read.**
+   It replaced a two-circle SVG, and the swap is not free: a 3-D render is a
+   photograph of an object, so it needs a couple more pixels than a line
+   drawing did to stop being a smudge — 22 in the rail against the old 20 — and
+   it is served from one 512 px file for every place it appears, which the
+   browser downsamples. `image-rendering` is left alone deliberately: the smooth
+   default is what makes a 512 → 22 reduction clean. */
+.brand .mark{flex:none; width:22px; height:22px; display:block}
+.footbrand .mark{width:26px; height:26px}
 .brand .tag{font:500 10px/1 var(--mono); color:var(--faint); letter-spacing:.14em; padding-top:2px}
 .rail nav{margin-left:14px; display:flex; align-items:center; gap:2px}
 .rail nav a{font-size:14px; color:var(--slate); text-decoration:none; padding:8px 12px; border-radius:999px; white-space:nowrap}
@@ -338,14 +347,17 @@ h1{font-size:clamp(34px,5.1vw,58px); font-weight:500; letter-spacing:-.025em;
 /* the window follows the promise rather than sitting a screen below it */
 .hero .shot{position:relative; z-index:1; margin-top:clamp(26px,3.4vw,46px);
   padding-bottom:clamp(40px,6vw,86px)}
+/* The hero's own is the same shadow with more of it, for the same reason the
+   frame's changed: the block it lifts is a near-white window on a white field,
+   so the layers are neutral and pulled in rather than the black halo a dark
+   screenshot needed. */
 .hero .shot .frame{
   border-radius:clamp(16px,1.8vw,26px);
   box-shadow:
-    0 0 0 1px rgba(255,255,255,.11),
-    0 2px 4px rgba(0,0,0,.5),
-    0 30px 60px rgba(0,0,0,.45),
-    0 80px 170px rgba(0,0,0,.55),
-    0 1px 0 rgba(255,255,255,.08) inset;
+    0 0 0 1px rgba(17,24,25,.10),
+    0 2px 4px rgba(17,24,25,.05),
+    0 30px 60px -24px rgba(17,24,25,.22),
+    0 80px 170px -80px rgba(17,24,25,.35);
 }
 figure{margin:0}
 /* **A window on a field, not a bordered box on a page.** A hairline rectangle
@@ -354,17 +366,27 @@ figure{margin:0}
    becomes an inner ring that catches the light rather than a line drawn round
    the outside, and the shadow is three layers: a contact edge, a lift, and a
    wide ambient that puts the block *in* the field rather than on top of it. */
+/* **The chrome belongs to the picture, not to the page.** This was a dark
+   title bar in both themes, and the note beside it said why: the clips were the
+   application in *its* dark theme, so a light frame round them would have been
+   the loudest seam in the figure. The figures are now taken in the app's light
+   theme with the site's own accent — `tools/clip.mjs --theme light --accent` —
+   so the same reasoning gives the opposite answer, and a dark bar over a white
+   window is that seam the other way round. The tokens are declared **on the
+   frame** rather than per page theme, because what decides them is the
+   screenshot, which is the same picture whichever theme the page is read in. */
 .frame{
+  --ground:#F2F4F5; --sunk:#FFFFFF; --hair:#E3E7E8; --line:#CBD3D4;
+  --ink:#111819; --faint:#5A6D71;
   border:0; border-radius:16px; overflow:hidden; background:var(--sunk);
   box-shadow:
-    0 0 0 1px rgba(255,255,255,.09),
-    0 1px 2px rgba(0,0,0,.5),
-    0 18px 40px rgba(0,0,0,.42),
-    0 54px 120px rgba(0,0,0,.5),
-    0 1px 0 rgba(255,255,255,.06) inset;
+    0 0 0 1px rgba(17,24,25,.10),
+    0 1px 2px rgba(17,24,25,.06),
+    0 18px 40px -18px rgba(17,24,25,.22),
+    0 54px 120px -60px rgba(17,24,25,.30);
 }
 .frame .bar{display:flex; align-items:center; gap:7px; padding:11px 15px;
-  border-bottom:1px solid rgba(255,255,255,.06); background:var(--ground)}
+  border-bottom:1px solid var(--hair); background:var(--ground)}
 .frame .bar i{width:10px; height:10px; border-radius:50%; background:var(--line); display:block}
 .frame .bar span{margin-left:8px; font:400 11.5px/1 var(--mono); color:var(--faint); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
 figcaption{margin:14px 2px 0; font:400 13px/1.5 var(--mono); color:var(--faint)}
@@ -967,36 +989,15 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--p
 :root[data-theme="light"] .cmp .us{--amber:#0956A8}
 :root[data-theme="light"] .btn.primary:hover{ background:#0956A8 }
 :root[data-theme="light"] .tbico{ background:rgba(15,125,104,.10) }
-.brand svg circle:first-of-type{ stroke:var(--amber) }
-.brand svg circle + circle{ fill:var(--fwd) }
 
-/* **The clips are the application, and the application is dark.** A dark
-   rectangle on a white page is a hole unless something says it is meant to
-   be one — so the frame keeps the program's own chrome, its title bar and
-   its hairlines, and reads as a window onto it rather than as a picture that
-   failed to load. Lightening the chrome only makes the seam the loudest
-   thing in the figure, and inverting the media is a lie about the product.
-   What changes is how the block is lifted off a page that is now lighter
-   than it is: the dark drop shadow is invisible on white, so it becomes a
-   neutral one with a hairline ring to give the block an edge. Redeclaring
-   the four surface tokens *on the frame itself* re-darkens everything inside
-   it — the bar, its dots, the filename, the video's letterbox — with no new
-   selectors, because all of it was token-driven already. */
 :root[data-theme="light"] .frame{
-  --ground:#131B1D; --sunk:#0A1012; --hair:#1D272A; --line:#263235;
-  --ink:#EAF0EE; --faint:#7E9093;
-  border-color:#0A1012;
-  /* **The reference's workhorse shadow is almost nothing**, and that is the
-     point: `0 8px 19.1px -7px rgba(0,0,0,.06)` on sixteen of its elements — one
-     layer with a *negative spread*, so it is a soft contact under the block
-     rather than a halo round it. Ours is stronger, because the block it lifts
-     is near-black on a white page, but it is that shape: one soft layer pulled
-     in, plus the hairline that gives a dark block an edge. The three heavy
-     layers that were here were doing the work the scene card now does. */
+  /* the dark-picture re-darkening that used to live here is gone with the dark
+     clips; what the light page still owes the block is a slightly firmer edge,
+     since a near-white window on a white page has none of its own */
   box-shadow:
-    0 0 0 1px rgba(13,19,21,.09),
-    0 8px 19px -7px rgba(13,19,21,.20),
-    0 26px 48px -22px rgba(13,19,21,.26);
+    0 0 0 1px rgba(17,24,25,.12),
+    0 8px 19px -7px rgba(17,24,25,.14),
+    0 26px 48px -22px rgba(17,24,25,.20);
 }
 
 /* ════════════════════════════════════════════════════════════════════════════
@@ -1340,7 +1341,13 @@ section.plain.onplate .gridlines > div{background:var(--plate)}
   transform:translateY(-70%) rotate(45deg); transition:transform .22s ease;
 }
 .qs details[open] summary::after{content:''; transform:translateY(-30%) rotate(225deg)}
-.qs details p{margin:0; padding:0 26px 22px; font-size:15.5px; max-width:66ch}
+/* **An answer is prose, and prose is `--body`.** These carried `--slate`, the
+   token for a *label beside* something — measured on the row's own dark ground
+   the answers read **4.20** against the 4.5 they need, and the `<code>` inside
+   them inherited it. It is not only a contrast repair: the question is the
+   quiet thing here and the answer is what somebody came to read, so the two
+   were the wrong way round. */
+.qs details p{margin:0; padding:0 26px 22px; font-size:15.5px; max-width:66ch; color:var(--body)}
 /* it opens rather than appearing: a row that changes height with no motion
    reads as the page having jumped */
 @media (prefers-reduced-motion:no-preference){
@@ -1570,4 +1577,116 @@ footer, :root[data-theme="light"] footer{
   --paper:#0D1315; --ground:#131B1D; --plate:#0D1315;
   --ink:#EAF0EE; --body:#C6D2D0; --slate:#8A9B9D; --faint:#75888B;
   --line:#263235; --hair:#1D272A; --amber:#5EB1FF;
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   The motion
+   ────────────────────────────────────────────────────────────────────────────
+   Four things move on this page, and the rules they share are the point:
+
+   1. **Nothing moves that is being read.** The wall drifts because nobody reads
+      a wall of claims top to bottom; the prose beside it does not move at all,
+      and a figure settles *once* and then stays.
+   2. **Nothing animates off screen.** Each of these is armed by an observer
+      when its section is reached and disarmed when it leaves — a page running
+      six animations in a background tab is a battery cost for nobody.
+   3. **Reduced motion stops them in a readable state**, which is not the same
+      as stopping them: a wall paused mid-drift is fine, a figure frozen at
+      `scale(.94)` and half transparent is a bug wearing an accessibility flag.
+   ════════════════════════════════════════════════════════════════════════════ */
+
+/* ── a figure rises as it is reached ───────────────────────────────────────
+   The reference's product shots are not simply *there* when you arrive at
+   them — they lift the last few pixels and settle. It is one transition on one
+   class, so a figure that is never reached costs nothing, and `will-change` is
+   deliberately absent: fourteen promoted layers on one page is a memory cost
+   for an animation that runs once each. */
+/* **Hidden only where something is certain to reveal it.** `.rise` above is
+   guarded on `html.js` — the class the reveal script itself adds — for exactly
+   this reason: a page whose script never ran, or ran and threw, must be a page
+   with everything on it rather than a page of invisible figures. An unguarded
+   `.settle{opacity:0}` is that failure, and it is silent. */
+html.js .settle{
+  opacity:0; transform:translateY(26px) scale(.985);
+  transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1);
+}
+html.js .settle.in{opacity:1; transform:none}
+/* `html.js .rise` is two classes and `.settle` one, so on a figure carrying
+   both the older rule would win and the figure would arrive with the shorter
+   travel and the wrong curve — stated at three classes so the pair reads as
+   one motion rather than two fighting over the same property. */
+html.js .rise.settle{
+  transform:translateY(26px) scale(.985);
+  transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1);
+}
+html.js .rise.settle.in{transform:none}
+
+/* ── the wall drifts ───────────────────────────────────────────────────────
+   Alternate columns run the other way, which is what stops four columns
+   drifting in lockstep reading as one sliding block. The track is the column's
+   contents twice over — cloned in script, `aria-hidden` — so -50 % lands the
+   copy exactly where the original started and the loop has no seam. */
+.wallcol{overflow:hidden}
+.wall[data-drift] .wallcol{max-height:none}
+.walltrack{display:grid; gap:14px}
+.wall[data-drift].on .walltrack{animation:drift var(--dur,64s) linear infinite}
+.wall[data-drift].on .wallcol:nth-child(even) .walltrack{animation-direction:reverse}
+/* a wall that keeps moving while somebody is reading one of its cards is a
+   wall nobody can read */
+.wall[data-drift]:hover .walltrack{animation-play-state:paused}
+@keyframes drift{ from{transform:translateY(0)} to{transform:translateY(-50%)} }
+
+/* ── the living glyphs ─────────────────────────────────────────────────────
+   `g-still` draws the subject and never moves; `g-live` is the part that does.
+   Everything is keyed on `.on`, which an observer puts on the list, so the
+   glyphs are drawn — complete — before they are ever animated. */
+.vb svg{width:30px; height:30px; fill:none; stroke:currentColor; stroke-width:1.7;
+  stroke-linecap:round; stroke-linejoin:round; color:var(--faint);
+  transition:color .18s ease}
+.verbs a:hover .vb svg{color:var(--amber)}
+.g-live{stroke:var(--amber); opacity:.9}
+.verbs a:hover .g-live{opacity:1}
+
+/* Open — the ring inside the file turns over */
+.verbs.on .g-open{transform-origin:16px 19.5px; animation:gOpen 3.6s ease-in-out infinite}
+@keyframes gOpen{
+  0%,64%{transform:rotate(0)} 82%{transform:rotate(180deg)} 100%{transform:rotate(360deg)}
+}
+/* Read — a window travels along the two strands */
+.verbs.on .g-win{animation:gRead 3.6s cubic-bezier(.5,0,.5,1) infinite}
+@keyframes gRead{ 0%,8%{transform:translateX(0)} 50%{transform:translateX(17px)} 92%,100%{transform:translateX(0)} }
+/* Cut — the blades close and the two ends part */
+.verbs.on .g-b1{transform-origin:7.4px 5.2px; animation:gB1 3.2s ease-in-out infinite}
+.verbs.on .g-b2{transform-origin:7.4px 26.8px; animation:gB2 3.2s ease-in-out infinite}
+.verbs.on .g-lhs{animation:gLhs 3.2s ease-in-out infinite}
+.verbs.on .g-rhs{animation:gRhs 3.2s ease-in-out infinite}
+@keyframes gB1{ 0%,30%{transform:rotate(0)} 46%,62%{transform:rotate(14deg)} 100%{transform:rotate(0)} }
+@keyframes gB2{ 0%,30%{transform:rotate(0)} 46%,62%{transform:rotate(-14deg)} 100%{transform:rotate(0)} }
+@keyframes gLhs{ 0%,50%{transform:translateX(0)} 70%,86%{transform:translateX(-2.6px)} 100%{transform:translateX(0)} }
+@keyframes gRhs{ 0%,50%{transform:translateX(0)} 70%,86%{transform:translateX(2.6px)} 100%{transform:translateX(0)} }
+/* Design — an oligo grows 5′→3′ along the template */
+.verbs.on .g-grow{stroke-dasharray:17 17; animation:gGrow 3.4s cubic-bezier(.4,0,.3,1) infinite}
+.verbs.on .g-head{animation:gHead 3.4s cubic-bezier(.4,0,.3,1) infinite}
+@keyframes gGrow{ 0%{stroke-dashoffset:17} 55%,88%{stroke-dashoffset:0} 100%{stroke-dashoffset:17} }
+@keyframes gHead{ 0%{transform:translateX(-15px); opacity:0} 18%{opacity:1}
+  55%,88%{transform:translateX(0); opacity:1} 100%{transform:translateX(-15px); opacity:0} }
+/* Check — the trace draws itself, peak by peak */
+.verbs.on .g-trace{stroke-dasharray:46 46; animation:gTrace 3.8s ease-in-out infinite}
+@keyframes gTrace{ 0%{stroke-dashoffset:46} 52%,86%{stroke-dashoffset:0} 100%{stroke-dashoffset:46} }
+/* Share — the link lights from the middle outward */
+.verbs.on .g-l1{stroke-dasharray:12 12; animation:gLink 3.2s ease-in-out infinite}
+.verbs.on .g-l2{stroke-dasharray:12 12; animation:gLink 3.2s ease-in-out infinite .26s}
+@keyframes gLink{ 0%{stroke-dashoffset:12} 46%,84%{stroke-dashoffset:0} 100%{stroke-dashoffset:12} }
+
+/* ── and every one of them stops ───────────────────────────────────────────
+   **Stopped in a readable state**, which is the part that is easy to get
+   wrong: `animation:none` on a glyph whose line is `stroke-dashoffset:12` is a
+   glyph with no line in it, so the dash is cleared too, and a figure that is
+   held at `translateY(26px)` is put back rather than left mid-arrival. */
+@media (prefers-reduced-motion:reduce){
+  html.js .settle, html.js .rise.settle{opacity:1 !important; transform:none !important; transition:none}
+  .wall[data-drift].on .walltrack,
+  .wall[data-drift].on .wallcol:nth-child(even) .walltrack{animation:none}
+  .verbs.on [class*="g-"]{animation:none !important; stroke-dashoffset:0 !important;
+    stroke-dasharray:none !important; transform:none !important; opacity:1}
 }

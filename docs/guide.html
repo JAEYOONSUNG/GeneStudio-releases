@@ -15,7 +15,13 @@ document.documentElement.dataset.theme=t;})()</script>
 <meta property="og:title" content="Gene Studio — the manual">
 <meta property="og:description" content="Every part of the workbench, with worked examples.">
 <meta property="og:type" content="article">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%231B7FE0' stroke-width='2.6'/%3E%3Ccircle cx='16' cy='5' r='3.1' fill='%234FB79E'/%3E%3C/svg%3E">
+<!-- **The favicon is the application's own icon, not a second drawing of it.**
+     The macOS and Windows icon is this render (`build/ring.png` -> `build/icon.png`),
+     so a page whose tab carries a different mark looks like a different product.
+     32 is the floor: a 3-D render at 16 px is mush. -->
+<link rel="icon" type="image/png" sizes="32x32" href="asset/ring-32.png">
+<link rel="icon" type="image/png" sizes="180x180" href="asset/ring-180.png">
+<link rel="apple-touch-icon" href="asset/ring-180.png">
 <!-- **The same face, or the two pages are two products.** `base.css` names
      Inter and Inter Tight and this page carries all of its type; without the
      link here the manual falls back to whatever the system answers with while
@@ -24,7 +30,7 @@ document.documentElement.dataset.theme=t;})()</script>
      landing page gives beside its own copy of these two lines. -->
 <link rel="preload" href="font/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="font/fonts.css?v=20260828">
-<link rel="stylesheet" href="base.css?v=20260828b">
+<link rel="stylesheet" href="base.css?v=20260828c">
 <link rel="stylesheet" href="guide.css">
 </head>
 <body>
@@ -32,10 +38,8 @@ document.documentElement.dataset.theme=t;})()</script>
 <header class="rail">
   <div class="wrap">
     <a class="brand" href="index.html">
-      <svg width="20" height="20" viewBox="0 0 32 32" aria-hidden="true">
-        <circle cx="16" cy="16" r="11" fill="none" stroke="#1B7FE0" stroke-width="2.6"/>
-        <circle cx="16" cy="5" r="3.1" fill="#4FB79E"/>
-      </svg>
+      <img class="mark" src="asset/ring-128.png" width="128" height="128"
+           alt="" decoding="async">
       Gene Studio <span class="tag">BETA</span>
     </a>
     <nav>
