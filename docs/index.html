@@ -54,7 +54,7 @@ document.documentElement.dataset.theme=t;})()</script>
 <link rel="preload" href="font/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="font/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="font/fonts.css?v=20260828">
-<link rel="stylesheet" href="base.css?v=20260828z">
+<link rel="stylesheet" href="base.css?v=20260828aa">
 </head>
 <body>
 
@@ -335,7 +335,7 @@ document.documentElement.dataset.theme=t;})()</script>
          and `mov` are material, instrument and active locus. The active part
          moves once on arrival or focus and every reduced-motion state is a
          complete, scientifically legible drawing. -->
-    <ul class="verbs" data-glyphs>
+    <ul class="verbs" data-glyphs data-glyphs-once>
       <li><a href="#formats"><span class="vb lg" data-glyph="open">
         <svg viewBox="0 0 64 64" aria-hidden="true">
           <g class="depth"><path class="plate" d="M12 11h29l10 10v34H12z"/></g>
@@ -2543,9 +2543,18 @@ if('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion:redu
   }
 
   for(const list of document.querySelectorAll('[data-glyphs]')){
-    new IntersectionObserver(es => {
-      for(const e of es) list.classList.toggle('on', e.isIntersecting);
-    }, {rootMargin:'80px'}).observe(list);
+    const observer = new IntersectionObserver(es => {
+      for(const e of es){
+        if(list.hasAttribute('data-glyphs-once')){
+          /* The Workbench is an introduction, not an ambient animation. Once
+             its six instruments have assembled they stay complete for as long
+             as the reader wants to inspect them; scrolling a few pixels must
+             not rewind and flash the row again. */
+          if(e.isIntersecting){ list.classList.add('on'); observer.unobserve(list); }
+        }else list.classList.toggle('on', e.isIntersecting);
+      }
+    }, {rootMargin:'80px'});
+    observer.observe(list);
   }
 
   /* the hero's two lights, armed the same way as everything else — a first

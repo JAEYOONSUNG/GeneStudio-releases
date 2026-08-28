@@ -2136,17 +2136,35 @@ html.js .rise.settle.in{transform:none}
    close to the chapter ground: depth without turning them into glossy app
    icons. Their drawings are neutral except for one operation-specific signal. */
 .verbs .lg{
-  --g-ink:#C9D5D9; --g-muted:#66787E; --g-body:rgba(184,204,210,.035);
-  --g-edge:rgba(190,211,216,.115); --g-signal:var(--g-accent);
+  --g-ink:#D2DEE1; --g-muted:#708388; --g-body:rgba(184,204,210,.045);
+  --g-edge:rgba(190,211,216,.145); --g-signal:var(--g-accent);
   border-color:var(--g-edge);
   background:linear-gradient(145deg,#152126 0%,#0D171A 72%,#0B1417 100%);
   box-shadow:
-    -7px -7px 18px rgba(63,84,89,.15),
-    9px 10px 20px rgba(0,0,0,.43),
-    0 2px 5px rgba(0,0,0,.24),
-    inset 1px 1px 0 rgba(255,255,255,.055),
-    inset -2px -2px 4px rgba(0,0,0,.22);
+    -8px -8px 20px rgba(69,94,101,.17),
+    10px 12px 23px rgba(0,0,0,.45),
+    0 3px 6px rgba(0,0,0,.25),
+    inset 1px 1px 0 rgba(255,255,255,.07),
+    inset -2px -2px 5px rgba(0,0,0,.24);
 }
+:root[data-theme="dark"] .verbs .lg{
+  --g-ink:#D8E3E5; --g-muted:#7B8F94; --g-body:rgba(184,204,210,.055);
+  --g-edge:rgba(190,211,216,.17);
+}
+.verbs .lg::before{
+  content:''; position:absolute; inset:1px; z-index:0; pointer-events:none;
+  border-radius:14px;
+  background:
+    radial-gradient(58% 48% at 22% 12%,rgba(184,221,231,.075),transparent 76%),
+    linear-gradient(145deg,rgba(255,255,255,.018),transparent 48%);
+}
+.verbs .lg::after{
+  content:''; position:absolute; z-index:-1; pointer-events:none;
+  left:16%; right:10%; bottom:-9px; height:15px; border-radius:50%;
+  background:radial-gradient(ellipse,rgba(0,0,0,.34),transparent 70%);
+  filter:blur(4px); opacity:.72;
+}
+.verbs .lg svg{position:relative; z-index:1}
 .gridlines .lg{--g-body:rgba(120,151,178,.10);--g-edge:rgba(194,216,233,.26)}
 :root[data-theme="light"] .gridlines .lg{
   --g-ink:#263847; --g-muted:#667B8C; --g-body:rgba(45,76,101,.065);
@@ -2176,7 +2194,7 @@ html.js .rise.settle.in{transform:none}
 .lg .edge{stroke:var(--g-edge); stroke-width:1.3}
 .lg .ink{stroke:var(--g-ink); stroke-width:1.75}
 .lg .muted{stroke:var(--g-muted); stroke-width:1.55}
-.lg .micro{stroke:var(--g-muted); stroke-width:1.15; opacity:.82}
+.lg .micro{stroke:var(--g-muted); stroke-width:1.15; opacity:.86}
 .lg .accent{stroke:var(--g-accent); stroke-width:2.2}
 .lg .signal{stroke:var(--g-signal); stroke-width:2.15}
 .lg .accent-fill,.lg .packet,.lg .feature-fill{fill:var(--g-accent)}
@@ -2215,6 +2233,56 @@ html.js [data-glyphs]:not(.on) .lg svg{opacity:0; transform:translateY(3px)}
 @keyframes lgMove{from{opacity:0;transform:translateY(2px)}to{opacity:1;transform:none}}
 .lg .depth,.lg .face,.lg .mov{transform-box:fill-box; transform-origin:center}
 
+@keyframes wbIn{
+  0%{opacity:0;transform:translateY(6px) scale(.975)}
+  72%{opacity:1}
+  100%{opacity:1;transform:none}
+}
+@keyframes wbDepth{from{opacity:0;transform:translate(3px,3px)}to{opacity:1;transform:none}}
+@keyframes wbFace{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
+@keyframes wbMove{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
+
+/* The Workbench needs enough time for each scientific symbol to be read, not
+   merely noticed. The earlier 45 ms cascade finished the entire row in under
+   eight tenths of a second. These six starts are 150 ms apart; material,
+   instrument face and active locus then settle in that order. The final Share
+   packet lands at roughly 2.1 s and `both` holds every complete drawing from
+   then on. `data-glyphs-once` is unobserved in script after that first pass, so
+   this long dwell is genuinely still rather than a loop waiting to restart. */
+.verbs > :nth-child(1){--g-delay:0ms}.verbs > :nth-child(2){--g-delay:150ms}
+.verbs > :nth-child(3){--g-delay:300ms}.verbs > :nth-child(4){--g-delay:450ms}
+.verbs > :nth-child(5){--g-delay:600ms}.verbs > :nth-child(6){--g-delay:750ms}
+.verbs.on .lg svg{
+  animation:wbIn 820ms cubic-bezier(.16,.78,.2,1) var(--g-delay) both;
+}
+.verbs.on .lg .depth{
+  animation:wbDepth 900ms cubic-bezier(.16,.78,.2,1) calc(var(--g-delay) + 90ms) both;
+}
+.verbs.on .lg .face{
+  animation:wbFace 860ms cubic-bezier(.16,.78,.2,1) calc(var(--g-delay) + 230ms) both;
+}
+.verbs.on .lg .mov{
+  animation:wbMove 940ms cubic-bezier(.16,.78,.2,1) calc(var(--g-delay) + 390ms) both;
+}
+.verbs.on [data-glyph="open"] .mov{
+  animation:gOpen 1040ms cubic-bezier(.16,.78,.2,1) calc(var(--g-delay) + 390ms) both;
+}
+.verbs.on [data-glyph="read"] .mov{
+  animation:gScan 1120ms cubic-bezier(.16,.78,.2,1) calc(var(--g-delay) + 390ms) both;
+}
+.verbs.on [data-glyph="cut"] .mov{
+  animation:gCut 1000ms cubic-bezier(.16,.78,.2,1) calc(var(--g-delay) + 390ms) both;
+}
+.verbs.on [data-glyph="design"] .mov{
+  animation:gModule 1080ms cubic-bezier(.16,.78,.2,1) calc(var(--g-delay) + 390ms) both;
+}
+.verbs.on [data-glyph="check"] .trace{
+  animation:gTrace 1120ms cubic-bezier(.16,.78,.2,1) calc(var(--g-delay) + 390ms) both;
+}
+.verbs.on [data-glyph="share"] .packet{
+  animation:gPacket 1040ms cubic-bezier(.16,.78,.2,1) calc(var(--g-delay) + 390ms) both;
+}
+
 /* ── and it answers the pointer, once ────────────────────────────────────── */
 @media (hover:hover) and (pointer:fine){
   .gridlines > div:hover .lg{
@@ -2236,17 +2304,17 @@ html.js [data-glyphs]:not(.on) .lg svg{opacity:0; transform:translateY(3px)}
   :root[data-theme="light"] .gridlines > div:hover .lg{
     background:linear-gradient(155deg,#FBFDFF,color-mix(in srgb,var(--g-accent) 8%,#EDF3F7));
     box-shadow:inset 0 1px 0 #fff,0 12px 24px -20px rgba(25,55,78,.34)}
-  .verbs a:is(:hover,:focus-visible) [data-glyph="open"] .mov{animation:gOpen 600ms cubic-bezier(.22,.75,.2,1) both}
-  .verbs a:is(:hover,:focus-visible) [data-glyph="read"] .mov{animation:gScan 620ms cubic-bezier(.22,.75,.2,1) both}
-  .verbs a:is(:hover,:focus-visible) [data-glyph="cut"] .mov{animation:gCut 520ms cubic-bezier(.22,.75,.2,1) both}
-  .verbs a:is(:hover,:focus-visible) [data-glyph="design"] .mov{animation:gModule 620ms cubic-bezier(.22,.75,.2,1) both}
-  .verbs a:is(:hover,:focus-visible) [data-glyph="share"] .packet,
+  .verbs a:is(:hover,:focus-visible) [data-glyph="open"] .mov{animation:gOpen 980ms cubic-bezier(.16,.78,.2,1) both}
+  .verbs a:is(:hover,:focus-visible) [data-glyph="read"] .mov{animation:gScan 1080ms cubic-bezier(.16,.78,.2,1) both}
+  .verbs a:is(:hover,:focus-visible) [data-glyph="cut"] .mov{animation:gCut 920ms cubic-bezier(.16,.78,.2,1) both}
+  .verbs a:is(:hover,:focus-visible) [data-glyph="design"] .mov{animation:gModule 1020ms cubic-bezier(.16,.78,.2,1) both}
+  .verbs a:is(:hover,:focus-visible) [data-glyph="share"] .packet{animation:gPacket 980ms cubic-bezier(.16,.78,.2,1) both}
   .gridlines > div:hover [data-glyph="out"] .packet{animation:gPacket 560ms cubic-bezier(.22,.75,.2,1) both}
   .gridlines > div:hover [data-glyph="genbank"] .mov{animation:gWrite 560ms cubic-bezier(.22,.75,.2,1) both}
   .gridlines > div:hover [data-glyph="dna"] .mov{animation:gPacketSeat 580ms cubic-bezier(.22,.75,.2,1) both}
   .gridlines > div:hover [data-glyph="fasta"] .mov{animation:gIndex 540ms cubic-bezier(.22,.75,.2,1) both}
   .gridlines > div:hover [data-glyph="local"] .mov{animation:gLatch 520ms cubic-bezier(.22,.75,.2,1) both}
-  .verbs a:is(:hover,:focus-visible) [data-glyph="check"] .trace,
+  .verbs a:is(:hover,:focus-visible) [data-glyph="check"] .trace{animation:gTrace 1080ms cubic-bezier(.16,.78,.2,1) both}
   .gridlines > div:hover [data-glyph="ab1"] .trace{animation:gTrace 620ms cubic-bezier(.22,.75,.2,1) both}
 }
 @keyframes gOpen{from{opacity:.45;transform:translate(-4px,4px) rotate(-10deg)}to{opacity:1;transform:none}}
@@ -2264,6 +2332,7 @@ html.js [data-glyphs]:not(.on) .lg svg{opacity:0; transform:translateY(3px)}
   html.js [data-glyphs]:not(.on) .lg svg{opacity:1; transform:none}
   [data-glyphs].on .lg svg,[data-glyphs].on .lg .depth,
   [data-glyphs].on .lg .face,[data-glyphs].on .lg .mov,
+  .verbs.on .lg .trace,.verbs.on .lg .packet,
   .verbs a:hover .lg .mov,.gridlines > div:hover .lg .mov,
   .verbs a:hover .lg .trace,.gridlines > div:hover .lg .trace{
     animation:none !important; opacity:1 !important; transform:none !important;
