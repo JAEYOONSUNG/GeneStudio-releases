@@ -54,7 +54,7 @@ document.documentElement.dataset.theme=t;})()</script>
 <link rel="preload" href="font/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="font/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="font/fonts.css?v=20260828">
-<link rel="stylesheet" href="base.css?v=20260828y">
+<link rel="stylesheet" href="base.css?v=20260828z">
 </head>
 <body>
 
@@ -162,24 +162,102 @@ document.documentElement.dataset.theme=t;})()</script>
     </div>
   </div>
 
-  <div class="shot">
-    <figure class="hero-showcase">
-      <div class="hero-cinema">
-      <div class="frame hero-product-window">
-        <div class="bar"><i></i><i></i><i></i><span>pDEMO-T7 · 2,950 bp · circular</span></div>
-        <video class="wide" data-clip="clip/map.mp4" data-poster="clip/map.webp" width="1200" height="750"
-               muted loop playsinline preload="none"
-               aria-label="The circular map being zoomed out to the whole plasmid, the restriction sites resolving into the margin as there is room for them."></video>
-        <video class="narrow" data-clip="clip/map-phone.mp4" data-poster="clip/map-phone.webp" width="390" height="317"
-               muted loop playsinline preload="none" aria-label="The circular map of a 2,950 bp plasmid: features on both strands, every restriction site named in the margin."></video>
+  <div class="shot hero-reel-shot">
+    <!-- **One tour, not six videos.** Every face is a complete poster from the
+         real application. One muted video node is moved into whichever face is
+         arriving, so an inactive screen can never own a decoder. The cylinder
+         is decorative; the controls and the synchronized caption below it are
+         the accessible description of the same six-part product overview. -->
+    <figure class="hero-reel" data-hero-reel data-state="idle" data-index="0"
+            data-in-view="false" data-user-paused="false" aria-labelledby="hero-reel-title">
+      <div class="reel-viewport" data-reel-viewport>
+        <div class="reel-ring" data-reel-ring aria-hidden="true">
+          <div class="reel-face is-active" data-reel-face data-scene="home"
+               data-video="clip/home.mp4" data-phone-video="clip/home-phone.mp4"
+               data-label="Home" style="--face-angle:0deg">
+            <div class="reel-screen">
+              <picture><source media="(max-width:760px)" srcset="clip/home-phone.webp">
+                <img src="clip/home.webp" width="2400" height="1500" alt=""></picture>
+              <div class="reel-live-slot" data-reel-live-slot></div>
+            </div>
+          </div>
+          <div class="reel-face" data-reel-face data-scene="map"
+               data-video="clip/map.mp4" data-phone-video="clip/map-phone.mp4"
+               data-label="Map" style="--face-angle:60deg">
+            <div class="reel-screen">
+              <picture><source media="(max-width:760px)" srcset="clip/map-phone.webp">
+                <img src="clip/map.webp" width="2400" height="1500" alt=""></picture>
+              <div class="reel-live-slot" data-reel-live-slot></div>
+            </div>
+          </div>
+          <div class="reel-face" data-reel-face data-scene="feature"
+               data-video="clip/feature.mp4" data-phone-video="clip/feature-phone.mp4"
+               data-label="Features" style="--face-angle:120deg">
+            <div class="reel-screen">
+              <picture><source media="(max-width:760px)" srcset="clip/feature-phone.webp">
+                <img src="clip/feature.webp" width="2400" height="1500" alt=""></picture>
+              <div class="reel-live-slot" data-reel-live-slot></div>
+            </div>
+          </div>
+          <div class="reel-face" data-reel-face data-scene="digest" data-fit="tall"
+               data-video="clip/digest.mp4" data-label="Digest" style="--face-angle:180deg">
+            <div class="reel-screen">
+              <picture><img src="clip/digest.webp" width="2400" height="1980" alt=""></picture>
+              <div class="reel-live-slot" data-reel-live-slot></div>
+            </div>
+          </div>
+          <div class="reel-face" data-reel-face data-scene="guides"
+               data-video="clip/guides.mp4" data-phone-video="clip/guides-phone.mp4"
+               data-label="Guides" style="--face-angle:240deg">
+            <div class="reel-screen">
+              <picture><source media="(max-width:760px)" srcset="clip/guides-phone.webp">
+                <img src="clip/guides.webp" width="2400" height="1500" alt=""></picture>
+              <div class="reel-live-slot" data-reel-live-slot></div>
+            </div>
+          </div>
+          <div class="reel-face" data-reel-face data-scene="sanger"
+               data-video="clip/sanger.mp4" data-phone-video="clip/sanger-phone.mp4"
+               data-label="Sanger" style="--face-angle:300deg">
+            <div class="reel-screen">
+              <picture><source media="(max-width:760px)" srcset="clip/sanger-phone.webp">
+                <img src="clip/sanger.webp" width="2400" height="1500" alt=""></picture>
+              <div class="reel-live-slot" data-reel-live-slot></div>
+            </div>
+          </div>
+        </div>
+        <div class="reel-streak" aria-hidden="true"></div>
+        <video data-reel-video muted playsinline preload="none" aria-hidden="true" tabindex="-1"></video>
       </div>
-      <div class="hero-cinema-focus" aria-hidden="true"></div>
-      <div class="hero-cinema-hud" aria-hidden="true">
-        <span><i></i>Live construct</span><b>pDEMO-T7</b>
-        <span>2,950 bp · circular</span>
+
+      <figcaption class="reel-caption">
+        <div class="reel-factline">
+          <span class="reel-count" data-reel-count>01 / 06</span>
+          <span class="reel-live-state"><i aria-hidden="true"></i><span data-reel-status>Product overview</span></span>
+        </div>
+        <strong id="hero-reel-title" data-reel-title>Find the file, or the exact site inside it.</strong>
+        <p data-reel-copy>Home searches favorite folders by filename or recognition sequence, locally and without an import step.</p>
+      </figcaption>
+
+      <div class="reel-controls" role="group" aria-label="Gene Studio product views">
+        <button class="reel-skip" type="button" data-reel-prev aria-label="Show previous product view">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ti-chevron-left"/></svg>
+        </button>
+        <div class="reel-scenes">
+          <button type="button" data-reel-go="0" aria-current="true">Home</button>
+          <button type="button" data-reel-go="1" aria-current="false">Map</button>
+          <button type="button" data-reel-go="2" aria-current="false">Features</button>
+          <button type="button" data-reel-go="3" aria-current="false">Digest</button>
+          <button type="button" data-reel-go="4" aria-current="false">Guides</button>
+          <button type="button" data-reel-go="5" aria-current="false">Sanger</button>
+        </div>
+        <button class="reel-tour-toggle" type="button" data-reel-pause aria-pressed="false">
+          <span class="reel-tour-mark" aria-hidden="true"></span><span data-reel-pause-label>Pause tour</span>
+        </button>
+        <button class="reel-skip" type="button" data-reel-next aria-label="Show next product view">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ti-chevron-right"/></svg>
+        </button>
       </div>
-      </div>
-      <figcaption>The actual Map in Gene Studio’s light workspace — every cut named in the margin, every feature on its strand, and the whole construct resolving as the zoom moves.</figcaption>
+      <p class="sr">The overview moves through Home, Map, Features, Digest, Guides and Sanger in that order.</p>
     </figure>
     <div class="hero-meta">
       <p class="verline">Free while the beta lasts. A licence is written for one computer and takes a minute — <b><a href="#get" style="color:inherit">ask for one</a></b>.</p>
@@ -1910,6 +1988,307 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
   }else for(const a of document.querySelectorAll('[data-dl="nix"]')) a.hidden = true;
 }).catch(() => {});
 
+/* ── one whole-product reel, and exactly one decoder ───────────────────────
+   Six real screens occupy the six faces of a CSS cylinder. The pictures are
+   complete answers by themselves; motion is added by moving this one video
+   node into the face that is about to arrive. No inactive face can decode,
+   reduced motion never receives a source, and the phone's Digest stays on its
+   complete poster because the only existing phone crop is a gel, not Digest. */
+{
+  const reel = document.querySelector('[data-hero-reel]');
+  if(reel){
+    const ring = reel.querySelector('[data-reel-ring]');
+    const faces = [...reel.querySelectorAll('[data-reel-face]')];
+    const video = reel.querySelector('[data-reel-video]');
+    const count = reel.querySelector('[data-reel-count]');
+    const title = reel.querySelector('[data-reel-title]');
+    const copy = reel.querySelector('[data-reel-copy]');
+    const status = reel.querySelector('[data-reel-status]');
+    const sceneButtons = [...reel.querySelectorAll('[data-reel-go]')];
+    const pauseButton = reel.querySelector('[data-reel-pause]');
+    const pauseLabel = reel.querySelector('[data-reel-pause-label]');
+    const compact = matchMedia('(max-width:760px)');
+    const reduced = matchMedia('(prefers-reduced-motion:reduce)');
+    const SPIN = 620, HOLD = 460, STILL_HOLD = 2100;
+    const words = [
+      ['Find the file, or the exact site inside it.',
+       'Home searches favorite folders by filename or recognition sequence, locally and without an import step.'],
+      ['Read the whole construct at once.',
+       'Map resolves the circular molecule, both feature strands and every restriction label as space opens.'],
+      ['Open the annotation beyond GenBank.',
+       'Features keeps identity pinned while computed properties, eggNOG and InterPro move into view.'],
+      ['Cut once. See every consequence.',
+       'Digest links the selected stretch, compatible enzymes, gel, fragment table and methylation verdict.'],
+      ['Design the edit and the oligos together.',
+       'Guides scans real candidates, ranks them and carries the selected design through to order-ready sequences.'],
+      ['Verify the clone where the trace says it changed.',
+       'Sanger aligns forward and reverse reads, quality, differences and chromatograms against the construct.']
+    ];
+
+    let index = reduced.matches ? 1 : 0;
+    let angle = -index * 60;
+    let timer = 0, middleTimer = 0, finishTimer = 0, loadToken = 0;
+    let inView = false, userPaused = false, hardPaused = false, pageVisible = !document.hidden;
+    let prepared = null, pending = null;
+
+    const clearClocks = () => {
+      clearTimeout(timer); clearTimeout(middleTimer); clearTimeout(finishTimer);
+      timer = middleTimer = finishTimer = 0;
+    };
+    const setState = (next, message) => {
+      reel.dataset.state = next;
+      if(status && message) status.textContent = message;
+    };
+    const updatePause = () => {
+      reel.dataset.userPaused = String(userPaused);
+      pauseButton?.setAttribute('aria-pressed', String(userPaused));
+      if(pauseLabel) pauseLabel.textContent = userPaused ? 'Resume tour' : 'Pause tour';
+    };
+    const sync = next => {
+      index = (next + faces.length) % faces.length;
+      reel.dataset.index = String(index);
+      faces.forEach((face, at) => face.classList.toggle('is-active', at === index));
+      sceneButtons.forEach((button, at) => button.setAttribute('aria-current', String(at === index)));
+      if(count) count.textContent = String(index + 1).padStart(2, '0') + ' / ' +
+        String(faces.length).padStart(2, '0');
+      if(title) title.textContent = words[index][0];
+      if(copy) copy.textContent = words[index][1];
+    };
+    const sourceFor = at => {
+      if(reduced.matches) return '';
+      return compact.matches ? (faces[at].dataset.phoneVideo || '') : (faces[at].dataset.video || '');
+    };
+    const releaseSource = () => {
+      loadToken++;
+      prepared = null;
+      video.pause();
+      video.removeAttribute('src');
+      video.removeAttribute('data-ready');
+      video.dataset.scene = '';
+      reel.dataset.source = '';
+      video.load();
+    };
+    const mayPlay = () => inView && pageVisible && !reduced.matches && !hardPaused;
+    const mayAdvance = () => mayPlay() && !userPaused;
+
+    const queue = delay => {
+      clearTimeout(timer); timer = 0;
+      if(!mayAdvance()) return;
+      reel.dataset.auto = 'waiting';
+      timer = setTimeout(() => requestScene((index + 1) % faces.length, false, 1), delay);
+    };
+    const holdPoster = (message = faces[index].dataset.label + ' poster') => {
+      video.removeAttribute('data-ready');
+      setState(userPaused ? 'paused' : 'holding', message);
+      reel.dataset.auto = userPaused ? 'off' : 'waiting';
+      queue(STILL_HOLD);
+    };
+    const startPrepared = () => {
+      if(!prepared || prepared.index !== index || prepared.token !== loadToken) return;
+      if(!mayPlay()){
+        video.pause();
+        setState(reduced.matches ? 'still' : 'idle', reduced.matches ? 'Static product overview' : 'Overview paused');
+        return;
+      }
+      if(!prepared.src){ holdPoster(faces[index].dataset.label + ' · poster'); return; }
+      if(!prepared.ready){ setState('loading', faces[index].dataset.label + ' · loading'); return; }
+      for(const other of document.querySelectorAll('video[data-clip]')) other.pause?.();
+      video.dataset.ready = 'true';
+      video.play().then(() => {
+        if(prepared && prepared.index === index){
+          setState('playing', faces[index].dataset.label + ' · in motion');
+          reel.dataset.auto = userPaused ? 'off' : 'running';
+        }
+      }).catch(() => holdPoster(faces[index].dataset.label + ' · poster'));
+    };
+    const prepare = at => {
+      const token = ++loadToken;
+      const src = sourceFor(at);
+      video.pause();
+      video.removeAttribute('data-ready');
+      faces[at].querySelector('[data-reel-live-slot]').append(video);
+      video.dataset.scene = faces[at].dataset.scene;
+      reel.dataset.source = src;
+      prepared = {index:at, token, src, ready:false};
+      video.onloadeddata = () => {
+        if(!prepared || prepared.token !== token) return;
+        prepared.ready = true;
+        reel.dataset.videoReady = 'true';
+        if(reel.dataset.state !== 'spinning') startPrepared();
+      };
+      video.onerror = () => {
+        if(!prepared || prepared.token !== token) return;
+        prepared.ready = false;
+        reel.dataset.videoReady = 'false';
+        if(reel.dataset.state !== 'spinning') holdPoster(faces[at].dataset.label + ' · poster');
+      };
+      video.onended = () => {
+        if(!prepared || prepared.token !== token || prepared.index !== index) return;
+        video.removeAttribute('data-ready');
+        setState(userPaused ? 'paused' : 'holding', faces[index].dataset.label + ' · complete');
+        if(mayAdvance()) queue(HOLD);
+      };
+      if(!src){
+        video.removeAttribute('src'); video.load();
+        reel.dataset.videoReady = 'false';
+        return;
+      }
+      video.src = src;
+      video.load();
+    };
+
+    function requestScene(next, manual = true, directionHint = 0){
+      next = (Number(next) + faces.length) % faces.length;
+      if(manual){ userPaused = true; hardPaused = false; updatePause(); }
+      if(reduced.matches){
+        clearClocks(); pending = null; sync(next);
+        angle = -next * 60;
+        ring.style.setProperty('--reel-angle', angle + 'deg');
+        faces[next].querySelector('[data-reel-live-slot]').append(video);
+        releaseSource(); setState('still', faces[next].dataset.label + ' · poster');
+        return;
+      }
+      if(reel.dataset.state === 'spinning'){
+        pending = {next, manual, directionHint};
+        return;
+      }
+      if(next === index){
+        if(!prepared || prepared.index !== index) prepare(index);
+        startPrepared();
+        return;
+      }
+      clearClocks(); pending = null;
+      let delta = next - index;
+      if(directionHint) delta = directionHint;
+      else { if(delta > faces.length / 2) delta -= faces.length;
+             if(delta < -faces.length / 2) delta += faces.length; }
+      prepare(next);
+      reel.dataset.direction = delta > 0 ? 'next' : 'previous';
+      setState('spinning', 'Changing product view');
+      const targetAngle = angle - delta * 60;
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        angle = targetAngle;
+        ring.style.setProperty('--reel-angle', angle + 'deg');
+      }));
+      middleTimer = setTimeout(() => sync(next), Math.round(SPIN * .48));
+      finishTimer = setTimeout(() => {
+        if(index !== next) sync(next);
+        setState('loading', faces[index].dataset.label + ' · loading');
+        /* A full turn is the same pose. Normalize only after the transition has
+           been removed, or the browser helpfully spins it back to zero. */
+        if(Math.abs(angle) >= 360){
+          angle %= 360;
+          if(angle > 180) angle -= 360;
+          if(angle < -180) angle += 360;
+          ring.style.setProperty('--reel-angle', angle + 'deg');
+        }
+        startPrepared();
+        const queued = pending; pending = null;
+        if(queued) requestScene(queued.next, queued.manual, queued.directionHint);
+      }, SPIN + 36);
+    }
+
+    const pauseHere = message => {
+      clearClocks(); video.pause();
+      pending = null;
+      if(reel.dataset.state === 'spinning'){
+        const target = prepared?.index ?? index;
+        sync(target); angle = -target * 60;
+        setState('paused', message);
+        ring.style.setProperty('--reel-angle', angle + 'deg');
+      }else setState('paused', message);
+      reel.dataset.auto = 'off';
+    };
+    pauseButton?.addEventListener('click', () => {
+      if(userPaused){
+        userPaused = false; hardPaused = false; updatePause();
+        if(prepared?.src && prepared.index === index && video.currentTime > 0 && !video.ended){
+          video.play().then(() => setState('playing', faces[index].dataset.label + ' · in motion'))
+            .catch(() => holdPoster());
+        }else{
+          prepare(index); startPrepared();
+        }
+      }else{
+        userPaused = true; hardPaused = true; updatePause(); pauseHere('Tour paused');
+      }
+    });
+    reel.querySelector('[data-reel-prev]')?.addEventListener('click', () => requestScene(index - 1, true, -1));
+    reel.querySelector('[data-reel-next]')?.addEventListener('click', () => requestScene(index + 1, true, 1));
+    sceneButtons.forEach((button, at) => {
+      button.addEventListener('click', () => requestScene(at, true));
+      button.addEventListener('keydown', event => {
+        let next = null;
+        if(event.key === 'ArrowLeft') next = (at - 1 + faces.length) % faces.length;
+        if(event.key === 'ArrowRight') next = (at + 1) % faces.length;
+        if(event.key === 'Home') next = 0;
+        if(event.key === 'End') next = faces.length - 1;
+        if(next === null) return;
+        event.preventDefault(); sceneButtons[next].focus(); requestScene(next, true);
+      });
+    });
+
+    const resetForMedia = () => {
+      clearClocks(); pending = null; video.pause();
+      angle = -index * 60;
+      ring.style.setProperty('--reel-angle', angle + 'deg');
+      sync(index);
+      if(reduced.matches){
+        reel.dataset.reduced = 'true';
+        userPaused = false; hardPaused = false; updatePause();
+        sync(1); angle = -60; ring.style.setProperty('--reel-angle', angle + 'deg');
+        faces[1].querySelector('[data-reel-live-slot]').append(video);
+        releaseSource(); setState('still', 'Static product overview');
+      }else{
+        reel.dataset.reduced = 'false';
+        if(inView){ prepare(index); startPrepared(); }
+        else { releaseSource(); setState('idle', 'Overview paused'); }
+      }
+    };
+    compact.addEventListener?.('change', resetForMedia);
+    reduced.addEventListener?.('change', resetForMedia);
+    document.addEventListener('visibilitychange', () => {
+      pageVisible = !document.hidden;
+      reel.dataset.pageVisible = String(pageVisible);
+      if(!pageVisible) pauseHere('Overview paused');
+      else if(inView && !reduced.matches && !hardPaused){
+        if(prepared?.ready) startPrepared(); else { prepare(index); startPrepared(); }
+      }
+    });
+
+    ring.style.setProperty('--reel-angle', angle + 'deg');
+    sync(index); updatePause();
+    reel.dataset.reduced = String(reduced.matches);
+    reel.dataset.pageVisible = String(pageVisible);
+    if(reduced.matches){
+      faces[index].querySelector('[data-reel-live-slot]').append(video);
+      releaseSource(); setState('still', 'Static product overview');
+    }
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(entries => {
+        for(const entry of entries){
+          const nextInView = entry.isIntersecting && entry.intersectionRatio >= .12;
+          inView = nextInView;
+          reel.dataset.inView = String(inView);
+          if(!inView){ pauseHere('Overview paused'); continue; }
+          if(reduced.matches){ releaseSource(); setState('still', 'Static product overview'); continue; }
+          /* Caption and controls change the figure's height at the middle of a
+             turn, which can make IntersectionObserver report the same visible
+             reel again. That notification must not re-prepare the outgoing
+             scene over the incoming source while the cylinder is spinning. */
+          if(reel.dataset.state === 'spinning') continue;
+          if(!hardPaused){
+            if(!prepared || prepared.index !== index) prepare(index);
+            startPrepared();
+          }
+        }
+      }, {threshold:[0,.12,.35]}).observe(reel);
+    }else{
+      inView = true; reel.dataset.inView = 'true';
+      if(!reduced.matches){ prepare(index); startPrepared(); }
+    }
+  }
+}
+
 /* ── a clip plays where a clip is worth playing ────────────────────────────
    The source is attached in script, not in the markup, so nothing is fetched
    for a screen that will not show it (under 760 px the still is what is drawn)
@@ -1920,60 +2299,51 @@ let armClips;   /* the rail advances to a clip that has never been armed */
 {
   const wide = matchMedia('(min-width: 761px)');
   const still = matchMedia('(prefers-reduced-motion: reduce)');
+  const videos = [...document.querySelectorAll('video[data-clip]')];
+  const rendered = v => getComputedStyle(v).display !== 'none' && v.getClientRects().length > 0;
+  const playOne = v => {
+    /* `loadeddata → play()` used to run for every source as it arrived. At the
+       top of the page that meant ten invisible loops decoding together. A clip
+       now owns playback only while its own figure is near the viewport, and it
+       first releases every other product clip — including the hero's one node. */
+    for(const other of document.querySelectorAll('video')) if(other !== v) other.pause?.();
+    if(v.dataset.clipVisible === 'true' && !still.matches) v.play?.().catch(() => {});
+  };
+  const ensure = v => {
+    if(!v.getAttribute('poster')) v.poster = v.dataset.poster;
+    if(v.dataset.armed) return;
+    v.dataset.armed = '1';
+    const src = document.createElement('source');
+    src.type = 'video/mp4'; src.src = v.dataset.clip;
+    v.appendChild(src);
+    v.addEventListener('loadeddata', () => playOne(v), {once:true});
+    v.load();
+  };
+  const visibleNow = v => {
+    if(!rendered(v) || still.matches) return false;
+    const r = v.getBoundingClientRect();
+    return r.bottom >= -120 && r.top <= innerHeight + 120;
+  };
+  const setVisible = (v, visible) => {
+    v.dataset.clipVisible = String(visible);
+    if(!visible){ v.removeAttribute('autoplay'); v.pause?.(); return; }
+    ensure(v);
+    if(v.readyState >= 2) playOne(v);
+  };
+  const observer = 'IntersectionObserver' in window ? new IntersectionObserver(entries => {
+    for(const entry of entries) setVisible(entry.target,
+      entry.isIntersecting && rendered(entry.target) && !still.matches);
+  }, {rootMargin:'120px 0px', threshold:0}) : null;
   const arm = armClips = () => {
-    for(const v of document.querySelectorAll('video[data-clip]')){
-      /* **Which of the two is on screen decides, not the width.** There are now
-         a wide clip and a phone clip in each frame, and only one of them is
-         displayed at any width — so the test is whether *this* video is drawn,
-         which is the same question the CSS already answered. A phone gets the
-         clip cropped to where the action is rather than a still: a picture is
-         the wrong answer to "does it move", and what a phone cannot read is the
-         whole window, not the thing happening in it. */
-      /* **A poster is fetched even where the video is not drawn.**
-         `display:none` does not stop it — measured over the network log at a
-         true 390 px, the page asked for all ten desktop posters, 1.28 MB for
-         figures a phone can never show, and a desktop paid the mirror of it in
-         phone posters. The source is already attached here for exactly this
-         reason; the poster goes the same way, and only for the one on screen.
-         Reduced motion still gets it, because there the poster *is* the
-         picture — so it is set before the early return. */
-      /* **`getComputedStyle` does not ask whether an ancestor is hidden.** For
-         a video inside a folded rail step the computed `display` is still the
-         `block` that `.frame video` gives it, so the display test alone armed
-         and played all three of the rail's steps at once — the exact cost this
-         block exists to avoid, and invisible on screen because only one of them
-         is drawn. `getClientRects()` is empty when *anything* above the element
-         is `display:none`, which is the question actually being asked. */
-      const shown = getComputedStyle(v).display !== 'none' && v.getClientRects().length > 0;
-      if(shown && !v.getAttribute('poster')) v.poster = v.dataset.poster;
-      if(!shown || still.matches){
-        v.removeAttribute('autoplay'); v.pause?.(); continue; }
-      if(!v.dataset.armed){
-        v.dataset.armed = '1';
-        const src = document.createElement('source');
-        src.type = 'video/mp4'; src.src = v.dataset.clip;
-        v.appendChild(src); v.load();
-      }
-      /* **A muted inline clip on iOS wants the attribute, not only the call.**
-         Safari will start a muted `playsinline` video from script, and will
-         also decline to — after a dynamically attached source, in Low Power
-         Mode, on a first paint it has not settled. The attribute is the thing
-         it honours, and it is set here rather than in the markup so that a
-         screen which will not show this clip still fetches nothing. */
-      v.setAttribute('autoplay', '');
-      /* and a second go once there are frames to show: the first play() can be
-         refused before the source has loaded, and nothing tries again */
-      v.addEventListener('loadeddata', () => { v.play?.().catch(() => {}); }, {once:true});
-      /* it starts when it is reached, not when the page loads: three clips
-         decoding at once on a laptop is a page that stutters as it opens */
-      new IntersectionObserver((es, io) => {
-        for(const e of es) if(e.isIntersecting){ e.target.play?.().catch(() => {}); io.disconnect(); }
-      }, {rootMargin:'120px'}).observe(v);
+    for(const v of videos){
+      if(!v.dataset.clipObserved && observer){ observer.observe(v); v.dataset.clipObserved = 'true'; }
+      setVisible(v, visibleNow(v));
     }
   };
   arm();
   wide.addEventListener?.('change', arm);
   still.addEventListener?.('change', arm);
+  addEventListener('resize', arm, {passive:true});
 }
 
 /* ── things arrive as they are reached ─────────────────────────────────────
