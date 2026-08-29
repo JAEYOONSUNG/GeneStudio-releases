@@ -128,7 +128,12 @@ header.rail{
   background:rgba(9,14,16,.66); backdrop-filter:blur(18px) saturate(1.5);
   border:1px solid rgba(255,255,255,.09); border-radius:999px;
   box-shadow:0 12px 34px rgba(0,0,0,.42);}
-.brand{display:flex; align-items:center; gap:9px; font-weight:650; color:var(--ink); text-decoration:none; letter-spacing:-.01em}
+.brand{display:flex; align-items:center; gap:9px; font-weight:650; color:var(--ink); text-decoration:none; letter-spacing:-.01em; white-space:nowrap}
+/* **The menu button cost the brand its line.** With Menu, the theme control
+   and Get it in a 390 px capsule the name wrapped to `Gene / Studio`; the
+   beta state is the first thing the hero says two lines below, so the tag is
+   what goes rather than the name. */
+@media (max-width:430px){ .brand .tag{display:none} }
 .brand svg{flex:none}
 /* **The mark is the application's own icon, drawn at the size it is read.**
    It replaced a two-circle SVG, and the swap is not free: a 3-D render is a
@@ -223,6 +228,38 @@ header.rail{
 .rail nav a.get{color:var(--amber-ink); background:var(--amber); border:0; margin-left:6px; font-weight:600}
 .rail nav a.get:hover{background:color-mix(in oklab, var(--amber) 86%, #fff); color:var(--amber-ink)}
 @media (max-width:900px){ .rail nav .hide-s{display:none} }
+/* the trigger names which of its two jobs it is doing at this width, and below
+   360 px it is the glyph alone — measured, the capsule needs 360 px of content
+   in 294, and a label and a shortcut are what can go when a name cannot */
+.ft-narrow,.ft-burger{display:none}
+@media (max-width:900px){
+  .ft-wide,.ft-chev{display:none}
+  .ft-narrow,.ft-burger{display:inline}
+  .ft-burger{width:18px; height:18px}
+}
+@media (max-width:360px){ .ft-narrow{display:none} }
+/* the links the bar dropped, cloned in from the bar — a row of plain
+   destinations under the six cards, and only where the bar is not showing them */
+.feature-links{display:none}
+@media (max-width:900px){
+  .feature-popover .feature-links{
+    display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:6px;
+    grid-column:1 / -1; margin-top:2px; padding-top:8px;
+    border-top:1px solid var(--hair);
+  }
+  .feature-popover .feature-links a{
+    display:flex; align-items:center; min-height:44px; padding:0 14px;
+    border:1px solid var(--hair); border-radius:12px; background:var(--ground);
+    color:var(--ink); font-size:14.5px; text-decoration:none; white-space:nowrap;
+  }
+  /* the primary act keeps being the primary act inside the sheet, and it is
+     only there at all where the capsule had to drop it */
+  .feature-popover .feature-links a.get{display:none}
+  .feature-popover .feature-links a:hover{
+    border-color:color-mix(in oklab,var(--amber) 34%,var(--line));
+    background:color-mix(in oklab,var(--amber) 5%,var(--ground));
+  }
+}
 /* the theme control keeps the nav links' own shape — it is one more thing in
    the capsule, not a widget bolted to it — and it stays on a phone, where the
    links are the first things to go */
@@ -237,6 +274,30 @@ header.rail{
 :root[data-theme="light"] .themebtn .t-sun{display:none}
 :root[data-theme="light"] .themebtn .t-moon{display:block}
 :root[data-theme="light"] .themebtn:hover{background:rgba(14,22,24,.06)}
+/* **A finger is not a pointer.** The app holds every control it draws to a 44 px
+   target on a touch screen and this page did not: measured at 390 px, the theme
+   button was 32×32 and `Get it` 58×38. The paint does not move — only the box
+   the finger has to land in. */
+@media (max-width:360px){
+  .feature-popover .feature-links a.get{
+    display:flex; grid-column:1 / -1; justify-content:center;
+    border-color:transparent; background:var(--amber); color:var(--amber-ink);
+    font-weight:600;
+  }
+}
+@media (pointer:coarse){
+  .brand{min-height:44px}
+  .feature-trigger{min-height:44px}
+  .rail nav a.get{display:inline-flex; align-items:center; min-height:44px}
+  .themebtn{width:44px; height:44px}
+}
+/* **After the coarse-pointer block, not before it**: same specificity, and the
+   later rule wins — declared above, `display:none` lost to `inline-flex` and
+   the shortcut stayed in a capsule that had no room for it. */
+@media (max-width:360px){
+  .rail nav a.get{display:none}
+  .feature-trigger{min-width:44px; justify-content:center}
+}
 .sr{position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap}
 
 /* ── hero ────────────────────────────────────────────────────────────────── */

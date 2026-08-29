@@ -66,11 +66,18 @@ document.documentElement.dataset.theme=t;})()</script>
       Gene Studio <span class="tag">BETA</span>
     </a>
     <nav>
-      <div class="feature-menu hide-s">
+      <!-- **It stayed behind `hide-s`, and the bar drops its links at 900 px** —
+           so on a phone the only way to a section was to scroll the page (31,043
+           px of it) or to reach the footer at the end. The trigger is now at every
+           width: the six workspaces on a wide screen, and below 900 px the page's
+           menu, carrying the links the bar had to drop. -->
+      <div class="feature-menu">
         <button class="feature-trigger" type="button" aria-expanded="false"
                 aria-controls="featurePopover">
-          What it does
-          <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ti-chevron-down"/></svg>
+          <svg class="ft-burger" viewBox="0 0 24 24" aria-hidden="true"><use href="#ti-menu-2"/></svg>
+          <span class="ft-wide">What it does</span>
+          <span class="ft-narrow">Menu</span>
+          <svg class="ft-chev" viewBox="0 0 24 24" aria-hidden="true"><use href="#ti-chevron-down"/></svg>
         </button>
         <div class="feature-popover" id="featurePopover" aria-label="Gene Studio workspaces" hidden>
           <a class="feature-card sequence" href="#sequence">
@@ -1918,6 +1925,22 @@ document.documentElement.dataset.theme=t;})()</script>
   const trigger=host&&host.querySelector('.feature-trigger');
   const panel=document.getElementById('featurePopover');
   if(!host||!trigger||!panel)return;
+  /* **The links the bar drops below 900 px are cloned in from the bar itself**,
+     so one list in the markup serves both. A second copy in the sheet is how
+     the two come to disagree about what the page contains — and the clone has
+     to lose `hide-s`, or it would be hidden inside the menu that exists to
+     show it. */
+  const dropped=[...host.parentElement.querySelectorAll(':scope > a.hide-s, :scope > a.get')];
+  if(dropped.length){
+    const more=document.createElement('div');
+    more.className='feature-links';
+    for(const link of dropped){
+      const copy=link.cloneNode(true);
+      copy.classList.remove('hide-s');
+      more.appendChild(copy);
+    }
+    panel.appendChild(more);
+  }
   const hover=matchMedia('(hover:hover) and (pointer:fine)');
   const reduced=matchMedia('(prefers-reduced-motion:reduce)');
   let hideTimer=0;
