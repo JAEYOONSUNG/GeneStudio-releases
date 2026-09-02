@@ -54,7 +54,7 @@ document.documentElement.dataset.theme=t;})()</script>
 <link rel="preload" href="font/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="font/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="font/fonts.css?v=20260828">
-<link rel="stylesheet" href="base.css?v=20260902g">
+<link rel="stylesheet" href="base.css?v=20260902h">
 </head>
 <body>
 
@@ -2037,6 +2037,13 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
     const compact = matchMedia('(max-width:760px)');
     const reduced = matchMedia('(prefers-reduced-motion:reduce)');
     const SPIN = 620, HOLD = 460, STILL_HOLD = 2100;
+    /* The arrival. Timing is the one this project settled on for cylindrical
+       motion after looking at how it is actually done: roughly 700 ms of
+       expo.inOut for the turn and a 120–180 ms settle after it, with blur and
+       scale applied only while it is moving. The drum starts a good way round
+       and a long way back, so the first thing the page does is bring the
+       product to the reader rather than present it already arrived. */
+    const ARRIVE = 700, SETTLE = 160, ARRIVE_TURN = 128;
     const words = [
       ['Find the file, or the exact site inside it.',
        'Home searches favorite folders by filename or recognition sequence, locally and without an import step.'],
@@ -2056,7 +2063,25 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
     let angle = -index * 60;
     let timer = 0, middleTimer = 0, finishTimer = 0, loadToken = 0;
     let inView = false, userPaused = false, hardPaused = false, pageVisible = !document.hidden;
+    let arrived = false;
     let prepared = null, pending = null;
+
+    /* Runs once, on the first time the reel is actually looked at. It drives
+       the same `--reel-angle` every other movement here drives, so the faces,
+       the caption and the controls need to know nothing about it. */
+    const arrive = () => {
+      if(arrived) return;
+      arrived = true;
+      if(reduced.matches) return;
+      const target = angle;
+      reel.dataset.intro = 'arrive';
+      ring.style.setProperty('--reel-angle', (target + ARRIVE_TURN) + 'deg');
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        reel.dataset.intro = 'run';
+        ring.style.setProperty('--reel-angle', target + 'deg');
+        setTimeout(() => { delete reel.dataset.intro; }, ARRIVE + SETTLE + 40);
+      }));
+    };
 
     const clearClocks = () => {
       clearTimeout(timer); clearTimeout(middleTimer); clearTimeout(finishTimer);
@@ -2303,6 +2328,7 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
              reel again. That notification must not re-prepare the outgoing
              scene over the incoming source while the cylinder is spinning. */
           if(reel.dataset.state === 'spinning') continue;
+          arrive();
           if(!hardPaused){
             if(!prepared || prepared.index !== index) prepare(index);
             startPrepared();
@@ -2311,6 +2337,7 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
       }, {threshold:[0,.12,.35]}).observe(reel);
     }else{
       inView = true; reel.dataset.inView = 'true';
+      arrive();
       if(!reduced.matches){ prepare(index); startPrepared(); }
     }
   }

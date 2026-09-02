@@ -549,7 +549,12 @@ figure{margin:0}
 .frame .bar i{width:10px; height:10px; border-radius:50%; background:var(--line); display:block}
 .frame .bar span{flex:1; min-width:0; margin-left:8px; font:400 11.5px/1 var(--mono);
   color:var(--faint); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
-figcaption{margin:14px 2px 0; font:400 13px/1.5 var(--mono); color:var(--faint)}
+/* **A caption is a sentence, not a listing.** These were set in the mono face
+   while every other sentence on the page is `--ui`, so each figure ended in a
+   paragraph that looked like it came from somewhere else. `code` inside one
+   keeps the mono it earns by being code. */
+figcaption{margin:14px 2px 0; font:400 13px/1.55 var(--ui); color:var(--faint);
+  letter-spacing:-.005em}
 
 /* ── a clip, where there is one ──────────────────────────────────────────────
    The clips are the application driven by the screenshot harness, one frame per
@@ -614,9 +619,10 @@ figcaption{margin:14px 2px 0; font:400 13px/1.5 var(--mono); color:var(--faint)}
   content:''; position:absolute; inset:0; z-index:4; pointer-events:none;
   border-radius:inherit
 }
-/* the inner edge of the pane's own thickness — `outline-offset` follows the
-   radius, so it stays a rounded line rather than a rectangle over the corners */
-.reel-viewport::before{outline:1px solid rgba(233,247,255,.10); outline-offset:-10px}
+/* **A drawn inner line is not glass thickness, it is a guide.** An inset
+   `outline` at a fixed offset reads as a margin marker somebody left in — the
+   one thing a piece of glass never has. Thickness is carried by the lit rim
+   and the specular alone. */
 .reel-viewport::before{
   background:
     linear-gradient(112deg,rgba(255,255,255,.20) 0%,rgba(255,255,255,.10) 13%,
@@ -643,6 +649,29 @@ figcaption{margin:14px 2px 0; font:400 13px/1.5 var(--mono); color:var(--faint)}
   animation:reelDolly 656ms cubic-bezier(.3,0,.2,1) both
 }
 @keyframes reelDolly{0%{scale:1}44%{scale:.855}100%{scale:1}}
+
+/* ── the arrival ────────────────────────────────────────────────────────────
+   The drum does not begin at rest facing the reader; it comes in from a long
+   way back, turned away, and lands. Timing is the one this project already
+   settled on for cylindrical motion: about 700 ms of `expo.inOut` for the turn
+   with a 160 ms settle after it, and blur and scale only while it is moving.
+   `opacity` and `filter` both force `transform-style:flat`, so neither may go
+   on the ring — the faces carry them, which is where the existing spin already
+   puts them. */
+.hero-reel[data-intro="arrive"] .reel-ring{transition:none; scale:.62}
+.hero-reel[data-intro="arrive"] .reel-face{filter:blur(12px) brightness(.62); opacity:.26}
+.hero-reel[data-intro="run"] .reel-ring{
+  /* cubic-bezier(.87,0,.13,1) is expo.inOut; the scale runs the turn plus the
+     settle, so the drum is still easing forward as the rotation finishes */
+  transition:transform 700ms cubic-bezier(.87,0,.13,1),
+             scale 860ms cubic-bezier(.16,1,.3,1);
+  scale:1; will-change:transform
+}
+.hero-reel[data-intro="run"] .reel-face{
+  transition:filter 620ms ease-out,opacity 620ms ease-out;
+  filter:saturate(.94) brightness(1); opacity:.14
+}
+.hero-reel[data-intro="run"] .reel-face.is-active{opacity:1}
 .reel-face{
   position:absolute; inset:0; opacity:.14; filter:saturate(.72) brightness(.82);
   transform:rotateY(var(--face-angle)) translateZ(var(--reel-radius));
@@ -703,10 +732,10 @@ figcaption{margin:14px 2px 0; font:400 13px/1.5 var(--mono); color:var(--faint)}
 .reel-caption{width:min(100%,760px); margin:clamp(20px,2.5vw,30px) auto 0;
   font-family:var(--ui); text-align:center; color:var(--slate)}
 .reel-factline{display:flex; align-items:center; justify-content:center; gap:14px; margin-bottom:10px}
-.reel-count{font:600 11px/1.35 var(--mono); letter-spacing:.1em; color:var(--amber);
+.reel-count{font:600 11px/1.35 var(--ui); letter-spacing:.1em; color:var(--amber);
   font-variant-numeric:tabular-nums}
 .reel-live-state{display:inline-flex; align-items:center; gap:7px;
-  font:500 10.5px/1.35 var(--mono); letter-spacing:.07em; text-transform:uppercase; color:var(--faint)}
+  font:500 10.5px/1.35 var(--ui); letter-spacing:.07em; text-transform:uppercase; color:var(--faint)}
 .reel-live-state i{display:block; width:6px; height:6px; border-radius:50%; background:var(--fwd);
   box-shadow:0 0 0 4px color-mix(in oklab,var(--fwd) 13%,transparent)}
 .hero-reel[data-state="playing"] .reel-live-state i{animation:reelLive 1.8s ease-in-out infinite}
@@ -1161,12 +1190,25 @@ section{--topic:var(--fwd); --topic-ink:var(--topic);
      eyebrow chip keeps the topic itself: it is a label, and a label is meant
      to be seen. */
   --topic-wash:color-mix(in oklab, var(--topic) 42%, var(--slate))}
-.num{display:inline-flex; align-items:center; gap:7px; margin:0 0 16px; justify-self:start;
-  padding:6px 13px 6px 10px; border-radius:999px; letter-spacing:.02em;
+/* **The label the section is known by, made of the page's own glass.** A flat
+   15 % wash with a ring round it was a chip; this is a capsule with a light on
+   it — the topic strongest at the leading edge and falling away across the
+   pill, one specular over the top-left, and the topic's own colour thrown
+   softly underneath. The number sits in its own well rather than running into
+   the word, which is what a numbered label is for. */
+.num{display:inline-flex; align-items:center; gap:9px; margin:0 0 16px; justify-self:start;
+  padding:5px 15px 5px 9px; border-radius:999px; letter-spacing:.035em;
   font:600 12.5px/1 var(--ui); color:var(--topic-ink);
-  background:color-mix(in oklab, var(--topic) 15%, transparent);
-  /* a fill this weak needs an edge, or on the plate it reads as a smudge */
-  box-shadow:0 0 0 1px color-mix(in oklab, var(--topic) 26%, transparent) inset}
+  -webkit-backdrop-filter:blur(14px) saturate(1.5);
+  backdrop-filter:blur(14px) saturate(1.5);
+  background:
+    linear-gradient(122deg,rgba(255,255,255,.17) 0%,rgba(255,255,255,.05) 26%,transparent 52%),
+    linear-gradient(90deg,color-mix(in oklab, var(--topic) 32%, transparent) 0%,
+      color-mix(in oklab, var(--topic) 11%, transparent) 100%);
+  box-shadow:
+    1px 1px 0 rgba(255,255,255,.24) inset,
+    0 0 0 1px color-mix(in oklab, var(--topic) 30%, transparent) inset,
+    0 7px 20px -11px color-mix(in oklab, var(--topic) 62%, transparent)}
 /* **The gap above a heading belongs to the pill, once.** Measured across the
    ten: 16 px in the numbered sections, 14 in the two-column heads (where the
    pill's own margin was zeroed and the heading's 14 stood in for it) and 30 in
@@ -1177,7 +1219,10 @@ section{--topic:var(--fwd); --topic-ink:var(--topic);
    later block, so the general form alone left four of the ten at 30 px. */
 section .num + h2, section.plain .num + h2{margin-top:0}
 .num svg{display:block; flex:none}
-.num b{font-weight:600; font-family:var(--mono); font-size:11.5px;
+.num b{padding:4px 7px; border-radius:999px; font-variant-numeric:tabular-nums;
+  background:color-mix(in oklab, var(--topic) 24%, transparent);
+  box-shadow:0 0 0 1px color-mix(in oklab, var(--topic) 20%, transparent) inset;
+  font-weight:600; font-family:var(--mono); font-size:11px; letter-spacing:.06em;
   opacity:.72; letter-spacing:.08em}
 /* ── the scene card ──────────────────────────────────────────────────────────
    **The wash was a guess and the reference does something else entirely.** Read
@@ -1218,6 +1263,7 @@ section .num + h2, section.plain .num + h2{margin-top:0}
    no ring and read as plain text, so the fallback is the page's own card */
 @supports not (color:color-mix(in oklab, red 10%, transparent)){
   .num{background:var(--ground); box-shadow:0 0 0 1px var(--line) inset}
+  .num b{background:none; box-shadow:none; padding:0}
   .feat figure::before{display:none}
 }
 
@@ -1573,6 +1619,15 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--p
 /* the pill's word, solved against the pill's own tint — see the note beside
    `.feat .num`. The fill and the ring stay the topic itself. */
 :root[data-theme="light"] section{ --topic-ink:color-mix(in oklab, var(--topic) 74%, #0E1618) }
+:root[data-theme="light"] .num{
+  background:
+    linear-gradient(122deg,rgba(255,255,255,.78) 0%,rgba(255,255,255,.30) 26%,transparent 54%),
+    linear-gradient(90deg,color-mix(in oklab, var(--topic) 26%, transparent) 0%,
+      color-mix(in oklab, var(--topic) 9%, transparent) 100%);
+  box-shadow:
+    1px 1px 0 #FFFFFF inset,
+    0 0 0 1px color-mix(in oklab, var(--topic) 26%, transparent) inset,
+    0 7px 18px -12px color-mix(in oklab, var(--topic) 52%, transparent)}
 /* the scene card, on the theme its technique was read from: a real pastel —
    the washed topic mixed into white rather than into the page — and the inner
    glow at full white, which is the reference's own figure */
@@ -1927,6 +1982,48 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--p
    two inside it a given screen gets. */
 .flowclip{display:none}
 .flowclip.on{display:block}
+
+/* ── one glass, on every plate ──────────────────────────────────────────────
+   The reel's pane and the plates the figures stand on were three different
+   materials: a lit pane, and two flat washes that happened to share a radius.
+   They are one now. What makes it read as glass rather than as a tinted box is
+   the *edge*: 1.2 px of light down the top and left, a tenth of that returning
+   along the bottom and right, and a broad specular crossing the upper corner —
+   an even ring all the way round is a border, and a border is what these had.
+   The wash stays; it is the section's own hue and it is what tells the six
+   apart. It is simply no longer opaque, so the page is under the plate rather
+   than hidden by it. */
+.feat figure, .flowshot{
+  -webkit-backdrop-filter:blur(26px) saturate(1.4);
+  backdrop-filter:blur(26px) saturate(1.4);
+  background:
+    linear-gradient(112deg,rgba(255,255,255,.11) 0%,rgba(255,255,255,.05) 13%,
+      transparent 31%,transparent 66%,rgba(255,255,255,.03) 81%,transparent 95%),
+    linear-gradient(180deg,rgba(255,255,255,.06) 0%,transparent 24%),
+    color-mix(in oklab, var(--topic-wash) 15%,
+      color-mix(in oklab, var(--ground) 74%, transparent));
+  box-shadow:
+    1.2px 1.2px 0 rgba(233,247,255,.24) inset,
+    -1px -1px 0 rgba(233,247,255,.07) inset,
+    0 20px 44px -32px rgba(226,244,255,.30) inset,
+    0 -34px 62px -58px rgba(94,177,255,.26) inset,
+    0 22px 52px -34px rgba(0,0,0,.36);
+}
+/* a white page has no dark to lift the plate off, so the edge is the page's
+   own white and the lift is a shadow rather than a glow */
+:root[data-theme="light"] .feat figure, :root[data-theme="light"] .flowshot{
+  background:
+    linear-gradient(112deg,rgba(255,255,255,.62) 0%,rgba(255,255,255,.28) 13%,
+      transparent 31%,transparent 66%,rgba(255,255,255,.20) 81%,transparent 95%),
+    linear-gradient(180deg,rgba(255,255,255,.55) 0%,transparent 26%),
+    color-mix(in oklab, var(--topic-wash) 16%,
+      color-mix(in oklab, #FFFFFF 76%, transparent));
+  box-shadow:
+    1.2px 1.2px 0 #FFFFFF inset,
+    -1px -1px 0 rgba(255,255,255,.7) inset,
+    0 20px 44px -34px rgba(10,102,194,.20) inset,
+    0 18px 44px -30px rgba(38,67,84,.20);
+}
 
 /* ── the ruled grid ─────────────────────────────────────────────────────────
    Six cards put five borders between every pair. One grid ruled by its own
