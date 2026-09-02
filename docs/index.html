@@ -54,7 +54,7 @@ document.documentElement.dataset.theme=t;})()</script>
 <link rel="preload" href="font/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="font/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="font/fonts.css?v=20260828">
-<link rel="stylesheet" href="base.css?v=20260903b">
+<link rel="stylesheet" href="base.css?v=20260903c">
 </head>
 <body>
 
@@ -2036,7 +2036,7 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
     const pauseLabel = reel.querySelector('[data-reel-pause-label]');
     const compact = matchMedia('(max-width:760px)');
     const reduced = matchMedia('(prefers-reduced-motion:reduce)');
-    const SPIN = 620, HOLD = 460, STILL_HOLD = 2100;
+    const SPIN = 900, HOLD = 460, STILL_HOLD = 2100;
     /* **The arrival is a skim, not an entrance.** Coming in from a face and a
        half showed the reader one screen arriving and said nothing about the
        other five. It runs two full turns plus a face instead — 792° — so every
@@ -2046,10 +2046,11 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
        **A skim has a reading speed, and two turns is past it.** The first cut
        ran 792° in 1,450 ms: measured off the frames, the fast third was a dark
        smear with nothing legible in it, which is a whoosh, not a skim. One turn
-       and a face over 2 s puts each of the six square to the reader for about
-       300 ms at the fastest and longer as it slows — enough to see what it is,
-       still quick enough to be one gesture. */
-    const ARRIVE = 2000, SETTLE = 180, ARRIVE_TURN = 420;
+       and a face over 3 s puts each of the six square to the reader for about
+       450 ms at the fastest and longer as it slows — enough to see what it is,
+       and slow enough to read as a reel running rather than a cylinder being
+       cocked. */
+    const ARRIVE = 3000, SETTLE = 200, ARRIVE_TURN = 420;
     const words = [
       ['Find the file, or the exact site inside it.',
        'Home searches favorite folders by filename or recognition sequence, locally and without an import step.'],
@@ -2073,15 +2074,15 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
 
     /* ── the faces are curves, not panels ──────────────────────────────────
        Twelve vertical slices of the same screenshot, each its own plane, laid
-       on an arc of 44° across the face — the frame's own share of the drum, so
-       each one is a true segment of the cylinder and the remaining 16° of its
+       on an arc of 50° across the face — the frame's own share of the drum, so
+       each one is a true segment of the cylinder and the remaining 10° of its
        60° is the gap between frames. `r = sliceWidth / (2·tan(step/2))` is the
        radius at which neighbouring slices meet exactly; it comes out equal to
        `--reel-radius`, which is the check that the two agree. It depends on the
        drum's measured width, so it is set here rather than in the stylesheet
        and re-set whenever that width changes. The plain `<picture>` stays in
        the markup and is what a reader sees if this never runs. */
-    const CURVE_N = 12, CURVE_BEND = 44;
+    const CURVE_N = 12, CURVE_BEND = 50;
     const curveStep = CURVE_BEND / CURVE_N;
     const curveRatio = 1 / (CURVE_N * 2 * Math.tan(curveStep / 2 * Math.PI / 180));
     const sizeCurves = () => {
