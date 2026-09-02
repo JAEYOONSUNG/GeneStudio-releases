@@ -1282,58 +1282,22 @@ section.plain h2{font-size:clamp(26px,3.4vw,36px); margin-top:14px}
 .toolbox > :nth-child(11), .toolbox > :nth-child(12){--tb:var(--fwd)}
 .toolbox > :nth-child(13), .toolbox > :nth-child(14){--tb:var(--amber)}
 .toolbox > :nth-child(15), .toolbox > :nth-child(16){--tb:var(--slate)}
-/* **A bench is a row you walk along, not a wall you read down.** Fifty-seven
-   cards in a three-column grid was four screens on a desk and thirteen on a
-   phone, for a section nobody reads end to end — it is scanned for the one
-   tool somebody wants. So each bench is one horizontal row: the eight headings
-   are all on screen within a screen and a half, and the row is scrolled only
-   when its bench is the one being looked for. The card width is chosen so
-   that a fraction of the next card is always showing (29 %, capped, never
-   exactly a third), because a row that ends flush at the edge says there is
-   nothing more. The arrows are added by the script and only where the row
-   really overflows; a finger needs none, and gets none. */
+/* **Tried as eight horizontal rows and put back.** A bench read as a row you
+   walk along is shorter on the page, and it is the wrong shape for this
+   section: the toolbox is the one place somebody scans for a tool they cannot
+   name yet, and a row shows three of eight and hides the rest behind a
+   gesture. Fifty-seven cards laid out is longer and answers the question. */
 .tbhead{
-  display:flex; align-items:center; gap:10px; margin:38px 0 14px;
+  display:flex; align-items:baseline; gap:10px; margin:38px 0 14px;
   font:500 11.5px/1 var(--mono); letter-spacing:.16em; text-transform:uppercase;
   color:var(--tb,var(--amber));
 }
 .tbhead:first-child{margin-top:0}
-.tbhead h3{display:flex; flex:1; align-items:baseline; gap:10px; margin:0;
-  font:inherit; letter-spacing:inherit; color:inherit; text-transform:inherit}
-.tbhead h3::after{content:''; flex:1; height:1px; background:var(--hair)}
+.tbhead::after{content:''; flex:1; height:1px; background:var(--hair)}
 .tbhead i{font:400 11.5px/1 var(--mono); font-style:normal; color:var(--faint); letter-spacing:.1em}
-.tbnav{display:flex; gap:4px}
-.tbnav[hidden]{display:none}
-.tbarrow{
-  width:28px; height:28px; padding:0; border-radius:8px; cursor:pointer;
-  border:1px solid var(--hair); background:var(--ground); color:var(--slate);
-  display:grid; place-items:center; transition:border-color .15s ease, color .15s ease;
-}
-.tbarrow svg{width:14px; height:14px; fill:none; stroke:currentColor; stroke-width:1.75;
-  stroke-linecap:round; stroke-linejoin:round}
-.tbarrow:hover:not(:disabled){border-color:var(--line); color:var(--ink)}
-.tbarrow:disabled{opacity:.3; cursor:default}
-.tbarrow:focus-visible{outline:1px solid var(--amber); outline-offset:2px}
-@media (pointer:coarse){ .tbnav{display:none} }
-.tbgrid{
-  display:flex; gap:14px; overflow-x:auto; overscroll-behavior-x:contain;
-  scroll-snap-type:x mandatory; padding:2px 2px 10px; margin:-2px -2px 0;
-  scrollbar-width:thin; scrollbar-color:var(--hair) transparent;
-}
-.tbgrid::-webkit-scrollbar{height:6px}
-.tbgrid::-webkit-scrollbar-thumb{background:var(--hair); border-radius:3px}
-.tbgrid::-webkit-scrollbar-track{background:transparent}
-/* the edge that has more behind it fades; the one that does not, does not */
-.tbgrid[data-scroll="start"]{
-  -webkit-mask-image:linear-gradient(to right,#000 calc(100% - 56px),transparent);
-          mask-image:linear-gradient(to right,#000 calc(100% - 56px),transparent)}
-.tbgrid[data-scroll="mid"]{
-  -webkit-mask-image:linear-gradient(to right,transparent,#000 40px,#000 calc(100% - 56px),transparent);
-          mask-image:linear-gradient(to right,transparent,#000 40px,#000 calc(100% - 56px),transparent)}
-.tbgrid[data-scroll="end"]{
-  -webkit-mask-image:linear-gradient(to right,transparent,#000 40px);
-          mask-image:linear-gradient(to right,transparent,#000 40px)}
-@media (prefers-reduced-motion:no-preference){ .tbgrid{scroll-behavior:smooth} }
+.tbgrid{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px}
+@media (max-width:1000px){ .tbgrid{grid-template-columns:repeat(2,minmax(0,1fr))} }
+@media (max-width:640px){ .tbgrid{grid-template-columns:1fr} }
 /* **On a phone the toolbox was 46 % of the page** — 13 screens of it between
    Compare and the section where somebody actually asks for a licence. 49 px of
    each 170 px card was an icon on a line of its own, which is right in a
@@ -1357,7 +1321,6 @@ section.plain h2{font-size:clamp(26px,3.4vw,36px); margin-top:14px}
    row's worth of height out of every card: measured at 1440 px, the first grid
    522 -> 360 px and the whole section 5,102 -> 3,721. */
 .tbcard{
-  flex:0 0 clamp(250px, 29%, 340px); scroll-snap-align:start;
   display:grid; grid-template-columns:auto 1fr; column-gap:10px;
   align-items:start; align-content:start; padding:16px 18px 18px;
   border:1px solid var(--hair); border-radius:16px; background:var(--ground);
