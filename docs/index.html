@@ -54,7 +54,7 @@ document.documentElement.dataset.theme=t;})()</script>
 <link rel="preload" href="font/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="font/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="font/fonts.css?v=20260828">
-<link rel="stylesheet" href="base.css?v=20260902j">
+<link rel="stylesheet" href="base.css?v=20260902k">
 </head>
 <body>
 
@@ -185,7 +185,7 @@ document.documentElement.dataset.theme=t;})()</script>
             <div class="reel-screen">
               <picture><source media="(max-width:760px)" srcset="clip/home-phone.webp">
                 <img src="clip/home.webp" width="2400" height="1500" alt=""></picture>
-              <div class="reel-live-slot" data-reel-live-slot></div>
+              <div class="reel-live-slot reel-fill" data-reel-live-slot></div>
             </div>
           </div>
           <div class="reel-face" data-reel-face data-scene="map"
@@ -194,7 +194,7 @@ document.documentElement.dataset.theme=t;})()</script>
             <div class="reel-screen">
               <picture><source media="(max-width:760px)" srcset="clip/map-phone.webp">
                 <img src="clip/map.webp" width="2400" height="1500" alt=""></picture>
-              <div class="reel-live-slot" data-reel-live-slot></div>
+              <div class="reel-live-slot reel-fill" data-reel-live-slot></div>
             </div>
           </div>
           <div class="reel-face" data-reel-face data-scene="feature"
@@ -203,14 +203,14 @@ document.documentElement.dataset.theme=t;})()</script>
             <div class="reel-screen">
               <picture><source media="(max-width:760px)" srcset="clip/feature-phone.webp">
                 <img src="clip/feature.webp" width="2400" height="1500" alt=""></picture>
-              <div class="reel-live-slot" data-reel-live-slot></div>
+              <div class="reel-live-slot reel-fill" data-reel-live-slot></div>
             </div>
           </div>
           <div class="reel-face" data-reel-face data-scene="digest" data-fit="tall"
                data-video="clip/digest.mp4" data-label="Digest" style="--face-angle:180deg">
             <div class="reel-screen">
               <picture><img src="clip/digest.webp" width="2400" height="1980" alt=""></picture>
-              <div class="reel-live-slot" data-reel-live-slot></div>
+              <div class="reel-live-slot reel-fill" data-reel-live-slot></div>
             </div>
           </div>
           <div class="reel-face" data-reel-face data-scene="guides"
@@ -219,7 +219,7 @@ document.documentElement.dataset.theme=t;})()</script>
             <div class="reel-screen">
               <picture><source media="(max-width:760px)" srcset="clip/guides-phone.webp">
                 <img src="clip/guides.webp" width="2400" height="1500" alt=""></picture>
-              <div class="reel-live-slot" data-reel-live-slot></div>
+              <div class="reel-live-slot reel-fill" data-reel-live-slot></div>
             </div>
           </div>
           <div class="reel-face" data-reel-face data-scene="sanger"
@@ -228,7 +228,7 @@ document.documentElement.dataset.theme=t;})()</script>
             <div class="reel-screen">
               <picture><source media="(max-width:760px)" srcset="clip/sanger-phone.webp">
                 <img src="clip/sanger.webp" width="2400" height="1500" alt=""></picture>
-              <div class="reel-live-slot" data-reel-live-slot></div>
+              <div class="reel-live-slot reel-fill" data-reel-live-slot></div>
             </div>
           </div>
         </div>
@@ -2070,6 +2070,65 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
     let timer = 0, middleTimer = 0, finishTimer = 0, loadToken = 0;
     let inView = false, userPaused = false, hardPaused = false, pageVisible = !document.hidden;
     let arrived = false, captioned = false;
+
+    /* ── the faces are curves, not panels ──────────────────────────────────
+       Nine vertical slices of the same screenshot, each its own plane, laid on
+       an arc of 30° across the face. `r = sliceWidth / (2·tan(step/2))` is the
+       radius at which neighbouring slices meet exactly; it depends on the
+       drum's measured width, so it is set here rather than in the stylesheet
+       and re-set whenever that width changes. The plain `<picture>` stays in
+       the markup and is what a reader sees if this never runs. */
+    const CURVE_N = 9, CURVE_BEND = 30;
+    const curveStep = CURVE_BEND / CURVE_N;
+    const curveRatio = 1 / (CURVE_N * 2 * Math.tan(curveStep / 2 * Math.PI / 180));
+    const sizeCurves = () => {
+      /* **`offsetWidth`, not the bounding rect.** The ring is scaled and turned
+         in 3D, so its client rect is the *projected* box — measured mid-arrival
+         it read 292 px against a real 928, and every slice was laid on a circle
+         a fifth of the right size, which stacks them instead of tiling them. */
+      const w = ring.offsetWidth;
+      if(!w) return;
+      for(const face of faces)
+        face.querySelector('.reel-curve')
+          ?.style.setProperty('--curve-r', (w * curveRatio).toFixed(2) + 'px');
+    };
+    const buildCurves = () => {
+      if(reduced.matches) return;
+      for(const face of faces){
+        const screen = face.querySelector('.reel-screen');
+        const img = face.querySelector('img');
+        const src = img && (img.currentSrc || img.getAttribute('src'));
+        if(!screen || !src) continue;
+        let curve = screen.querySelector('.reel-curve');
+        if(!curve){
+          curve = document.createElement('div');
+          curve.className = 'reel-curve';
+          curve.style.setProperty('--curve-n', String(CURVE_N));
+          for(let i = 0; i < CURVE_N; i++){
+            const slice = document.createElement('div');
+            slice.className = 'reel-slice reel-fill' +
+              (i === 0 ? ' is-first' : i === CURVE_N - 1 ? ' is-last' : '');
+            slice.style.setProperty('--sa',
+              ((i - (CURVE_N - 1) / 2) * curveStep).toFixed(4) + 'deg');
+            /* the picture is the width of the whole face inside a box one
+               N-th of it, pushed left by this slice's share */
+            slice.style.setProperty('--sk', String(i));
+            const shot = document.createElement('img');
+            shot.alt = '';
+            shot.decoding = 'async';
+            slice.appendChild(shot);
+            curve.appendChild(slice);
+          }
+          screen.insertBefore(curve, screen.firstChild);
+        }
+        for(const slice of curve.children){
+          const shot = slice.firstElementChild;
+          if(shot && shot.getAttribute('src') !== src) shot.setAttribute('src', src);
+        }
+        face.dataset.curved = 'true';
+      }
+      sizeCurves();
+    };
     let prepared = null, pending = null;
 
     /* Runs once, on the first time the reel is actually looked at. It drives
@@ -2350,6 +2409,13 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
       faces[index].querySelector('[data-reel-live-slot]').append(video);
       releaseSource(); setState('still', 'Static product overview');
     }
+    buildCurves();
+    /* `currentSrc` is empty until the picture has picked a source, and the
+       source itself changes at the phone breakpoint — so rebuild on both */
+    addEventListener('load', buildCurves, {once:true});
+    compact.addEventListener?.('change', buildCurves);
+    if('ResizeObserver' in window) new ResizeObserver(sizeCurves).observe(ring);
+
     if('IntersectionObserver' in window){
       new IntersectionObserver(entries => {
         for(const entry of entries){
