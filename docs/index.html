@@ -54,7 +54,7 @@ document.documentElement.dataset.theme=t;})()</script>
 <link rel="preload" href="font/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="font/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="font/fonts.css?v=20260828">
-<link rel="stylesheet" href="base.css?v=20260902c">
+<link rel="stylesheet" href="base.css?v=20260902d">
 </head>
 <body>
 
@@ -486,8 +486,8 @@ document.documentElement.dataset.theme=t;})()</script>
         <li><em>Find</em> reads IUPAC and regular expressions, and marks every hit on all three drawings.</li>
       </ul>
     </div>
-    <div class="deck">
-<figure class="rise settle">
+    <div class="deck rise settle">
+<figure>
       <div class="frame">
         <video class="wide" data-clip="clip/drag.mp4" data-poster="clip/drag.webp" width="1200" height="750"
                muted loop playsinline preload="none"
@@ -497,7 +497,7 @@ document.documentElement.dataset.theme=t;})()</script>
       </div>
       <figcaption>Dragging across the His6 tag. Nothing was pressed first — the figures are what a selection says about itself.</figcaption>
     </figure>
-    <figure class="rise settle">
+    <figure>
       <div class="frame">
         <video class="wide" data-clip="clip/find.mp4" data-poster="clip/find.webp" width="1200" height="750"
                muted loop playsinline preload="none"
@@ -507,7 +507,7 @@ document.documentElement.dataset.theme=t;})()</script>
       </div>
       <figcaption>And a motif being typed into ⌘F, every match lighting up as the query grows.</figcaption>
     </figure>
-    <figure class="rise settle">
+    <figure>
       <div class="frame">
         <video class="wide" data-clip="clip/primer.mp4" data-poster="clip/primer.webp" width="1200" height="750"
                muted loop playsinline preload="none"
@@ -548,14 +548,14 @@ document.documentElement.dataset.theme=t;})()</script>
          methylation table's sentence column wraps rather than taking its
          natural width, which is what let the pane be 1,478 px instead of the
          1,980 that made this one figure overwhelm the rest. -->
-    <div class="deck">
-<figure class="rise settle">
+    <div class="deck rise settle">
+<figure>
       <video data-clip="clip/digest.mp4" data-poster="clip/digest.webp" width="1200" height="990"
              muted loop playsinline preload="none"
              aria-label="The whole Digest view with a digest running. Above, the selected stretch 413 to 1,129 — 717 bp — with the Enzynomics catalogue narrowed to the 46 enzymes that have a complete recognition site inside it, six of them listed with the site they recognise, the base they cut at, the end they leave and the two pieces the stretch becomes. Below left, the gel filling as the running time goes up: EcoRI, HindIII, XhoI and BamHI, six cuts, six fragments against a 1 kb ladder. Below right, the molecule drawn as its six coloured pieces with what each carries, the fragment table giving size, span, ends, self-ligation and GC, the compatible ends, and the methylation table judging each of the four enzymes on this construct."></video>
       <figcaption>The Digest view, running — the stretch and the enzymes of your set that cut inside it, the gel as the run goes up, the molecule divided into pieces, and what the host's methylation does to each enzyme.</figcaption>
     </figure>
-    <figure class="rise settle">
+    <figure>
       <div class="frame">
         <video class="wide" data-clip="clip/enzdb.mp4" data-poster="clip/enzdb.webp" width="1200" height="750"
                muted loop playsinline preload="none"
@@ -565,7 +565,7 @@ document.documentElement.dataset.theme=t;})()</script>
       </div>
       <figcaption>A card per enzyme — the cut on both strands, the overhang, who sells it, and what one digest costs from the catalogue it was read off.</figcaption>
     </figure>
-    <figure class="rise settle">
+    <figure>
       <div class="frame">
         <video class="wide" data-clip="clip/methyl.mp4" data-poster="clip/methyl.webp" width="1200" height="750"
                muted loop playsinline preload="none"
@@ -2725,27 +2725,46 @@ if('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion:redu
       const short = cap.split(/[—.]/)[0].trim().slice(0, 70);
       b.setAttribute('aria-label', `Figure ${i + 1} of ${pages.length}` + (short ? ' — ' + short : ''));
       b.addEventListener('click', () => {
-        deck.scrollTo({left: page.offsetLeft - deck.offsetLeft, behavior: still ? 'auto' : 'smooth'});
+        deck.scrollTo({left: page.offsetLeft - pages[0].offsetLeft, behavior: still ? 'auto' : 'smooth'});
       });
       dots.append(b); return b;
     });
     deck.after(dots);
-    /* which page is on screen is read off the scroller rather than counted:
-       a page is the current one when its own middle is nearest the deck's */
+    /* Which page is on screen is read off the scroller rather than counted: a
+       page is the current one when its own middle is nearest the deck's. The
+       same distance drives the effect — `--away` is 0 for the page under the
+       eye and 1 for one a full deck away, so the page being left shrinks and
+       fades *as the finger moves*. One pass per frame, transform and opacity
+       only; a scroll handler that wrote layout would fight the drag it is
+       answering. */
+    let queued = false;
     const sync = () => {
-      const mid = deck.scrollLeft + deck.clientWidth / 2;
+      queued = false;
+      /* **The origin is the first page, not the deck.** `offsetLeft` is measured
+         from the nearest positioned ancestor, and the deck and its figures do
+         not share one — subtracting `deck.offsetLeft` left the resting page
+         194 px from where it was thought to be, so it sat at 0.89 opacity and
+         a 0.99 scale with nobody touching it. Page one is at content-x 0 by
+         construction. */
+      const base = pages[0].offsetLeft;
+      const mid = deck.scrollLeft + deck.clientWidth / 2, span = deck.clientWidth || 1;
       let best = 0, near = Infinity;
       pages.forEach((page, i) => {
-        const c = page.offsetLeft - deck.offsetLeft + page.offsetWidth / 2;
+        const c = page.offsetLeft - base + page.offsetWidth / 2;
         const d = Math.abs(c - mid);
         if(d < near){ near = d; best = i; }
+        if(!still) page.style.setProperty('--away', Math.min(1, d / span).toFixed(3));
       });
       buttons.forEach((b, i) => b.setAttribute('aria-current', String(i === best)));
       dots.hidden = deck.scrollWidth <= deck.clientWidth + 1;
     };
-    deck.addEventListener('scroll', sync, {passive:true});
-    if('ResizeObserver' in window) new ResizeObserver(sync).observe(deck);
-    else addEventListener('resize', sync);
+    const onScroll = () => {
+      if(queued) return;
+      queued = true; requestAnimationFrame(sync);
+    };
+    deck.addEventListener('scroll', onScroll, {passive:true});
+    if('ResizeObserver' in window) new ResizeObserver(onScroll).observe(deck);
+    else addEventListener('resize', onScroll);
     /* ← → move a page when the deck itself has the keyboard */
     deck.tabIndex = 0;
     deck.setAttribute('role', 'group');

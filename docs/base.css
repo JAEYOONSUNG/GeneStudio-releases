@@ -918,16 +918,51 @@ section.plain.onplate .tbcard, .beta .betabox{--faint:#89999C}
    decoding became one. */
 .deck{
   display:flex; overflow-x:auto; overscroll-behavior-x:contain;
-  scroll-snap-type:x mandatory; align-items:start;
+  scroll-snap-type:x mandatory; align-items:stretch;
   gap:clamp(14px,2vw,24px); margin-top:clamp(26px,4vw,44px);
   /* the pages are the scrollbar; it is the dots that say where you are */
   scrollbar-width:none;
 }
 .deck::-webkit-scrollbar{display:none}
-.deck > figure{flex:0 0 100%; scroll-snap-align:center; margin-top:0}
-@media (prefers-reduced-motion:no-preference){ .deck{scroll-behavior:smooth} }
+/* **The pages are one size, and the caption sits on the same line on each.**
+   Digest's first clip is 1200x990 and the two after it 1200x750, so the deck
+   was as tall as the first and the other two left 198 px of dead card under
+   them; in Sequence the same happened at 19 px, from one caption wrapping to a
+   second line. A page is a grid of *the media, then its caption* — the media
+   row takes what is left and centres what is in it, the caption is on the
+   bottom edge — so every page is the deck's own height whatever it carries,
+   and the caption does not move as you swipe. */
+.deck > figure{
+  flex:0 0 100%; scroll-snap-align:center; margin-top:0;
+  display:grid; grid-template-rows:1fr auto; row-gap:14px;
+}
+.deck > figure > video,
+.deck > figure > .frame{align-self:center; justify-self:center; width:100%}
+.deck > figure > figcaption{margin-top:0; align-self:end}
+/* **The pages could not carry the effect while they carried the entrance.**
+   `.rise` owns `transform` and `opacity` on whatever wears it, and
+   `html.js .rise.settle.in{transform:none}` is three classes — so the scale
+   written here was overridden the moment the figure settled, and measured, it
+   sat at the entrance's own 0.985 whatever `--away` said. Three pages of one
+   deck should not stage three entrances anyway: the deck arrives once and
+   wears `.rise` itself, which leaves the two properties free for the swipe. */
+/* **The swipe is the effect, and it is driven by the swipe.** `--away` is how
+   far a page's own middle is from the deck's, 0 to 1, written by the script on
+   every frame of a drag — so the page being left shrinks and fades *as the
+   finger moves* rather than a canned animation playing afterwards. The scale
+   is about the centre, which is the one origin `scroll-snap-align:center` is
+   safe under: a centre-origin scale leaves the snap position exactly where it
+   was. */
+@media (prefers-reduced-motion:no-preference){
+  .deck{scroll-behavior:smooth}
+  .deck > figure{
+    transform-origin:center center;
+    transform:scale(calc(1 - var(--away,0) * .055));
+    opacity:calc(1 - var(--away,0) * .62);
+  }
+}
 
-.deckdots{display:flex; justify-content:center; align-items:center; gap:9px; margin-top:16px}
+.deckdots{display:flex; justify-content:center; align-items:center; gap:2px; margin-top:14px}
 .deckdots[hidden]{display:none}
 /* the dot is 8 px and the control around it is 44 — a target a finger can land
    on, which is the rule the rest of this page keeps */
@@ -935,15 +970,20 @@ section.plain.onplate .tbcard, .beta .betabox{--faint:#89999C}
   width:44px; height:44px; padding:0; border:0; background:none; cursor:pointer;
   display:grid; place-items:center; border-radius:50%;
 }
+/* **The one you are on is a longer mark, not a bigger dot.** A dot scaled up
+   among dots says *this one is emphasised*; a pill says *this is the stretch
+   you are in*, which is what a page indicator is for — and it is legible at a
+   glance without relying on the colour alone, which a red-green reader cannot
+   use. `--line` was the first idea and measured 1.38:1 against the section:
+   a hairline colour on something you are meant to press. `--faint` is this
+   page's own quiet-but-legible token, solved per theme. */
 .deckdot::before{
-  content:''; width:8px; height:8px; border-radius:50%;
-  /* `--line` is a hairline, and a dot is a control: it measured 1.38:1 against
-     the section, where 3 is the floor for something you are meant to press.
-     `--faint` is this page's own quiet-but-legible token, solved per theme. */
-  background:var(--faint); transition:background-color .2s ease, transform .2s ease;
+  content:''; width:8px; height:8px; border-radius:99px;
+  background:var(--faint);
+  transition:width .28s cubic-bezier(.3,.72,.2,1), background-color .2s ease;
 }
 .deckdot:hover::before{background:var(--ink)}
-.deckdot[aria-current="true"]::before{background:var(--topic,var(--amber)); transform:scale(1.35)}
+.deckdot[aria-current="true"]::before{width:26px; background:var(--topic,var(--amber))}
 .deckdot:focus-visible{outline:1px solid var(--amber); outline-offset:-8px}
 @media (prefers-reduced-motion:reduce){ .deckdot::before{transition:none} }
 /* **A frame is the window round a drawing, so where the drawing is narrower
