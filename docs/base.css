@@ -589,10 +589,16 @@ figcaption{margin:14px 2px 0; font:400 13px/1.55 var(--ui); color:var(--faint);
   filter:blur(54px)
 }
 .hero-reel{position:relative; z-index:1}
-/* The radius is the hexagon's, not a taste: R = W / (2·tan 30°), so six faces
-   of width W close into a drum with no gap and no overlap. Change one and the
-   other has to move with it. */
-.hero-reel{--reel-angle:0deg; --reel-radius:min(71vw,806px); margin:0; text-align:left}
+/* **The drum is a reel, so the frames do not touch.** The hexagon radius —
+   W / (2·tan 30°) — is the one at which six panels close into a solid prism
+   with no gap anywhere, and a solid prism is what it looked like: six pages
+   butted edge to edge with nothing between them. The radius here is larger, so
+   each frame takes only about 44° of the 60° it is given and the remaining 16°
+   is the gap you see through to the glass behind. `R = W / β` in radians, and β
+   is `CURVE_BEND` in the script — the frame's own bend is the same 44°, which
+   is what makes each one a true segment of one cylinder rather than a bowed
+   card that happens to be near it. Move one and the other must move with it. */
+.hero-reel{--reel-angle:0deg; --reel-radius:min(105.5vw,1211px); margin:0; text-align:left}
 .reel-viewport{
   position:relative; isolation:isolate; height:clamp(452px,58vw,714px); overflow:hidden;
   perspective:clamp(1000px,86vw,1300px); perspective-origin:50% 46%;
@@ -725,14 +731,17 @@ figcaption{margin:14px 2px 0; font:400 13px/1.55 var(--ui); color:var(--faint);
 /* ── a page is bent, and six bent pages are a cylinder ──────────────────────
    Six flat panels at 60° is a hexagonal prism: it turns on hard corners and
    the silhouette is a hexagon, which is what it looked like. A page cannot be
-   bent in CSS, but it can be *built* bent — nine vertical slices of the same
-   screenshot, each a plane of its own, laid on an arc. Thirty degrees across a
-   face is half of what a closed cylinder would need: enough that the drum
-   reads as round and the edges fall away, little enough that the face square
-   to the reader is still a screenshot somebody can read. The radius is
-   `sliceWidth / (2·tan(step/2))`, which is the one value at which neighbouring
-   slices meet with no gap and no overlap; script sets it in pixels because it
-   is a function of the drum's measured width. */
+   bent in CSS, but it can be *built* bent — twelve vertical slices of the same
+   screenshot, each a plane of its own, laid on an arc. Forty-four degrees is
+   the frame's share of the drum, so the panel is a real segment of the
+   cylinder and not a card leaning against one: the edges fall away about a
+   tenth of the frame's width in depth, which is what finally reads as round.
+   Twelve slices rather than nine because at 44° the earlier step showed its
+   own facets. The radius is `sliceWidth / (2·tan(step/2))`, the one value at
+   which neighbouring slices meet with no gap and no overlap, and it comes out
+   equal to the drum's own radius — which is the check that the geometry is
+   right. Script sets it in pixels because it is a function of the drum's
+   measured width. */
 .reel-curve{position:absolute; inset:0; transform-style:preserve-3d;
   transform:translateZ(calc(0px - var(--curve-r,0px)))}
 /* **A slice holds a real `<img>`, not a slice of a background.** Sizing one
@@ -955,7 +964,7 @@ figcaption{margin:14px 2px 0; font:400 13px/1.55 var(--ui); color:var(--faint);
 }
 
 @media (max-width:760px){
-  .hero-reel{--reel-radius:300px}
+  .hero-reel{--reel-radius:calc((100vw - 52px) * 1.302)}
   .reel-viewport{height:clamp(316px,86vw,350px); perspective:760px; border-radius:22px}
   .reel-ring{width:calc(100vw - 52px); aspect-ratio:1.22}
   .reel-screen{border-radius:16px}
@@ -973,6 +982,7 @@ figcaption{margin:14px 2px 0; font:400 13px/1.55 var(--ui); color:var(--faint);
 @media (max-width:430px){
   .hero-reel-shot{padding-inline:14px}
   .reel-ring{width:calc(100vw - 48px)}
+  .hero-reel{--reel-radius:calc((100vw - 48px) * 1.302)}
 }
 @media (prefers-reduced-motion:reduce){
   .hero-reel .reel-ring{transform:translate(-50%,-50%) !important; transform-style:flat;
