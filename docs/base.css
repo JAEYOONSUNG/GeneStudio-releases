@@ -1181,9 +1181,27 @@ section.plain h2{font-size:clamp(26px,3.4vw,36px); margin-top:14px}
    one inline sprite rather than a file per card: the page fetches from nobody. */
 .tbsprite{display:none}
 .toolbox{margin-top:34px}
+/* **Eight benches, and the colour says which.** Fifty-seven cards under one
+   accent is a wall to be read line by line; the headings already name the
+   groups in words, so the hue is what lets somebody find the enzyme bench
+   without reading. They are the application's own — the accent, the two strand
+   colours, the cut and the page blue, each already solved per theme — so a
+   reader who has seen a map recognises them rather than learning a new set.
+   The heading and the glyphs of a group take the same one, which is what keeps
+   this a system rather than confetti; `--slate` closes it, because the last
+   group is the application itself and is not a bench. */
+.toolbox > :nth-child(1),  .toolbox > :nth-child(2) {--tb:var(--amber)}
+.toolbox > :nth-child(3),  .toolbox > :nth-child(4) {--tb:var(--fwd)}
+.toolbox > :nth-child(5),  .toolbox > :nth-child(6) {--tb:var(--cut)}
+.toolbox > :nth-child(7),  .toolbox > :nth-child(8) {--tb:var(--rev)}
+.toolbox > :nth-child(9),  .toolbox > :nth-child(10){--tb:var(--blue)}
+.toolbox > :nth-child(11), .toolbox > :nth-child(12){--tb:var(--fwd)}
+.toolbox > :nth-child(13), .toolbox > :nth-child(14){--tb:var(--amber)}
+.toolbox > :nth-child(15), .toolbox > :nth-child(16){--tb:var(--slate)}
 .tbhead{
   display:flex; align-items:baseline; gap:10px; margin:38px 0 14px;
-  font:500 11.5px/1 var(--mono); letter-spacing:.16em; text-transform:uppercase; color:var(--amber);
+  font:500 11.5px/1 var(--mono); letter-spacing:.16em; text-transform:uppercase;
+  color:var(--tb,var(--amber));
 }
 .tbhead:first-child{margin-top:0}
 .tbhead::after{content:''; flex:1; height:1px; background:var(--hair)}
@@ -1195,53 +1213,65 @@ section.plain h2{font-size:clamp(26px,3.4vw,36px); margin-top:14px}
    each 170 px card was an icon on a line of its own, which is right in a
    three-column grid and wrong when the card is 350 px wide with two lines of
    text beside it. Card 170 → 85 px, the section 10,970 → 7,545. */
-@media (max-width:640px){
-  .tbgrid{grid-template-columns:1fr}
-  .tbcard{display:grid; grid-template-columns:auto 1fr; column-gap:13px; row-gap:5px; padding:16px 18px}
-  .tbcard > .tbico{grid-column:1; grid-row:1 / span 2; align-self:start; width:32px; height:32px; margin-bottom:0}
-  .tbcard b{grid-column:2}
-  .tbcard b + span{grid-column:2; margin-top:0}
-}
+@media (max-width:640px){ .tbgrid{grid-template-columns:1fr} }
+/* **The icon is a marker on the title, not an object of its own.** Fifty-seven
+   of these carried a 40 px glossy tile — a radial specular highlight, a
+   gradient, two drop shadows and two insets — with the glyph drawn *twice*
+   inside it: a pale blue ghost offset 1.6/1.8 px behind the face, plus a
+   `drop-shadow` filter on top. Five depth effects stacked on a 20 px line
+   drawing, none of which can read as depth at that size; what they read as is
+   misregistration, the way cheap printing looks. And the tile was hardcoded
+   white with no dark answer, so on this page's own default theme all
+   fifty-seven were white stickers punched into a dark card.
+
+   The comment they replaced already said the right thing — *a toolbox card's
+   icon is a bullet, not a subject* — and then gave it a bevel anyway. A bullet
+   is flat, one colour, and beside the thing it marks. It sits on the title's
+   own line now, which also makes the title the first thing read and takes a
+   row's worth of height out of every card: measured at 1440 px, the first grid
+   522 -> 360 px and the whole section 5,102 -> 3,721. */
 .tbcard{
+  display:grid; grid-template-columns:auto 1fr; column-gap:10px;
+  align-items:start; padding:16px 18px 18px;
   border:1px solid var(--hair); border-radius:16px; background:var(--ground);
-  padding:18px 18px 20px; transition:border-color .15s ease, transform .15s ease;
+  transition:border-color .15s ease, transform .15s ease;
 }
 .tbcard:hover{border-color:var(--line); transform:translateY(-2px)}
-/* **The same object the glyph tiles are.** Fifty-seven of these sat beside
-   twelve layered tiles as flat teal washes with a line icon in them, which is
-   why the toolbox read as the un-designed part of the page — one system for
-   the hero rows and another for the bulk. Same gradient, same hairline, same
-   inset pair; smaller, because a toolbox card's icon is a bullet, not a
-   subject. */
+/* the glyph is optically on the title's *first* line — centring it against a
+   two-line title floats it into the gap between them */
 .tbico{
-  display:grid; place-items:center; width:40px; height:40px; border-radius:13px;
-  background:
-    radial-gradient(circle at 29% 20%, rgba(255,255,255,.98) 0 12%, transparent 42%),
-    linear-gradient(145deg, #ffffff 4%, #f7f9fd 58%, #eaf0f8 100%);
-  box-shadow:
-    0 8px 18px rgba(30,44,72,.11), 0 2px 5px rgba(30,44,72,.07),
-    inset 0 1px 0 #fff, inset 0 -1px 0 rgba(60,80,120,.09);
-  margin-bottom:14px;
+  grid-column:1; grid-row:1; display:grid; place-items:center;
+  width:20px; height:20px; margin:2px 0 0; color:var(--tb,var(--amber));
 }
-.tbico svg{width:20px; height:20px; fill:none; stroke-width:1.85;
-  stroke-linecap:round; stroke-linejoin:round; overflow:visible;
-  filter:drop-shadow(0 2px 2px rgba(45,60,92,.14))}
-/* the sprite cannot be layered the way the drawn glyphs are — a symbol is one
-   set of paths — so the depth the glyph tiles get from a `material` shape
-   these get from a second <use> of the same symbol: a soft copy behind,
-   nudged down-right, and the face in ink over it. Two references, no second
-   sprite. */
-.tbico use.d{stroke:#A9C4E4; transform:translate(1.6px,1.8px); opacity:.6}
-.tbico use.f{stroke:#4A5A74}
-.tbcard b{display:block; color:var(--ink); font-size:15.5px; font-weight:600; letter-spacing:-.005em}
+.tbico svg{width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:1.75;
+  stroke-linecap:round; stroke-linejoin:round; overflow:visible}
+/* one reference, one stroke. `use.d` was the ghost; it stays in the markup
+   because the sprite is written by `tools/sync-site-toolbox-icons.mjs` and a
+   second <use> costs nothing, but it must not paint. */
+.tbico use.d{display:none}
+.tbico use.f{stroke:currentColor}
+.tbcard b{grid-column:2; grid-row:1; display:block; color:var(--ink);
+  font-size:15.5px; font-weight:600; letter-spacing:-.005em; line-height:1.3}
 /* **All 57 icons sat in the corner of their tile, and it had never rendered
    otherwise.** `.tbcard span` also matches <span class="tbico">, is one class
    heavier than `.tbico` and comes later — so it won, the tile computed
    `display:block`, and the `place-items:center` written to centre the glyph did
-   nothing. Measured: the SVG inset 0,0,17,17 in a 36 px tile; after, 8.5 all
-   round. The description is the span *after* the name. */
-.tbcard b + span{display:block; margin-top:7px; font-size:13.5px; line-height:1.55; color:var(--slate)}
-.tbcard > .tbico{display:grid; place-items:center; margin-top:0}
+   nothing. The description is the span *after* the name. */
+.tbcard b + span{grid-column:1 / -1; grid-row:2; display:block; margin-top:8px;
+  font-size:13.5px; line-height:1.55; color:var(--slate)}
+/* **On a phone the toolbox is the longest section on the page**, and the
+   comment this replaced had already bought 3,425 px of it back once. A card
+   one column wide is read with the eye against its left edge rather than
+   scanned across a grid, so it can afford less air between the title and the
+   line under it. It goes *after* the rules it narrows, not before them: at
+   equal specificity the later declaration wins, and written above `.tbcard`
+   the whole block measured as though it were not there — 7,873 px against the
+   7,573 it asks for, which is the trap this stylesheet already names for
+   `.fdbox .field`. */
+@media (max-width:640px){
+  .tbcard{padding:16px 18px}
+  .tbcard b + span{margin-top:5px}
+}
 
 /* **A third of the box the whole page aims at was empty.** The steps are capped
    at 66 ch, so at 1400 the widest ink in a 968 px box was 625 px — 343 px of
@@ -1589,30 +1619,64 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--p
   max-width:min(100%,940px); margin:0 auto;
 }
 .chapter-eyebrow{margin-bottom:22px}
+/* **Six instruments in a row is not a pipeline until something joins them.**
+   The heading under this strip says *from the file on your disk to the figure
+   in the paper*, which is a sequence — and the strip drew six equally spaced
+   tiles with nothing between them, so what it read as was a menu. A hairline
+   from each tile to the next is the whole of the fix, and it is deliberately
+   **one quiet colour** rather than six: the glyphs already carry an accent
+   apiece, and a rail repeating them would be the same thing said twice.
+
+   The geometry is derived rather than written down twice — the gap, the tile
+   and the padding are variables, so a segment always spans exactly the space
+   between two tile edges and cannot come adrift when any of them changes. */
 .verbs{
+  --vgap:clamp(12px,2vw,26px); --vtile:72px; --vpad:10px;
   display:grid; grid-template-columns:repeat(6,minmax(76px,1fr));
-  gap:clamp(12px,2vw,26px); width:min(100%,850px);
+  gap:var(--vgap); width:min(100%,850px);
   margin:clamp(38px,5vw,58px) auto 0; padding:0; list-style:none;
 }
-.verbs li{min-width:0}
+.verbs li{min-width:0; position:relative}
+/* the segment *leaving* a tile, so the one to suppress is the last of a row */
+.verbs li::after{
+  content:''; position:absolute; height:1px; background:var(--vedge);
+  top:calc(var(--vpad) + var(--vtile)/2);
+  left:calc(50% + var(--vtile)/2);
+  width:calc(100% + var(--vgap) - var(--vtile));
+}
+/* **A rail's ends belong to a row, not to the list.** At 900 px the six wrap
+   to 3 x 2, and `:last-child` is then the end of the second row only — the
+   third tile would run a line off the right edge into nothing. This is the
+   same trap the four-step strip already names one section along. */
+.verbs li:last-child::after{display:none}
 .verbs a{
-  display:grid; justify-items:center; gap:12px; min-height:112px; padding:10px 6px;
-  border-radius:14px;
+  display:grid; justify-items:center; gap:12px; min-height:112px;
+  padding:var(--vpad) 6px; border-radius:14px;
   font-size:14.5px; color:var(--slate); text-decoration:none;
   transition:color .18s ease, background .18s ease;
 }
 .verbs a:hover{color:var(--ink); background:rgba(255,255,255,.025)}
 .verbs a:focus-visible{outline:1px solid var(--amber); outline-offset:3px}
-.verbs .vb{display:grid; place-items:center; width:72px; height:72px}
+.verbs .vb{display:grid; place-items:center; width:var(--vtile); height:var(--vtile)}
 .verbs .vb svg{width:54px; height:54px}
 @media (max-width:900px){
   .verbs{grid-template-columns:repeat(3,minmax(82px,1fr)); width:min(100%,500px)}
+  .verbs li:nth-child(3)::after{display:none}
 }
 @media (max-width:620px){
-  .verbs{gap:8px 6px}
-  .verbs a{min-height:96px; padding:8px 3px; font-size:13px}
-  .verbs .vb{width:64px; height:64px}
+  .verbs{gap:8px 6px; --vgap:6px; --vtile:64px; --vpad:8px}
+  .verbs a{min-height:96px; padding:var(--vpad) 3px; font-size:13px}
   .verbs .vb svg{width:48px; height:48px}
+}
+/* **One orchestrated moment, and it is the one already happening.** The glyphs
+   arrive on a 45 ms stagger (`--g-delay`, set per child below); the rail is
+   drawn on the same cadence, so the eye is led along the sequence once, on
+   arrival, rather than a second effect being added beside the first. Without
+   JavaScript, and under reduced motion, the rail is simply there. */
+@media (prefers-reduced-motion:no-preference){
+  html.js .verbs:not(.on) li::after{transform:scaleX(0)}
+  html.js .verbs li::after{transform-origin:left center;
+    transition:transform .38s cubic-bezier(.3,.72,.2,1) var(--g-delay,0ms)}
 }
 
 /* ── the three-move rail ────────────────────────────────────────────────────
@@ -2154,15 +2218,10 @@ html.js .rise.settle.in{transform:none}
   .rail nav .feature-card:focus-visible .feature-icon svg{
     animation:tbDraw .62s cubic-bezier(.35,0,.2,1);
   }
-  /* the tile answers as well as the drawing in it: a 19 px icon redrawing on
-     its own is a flicker, and the two together read as one response */
-  .tbico{transition:transform .22s cubic-bezier(.2,.7,.2,1), background-color .22s ease}
-  .tbcard:hover .tbico{transform:scale(1.09)}
 }
 @media (prefers-reduced-motion:reduce){
   .tbcard:hover .tbico svg,
   .rail nav .feature-card:hover .feature-icon svg{animation:none}
-  .tbcard:hover .tbico{transform:none}
 }
 
 /* ════════════════════════════════════════════════════════════════════════════
@@ -2190,7 +2249,17 @@ html.js .rise.settle.in{transform:none}
   transition:transform .2s cubic-bezier(.22,.75,.2,1),border-color .2s ease,
     background .2s ease,box-shadow .2s ease;
 }
-.chapter .lg{--g-body:rgba(111,146,169,.09);--g-edge:rgba(194,216,233,.22);
+/* **The rail between the tiles has to be the same line as their borders**, and
+   it cannot get there by inheriting: `.lg` sets `--g-edge` on the element
+   itself, and a value set directly on an element beats an inherited one
+   whatever the specificity of the rule that inherited it. So the edge is
+   written once on the list and read twice — by the tile's border here and by
+   `.verbs li::after` below. Measured off `--line` instead, the rail came out
+   `rgba(214,221,222)` against the tiles' `rgba(194,216,233,.22)`: brighter
+   than the borders it runs between, in the theme where the chapter's ground
+   does not change at all. */
+.chapter .verbs{--vedge:rgba(194,216,233,.22)}
+.chapter .lg{--g-body:rgba(111,146,169,.09); --g-edge:var(--vedge);
   background:linear-gradient(155deg,rgba(104,139,162,.09),rgba(30,48,58,.03))}
 /* The six workbench instruments share one material and one light source. The
    top-left lift and bottom-right contact shadow are deliberately soft and
@@ -2198,7 +2267,7 @@ html.js .rise.settle.in{transform:none}
    icons. Their drawings are neutral except for one operation-specific signal. */
 .verbs .lg{
   --g-ink:#D2DEE1; --g-muted:#708388; --g-body:rgba(184,204,210,.045);
-  --g-edge:rgba(190,211,216,.145); --g-signal:var(--g-accent);
+  --g-edge:var(--vedge); --g-signal:var(--g-accent);
   border-color:var(--g-edge);
   background:linear-gradient(145deg,#152126 0%,#0D171A 72%,#0B1417 100%);
   box-shadow:
@@ -2210,8 +2279,8 @@ html.js .rise.settle.in{transform:none}
 }
 :root[data-theme="dark"] .verbs .lg{
   --g-ink:#D8E3E5; --g-muted:#7B8F94; --g-body:rgba(184,204,210,.055);
-  --g-edge:rgba(190,211,216,.17);
 }
+
 .verbs .lg::before{
   content:''; position:absolute; inset:1px; z-index:0; pointer-events:none;
   border-radius:14px;
