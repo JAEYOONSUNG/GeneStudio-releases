@@ -2455,25 +2455,24 @@ html.js [data-glyphs]:not(.on) .lg svg{opacity:0; transform:translateY(3px)}
 
 /* ── and it answers the pointer, once ────────────────────────────────────── */
 @media (hover:hover) and (pointer:fine){
+  /* **A tile that is flat at rest must not puff up under the pointer.** These
+     three rebuilt the whole bevel on hover — the verb one all five layers of
+     it — so pointing at an instrument turned it back into the 2020 soft-UI
+     button the resting state had just stopped being. What answers a pointer
+     here is the lift and the accent in the border, which is the same thing
+     every other card on this page answers with. */
   .gridlines > div:hover .lg{
-    transform:translateY(-1px); border-color:color-mix(in srgb,var(--g-accent) 40%,var(--g-edge));
-    background:linear-gradient(155deg,color-mix(in srgb,var(--g-accent) 8%,transparent),rgba(54,78,94,.025));
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 14px 28px -24px rgba(0,0,0,.75);
+    transform:translateY(-1px);
+    border-color:color-mix(in srgb,var(--g-accent) 40%,var(--g-edge));
+    background:color-mix(in srgb,var(--g-accent) 7%,rgba(129,163,188,.055));
   }
   .verbs a:hover .lg{
     transform:translateY(-1px);
-    border-color:color-mix(in srgb,var(--g-accent) 22%,var(--g-edge));
-    background:linear-gradient(145deg,#172429 0%,#0E181B 72%,#0C1518 100%);
-    box-shadow:
-      -8px -8px 20px rgba(67,90,96,.17),
-      10px 12px 23px rgba(0,0,0,.46),
-      0 3px 6px rgba(0,0,0,.25),
-      inset 1px 1px 0 rgba(255,255,255,.065),
-      inset -2px -2px 4px rgba(0,0,0,.23);
+    border-color:color-mix(in srgb,var(--g-accent) 30%,var(--g-edge));
+    background:color-mix(in srgb,var(--g-accent) 6%,rgba(184,204,210,.045));
   }
   :root[data-theme="light"] .gridlines > div:hover .lg{
-    background:linear-gradient(155deg,#FBFDFF,color-mix(in srgb,var(--g-accent) 8%,#EDF3F7));
-    box-shadow:inset 0 1px 0 #fff,0 12px 24px -20px rgba(25,55,78,.34)}
+    background:color-mix(in srgb,var(--g-accent) 7%,#F6F9FB)}
   .verbs a:is(:hover,:focus-visible) [data-glyph="open"] .mov{animation:gOpen 980ms cubic-bezier(.16,.78,.2,1) both}
   .verbs a:is(:hover,:focus-visible) [data-glyph="read"] .mov{animation:gScan 1080ms cubic-bezier(.16,.78,.2,1) both}
   .verbs a:is(:hover,:focus-visible) [data-glyph="cut"] .mov{animation:gCut 920ms cubic-bezier(.16,.78,.2,1) both}
