@@ -54,7 +54,7 @@ document.documentElement.dataset.theme=t;})()</script>
 <link rel="preload" href="font/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="font/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="font/fonts.css?v=20260828">
-<link rel="stylesheet" href="base.css?v=20260903a">
+<link rel="stylesheet" href="base.css?v=20260903b">
 </head>
 <body>
 
@@ -2091,9 +2091,14 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
          a fifth of the right size, which stacks them instead of tiling them. */
       const w = ring.offsetWidth;
       if(!w) return;
-      for(const face of faces)
-        face.querySelector('.reel-curve')
-          ?.style.setProperty('--curve-r', (w * curveRatio).toFixed(2) + 'px');
+      for(const face of faces){
+        const curve = face.querySelector('.reel-curve');
+        if(!curve) continue;
+        curve.style.setProperty('--curve-r', (w * curveRatio).toFixed(2) + 'px');
+        /* the sprocket run is offset per slice in pixels, so it needs the
+           slice's real width rather than a percentage of it */
+        curve.style.setProperty('--slice-w', (w / CURVE_N).toFixed(3) + 'px');
+      }
     };
     const buildCurves = () => {
       if(reduced.matches) return;
