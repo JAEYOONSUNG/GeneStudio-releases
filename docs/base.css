@@ -1198,22 +1198,64 @@ section.plain h2{font-size:clamp(26px,3.4vw,36px); margin-top:14px}
 .toolbox > :nth-child(11), .toolbox > :nth-child(12){--tb:var(--fwd)}
 .toolbox > :nth-child(13), .toolbox > :nth-child(14){--tb:var(--amber)}
 .toolbox > :nth-child(15), .toolbox > :nth-child(16){--tb:var(--slate)}
+/* **A bench is a row you walk along, not a wall you read down.** Fifty-seven
+   cards in a three-column grid was four screens on a desk and thirteen on a
+   phone, for a section nobody reads end to end — it is scanned for the one
+   tool somebody wants. So each bench is one horizontal row: the eight headings
+   are all on screen within a screen and a half, and the row is scrolled only
+   when its bench is the one being looked for. The card width is chosen so
+   that a fraction of the next card is always showing (29 %, capped, never
+   exactly a third), because a row that ends flush at the edge says there is
+   nothing more. The arrows are added by the script and only where the row
+   really overflows; a finger needs none, and gets none. */
 .tbhead{
-  display:flex; align-items:baseline; gap:10px; margin:38px 0 14px;
+  display:flex; align-items:center; gap:10px; margin:38px 0 14px;
   font:500 11.5px/1 var(--mono); letter-spacing:.16em; text-transform:uppercase;
   color:var(--tb,var(--amber));
 }
 .tbhead:first-child{margin-top:0}
-.tbhead::after{content:''; flex:1; height:1px; background:var(--hair)}
+.tbhead h3{display:flex; flex:1; align-items:baseline; gap:10px; margin:0;
+  font:inherit; letter-spacing:inherit; color:inherit; text-transform:inherit}
+.tbhead h3::after{content:''; flex:1; height:1px; background:var(--hair)}
 .tbhead i{font:400 11.5px/1 var(--mono); font-style:normal; color:var(--faint); letter-spacing:.1em}
-.tbgrid{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px}
-@media (max-width:1000px){ .tbgrid{grid-template-columns:repeat(2,minmax(0,1fr))} }
+.tbnav{display:flex; gap:4px}
+.tbnav[hidden]{display:none}
+.tbarrow{
+  width:28px; height:28px; padding:0; border-radius:8px; cursor:pointer;
+  border:1px solid var(--hair); background:var(--ground); color:var(--slate);
+  display:grid; place-items:center; transition:border-color .15s ease, color .15s ease;
+}
+.tbarrow svg{width:14px; height:14px; fill:none; stroke:currentColor; stroke-width:1.75;
+  stroke-linecap:round; stroke-linejoin:round}
+.tbarrow:hover:not(:disabled){border-color:var(--line); color:var(--ink)}
+.tbarrow:disabled{opacity:.3; cursor:default}
+.tbarrow:focus-visible{outline:1px solid var(--amber); outline-offset:2px}
+@media (pointer:coarse){ .tbnav{display:none} }
+.tbgrid{
+  display:flex; gap:14px; overflow-x:auto; overscroll-behavior-x:contain;
+  scroll-snap-type:x mandatory; padding:2px 2px 10px; margin:-2px -2px 0;
+  scrollbar-width:thin; scrollbar-color:var(--hair) transparent;
+}
+.tbgrid::-webkit-scrollbar{height:6px}
+.tbgrid::-webkit-scrollbar-thumb{background:var(--hair); border-radius:3px}
+.tbgrid::-webkit-scrollbar-track{background:transparent}
+/* the edge that has more behind it fades; the one that does not, does not */
+.tbgrid[data-scroll="start"]{
+  -webkit-mask-image:linear-gradient(to right,#000 calc(100% - 56px),transparent);
+          mask-image:linear-gradient(to right,#000 calc(100% - 56px),transparent)}
+.tbgrid[data-scroll="mid"]{
+  -webkit-mask-image:linear-gradient(to right,transparent,#000 40px,#000 calc(100% - 56px),transparent);
+          mask-image:linear-gradient(to right,transparent,#000 40px,#000 calc(100% - 56px),transparent)}
+.tbgrid[data-scroll="end"]{
+  -webkit-mask-image:linear-gradient(to right,transparent,#000 40px);
+          mask-image:linear-gradient(to right,transparent,#000 40px)}
+@media (prefers-reduced-motion:no-preference){ .tbgrid{scroll-behavior:smooth} }
 /* **On a phone the toolbox was 46 % of the page** — 13 screens of it between
    Compare and the section where somebody actually asks for a licence. 49 px of
    each 170 px card was an icon on a line of its own, which is right in a
    three-column grid and wrong when the card is 350 px wide with two lines of
    text beside it. Card 170 → 85 px, the section 10,970 → 7,545. */
-@media (max-width:640px){ .tbgrid{grid-template-columns:1fr} }
+
 /* **The icon is a marker on the title, not an object of its own.** Fifty-seven
    of these carried a 40 px glossy tile — a radial specular highlight, a
    gradient, two drop shadows and two insets — with the glyph drawn *twice*
@@ -1231,8 +1273,9 @@ section.plain h2{font-size:clamp(26px,3.4vw,36px); margin-top:14px}
    row's worth of height out of every card: measured at 1440 px, the first grid
    522 -> 360 px and the whole section 5,102 -> 3,721. */
 .tbcard{
+  flex:0 0 clamp(250px, 29%, 340px); scroll-snap-align:start;
   display:grid; grid-template-columns:auto 1fr; column-gap:10px;
-  align-items:start; padding:16px 18px 18px;
+  align-items:start; align-content:start; padding:16px 18px 18px;
   border:1px solid var(--hair); border-radius:16px; background:var(--ground);
   transition:border-color .15s ease, transform .15s ease;
 }
@@ -2237,17 +2280,32 @@ html.js .rise.settle.in{transform:none}
    `vector-effect:non-scaling-stroke` keeps the 1.15 / 1.75 / 2.2 hierarchy
    crisp when the 64-unit scenes are drawn at their responsive optical size.
    ════════════════════════════════════════════════════════════════════════════ */
+/* **The tile was invisible as a shape and loud as an effect.** Measured against
+   its own composited ground: the border read **1.94:1** here and **1.70** on
+   the verb strip, and `--g-body` — the *material* each instrument is drawn on,
+   the record, the plate, the strand — read **1.09–1.14**, which is the page. So
+   the only thing with any presence was `--g-ink` at 15:1, and each glyph read
+   as a few bright marks floating in a dark blur. Meanwhile the box carried two
+   shadow layers here and **eight** on the verb strip: an outer glow up-left, an
+   outer shadow down-right, a second shadow under that, an inset highlight, an
+   inset shadow, a radial sheen, a blurred contact ellipse and a directional
+   surface gradient. Light from the top left with a bevel underneath is
+   neumorphism, and it is the same fault the toolbox glyphs had — fake depth
+   standing in for a hierarchy that was not there.
+
+   None of it is drawn now. What replaces it is a middle: an edge that is
+   actually an edge (**3.3:1**) and a material that is actually a material
+   (**1.4–1.6**), so the instrument reads as a drawing *of* something rather
+   than as an accent on nothing. */
 .lg{
   --g-ink:#DDE8F0; --g-muted:#7890A3;
-  --g-body:rgba(120,151,178,.10); --g-edge:rgba(194,216,233,.28);
+  --g-body:rgba(120,151,178,.30); --g-edge:rgba(194,216,233,.44);
   --g-accent:#5EB1FF; --g-signal:#63D2B3;
   display:grid; place-items:center; position:relative; isolation:isolate;
   width:72px; height:72px; border:1px solid var(--g-edge); border-radius:15px;
-  background:linear-gradient(155deg,rgba(129,163,188,.09),rgba(54,78,94,.025));
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.055),
-    0 12px 26px -22px rgba(0,0,0,.72);
+  background:rgba(129,163,188,.055);
   transition:transform .2s cubic-bezier(.22,.75,.2,1),border-color .2s ease,
-    background .2s ease,box-shadow .2s ease;
+    background .2s ease;
 }
 /* **The rail between the tiles has to be the same line as their borders**, and
    it cannot get there by inheriting: `.lg` sets `--g-edge` on the element
@@ -2258,7 +2316,7 @@ html.js .rise.settle.in{transform:none}
    `rgba(214,221,222)` against the tiles' `rgba(194,216,233,.22)`: brighter
    than the borders it runs between, in the theme where the chapter's ground
    does not change at all. */
-.chapter .verbs{--vedge:rgba(194,216,233,.22)}
+.chapter .verbs{--vedge:rgba(194,216,233,.34)}
 .chapter .lg{--g-body:rgba(111,146,169,.09); --g-edge:var(--vedge);
   background:linear-gradient(155deg,rgba(104,139,162,.09),rgba(30,48,58,.03))}
 /* The six workbench instruments share one material and one light source. The
@@ -2266,41 +2324,23 @@ html.js .rise.settle.in{transform:none}
    close to the chapter ground: depth without turning them into glossy app
    icons. Their drawings are neutral except for one operation-specific signal. */
 .verbs .lg{
-  --g-ink:#D2DEE1; --g-muted:#708388; --g-body:rgba(184,204,210,.045);
+  --g-ink:#D2DEE1; --g-muted:#708388; --g-body:rgba(184,204,210,.15);
   --g-edge:var(--vedge); --g-signal:var(--g-accent);
   border-color:var(--g-edge);
-  background:linear-gradient(145deg,#152126 0%,#0D171A 72%,#0B1417 100%);
-  box-shadow:
-    -8px -8px 20px rgba(69,94,101,.17),
-    10px 12px 23px rgba(0,0,0,.45),
-    0 3px 6px rgba(0,0,0,.25),
-    inset 1px 1px 0 rgba(255,255,255,.07),
-    inset -2px -2px 5px rgba(0,0,0,.24);
+  /* one plane. The gradient it replaces ran #152126 to #0B1417 across 145deg,
+     which is the light source the shadows above were lighting it with. */
+  background:rgba(184,204,210,.045);
 }
 :root[data-theme="dark"] .verbs .lg{
-  --g-ink:#D8E3E5; --g-muted:#7B8F94; --g-body:rgba(184,204,210,.055);
+  --g-ink:#D8E3E5; --g-muted:#7B8F94; --g-body:rgba(184,204,210,.16);
 }
 
-.verbs .lg::before{
-  content:''; position:absolute; inset:1px; z-index:0; pointer-events:none;
-  border-radius:14px;
-  background:
-    radial-gradient(58% 48% at 22% 12%,rgba(184,221,231,.075),transparent 76%),
-    linear-gradient(145deg,rgba(255,255,255,.018),transparent 48%);
-}
-.verbs .lg::after{
-  content:''; position:absolute; z-index:-1; pointer-events:none;
-  left:16%; right:10%; bottom:-9px; height:15px; border-radius:50%;
-  background:radial-gradient(ellipse,rgba(0,0,0,.34),transparent 70%);
-  filter:blur(4px); opacity:.72;
-}
 .verbs .lg svg{position:relative; z-index:1}
-.gridlines .lg{--g-body:rgba(120,151,178,.10);--g-edge:rgba(194,216,233,.26)}
+.gridlines .lg{--g-body:rgba(120,151,178,.30);--g-edge:rgba(194,216,233,.44)}
 :root[data-theme="light"] .gridlines .lg{
-  --g-ink:#263847; --g-muted:#667B8C; --g-body:rgba(45,76,101,.065);
-  --g-edge:rgba(54,83,105,.18); --g-accent:#0A66C2; --g-signal:#0F8B72;
-  background:linear-gradient(155deg,#F8FBFD,#EDF3F7);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.8),0 10px 22px -20px rgba(25,55,78,.35);
+  --g-ink:#263847; --g-muted:#667B8C; --g-body:rgba(45,76,101,.20);
+  --g-edge:rgba(54,83,105,.55); --g-accent:#0A66C2; --g-signal:#0F8B72;
+  background:#F6F9FB;
 }
 [data-glyph="cut"]{--g-accent:#FF746C}
 [data-glyph="design"]{--g-accent:#B49DFF}
