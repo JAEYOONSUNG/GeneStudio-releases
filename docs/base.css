@@ -537,6 +537,7 @@ figure{margin:0}
 .frame{
   --ground:#F2F4F5; --sunk:#FFFFFF; --hair:#E3E7E8; --line:#CBD3D4;
   --ink:#111819; --faint:#5A6D71;
+  position:relative;
   border:0; border-radius:16px; overflow:hidden; background:var(--sunk);
   box-shadow:
     0 0 0 1px rgba(17,24,25,.10),
@@ -544,17 +545,54 @@ figure{margin:0}
     0 18px 40px -18px rgba(17,24,25,.22),
     0 54px 120px -60px rgba(17,24,25,.30);
 }
+/* ── the glass in front of the picture ─────────────────────────────────────
+   The window is the surface a reflection belongs on, so this is where the
+   gloss lives rather than on the tray behind it. Two layers: one highlight
+   that never moves, thrown in over the top-left corner the way a light in a
+   room would be, and one that crosses slowly.
+
+   **A white sweep over a white screenshot is invisible.** The travelling band
+   is a pair — a thin shadow leading it and the specular behind — because it is
+   the *step* between the two that reads over a light interface, not the white
+   on its own. Kept low enough that the picture under it is never fogged, slow
+   enough to be a shine rather than a blink, and still for a reader who has
+   asked for less motion. */
+.frame::after{
+  content:''; position:absolute; inset:0; z-index:3; pointer-events:none;
+  background:
+    linear-gradient(112deg,transparent 27%,rgba(9,21,27,.055) 38%,
+      rgba(255,255,255,.46) 45%,rgba(255,255,255,.12) 50%,
+      rgba(9,21,27,.028) 56%,transparent 68%),
+    linear-gradient(158deg,rgba(255,255,255,.20) 0%,rgba(255,255,255,.05) 12%,
+      transparent 27%);
+  background-size:230% 100%,auto;
+  background-position:130% 0,0 0
+}
+@media (prefers-reduced-motion:no-preference){
+  .frame::after{animation:frameSheen 14s ease-in-out infinite}
+}
+@keyframes frameSheen{
+  0%,100%{background-position:132% 0,0 0}
+  50%{background-position:-32% 0,0 0}
+}
 .frame .bar{display:flex; align-items:center; gap:7px; padding:11px 15px;
   border-bottom:1px solid var(--hair); background:var(--ground)}
 .frame .bar i{width:10px; height:10px; border-radius:50%; background:var(--line); display:block}
 .frame .bar span{flex:1; min-width:0; margin-left:8px; font:400 11.5px/1 var(--mono);
   color:var(--faint); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
-/* **A caption is a sentence, not a listing.** These were set in the mono face
-   while every other sentence on the page is `--ui`, so each figure ended in a
-   paragraph that looked like it came from somewhere else. `code` inside one
-   keeps the mono it earns by being code. */
+/* **A figure that needs a paragraph under it is a figure that did not land.**
+   Every one of these ran three lines of numbers read off the screenshot above
+   it — the picture already says it, and the sentence only pushed the next one
+   further down the page. They are kept in the document and taken off the page:
+   the deck builds its dot labels out of them, and a reader on a screen reader
+   still gets the figure described. The hero's own caption is the reel's title
+   and copy and stays exactly where it is. */
 figcaption{margin:14px 2px 0; font:400 13px/1.55 var(--ui); color:var(--faint);
   letter-spacing:-.005em}
+figcaption:not(.reel-caption){
+  position:absolute; width:1px; height:1px; margin:-1px; padding:0;
+  overflow:hidden; clip-path:inset(50%); white-space:nowrap; border:0
+}
 
 /* ── a clip, where there is one ──────────────────────────────────────────────
    The clips are the application driven by the screenshot harness, one frame per
@@ -1436,8 +1474,14 @@ section .num + h2, section.plain .num + h2{margin-top:0}
    white on dark, where a full-strength white ring would be a halo. */
 .feat figure{
   position:relative; isolation:isolate;
-  padding:clamp(18px,2.7vw,40px);
-  border-radius:clamp(18px,2vw,30px);
+  /* **The plate is an edge, not a mount.** It was widened to 40 px to give a
+     travelling highlight somewhere to be seen, and what that bought was a
+     broad empty border round every screenshot — the picture the section exists
+     to show, made smaller so a reflection could have a margin to live in. The
+     band is a rim again and the gloss moved onto the screen itself, which is
+     the surface that is actually glass. */
+  padding:clamp(7px,0.95vw,14px);
+  border-radius:clamp(14px,1.5vw,22px);
   background:color-mix(in oklab, var(--topic-wash) 13%, var(--ground));
   box-shadow:inset 0 0 28px rgba(255,255,255,.055);
 }
@@ -2108,7 +2152,9 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--p
   font-size:clamp(27px,3.9vw,44px); line-height:1.12; letter-spacing:-.032em; margin:0}
 .flowhead .lede{max-width:50ch}
 .flowgrid{
-  display:grid; grid-template-columns:minmax(0,.86fr) minmax(0,1.14fr);
+  /* the rail is three short titles and one paragraph; the window beside it is
+     the thing being described, so it takes the larger share */
+  display:grid; grid-template-columns:minmax(0,.76fr) minmax(0,1.24fr);
   gap:clamp(26px,4.4vw,64px); align-items:center;
   margin-top:clamp(34px,5vw,58px);
 }
@@ -2167,7 +2213,7 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--p
 .step.on p{grid-template-rows:1fr; opacity:1; padding-bottom:22px}
 
 .flowshot{min-width:0; margin:0; position:relative; isolation:isolate;
-  padding:clamp(16px,2.5vw,34px); border-radius:clamp(18px,2vw,28px);
+  padding:clamp(6px,0.85vw,12px); border-radius:clamp(13px,1.4vw,20px);
   background:color-mix(in oklab, var(--topic-wash) 12%, var(--ground));
   box-shadow:inset 0 0 28px rgba(255,255,255,.05);
 }
@@ -2213,27 +2259,10 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--p
     0 -34px 62px -56px rgba(94,177,255,.30) inset,
     0 22px 52px -34px rgba(0,0,0,.38);
 }
-/* **A white shine over a white screenshot is not there.** Run above the figure
-   the reflection crosses the product for most of its travel and is invisible
-   for exactly that stretch — and where it *is* visible it is fogging the one
-   thing the card exists to show. It travels behind instead, over the plate's
-   own band, and the band was widened to give it somewhere to be seen. Slow
-   enough to be a shine rather than a blink, and off for a reader who has asked
-   for less motion. */
-.feat figure::before, .flowshot::before{
-  content:''; position:absolute; inset:0; z-index:0; pointer-events:none;
-  border-radius:inherit;
-  background:linear-gradient(104deg,transparent 30%,rgba(255,255,255,.14) 42%,
-    rgba(255,255,255,.40) 49%,rgba(255,255,255,.11) 56%,transparent 68%);
-  background-size:250% 100%; background-position:130% 0;
-}
-@media (prefers-reduced-motion:no-preference){
-  .feat figure::before, .flowshot::before{animation:plateSheen 11s ease-in-out infinite}
-}
-@keyframes plateSheen{
-  0%,100%{background-position:132% 0}
-  50%{background-position:-32% 0}
-}
+/* The plate carried a travelling highlight of its own for a while. It needed a
+   40 px band to be seen in, which cost the screenshot more than the shine was
+   worth — the reflection belongs on the glass in front of the picture, which
+   is `.frame` below, not on the tray the picture sits in. */
 /* a white page has no dark to lift the plate off, so the edge is the page's
    own white and the lift is a shadow rather than a glow */
 :root[data-theme="light"] .feat figure, :root[data-theme="light"] .flowshot{
@@ -2251,11 +2280,7 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--p
     0 22px 46px -32px rgba(10,102,194,.24) inset,
     0 18px 44px -30px rgba(38,67,84,.22);
 }
-:root[data-theme="light"] .feat figure::before,
-:root[data-theme="light"] .flowshot::before{
-  background:linear-gradient(104deg,transparent 30%,rgba(255,255,255,.42) 42%,
-    rgba(255,255,255,.95) 49%,rgba(255,255,255,.34) 56%,transparent 68%);
-  background-size:250% 100%}
+
 
 /* ── the ruled grid ─────────────────────────────────────────────────────────
    Six cards put five borders between every pair. One grid ruled by its own
