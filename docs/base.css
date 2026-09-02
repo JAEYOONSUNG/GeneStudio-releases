@@ -546,34 +546,46 @@ figure{margin:0}
     0 54px 120px -60px rgba(17,24,25,.30);
 }
 /* ── the glass in front of the picture ─────────────────────────────────────
-   The window is the surface a reflection belongs on, so this is where the
-   gloss lives rather than on the tray behind it. Two layers: one highlight
-   that never moves, thrown in over the top-left corner the way a light in a
-   room would be, and one that crosses slowly.
+   The window is the surface a reflection belongs on, so this is where it lives
+   rather than on the tray behind it.
 
-   **A white sweep over a white screenshot is invisible.** The travelling band
-   is a pair — a thin shadow leading it and the specular behind — because it is
-   the *step* between the two that reads over a light interface, not the white
-   on its own. Kept low enough that the picture under it is never fogged, slow
-   enough to be a shine rather than a blink, and still for a reader who has
-   asked for less motion. */
+   **Light, not shading.** The first version put a thin shadow ahead of the
+   highlight so the step between the two would read over a white interface, and
+   what that gives you is a dark edge sliding across a screenshot — a shaded
+   panel, not glass. There is no dark here at all. Three soft light bands lie
+   at slightly different angles and drift on three different periods, so where
+   two of them cross the light gathers and where they part it thins: the
+   brightness on the surface wanders instead of sweeping, which is what light
+   through a thick piece of glass actually does. The corner highlight stays put
+   underneath them as the fixed source they are wandering away from.
+
+   All three travel on one animation, because three animations setting
+   `background-position-x` on one element do not run side by side — the last
+   declared simply wins and the other two never move. The waypoints do the
+   separating instead: each band is given its own irregular path between them,
+   so they cross at four different moments and no two are ever in step. */
 .frame::after{
   content:''; position:absolute; inset:0; z-index:3; pointer-events:none;
   background:
-    linear-gradient(112deg,transparent 27%,rgba(9,21,27,.055) 38%,
-      rgba(255,255,255,.46) 45%,rgba(255,255,255,.12) 50%,
-      rgba(9,21,27,.028) 56%,transparent 68%),
-    linear-gradient(158deg,rgba(255,255,255,.20) 0%,rgba(255,255,255,.05) 12%,
-      transparent 27%);
-  background-size:230% 100%,auto;
-  background-position:130% 0,0 0
+    linear-gradient(102deg,transparent 30%,rgba(255,255,255,.30) 43%,
+      rgba(255,255,255,.06) 51%,transparent 62%),
+    linear-gradient(124deg,transparent 20%,rgba(255,255,255,.19) 32%,
+      rgba(255,255,255,.04) 40%,transparent 52%),
+    linear-gradient(88deg,transparent 52%,rgba(255,255,255,.15) 66%,
+      transparent 80%),
+    radial-gradient(150% 96% at 10% -20%,rgba(255,255,255,.22),
+      rgba(255,255,255,.05) 34%,transparent 58%);
+  background-size:250% 100%,320% 100%,290% 100%,auto;
+  background-position:118% 0,-38% 0,64% 0,0 0
 }
 @media (prefers-reduced-motion:no-preference){
-  .frame::after{animation:frameSheen 14s ease-in-out infinite}
+  .frame::after{animation:glassWaver 26s ease-in-out infinite}
 }
-@keyframes frameSheen{
-  0%,100%{background-position:132% 0,0 0}
-  50%{background-position:-32% 0,0 0}
+@keyframes glassWaver{
+  0%,100%{background-position:118% 0,-38% 0, 64% 0,0 0}
+  22%    {background-position: 64% 0, 22% 0,  8% 0,0 0}
+  46%    {background-position: -6% 0, 78% 0, 96% 0,0 0}
+  71%    {background-position: 52% 0,-16% 0, 30% 0,0 0}
 }
 .frame .bar{display:flex; align-items:center; gap:7px; padding:11px 15px;
   border-bottom:1px solid var(--hair); background:var(--ground)}
@@ -718,9 +730,9 @@ figcaption:not(.reel-caption){
    It leans only while it is moving: at rest the frame the reader is reading
    sits square, which is the one thing a lean must not cost. */
 @keyframes reelDolly{
-  0%  {scale:1;    rotate:0deg}
-  44% {scale:.855; rotate:-3.6deg}
-  100%{scale:1;    rotate:0deg}
+  0%  {scale:1;   rotate:0deg}
+  44% {scale:.94; rotate:-3.6deg}
+  100%{scale:1;   rotate:0deg}
 }
 @keyframes reelHelix{
   0%  {rotate:-9.5deg}
@@ -735,8 +747,13 @@ figcaption:not(.reel-caption){
    band with one bright panel in it and there is nothing to skim. `opacity` and
    `filter` both force `transform-style:flat`, so neither may go on the ring;
    the faces carry them, which is where the existing spin already puts them. */
-.hero-reel[data-intro="arrive"] .reel-ring{transition:none; scale:.55}
-.hero-reel[data-intro="arrive"] .reel-fill{filter:blur(3px) brightness(.84); opacity:.8}
+/* **A layer rasterised at .55 and scaled to 1 is a soft layer.** The drum is
+   composited once and then transformed, so the further the scale travels the
+   more of the arrival is spent looking at an enlarged bitmap of the frames
+   rather than at the frames. Eight tenths still reads as coming forward and
+   costs almost nothing in sharpness. */
+.hero-reel[data-intro="arrive"] .reel-ring{transition:none; scale:.8}
+.hero-reel[data-intro="arrive"] .reel-fill{filter:brightness(.86); opacity:.8}
 .hero-reel[data-intro="run"] .reel-ring{
   /* Eased out, but not off a cliff. `cubic-bezier(.16,1,.3,1)` spends the
      whole turn in its first third and the rest standing still, which is why
@@ -759,15 +776,15 @@ figcaption:not(.reel-caption){
 }
 .hero-reel[data-intro="run"] .reel-face.is-active .reel-fill{animation-name:introFaceOn}
 @keyframes introFace{
-  0%  {opacity:.80; filter:blur(3px) brightness(.84)}
-  58% {opacity:.74; filter:blur(1.1px) brightness(.93)}
-  78% {opacity:.52; filter:blur(.4px) brightness(.97)}
+  0%  {opacity:.80; filter:brightness(.86)}
+  58% {opacity:.74; filter:brightness(.94)}
+  78% {opacity:.52; filter:brightness(.98)}
   100%{opacity:.14; filter:saturate(.94) brightness(1)}
 }
 @keyframes introFaceOn{
-  0%  {opacity:.88; filter:blur(3px) brightness(.84)}
-  58% {opacity:.94; filter:blur(1.1px) brightness(.93)}
-  100%{opacity:1;   filter:saturate(.94) brightness(1)}
+  0%  {opacity:.88; filter:brightness(.88)}
+  58% {opacity:.94; filter:brightness(.96)}
+  100%{opacity:1;   filter:none}
 }
 /* **A face may not carry `opacity` or `filter`, because either one flattens
    what is inside it.** Both were on the face, which was harmless while a face
@@ -813,19 +830,29 @@ figcaption:not(.reel-caption){
    crop with none of that — and `overflow` here costs nothing, because a slice
    is a leaf whose own place in the drum comes from its own transform. */
 .reel-slice{
-  position:absolute; top:0; bottom:0; left:50%; width:calc(100% / var(--curve-n,9));
-  margin-left:calc(-50% / var(--curve-n,9));
-  /* the hair of overlap closes the seam. Nine boxes that meet exactly leave a
-     one-device-pixel gap at every join once they are rotated and resampled,
-     and nine hairlines down a screenshot is the first thing anybody sees.
-     1 % of a slice is a pixel of overlap and half a pixel of misregistration
-     in the picture, which is the better of the two. */
-  transform:rotateY(var(--sa,0deg)) translateZ(var(--curve-r,0px)) scaleX(1.012);
+  /* **The overlap has to be the same pixels, not a scaled copy of them.**
+     Boxes that meet exactly leave a device-pixel gap at every join once they
+     are rotated and resampled, and twelve hairlines down a screenshot is the
+     first thing anybody sees turning. Scaling each slice 1 % closed the gap
+     and opened a worse one: the two sides of every join then showed the *same
+     picture at two sizes*, which is a seam that gets more visible the faster
+     it moves. The box is widened by a fixed hair on each side instead and the
+     picture inside is shifted back by exactly that, so the overlapping band is
+     one image drawn twice and the join has nothing to show. */
+  position:absolute; top:0; bottom:0; left:50%;
+  width:calc(var(--slice-w,0px) + 2 * var(--ov,2px));
+  margin-left:calc(-0.5 * var(--slice-w,0px) - var(--ov,2px));
+  transform:rotateY(var(--sa,0deg)) translateZ(var(--curve-r,0px));
+  /* **The face hiding its own back does not hide its children's.** Taken off
+     the slices to chase the seams, and the far side of the drum promptly came
+     through the gaps as mirrored screenshots. The seams were the overlap's
+     fault, not this property's, so it goes back. */
   backface-visibility:hidden; overflow:hidden; background:#F7FAFC
 }
 .reel-slice img{
-  position:absolute; top:0; left:calc(var(--sk,0) * -100%);
-  width:calc(100% * var(--curve-n,9)); max-width:none; height:100%;
+  position:absolute; top:0;
+  left:calc(var(--ov,2px) - var(--sk,0) * var(--slice-w,0px));
+  width:calc(var(--slice-w,0px) * var(--curve-n,12)); max-width:none; height:100%;
   object-fit:cover; object-position:50% 50%; display:block
 }
 /* Sprocket holes were drawn here once and taken out again: the curve and the
@@ -858,9 +885,14 @@ figcaption:not(.reel-caption){
 .reel-face.is-active::after{opacity:.16}
 /* while it turns the whole drum is the subject, so the far facets come up out
    of the dark rather than staying the near-invisible .34 they rest at */
-.hero-reel[data-state="spinning"] .reel-fill{opacity:.72; filter:saturate(.66) brightness(.74) blur(.75px)}
+/* **No blur on a turn.** A little of it was meant to read as motion and what
+   it actually did was hand the reader a soft picture for the whole second the
+   drum was moving — on a page whose entire argument is that you can read the
+   screenshots. Depth is carried by brightness alone now, and the frame square
+   to the reader keeps its own. */
+.hero-reel[data-state="spinning"] .reel-fill{opacity:.72; filter:saturate(.7) brightness(.8)}
 .hero-reel[data-state="spinning"] .reel-face.is-active::after{opacity:.44}
-.hero-reel[data-state="spinning"] .reel-face.is-active .reel-fill{filter:saturate(.88) brightness(.94) blur(.28px)}
+.hero-reel[data-state="spinning"] .reel-face.is-active .reel-fill{filter:none}
 .reel-screen{
   position:absolute; inset:0; border:1px solid rgba(52,75,87,.30);
   border-radius:clamp(14px,1.8vw,23px); background:#F7FAFC;
