@@ -663,27 +663,45 @@ figcaption{margin:14px 2px 0; font:400 13px/1.55 var(--ui); color:var(--faint);
 @keyframes reelDolly{0%{scale:1}44%{scale:.855}100%{scale:1}}
 
 /* ── the arrival ────────────────────────────────────────────────────────────
-   The drum does not begin at rest facing the reader; it comes in from a long
-   way back, turned away, and lands. Timing is the one this project already
-   settled on for cylindrical motion: about 700 ms of `expo.inOut` for the turn
-   with a 160 ms settle after it, and blur and scale only while it is moving.
-   `opacity` and `filter` both force `transform-style:flat`, so neither may go
-   on the ring — the faces carry them, which is where the existing spin already
-   puts them. */
-.hero-reel[data-intro="arrive"] .reel-ring{transition:none; scale:.62}
-.hero-reel[data-intro="arrive"] .reel-face{filter:blur(12px) brightness(.62); opacity:.26}
+   The drum comes in from two full turns back and lands, so the six screens are
+   all read once before the caption says anything about the first. Every face
+   is lit through the skim — at the .14 they rest at, a spinning drum is a dark
+   band with one bright panel in it and there is nothing to skim. `opacity` and
+   `filter` both force `transform-style:flat`, so neither may go on the ring;
+   the faces carry them, which is where the existing spin already puts them. */
+.hero-reel[data-intro="arrive"] .reel-ring{transition:none; scale:.74}
+.hero-reel[data-intro="arrive"] .reel-face{filter:blur(3px) brightness(.84); opacity:.8}
 .hero-reel[data-intro="run"] .reel-ring{
-  /* cubic-bezier(.87,0,.13,1) is expo.inOut; the scale runs the turn plus the
-     settle, so the drum is still easing forward as the rotation finishes */
-  transition:transform 700ms cubic-bezier(.87,0,.13,1),
-             scale 860ms cubic-bezier(.16,1,.3,1);
+  /* Eased out, but not off a cliff. `cubic-bezier(.16,1,.3,1)` spends the
+     whole turn in its first third and the rest standing still, which is why
+     the first version had nothing readable in it. This one leaves the faces
+     legible the whole way round and still lands soft. The scale runs the turn
+     plus the settle, so the drum is easing forward as the rotation finishes. */
+  transition:transform 2000ms cubic-bezier(.22,.85,.28,1),
+             scale 2180ms cubic-bezier(.22,.85,.28,1);
   scale:1; will-change:transform
 }
+/* **A transition fades from the first frame; a skim needs the light to hold.**
+   Easing opacity from .8 to .14 across the turn meant the far faces were
+   already halfway gone by the time they reached the front, and the middle of
+   the arrival showed one screen and five ghosts. The keyframes hold every face
+   lit for the first two thirds — the part that is actually the skim — and take
+   them down to their resting values only over the last of it. */
 .hero-reel[data-intro="run"] .reel-face{
-  transition:filter 620ms ease-out,opacity 620ms ease-out;
-  filter:saturate(.94) brightness(1); opacity:.14
+  animation:introFace 2180ms cubic-bezier(.22,.85,.28,1) both
 }
-.hero-reel[data-intro="run"] .reel-face.is-active{opacity:1}
+.hero-reel[data-intro="run"] .reel-face.is-active{animation-name:introFaceOn}
+@keyframes introFace{
+  0%  {opacity:.80; filter:blur(3px) brightness(.84)}
+  58% {opacity:.74; filter:blur(1.1px) brightness(.93)}
+  78% {opacity:.52; filter:blur(.4px) brightness(.97)}
+  100%{opacity:.14; filter:saturate(.94) brightness(1)}
+}
+@keyframes introFaceOn{
+  0%  {opacity:.88; filter:blur(3px) brightness(.84)}
+  58% {opacity:.94; filter:blur(1.1px) brightness(.93)}
+  100%{opacity:1;   filter:saturate(.94) brightness(1)}
+}
 .reel-face{
   position:absolute; inset:0; opacity:.14; filter:saturate(.72) brightness(.82);
   transform:rotateY(var(--face-angle)) translateZ(var(--reel-radius));
@@ -736,6 +754,38 @@ figcaption{margin:14px 2px 0; font:400 13px/1.55 var(--ui); color:var(--faint);
   28%{opacity:.86}
   76%{opacity:.28}
   100%{opacity:0; transform:skewX(-12deg) translateX(440%)}
+}
+
+/* ── the caption resolves rather than swaps ────────────────────────────────
+   The line arrives out of focus and settles, and a caret holds at the end of
+   the title while it does. Three rules keep it from being decoration: it fires
+   only on a real change (the first paint gets none of it), it runs at the one
+   moment the drum is already moving, and it is `transform`, `opacity` and a
+   short `blur` — nothing that costs a layout. Reduced motion gets the text and
+   no animation at all, which is why the class is added in script rather than
+   bound to the text. */
+@keyframes kineticIn{
+  0%  {opacity:0; transform:translate3d(0,11px,0) scale(.986); filter:blur(10px)}
+  52% {opacity:1}
+  100%{opacity:1; transform:none; filter:blur(0)}
+}
+/* the count is a figure, so it rolls up into place rather than rising into it */
+@keyframes kineticRoll{
+  0%  {opacity:0; transform:translate3d(0,.52em,0); filter:blur(5px)}
+  100%{opacity:1; transform:none; filter:blur(0)}
+}
+@keyframes kineticCaret{0%,49%{opacity:1} 50%,100%{opacity:0}}
+@media (prefers-reduced-motion:no-preference){
+  .reel-caption strong.is-kinetic{animation:kineticIn 440ms cubic-bezier(.16,1,.3,1) both}
+  .reel-caption p.is-kinetic{animation:kineticIn 480ms cubic-bezier(.16,1,.3,1) 70ms both}
+  .reel-count.is-kinetic{animation:kineticRoll 360ms cubic-bezier(.16,1,.3,1) both}
+  .reel-caption strong.is-kinetic::after{animation:kineticCaret 760ms steps(1,end) 3}
+}
+/* the caret is always in the line so its 2 px never moves the text when it
+   lights; it simply has nothing to show except while the line is resolving */
+.reel-caption strong::after{
+  content:''; display:inline-block; width:2px; height:.82em; margin-left:.13em;
+  vertical-align:-.06em; border-radius:1px; background:var(--amber); opacity:0
 }
 
 /* The caption is outside the screen because any label over a data-dense view

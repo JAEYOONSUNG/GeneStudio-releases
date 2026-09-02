@@ -54,7 +54,7 @@ document.documentElement.dataset.theme=t;})()</script>
 <link rel="preload" href="font/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="font/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="font/fonts.css?v=20260828">
-<link rel="stylesheet" href="base.css?v=20260902i">
+<link rel="stylesheet" href="base.css?v=20260902j">
 </head>
 <body>
 
@@ -2037,13 +2037,19 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
     const compact = matchMedia('(max-width:760px)');
     const reduced = matchMedia('(prefers-reduced-motion:reduce)');
     const SPIN = 620, HOLD = 460, STILL_HOLD = 2100;
-    /* The arrival. Timing is the one this project settled on for cylindrical
-       motion after looking at how it is actually done: roughly 700 ms of
-       expo.inOut for the turn and a 120–180 ms settle after it, with blur and
-       scale applied only while it is moving. The drum starts a good way round
-       and a long way back, so the first thing the page does is bring the
-       product to the reader rather than present it already arrived. */
-    const ARRIVE = 700, SETTLE = 160, ARRIVE_TURN = 128;
+    /* **The arrival is a skim, not an entrance.** Coming in from a face and a
+       half showed the reader one screen arriving and said nothing about the
+       other five. It runs two full turns plus a face instead — 792° — so every
+       one of the six passes the front before it lands, and the whole product
+       is read once before a word of the caption is.
+
+       **A skim has a reading speed, and two turns is past it.** The first cut
+       ran 792° in 1,450 ms: measured off the frames, the fast third was a dark
+       smear with nothing legible in it, which is a whoosh, not a skim. One turn
+       and a face over 2 s puts each of the six square to the reader for about
+       300 ms at the fastest and longer as it slows — enough to see what it is,
+       still quick enough to be one gesture. */
+    const ARRIVE = 2000, SETTLE = 180, ARRIVE_TURN = 420;
     const words = [
       ['Find the file, or the exact site inside it.',
        'Home searches favorite folders by filename or recognition sequence, locally and without an import step.'],
@@ -2063,7 +2069,7 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
     let angle = -index * 60;
     let timer = 0, middleTimer = 0, finishTimer = 0, loadToken = 0;
     let inView = false, userPaused = false, hardPaused = false, pageVisible = !document.hidden;
-    let arrived = false;
+    let arrived = false, captioned = false;
     let prepared = null, pending = null;
 
     /* Runs once, on the first time the reel is actually looked at. It drives
@@ -2079,7 +2085,18 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
       requestAnimationFrame(() => requestAnimationFrame(() => {
         reel.dataset.intro = 'run';
         ring.style.setProperty('--reel-angle', target + 'deg');
-        setTimeout(() => { delete reel.dataset.intro; }, ARRIVE + SETTLE + 40);
+        setTimeout(() => {
+          delete reel.dataset.intro;
+          /* the caption has been holding the first scene through the whole
+             skim; it resolves as the drum stops, so the two land together */
+          captioned = true;
+          for(const el of [count, title, copy]){
+            if(!el) continue;
+            el.classList.remove('is-kinetic');
+            void el.offsetWidth;
+            el.classList.add('is-kinetic');
+          }
+        }, ARRIVE + SETTLE + 40);
       }));
     };
 
@@ -2096,15 +2113,33 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
       pauseButton?.setAttribute('aria-pressed', String(userPaused));
       if(pauseLabel) pauseLabel.textContent = userPaused ? 'Resume tour' : 'Pause tour';
     };
+    /* **The caption changes at the middle of a turn, so it changes the way the
+       turn does.** Setting `textContent` swaps a sentence for another one
+       between two frames, which under a drum that is visibly moving reads as a
+       glitch rather than as the same event. The line resolves out of a blur
+       instead, and a caret sits at the end of the title while it does — the
+       kinetic-type figure this kind of montage is built on. Removing the class
+       and reading `offsetWidth` is what restarts a CSS animation; without the
+       reflow between, the browser sees no change and the second turn does
+       nothing. The first call is the page's initial state and gets none of it. */
+    const kinetic = (el, text) => {
+      if(!el) return;
+      el.textContent = text;
+      if(reduced.matches || !captioned) return;
+      el.classList.remove('is-kinetic');
+      void el.offsetWidth;
+      el.classList.add('is-kinetic');
+    };
     const sync = next => {
       index = (next + faces.length) % faces.length;
       reel.dataset.index = String(index);
       faces.forEach((face, at) => face.classList.toggle('is-active', at === index));
       sceneButtons.forEach((button, at) => button.setAttribute('aria-current', String(at === index)));
-      if(count) count.textContent = String(index + 1).padStart(2, '0') + ' / ' +
-        String(faces.length).padStart(2, '0');
-      if(title) title.textContent = words[index][0];
-      if(copy) copy.textContent = words[index][1];
+      kinetic(count, String(index + 1).padStart(2, '0') + ' / ' +
+        String(faces.length).padStart(2, '0'));
+      kinetic(title, words[index][0]);
+      kinetic(copy, words[index][1]);
+      captioned = true;
     };
     const sourceFor = at => {
       if(reduced.matches) return '';
