@@ -54,7 +54,7 @@ document.documentElement.dataset.theme=t;})()</script>
 <link rel="preload" href="font/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="font/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="font/fonts.css?v=20260828">
-<link rel="stylesheet" href="base.css?v=20260903i">
+<link rel="stylesheet" href="base.css?v=20260903j">
 </head>
 <body>
 
@@ -2036,7 +2036,7 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
     const pauseLabel = reel.querySelector('[data-reel-pause-label]');
     const compact = matchMedia('(max-width:760px)');
     const reduced = matchMedia('(prefers-reduced-motion:reduce)');
-    const SPIN = 900, HOLD = 460, STILL_HOLD = 2100;
+    const SPIN = 1100, HOLD = 460, STILL_HOLD = 2100;
     /* **The arrival is a skim, not an entrance.** Coming in from a face and a
        half showed the reader one screen arriving and said nothing about the
        other five. It runs two full turns plus a face instead — 792° — so every
@@ -2085,6 +2085,19 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
     const CURVE_N = 12, CURVE_BEND = 50;
     const curveStep = CURVE_BEND / CURVE_N;
     const curveRatio = 1 / (CURVE_N * 2 * Math.tan(curveStep / 2 * Math.PI / 180));
+    /* **A slice further round the arc is further away, and further away is
+       smaller — vertically too.** That is correct for a curved surface and
+       ruinous for one built out of flat facets: within a slice the shrink is
+       one constant, so it steps at every join and the picture comes apart into
+       twelve columns sitting at twelve different heights. Measured on the
+       outermost pair at this bend: 84 px and 57 px of depth against a 1,238 px
+       perspective, which is a two per cent difference in projected height — an
+       eleven pixel step down a 580 px frame, eleven times across.
+
+       Each slice is scaled up in Y by exactly what the projection is about to
+       take off it, `(p + |z|) / p`, so every column lands at the same height
+       and the rows run straight through. Only Y: the horizontal foreshortening
+       is the arc, and undoing that would flatten the curve. */
     const sizeCurves = () => {
       /* **`offsetWidth`, not the bounding rect.** The ring is scaled and turned
          in 3D, so its client rect is the *projected* box — measured mid-arrival
@@ -2092,13 +2105,22 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
          a fifth of the right size, which stacks them instead of tiling them. */
       const w = ring.offsetWidth;
       if(!w) return;
+      const view = reel.querySelector('[data-reel-viewport]');
+      const persp = parseFloat(getComputedStyle(view).perspective) || 0;
+      const r = w * curveRatio;
       for(const face of faces){
         const curve = face.querySelector('.reel-curve');
         if(!curve) continue;
-        curve.style.setProperty('--curve-r', (w * curveRatio).toFixed(2) + 'px');
-        /* the sprocket run is offset per slice in pixels, so it needs the
-           slice's real width rather than a percentage of it */
+        curve.style.setProperty('--curve-r', r.toFixed(2) + 'px');
+        /* the picture is offset per slice in pixels, so it needs the slice's
+           real width rather than a percentage of it */
         curve.style.setProperty('--slice-w', (w / CURVE_N).toFixed(3) + 'px');
+        [...curve.children].forEach((slice, i) => {
+          const a = (i - (CURVE_N - 1) / 2) * curveStep * Math.PI / 180;
+          const depth = r * (1 - Math.cos(a));
+          slice.style.setProperty('--sy',
+            (persp ? (persp + depth) / persp : 1).toFixed(5));
+        });
       }
     };
     const buildCurves = () => {

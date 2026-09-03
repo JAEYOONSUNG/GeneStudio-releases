@@ -759,16 +759,17 @@ figcaption:not(.reel-caption){
   transform:translate3d(-50%,-50%,calc(0px - var(--reel-radius))) rotateY(var(--reel-angle));
 }
 .hero-reel[data-state="spinning"] .reel-ring{
-  /* 620 ms on a curve that spends itself in the first third read as a flick.
-     Nine hundred on an even one is the same distance travelled as a movement
-     rather than as a snap — and it is the number `SPIN` carries, so the two
-     have to be changed together. */
-  transition:transform 900ms cubic-bezier(.34,.16,.2,1); will-change:transform;
+  /* 620 ms on a curve that spends itself in the first third read as a flick;
+     900 on `.34,.16` still left an edge on both ends. Eleven hundred on a
+     curve that eases in as well as out is a frame swinging round rather than
+     one being snapped into place — and it is the number `SPIN` carries, so
+     the two have to be changed together. */
+  transition:transform 1100ms cubic-bezier(.42,0,.2,1); will-change:transform;
   /* The camera pulls back as the drum comes round and rides in again as it
      lands — a turn seen at one distance reads as a slide, whatever the maths
      underneath say. `scale` is its own property, so this dip composes with the
      transform the transition owns instead of fighting it for the same slot. */
-  animation:reelDolly 940ms cubic-bezier(.34,.16,.2,1) both
+  animation:reelDolly 1140ms cubic-bezier(.42,0,.2,1) both
 }
 /* **The axis leans while it turns, so the frames climb rather than click.**
    Upright, six panels at 60° come round the front one after another at the
@@ -777,10 +778,13 @@ figcaption:not(.reel-caption){
    down the other, so the path a frame traces is a spiral rather than a circle.
    It leans only while it is moving: at rest the frame the reader is reading
    sits square, which is the one thing a lean must not cost. */
+/* the dip and the lean are halved: at 3.6° and .94 the drum was visibly
+   ducking on every turn, which is a gesture the reader did not ask for on a
+   scene change. Enough to be a camera, not enough to be a move. */
 @keyframes reelDolly{
-  0%  {scale:1;   rotate:0deg}
-  44% {scale:.94; rotate:-3.6deg}
-  100%{scale:1;   rotate:0deg}
+  0%  {scale:1;    rotate:0deg}
+  44% {scale:.968; rotate:-1.9deg}
+  100%{scale:1;    rotate:0deg}
 }
 @keyframes reelHelix{
   0%  {rotate:-9.5deg}
@@ -879,7 +883,11 @@ figcaption:not(.reel-caption){
    equal to the drum's own radius — which is the check that the geometry is
    right. Script sets it in pixels because it is a function of the drum's
    measured width. */
-.reel-curve{position:absolute; inset:0; transform-style:preserve-3d;
+/* the lap is declared once here rather than left to three fallbacks. Two
+   pixels closed the seam and doubled two pixels of picture at every join,
+   which shows on lettering; 1.25 is still two and a half device pixels at 2×,
+   which is enough to cover the join, and half as much picture drawn twice. */
+.reel-curve{--ov:1.25px; position:absolute; inset:0; transform-style:preserve-3d;
   transform:translateZ(calc(0px - var(--curve-r,0px)))}
 /* **A slice holds a real `<img>`, not a slice of a background.** Sizing one
    screenshot nine ways with `background-size` and a percentage offset is the
@@ -901,7 +909,7 @@ figcaption:not(.reel-caption){
   position:absolute; top:0; bottom:0; left:50%;
   width:calc(var(--slice-w,0px) + 2 * var(--ov,2px));
   margin-left:calc(-0.5 * var(--slice-w,0px) - var(--ov,2px));
-  transform:rotateY(var(--sa,0deg)) translateZ(var(--curve-r,0px));
+  transform:rotateY(var(--sa,0deg)) translateZ(var(--curve-r,0px)) scaleY(var(--sy,1));
   /* **The face hiding its own back does not hide its children's.** Taken off
      the slices to chase the seams, and the far side of the drum promptly came
      through the gaps as mirrored screenshots. The seams were the overlap's
