@@ -848,6 +848,35 @@ figcaption:not(.reel-caption){
   100%{rotate:0deg}
 }
 
+/* ── flat, after the arrival ────────────────────────────────────────────────
+   Once the drum has shown all six it is put away, and the reel becomes a row
+   of pages behind one window: the front page at `--dx` 0, the rest parked off
+   to the side, and a change one page slid across. Only the two pages involved
+   carry a transition — the others are moved without one, so a page being
+   re-parked never crosses the window. The curved stand-ins are not needed on a
+   flat page and the plain picture takes their place, with the screen's own
+   chrome back on it. */
+.hero-reel[data-mode="flat"] .reel-ring{
+  transform:translate(-50%,-50%); transform-style:flat;
+  transition:none; animation:none; scale:1; rotate:0deg
+}
+.hero-reel[data-mode="flat"] .reel-face{
+  transform:translateX(calc(var(--dx,3) * 106%)); transition:none;
+  backface-visibility:visible
+}
+.hero-reel[data-mode="flat"] .reel-face.is-sliding{
+  transition:transform var(--turn) var(--turn-ease)
+}
+.hero-reel[data-mode="flat"] .reel-curve{display:none}
+.hero-reel[data-mode="flat"] .reel-face[data-curved] .reel-screen > picture{display:block}
+.hero-reel[data-mode="flat"] .reel-face[data-curved] .reel-screen{
+  background:#F7FAFC; border-color:rgba(52,75,87,.30);
+  box-shadow:0 1px 0 rgba(255,255,255,.94) inset,0 4px 12px rgba(3,11,14,.20),
+    0 42px 84px -34px rgba(0,0,0,.72)
+}
+/* no camera move on a page turn */
+.hero-reel[data-mode="flat"][data-state="spinning"] .reel-ring{animation:none}
+
 /* ── the arrival ────────────────────────────────────────────────────────────
    The drum comes in from two full turns back and lands, so the six screens are
    all read once before the caption says anything about the first. Every face

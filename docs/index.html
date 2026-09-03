@@ -54,7 +54,7 @@ document.documentElement.dataset.theme=t;})()</script>
 <link rel="preload" href="font/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="font/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="font/fonts.css?v=20260828">
-<link rel="stylesheet" href="base.css?v=20260903s">
+<link rel="stylesheet" href="base.css?v=20260903t">
 </head>
 <body>
 
@@ -2161,6 +2161,35 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
     };
     let prepared = null, pending = null;
 
+    /* ── after the arrival, the drum is put away ──────────────────────────
+       The cylinder is for the first look: one turn that shows all six. After
+       that a scene change is a page turned, not a drum spun — the current face
+       slides out one step and the next slides in, flat. Every face keeps a
+       `--dx` in face widths from the front position: 0 is the front, ±1 is the
+       neighbour just off the edge, ±3 is parked well away. A change is always
+       exactly one step in the asked-for direction whatever the distance
+       between the two indexes: the incoming face is first *put* one step to
+       that side without a transition, and only then do the two of them slide.
+       Every other face is parked without one, so nothing crosses the pane on
+       its way to a new parking place. */
+    const parkFlat = (cur) => {
+      faces.forEach((f, i) => {
+        f.classList.remove('is-sliding');
+        f.style.setProperty('--dx', i === cur ? '0' : '3');
+      });
+    };
+    const slideFlat = (from, to, dir) => {
+      faces.forEach((f, i) => {
+        f.classList.remove('is-sliding');
+        f.style.setProperty('--dx', i === to ? String(dir) : i === from ? '0' : String(dir * 3));
+      });
+      void ring.offsetWidth;
+      faces[from].classList.add('is-sliding');
+      faces[to].classList.add('is-sliding');
+      faces[from].style.setProperty('--dx', String(-dir));
+      faces[to].style.setProperty('--dx', '0');
+    };
+
     /* Runs once, on the first time the reel is actually looked at. It drives
        the same `--reel-angle` every other movement here drives, so the faces,
        the caption and the controls need to know nothing about it. */
@@ -2176,6 +2205,9 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
         ring.style.setProperty('--reel-angle', target + 'deg');
         setTimeout(() => {
           delete reel.dataset.intro;
+          /* the drum has done its one job; from here the reel is flat */
+          parkFlat(index);
+          reel.dataset.mode = 'flat';
           /* the caption has been holding the first scene through the whole
              skim; it resolves as the drum stops, so the two land together */
           captioned = true;
@@ -2348,11 +2380,17 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
       prepare(next);
       reel.dataset.direction = delta > 0 ? 'next' : 'previous';
       setState('spinning', 'Changing product view');
-      const targetAngle = angle - delta * 60;
-      requestAnimationFrame(() => requestAnimationFrame(() => {
-        angle = targetAngle;
-        ring.style.setProperty('--reel-angle', angle + 'deg');
-      }));
+      if(reel.dataset.mode === 'flat'){
+        /* a page turned: one step sideways, and the angle is left alone so
+           the drum is exactly where it was should it ever be wanted again */
+        slideFlat(index, next, delta > 0 ? 1 : -1);
+      } else {
+        const targetAngle = angle - delta * 60;
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          angle = targetAngle;
+          ring.style.setProperty('--reel-angle', angle + 'deg');
+        }));
+      }
       middleTimer = setTimeout(() => sync(next), Math.round(SPIN * .48));
       finishTimer = setTimeout(() => {
         if(index !== next) sync(next);
@@ -2379,6 +2417,7 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
         sync(target); angle = -target * 60;
         setState('paused', message);
         ring.style.setProperty('--reel-angle', angle + 'deg');
+        if(reel.dataset.mode === 'flat') parkFlat(target);
       }else setState('paused', message);
       reel.dataset.auto = 'off';
     };
