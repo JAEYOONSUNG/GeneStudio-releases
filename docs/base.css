@@ -501,7 +501,14 @@ h1{font-size:clamp(34px,5.1vw,58px); font-weight:500; letter-spacing:-.025em;
    out behind it. */
 .shot{margin:clamp(44px,7vw,84px) auto 0; max-width:var(--wide); padding:0 var(--pad)}
 /* the window follows the promise rather than sitting a screen below it */
-.hero .shot{position:relative; z-index:1; margin-top:clamp(16px,2.2vw,28px);
+/* **The headline's vignette was lying over the product.** `.hero::after` is a
+   radial dark that settles the type on the field; it sits at z-index 1, and so
+   did this block, and a pseudo-element paints after the children it shares a
+   level with — so the one thing on the first screen that is the product was
+   read through a 26 % shade. Measured on the front frame at rest: 213 to 220
+   where the screenshot is 254, and 254 with the vignette off. The type is at
+   z-index 2 and was never under it; the picture goes to the same level. */
+.hero .shot{position:relative; z-index:2; margin-top:clamp(16px,2.2vw,28px);
   padding-bottom:clamp(40px,6vw,86px)}
 .hero-meta{display:grid; justify-items:center; gap:12px;
   margin:clamp(18px,2.4vw,28px) auto clamp(32px,5vw,62px)}
@@ -774,8 +781,15 @@ figcaption:not(.reel-caption){
   background:
     radial-gradient(58% 92% at 50% 50%,rgba(255,255,255,.22),
       rgba(255,255,255,.05) 40%,transparent 68%),
-    linear-gradient(90deg,rgba(4,10,12,.44),transparent 21%,transparent 79%,rgba(4,10,12,.44)),
-    radial-gradient(62% 76% at 50% 46%,transparent 46%,rgba(4,10,12,.14) 78%,rgba(4,9,11,.52) 100%);
+    /* **The vignette was tuned for a drum that sat in clear glass, and the
+       drum now fills the pane.** Its side bands reached 21 % in from each edge
+       and its centre fell off from 46 %, which was the empty glass then and is
+       the picture now — measured on the front frame at rest: 173 at the edges
+       against 227 with the vignette off, a quarter of the light gone from the
+       thing the pane exists to show. Both are pulled back to the sliver of
+       glass still visible round the frame. */
+    linear-gradient(90deg,rgba(4,10,12,.30),transparent 5.5%,transparent 94.5%,rgba(4,10,12,.30)),
+    radial-gradient(62% 76% at 50% 46%,transparent 86%,rgba(4,10,12,.10) 96%,rgba(4,9,11,.30) 100%);
   background-size:200% 185%,auto,auto;
   background-position:20% 16%,0 0,0 0
 }
@@ -1175,8 +1189,8 @@ figcaption:not(.reel-caption){
   background:
     radial-gradient(58% 92% at 50% 50%,rgba(255,255,255,.78),
       rgba(255,255,255,.22) 40%,transparent 68%),
-    linear-gradient(90deg,rgba(49,70,82,.16),transparent 19%,transparent 81%,rgba(49,70,82,.16)),
-    radial-gradient(62% 76% at 50% 46%,transparent 48%,rgba(66,89,103,.07) 80%,rgba(49,70,82,.19) 100%);
+    linear-gradient(90deg,rgba(49,70,82,.12),transparent 5.5%,transparent 94.5%,rgba(49,70,82,.12)),
+    radial-gradient(62% 76% at 50% 46%,transparent 86%,rgba(66,89,103,.05) 96%,rgba(49,70,82,.12) 100%);
   background-size:200% 185%,auto,auto
 }
 :root[data-theme="light"] .reel-viewport::after{
