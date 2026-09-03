@@ -860,8 +860,13 @@ figcaption:not(.reel-caption){
   transform:translate(-50%,-50%); transform-style:flat;
   transition:none; animation:none; scale:1; rotate:0deg
 }
+/* **One step has to be wider than the pane, not wider than the page.** At 106 %
+   a page one step over still showed a strip of itself down the pane's edge —
+   the pane is 1,180 wide and the page 1,010, so anything under 117 % of the
+   page is still inside it. 122 % clears the pane with a margin at every width
+   this is drawn at. */
 .hero-reel[data-mode="flat"] .reel-face{
-  transform:translateX(calc(var(--dx,3) * 106%)); transition:none;
+  transform:translateX(calc(var(--dx,3) * 122%)); transition:none;
   backface-visibility:visible
 }
 .hero-reel[data-mode="flat"] .reel-face.is-sliding{
@@ -869,7 +874,11 @@ figcaption:not(.reel-caption){
 }
 .hero-reel[data-mode="flat"] .reel-curve{display:none}
 .hero-reel[data-mode="flat"] .reel-face[data-curved] .reel-screen > picture{display:block}
+/* the screen clips again on a flat page: `overflow:hidden` was taken off it
+   because it flattens 3D, and a flat page has no 3D to flatten — without it
+   the picture's square corners sat proud of the rounded frame */
 .hero-reel[data-mode="flat"] .reel-face[data-curved] .reel-screen{
+  overflow:hidden;
   background:#F7FAFC; border-color:rgba(52,75,87,.30);
   box-shadow:0 1px 0 rgba(255,255,255,.94) inset,0 4px 12px rgba(3,11,14,.20),
     0 42px 84px -34px rgba(0,0,0,.72)

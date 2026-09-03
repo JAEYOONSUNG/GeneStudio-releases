@@ -54,7 +54,7 @@ document.documentElement.dataset.theme=t;})()</script>
 <link rel="preload" href="font/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="font/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="font/fonts.css?v=20260828">
-<link rel="stylesheet" href="base.css?v=20260903t">
+<link rel="stylesheet" href="base.css?v=20260903u">
 </head>
 <body>
 
@@ -2394,6 +2394,9 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
       middleTimer = setTimeout(() => sync(next), Math.round(SPIN * .48));
       finishTimer = setTimeout(() => {
         if(index !== next) sync(next);
+        /* the page that slid out is re-parked; it is already off the pane, so
+           this moves nothing anybody can see */
+        if(reel.dataset.mode === 'flat') parkFlat(index);
         setState('loading', faces[index].dataset.label + ' · loading');
         /* A full turn is the same pose. Normalize only after the transition has
            been removed, or the browser helpfully spins it back to zero. */
