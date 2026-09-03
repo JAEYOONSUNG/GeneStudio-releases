@@ -801,7 +801,7 @@ figcaption:not(.reel-caption){
    rather than at the frames. Eight tenths still reads as coming forward and
    costs almost nothing in sharpness. */
 .hero-reel[data-intro="arrive"] .reel-ring{transition:none; scale:.8}
-.hero-reel[data-intro="arrive"] .reel-fill{filter:brightness(.7)}
+.hero-reel[data-intro="arrive"] .reel-fill{filter:brightness(.82)}
 .hero-reel[data-intro="run"] .reel-ring{
   /* Eased out, but not off a cliff. `cubic-bezier(.16,1,.3,1)` spends the
      whole turn in its first third and the rest standing still, which is why
@@ -823,15 +823,19 @@ figcaption:not(.reel-caption){
   animation:introFace 3200ms cubic-bezier(.3,.28,.18,1) both
 }
 .hero-reel[data-intro="run"] .reel-face.is-active .reel-fill{animation-name:introFaceOn}
+/* **The drum is being read while it turns, so it is not dimmed to a silhouette.**
+   The first pass took the far faces to .18, which on a page whose argument is
+   that you can read the screenshots is the wrong end of the dial. They hold
+   near full light through the skim and only settle back at the end. */
 @keyframes introFace{
-  0%  {filter:brightness(.70)}
-  58% {filter:brightness(.76)}
-  78% {filter:brightness(.55) saturate(.6)}
-  100%{filter:brightness(.18) saturate(.5)}
+  0%  {filter:brightness(.84)}
+  58% {filter:brightness(.88)}
+  78% {filter:brightness(.7) saturate(.8)}
+  100%{filter:brightness(.4) saturate(.72)}
 }
 @keyframes introFaceOn{
-  0%  {filter:brightness(.80)}
-  58% {filter:brightness(.94)}
+  0%  {filter:brightness(.9)}
+  58% {filter:brightness(.98)}
   100%{filter:saturate(.98) brightness(1)}
 }
 /* **A face may not carry `opacity` or `filter`, because either one flattens
@@ -855,7 +859,7 @@ figcaption:not(.reel-caption){
    the drum is moving. Every state below dims with `brightness` instead: the
    slice stays opaque, the overlap shows one layer, and the join disappears. */
 .reel-fill, .reel-face:not([data-curved]) .reel-screen > picture{
-  filter:brightness(.18) saturate(.5);
+  filter:brightness(.4) saturate(.72);
   transition:filter .22s ease}
 .reel-face.is-active .reel-fill,
 .reel-face.is-active:not([data-curved]) .reel-screen > picture{
@@ -926,18 +930,15 @@ figcaption:not(.reel-caption){
    corners; there is nothing left for the screen to draw. */
 .reel-face[data-curved] .reel-screen{background:transparent; border-color:transparent;
   box-shadow:none}
-/* Each facet is shaded as a facet: dark where the drum turns away at both
-   edges, one soft specular down the middle. The face square to the reader
-   keeps almost none of it, because the point of that face is that it can be
-   read. */
-.reel-face::after{
-  content:''; position:absolute; inset:0; z-index:3; pointer-events:none;
-  border-radius:clamp(14px,1.8vw,23px);
-  background:linear-gradient(90deg,rgba(5,13,17,.72) 0%,rgba(5,13,17,.26) 17%,
-    rgba(233,248,255,.11) 46%,rgba(5,13,17,.28) 80%,rgba(5,13,17,.74) 100%);
-  transition:opacity .22s ease
-}
-.reel-face.is-active::after{opacity:.16}
+/* **The facet shading was a flat plate, and the facets are not flat any more.**
+   It shaded each face as a panel turning away — which was the right drawing
+   while a face *was* one flat panel, and became two faults the moment the face
+   became a curve. It sits at the face's own plane while the picture bends up
+   to a hundred pixels behind it, so it hangs in front of the frame instead of
+   lying on it; and it is a child, so the face hiding its own back does not
+   hide this, and every far-side face's plate carries on painting as a hard
+   rectangle floating inside the drum. Both of those are visible. The curve and
+   the brightness say what the gradient used to say, so it is gone. */
 /* while it turns the whole drum is the subject, so the far facets come up out
    of the dark rather than staying the near-invisible .34 they rest at */
 /* **No blur on a turn.** A little of it was meant to read as motion and what
@@ -945,7 +946,7 @@ figcaption:not(.reel-caption){
    drum was moving — on a page whose entire argument is that you can read the
    screenshots. Depth is carried by brightness alone now, and the frame square
    to the reader keeps its own. */
-.hero-reel[data-state="spinning"] .reel-fill{filter:saturate(.7) brightness(.62)}
+.hero-reel[data-state="spinning"] .reel-fill{filter:saturate(.86) brightness(.84)}
 .hero-reel[data-state="spinning"] .reel-face.is-active::after{opacity:.44}
 .hero-reel[data-state="spinning"] .reel-face.is-active .reel-fill{filter:none}
 .reel-screen{
@@ -1107,12 +1108,6 @@ figcaption:not(.reel-caption){
     radial-gradient(62% 76% at 50% 46%,transparent 48%,rgba(66,89,103,.07) 80%,rgba(49,70,82,.19) 100%);
   background-size:215% 100%,auto,auto
 }
-/* a light drum is shaded by less of it: the same facet gradient at full
-   strength over a white workspace would read as dirt on the screen */
-:root[data-theme="light"] .reel-face::after{
-  background:linear-gradient(90deg,rgba(30,52,64,.46) 0%,rgba(30,52,64,.14) 17%,
-    rgba(255,255,255,.16) 46%,rgba(30,52,64,.15) 80%,rgba(30,52,64,.48) 100%)
-}
 :root[data-theme="light"] .reel-viewport::after{
   background:radial-gradient(closest-side,rgba(39,64,78,.24),transparent 74%)
 }
@@ -1141,7 +1136,6 @@ figcaption:not(.reel-caption){
 @media (prefers-reduced-motion:reduce){
   .hero-reel .reel-ring{transform:translate(-50%,-50%) !important; transform-style:flat;
     transition:none !important; animation:none !important; scale:1 !important; will-change:auto}
-  .hero-reel .reel-face::after{display:none}
   .hero-reel .reel-face{transform:none !important; opacity:0; visibility:hidden; filter:none;
     transition:none}
   .hero-reel .reel-face.is-active{opacity:1; visibility:visible}
