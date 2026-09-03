@@ -54,7 +54,7 @@ document.documentElement.dataset.theme=t;})()</script>
 <link rel="preload" href="font/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="font/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="font/fonts.css?v=20260828">
-<link rel="stylesheet" href="base.css?v=20260903x">
+<link rel="stylesheet" href="base.css?v=20260904a">
 </head>
 <body>
 
@@ -1856,13 +1856,7 @@ document.documentElement.dataset.theme=t;})()</script>
         Gene Studio
       </a>
       <p>A plasmid workbench that opens what your lab already has — GenBank, SnapGene <code>.dna</code>, FASTA and Sanger traces — and writes them back without losing what was in them.</p>
-      <!-- **A footer is not the place to explain a font licence.** The page ships
-           two third-party things — the Inter faces and the Tabler icons — and both
-           licences ask only that their text travel with the files, which it does at
-           the two links. So the links stay, as a credit, and the sentence about
-           them goes; the app names every one of its own components itself. -->
-      <p class="footfine">Free to use for research; copying, changing or passing it on needs written permission.
-        <span class="footcred">Type <a href="font/OFL.txt">Inter</a> · Icons <a href="icon/tabler/LICENSE.txt">Tabler</a></span></p>
+      <p class="footfine">Free to use for research; copying, changing or passing it on needs written permission. Third-party components keep their own terms, including the <a href="font/OFL.txt">Inter font licence</a> and <a href="icon/tabler/LICENSE.txt">Tabler icon licence</a>.</p>
     </div>
     <nav class="footcols" aria-label="Site">
       <div class="footcol">
@@ -2063,10 +2057,7 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
        450 ms at the fastest and longer as it slows — enough to see what it is,
        and slow enough to read as a reel running rather than a cylinder being
        cocked. */
-    /* these three are `--turn`, `--arrive` and `--settle` in the stylesheet;
-       the rule that ties them is written there and both sides have to move
-       together, since one drives the transition and the other the clock */
-    const ARRIVE = 3700, SETTLE = 200, ARRIVE_TURN = 420;
+    const ARRIVE = 3000, SETTLE = 200, ARRIVE_TURN = 420;
     const words = [
       ['Find the file, or the exact site inside it.',
        'Home searches favorite folders by filename or recognition sequence, locally and without an import step.'],
@@ -2167,35 +2158,6 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
     };
     let prepared = null, pending = null;
 
-    /* ── after the arrival, the drum is put away ──────────────────────────
-       The cylinder is for the first look: one turn that shows all six. After
-       that a scene change is a page turned, not a drum spun — the current face
-       slides out one step and the next slides in, flat. Every face keeps a
-       `--dx` in face widths from the front position: 0 is the front, ±1 is the
-       neighbour just off the edge, ±3 is parked well away. A change is always
-       exactly one step in the asked-for direction whatever the distance
-       between the two indexes: the incoming face is first *put* one step to
-       that side without a transition, and only then do the two of them slide.
-       Every other face is parked without one, so nothing crosses the pane on
-       its way to a new parking place. */
-    const parkFlat = (cur) => {
-      faces.forEach((f, i) => {
-        f.classList.remove('is-sliding');
-        f.style.setProperty('--dx', i === cur ? '0' : '3');
-      });
-    };
-    const slideFlat = (from, to, dir) => {
-      faces.forEach((f, i) => {
-        f.classList.remove('is-sliding');
-        f.style.setProperty('--dx', i === to ? String(dir) : i === from ? '0' : String(dir * 3));
-      });
-      void ring.offsetWidth;
-      faces[from].classList.add('is-sliding');
-      faces[to].classList.add('is-sliding');
-      faces[from].style.setProperty('--dx', String(-dir));
-      faces[to].style.setProperty('--dx', '0');
-    };
-
     /* Runs once, on the first time the reel is actually looked at. It drives
        the same `--reel-angle` every other movement here drives, so the faces,
        the caption and the controls need to know nothing about it. */
@@ -2211,9 +2173,6 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
         ring.style.setProperty('--reel-angle', target + 'deg');
         setTimeout(() => {
           delete reel.dataset.intro;
-          /* the drum has done its one job; from here the reel is flat */
-          parkFlat(index);
-          reel.dataset.mode = 'flat';
           /* the caption has been holding the first scene through the whole
              skim; it resolves as the drum stops, so the two land together */
           captioned = true;
@@ -2386,23 +2345,14 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
       prepare(next);
       reel.dataset.direction = delta > 0 ? 'next' : 'previous';
       setState('spinning', 'Changing product view');
-      if(reel.dataset.mode === 'flat'){
-        /* a page turned: one step sideways, and the angle is left alone so
-           the drum is exactly where it was should it ever be wanted again */
-        slideFlat(index, next, delta > 0 ? 1 : -1);
-      } else {
-        const targetAngle = angle - delta * 60;
-        requestAnimationFrame(() => requestAnimationFrame(() => {
-          angle = targetAngle;
-          ring.style.setProperty('--reel-angle', angle + 'deg');
-        }));
-      }
+      const targetAngle = angle - delta * 60;
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        angle = targetAngle;
+        ring.style.setProperty('--reel-angle', angle + 'deg');
+      }));
       middleTimer = setTimeout(() => sync(next), Math.round(SPIN * .48));
       finishTimer = setTimeout(() => {
         if(index !== next) sync(next);
-        /* the page that slid out is re-parked; it is already off the pane, so
-           this moves nothing anybody can see */
-        if(reel.dataset.mode === 'flat') parkFlat(index);
         setState('loading', faces[index].dataset.label + ' · loading');
         /* A full turn is the same pose. Normalize only after the transition has
            been removed, or the browser helpfully spins it back to zero. */
@@ -2426,7 +2376,6 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
         sync(target); angle = -target * 60;
         setState('paused', message);
         ring.style.setProperty('--reel-angle', angle + 'deg');
-        if(reel.dataset.mode === 'flat') parkFlat(target);
       }else setState('paused', message);
       reel.dataset.auto = 'off';
     };
@@ -2625,6 +2574,53 @@ if('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion:redu
     copy.setAttribute('aria-hidden', 'true');
     m.append(copy);
     m.dataset.on = '1';
+  }
+}
+
+/* ── the download that is highlighted is the one for the machine reading ──
+   Three buttons, and the blue one was always Mac: `primary` was written into
+   the markup. It goes to whichever platform the visitor is on, read from
+   `userAgentData` where there is one and the platform string where there is
+   not, and Mac stays the default when neither says anything. iPadOS reports
+   itself as a Mac with touch points, which is the one case the string lies.
+
+   A phone or a tablet has no build to download, so no one button is the
+   right one. There the highlight goes round the three in turn — slowly, only
+   while the buttons are on screen, and not at all for a reader who has asked
+   for less motion, who gets Mac as before. */
+{
+  const groups = [...document.querySelectorAll('[data-dl]')].reduce((m, a) => {
+    const g = a.parentElement; (m.get(g) || m.set(g, []).get(g)).push(a); return m;
+  }, new Map());
+  if(groups.size){
+    const ua = navigator.userAgent || '';
+    const uad = navigator.userAgentData;
+    const plat = (uad && uad.platform) || navigator.platform || '';
+    const touchMac = /Mac/i.test(plat) && navigator.maxTouchPoints > 1;
+    const mobile = (uad && uad.mobile) || /Android|iPhone|iPad|iPod/i.test(ua) || touchMac;
+    const os = mobile ? null
+      : /Win/i.test(plat) ? 'win'
+      : /Linux|X11|CrOS/i.test(plat) ? 'nix'
+      : /Mac/i.test(plat) ? 'mac' : null;
+    const mark = which => {
+      for(const buttons of groups.values())
+        for(const a of buttons) a.classList.toggle('primary', a.dataset.dl === which);
+    };
+    if(os){ mark(os); }
+    else if(mobile && !matchMedia('(prefers-reduced-motion: reduce)').matches){
+      const order = ['mac', 'win', 'nix'];
+      let at = 0, timer = 0;
+      const step = () => { at = (at + 1) % order.length; mark(order[at]); };
+      const start = () => { if(!timer) timer = setInterval(step, 2400); };
+      const stop  = () => { clearInterval(timer); timer = 0; };
+      if('IntersectionObserver' in window){
+        const io = new IntersectionObserver(es => {
+          es.some(e => e.isIntersecting) ? start() : stop();
+        }, {threshold:.2});
+        for(const g of groups.keys()) io.observe(g);
+      } else start();
+      document.addEventListener('visibilitychange', () => document.hidden ? stop() : start());
+    }
   }
 }
 
