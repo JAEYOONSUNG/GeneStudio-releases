@@ -744,22 +744,30 @@ figcaption:not(.reel-caption){
    `outline` at a fixed offset reads as a margin marker somebody left in — the
    one thing a piece of glass never has. Thickness is carried by the lit rim
    and the specular alone. */
+/* **This pane still had the sweeping band the windows lost.** The gloss on
+   `.frame` was rebuilt as a light that sits on the surface and wanders, and
+   this one — the largest piece of glass on the page — was left crossing itself
+   on a thirteen second rail, which is the effect that was called cheap. Same
+   treatment: one soft specular drawn larger than the pane, moved across two
+   thirds of that spare room on both axes, never reaching an edge and so never
+   arriving or leaving. */
 .reel-viewport::before{
   background:
-    linear-gradient(112deg,transparent 4%,rgba(255,255,255,.24) 15%,
-      rgba(255,255,255,.05) 24%,transparent 40%,transparent 64%,
-      rgba(255,255,255,.07) 78%,transparent 92%),
+    radial-gradient(58% 92% at 50% 50%,rgba(255,255,255,.22),
+      rgba(255,255,255,.05) 40%,transparent 68%),
     linear-gradient(90deg,rgba(4,10,12,.44),transparent 21%,transparent 79%,rgba(4,10,12,.44)),
     radial-gradient(62% 76% at 50% 46%,transparent 46%,rgba(4,10,12,.14) 78%,rgba(4,9,11,.52) 100%);
-  background-size:215% 100%,auto,auto;
-  background-position:128% 0,0 0,0 0
+  background-size:200% 185%,auto,auto;
+  background-position:20% 16%,0 0,0 0
 }
 @media (prefers-reduced-motion:no-preference){
-  .reel-viewport::before{animation:paneSheen 13s ease-in-out infinite}
+  .reel-viewport::before{animation:paneWander 27s ease-in-out infinite}
 }
-@keyframes paneSheen{
-  0%,100%{background-position:130% 0,0 0,0 0}
-  50%{background-position:-30% 0,0 0,0 0}
+@keyframes paneWander{
+  0%,100%{background-position:20% 16%,0 0,0 0}
+  26%    {background-position:66% 34%,0 0,0 0}
+  51%    {background-position:80% 68%,0 0,0 0}
+  77%    {background-position:32% 78%,0 0,0 0}
 }
 .reel-viewport::after{
   inset:auto 8% 4%; height:17%; border-radius:50%;
@@ -1001,7 +1009,7 @@ figcaption:not(.reel-caption){
 /* **The clip was behind the curve, so the front of the drum never moved.**
    The slices and this slot are siblings in one 3D context and the slices sit
    within a pixel of z = 0, which was enough for the sort to put an `<img>` on
-   top of the video — measured on the live page, `elementFromPoint` at the dead
+   top of the video — measured on the live page: `elementFromPoint` at the dead
    centre of a playing clip returned IMG. A pixel forward settles it, and is
    invisible on a face that is itself at z = 0. */
 .reel-live-slot{position:absolute; inset:0; overflow:hidden;
@@ -1142,12 +1150,11 @@ figcaption:not(.reel-caption){
 }
 :root[data-theme="light"] .reel-viewport::before{
   background:
-    linear-gradient(112deg,transparent 4%,rgba(255,255,255,.86) 15%,
-      rgba(255,255,255,.24) 24%,transparent 40%,transparent 64%,
-      rgba(255,255,255,.30) 78%,transparent 92%),
+    radial-gradient(58% 92% at 50% 50%,rgba(255,255,255,.78),
+      rgba(255,255,255,.22) 40%,transparent 68%),
     linear-gradient(90deg,rgba(49,70,82,.16),transparent 19%,transparent 81%,rgba(49,70,82,.16)),
     radial-gradient(62% 76% at 50% 46%,transparent 48%,rgba(66,89,103,.07) 80%,rgba(49,70,82,.19) 100%);
-  background-size:215% 100%,auto,auto
+  background-size:200% 185%,auto,auto
 }
 :root[data-theme="light"] .reel-viewport::after{
   background:radial-gradient(closest-side,rgba(39,64,78,.24),transparent 74%)
