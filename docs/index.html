@@ -54,7 +54,7 @@ document.documentElement.dataset.theme=t;})()</script>
 <link rel="preload" href="font/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="font/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="font/fonts.css?v=20260828">
-<link rel="stylesheet" href="base.css?v=20260903p">
+<link rel="stylesheet" href="base.css?v=20260903q">
 </head>
 <body>
 
@@ -2057,7 +2057,10 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
        450 ms at the fastest and longer as it slows — enough to see what it is,
        and slow enough to read as a reel running rather than a cylinder being
        cocked. */
-    const ARRIVE = 3000, SETTLE = 200, ARRIVE_TURN = 420;
+    /* these three are `--turn`, `--arrive` and `--settle` in the stylesheet;
+       the rule that ties them is written there and both sides have to move
+       together, since one drives the transition and the other the clock */
+    const ARRIVE = 3700, SETTLE = 200, ARRIVE_TURN = 420;
     const words = [
       ['Find the file, or the exact site inside it.',
        'Home searches favorite folders by filename or recognition sequence, locally and without an import step.'],

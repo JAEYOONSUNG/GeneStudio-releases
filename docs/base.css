@@ -701,7 +701,26 @@ figcaption:not(.reel-caption){
 /* the drum was leaving 125 px of empty glass down each side and 66 top and
    bottom; at 1,010 it fills the pane it is mounted in. The radius is the same
    1.1459 × W it has to be for the frames to lie on one cylinder. */
-.hero-reel{--reel-angle:0deg; --reel-radius:min(98.6vw,1157px); margin:0; text-align:left}
+/* ── one rule for every movement the reel makes ────────────────────────────
+   The timings had grown one at a time and no two agreed: two easing curves for
+   the same rotation, a dolly sixty milliseconds longer than the turn it
+   belonged to for no reason, and four fades picked by eye. There is one curve
+   and one base duration now, and everything else is a fraction of it.
+
+   `--turn` is one face, 60°. The arrival is seven faces and takes `--turn ×
+   √7` — not seven times as long, because a drum already turning does not need
+   the easing again for every face, and not one turn's worth either. 1,400 ×
+   2.646 = 3,700, which is where the arrival had already been tuned by hand, so
+   the rule agrees with what was arrived at by ear. CSS cannot take a square
+   root, which is why the number is written out and this note is here. */
+.hero-reel{
+  --reel-angle:0deg; --reel-radius:min(98.6vw,1157px);
+  --turn:1400ms;
+  --arrive:3700ms;
+  --settle:200ms;
+  --turn-ease:cubic-bezier(.45,.05,.3,1);
+  margin:0; text-align:left
+}
 .reel-viewport{
   position:relative; isolation:isolate; height:clamp(452px,58vw,714px); overflow:hidden;
   /* **The vanishing point sits on the drum's own axis, not four per cent above
@@ -788,12 +807,12 @@ figcaption:not(.reel-caption){
      of its shape change in the last third of the turn, so that is the third
      that needs the time. The number lives here and in `SPIN`, and the two
      have to be changed together. */
-  transition:transform 1400ms cubic-bezier(.45,.05,.3,1); will-change:transform;
+  transition:transform var(--turn) var(--turn-ease); will-change:transform;
   /* The camera pulls back as the drum comes round and rides in again as it
      lands — a turn seen at one distance reads as a slide, whatever the maths
      underneath say. `scale` is its own property, so this dip composes with the
      transform the transition owns instead of fighting it for the same slot. */
-  animation:reelDolly 1460ms cubic-bezier(.45,.05,.3,1) both
+  animation:reelDolly calc(var(--turn) + var(--settle)) var(--turn-ease) both
 }
 /* **The axis leans while it turns, so the frames climb rather than click.**
    Upright, six panels at 60° come round the front one after another at the
@@ -836,9 +855,9 @@ figcaption:not(.reel-caption){
      the first version had nothing readable in it. This one leaves the faces
      legible the whole way round and still lands soft. The scale runs the turn
      plus the settle, so the drum is easing forward as the rotation finishes. */
-  transition:transform 3000ms cubic-bezier(.3,.28,.18,1),
-             scale 3200ms cubic-bezier(.3,.28,.18,1);
-  animation:reelHelix 3200ms cubic-bezier(.3,.28,.18,1) both;
+  transition:transform var(--arrive) var(--turn-ease),
+             scale calc(var(--arrive) + var(--settle)) var(--turn-ease);
+  animation:reelHelix calc(var(--arrive) + var(--settle)) var(--turn-ease) both;
   scale:1; will-change:transform
 }
 /* **A transition fades from the first frame; a skim needs the light to hold.**
@@ -848,7 +867,7 @@ figcaption:not(.reel-caption){
    lit for the first two thirds — the part that is actually the skim — and take
    them down to their resting values only over the last of it. */
 .hero-reel[data-intro="run"] .reel-fill{
-  animation:introFace 3200ms cubic-bezier(.3,.28,.18,1) both
+  animation:introFace calc(var(--arrive) + var(--settle)) var(--turn-ease) both
 }
 .hero-reel[data-intro="run"] .reel-face.is-active .reel-fill{animation-name:introFaceOn}
 /* **The drum is being read while it turns, so it is not dimmed to a silhouette.**
@@ -859,7 +878,7 @@ figcaption:not(.reel-caption){
   0%  {filter:brightness(.84)}
   58% {filter:brightness(.88)}
   78% {filter:brightness(.7) saturate(.8)}
-  100%{filter:brightness(.4) saturate(.72)}
+  100%{filter:brightness(.66) saturate(.85)}
 }
 @keyframes introFaceOn{
   0%  {filter:brightness(.9)}
@@ -890,8 +909,12 @@ figcaption:not(.reel-caption){
    hands `is-active` over at its midpoint, and at .22 s that landed as a step
    in the middle of a movement that is otherwise continuous */
 .reel-fill, .reel-face:not([data-curved]) .reel-screen > picture{
-  filter:brightness(.4) saturate(.72);
-  transition:filter .5s ease}
+/* **A frame that is not the front one is still a frame, not a shadow.** At .4
+   the drum rested as a dark band with one lit panel in it, which is why the
+   whole thing read as dark by default. Two thirds is quiet enough to say which
+   one is being read and bright enough that the others are still screens. */
+  filter:brightness(.66) saturate(.85);
+  transition:filter calc(var(--turn) * .36) ease}
 .reel-face.is-active .reel-fill,
 .reel-face.is-active:not([data-curved]) .reel-screen > picture{
   filter:saturate(.98) brightness(1)}
@@ -1027,11 +1050,11 @@ figcaption:not(.reel-caption){
    `visibility` cannot tween, but it can be delayed, and a delay is all this
    needs. Going the other way it returns with no delay, so the curve is already
    standing before the clip fades out. */
-.reel-live-slot{opacity:0; transition:opacity .55s ease}
+.reel-live-slot{opacity:0; transition:opacity calc(var(--turn) * .4) ease}
 .hero-reel[data-state="playing"] .reel-face.is-active .reel-live-slot{opacity:1}
 .reel-curve{transition:visibility 0s linear 0s}
 .hero-reel[data-state="playing"] .reel-face.is-active .reel-curve{
-  visibility:hidden; transition:visibility 0s linear .58s}
+  visibility:hidden; transition:visibility 0s linear calc(var(--turn) * .42)}
 .reel-live-slot video{opacity:0; transition:opacity .16s ease}
 .reel-live-slot video[data-ready="true"]{opacity:1}
 .reel-viewport > [data-reel-video]{display:none}
@@ -1043,8 +1066,8 @@ figcaption:not(.reel-caption){
 }
 /* the projector striking up: one pass of light across the gate as the reel
    comes in, and the same sweep on every turn after it */
-.hero-reel[data-state="spinning"] .reel-streak{animation:reelWhoosh 620ms cubic-bezier(.18,.82,.22,1) both}
-.hero-reel[data-intro="run"] .reel-streak{animation:reelWhoosh 1900ms cubic-bezier(.3,.28,.18,1) both}
+.hero-reel[data-state="spinning"] .reel-streak{animation:reelWhoosh calc(var(--turn) * .62) var(--turn-ease) both}
+.hero-reel[data-intro="run"] .reel-streak{animation:reelWhoosh calc(var(--arrive) * .63) var(--turn-ease) both}
 @keyframes reelWhoosh{
   0%{opacity:0; transform:skewX(-12deg) translateX(-260%)}
   28%{opacity:.86}
