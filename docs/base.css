@@ -574,8 +574,13 @@ figure{margin:0}
       rgba(255,255,255,.06) 38%,transparent 66%),
     linear-gradient(177deg,rgba(255,255,255,.10) 0%,transparent 30%,
       transparent 82%,rgba(255,255,255,.045) 100%);
-  background-size:150% 150%,auto;
-  background-position:6% -12%,0 0;
+  /* the specular is drawn twice the size of the window and moved across two
+     thirds of that spare room, on both axes — small enough that it never
+     reaches an edge, large enough to be a light that is somewhere different
+     each time you look up. Six per cent of a fifty per cent overhang, which
+     the first version had, is a fixed highlight with a rounding error. */
+  background-size:210% 190%,auto;
+  background-position:18% 14%,0 0;
   /* the window's edge is its own ring, so this adds no line either — only the
      lens, the light bending through the thickness just inside that edge */
   box-shadow:
@@ -588,9 +593,10 @@ figure{margin:0}
 /* small excursions only — the highlight never reaches an edge, so it is a
    light moving on the surface rather than one crossing it */
 @keyframes glassBreathe{
-  0%,100%{background-position:6% -12%,0 0}
-  34%    {background-position:22% -4%,0 0}
-  67%    {background-position:12% -16%,0 0}
+  0%,100%{background-position:18% 14%,0 0}
+  27%    {background-position:62% 30%,0 0}
+  53%    {background-position:78% 62%,0 0}
+  79%    {background-position:34% 74%,0 0}
 }
 /* ── the same light, on everything else that is a surface ──────────────────
    A pill, a button and an icon tile are the same material as the window, and
@@ -795,7 +801,7 @@ figcaption:not(.reel-caption){
    rather than at the frames. Eight tenths still reads as coming forward and
    costs almost nothing in sharpness. */
 .hero-reel[data-intro="arrive"] .reel-ring{transition:none; scale:.8}
-.hero-reel[data-intro="arrive"] .reel-fill{filter:brightness(.86); opacity:.8}
+.hero-reel[data-intro="arrive"] .reel-fill{filter:brightness(.7)}
 .hero-reel[data-intro="run"] .reel-ring{
   /* Eased out, but not off a cliff. `cubic-bezier(.16,1,.3,1)` spends the
      whole turn in its first third and the rest standing still, which is why
@@ -818,15 +824,15 @@ figcaption:not(.reel-caption){
 }
 .hero-reel[data-intro="run"] .reel-face.is-active .reel-fill{animation-name:introFaceOn}
 @keyframes introFace{
-  0%  {opacity:.80; filter:brightness(.86)}
-  58% {opacity:.74; filter:brightness(.94)}
-  78% {opacity:.52; filter:brightness(.98)}
-  100%{opacity:.14; filter:saturate(.94) brightness(1)}
+  0%  {filter:brightness(.70)}
+  58% {filter:brightness(.76)}
+  78% {filter:brightness(.55) saturate(.6)}
+  100%{filter:brightness(.18) saturate(.5)}
 }
 @keyframes introFaceOn{
-  0%  {opacity:.88; filter:brightness(.88)}
-  58% {opacity:.94; filter:brightness(.96)}
-  100%{opacity:1;   filter:none}
+  0%  {filter:brightness(.80)}
+  58% {filter:brightness(.94)}
+  100%{filter:saturate(.98) brightness(1)}
 }
 /* **A face may not carry `opacity` or `filter`, because either one flattens
    what is inside it.** Both were on the face, which was harmless while a face
@@ -841,12 +847,19 @@ figcaption:not(.reel-caption){
   transform:rotateY(var(--face-angle)) translateZ(var(--reel-radius));
   backface-visibility:hidden; transform-style:preserve-3d
 }
+/* **A dimmed slice must not be a transparent one.** The slices overlap by two
+   pixels at every join so the seam has nothing to show — and the moment they
+   were given `opacity` to dim them, that overlap started compositing twice.
+   Two layers at .72 read .92 where they meet, which is a bright vertical band
+   at all eleven joins, the full height of the frame, brightest exactly when
+   the drum is moving. Every state below dims with `brightness` instead: the
+   slice stays opaque, the overlap shows one layer, and the join disappears. */
 .reel-fill, .reel-face:not([data-curved]) .reel-screen > picture{
-  opacity:.14; filter:saturate(.72) brightness(.82);
-  transition:opacity .22s ease,filter .22s ease}
+  filter:brightness(.18) saturate(.5);
+  transition:filter .22s ease}
 .reel-face.is-active .reel-fill,
 .reel-face.is-active:not([data-curved]) .reel-screen > picture{
-  opacity:1; filter:saturate(.94) brightness(1)}
+  filter:saturate(.98) brightness(1)}
 
 /* ── a page is bent, and six bent pages are a cylinder ──────────────────────
    Six flat panels at 60° is a hexagonal prism: it turns on hard corners and
@@ -932,7 +945,7 @@ figcaption:not(.reel-caption){
    drum was moving — on a page whose entire argument is that you can read the
    screenshots. Depth is carried by brightness alone now, and the frame square
    to the reader keeps its own. */
-.hero-reel[data-state="spinning"] .reel-fill{opacity:.72; filter:saturate(.7) brightness(.8)}
+.hero-reel[data-state="spinning"] .reel-fill{filter:saturate(.7) brightness(.62)}
 .hero-reel[data-state="spinning"] .reel-face.is-active::after{opacity:.44}
 .hero-reel[data-state="spinning"] .reel-face.is-active .reel-fill{filter:none}
 .reel-screen{
@@ -1134,7 +1147,7 @@ figcaption:not(.reel-caption){
   .hero-reel .reel-face.is-active{opacity:1; visibility:visible}
   /* no curve here: the drum is flat, so the slices would be nine strips of one
      picture laid side by side, which is the picture — script builds none */
-  .hero-reel .reel-fill{opacity:1; filter:none; transition:none; animation:none !important}
+  .hero-reel .reel-fill{filter:none; transition:none; animation:none !important}
   .hero-reel .reel-streak{display:none}
   .hero-reel .reel-live-state i{animation:none}
   .hero-reel .reel-scenes button::after{transition:none}
