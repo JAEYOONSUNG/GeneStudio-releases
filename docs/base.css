@@ -769,17 +769,20 @@ figcaption:not(.reel-caption){
   transform:translate3d(-50%,-50%,calc(0px - var(--reel-radius))) rotateY(var(--reel-angle));
 }
 .hero-reel[data-state="spinning"] .reel-ring{
-  /* 620 ms on a curve that spends itself in the first third read as a flick;
-     900 on `.34,.16` still left an edge on both ends. Eleven hundred on a
-     curve that eases in as well as out is a frame swinging round rather than
-     one being snapped into place — and it is the number `SPIN` carries, so
-     the two have to be changed together. */
-  transition:transform 1100ms cubic-bezier(.42,0,.2,1); will-change:transform;
+  /* **The turn is the arrival's motion, one face's worth.** It had its own
+     curve and its own duration and read as a different gesture: the arrival
+     glides and lays its last degrees down slowly, while `.42,0` put the speed
+     in the middle and arrived with the frame still bending. The same curve as
+     the arrival, and long enough to use it — a face at this bend spends most
+     of its shape change in the last third of the turn, so that is the third
+     that needs the time. The number lives here and in `SPIN`, and the two
+     have to be changed together. */
+  transition:transform 1400ms cubic-bezier(.3,.28,.18,1); will-change:transform;
   /* The camera pulls back as the drum comes round and rides in again as it
      lands — a turn seen at one distance reads as a slide, whatever the maths
      underneath say. `scale` is its own property, so this dip composes with the
      transform the transition owns instead of fighting it for the same slot. */
-  animation:reelDolly 1140ms cubic-bezier(.42,0,.2,1) both
+  animation:reelDolly 1460ms cubic-bezier(.3,.28,.18,1) both
 }
 /* **The axis leans while it turns, so the frames climb rather than click.**
    Upright, six panels at 60° come round the front one after another at the
@@ -872,9 +875,12 @@ figcaption:not(.reel-caption){
    at all eleven joins, the full height of the frame, brightest exactly when
    the drum is moving. Every state below dims with `brightness` instead: the
    slice stays opaque, the overlap shows one layer, and the join disappears. */
+/* half a second rather than a fifth: the light on a face changes when the turn
+   hands `is-active` over at its midpoint, and at .22 s that landed as a step
+   in the middle of a movement that is otherwise continuous */
 .reel-fill, .reel-face:not([data-curved]) .reel-screen > picture{
   filter:brightness(.4) saturate(.72);
-  transition:filter .22s ease}
+  transition:filter .5s ease}
 .reel-face.is-active .reel-fill,
 .reel-face.is-active:not([data-curved]) .reel-screen > picture{
   filter:saturate(.98) brightness(1)}
