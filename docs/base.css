@@ -1832,7 +1832,18 @@ section.plain h2{font-size:clamp(26px,3.4vw,36px); margin-top:14px}
    it holds and the eye can decide what to read. The icon is a symbol reused from
    one inline sprite rather than a file per card: the page fetches from nobody. */
 .tbsprite{display:none}
-.toolbox{margin-top:34px}
+.toolbox{margin-top:34px; position:relative}
+/* the light the cards blur: three soft pools in the section's own hues, wider
+   than the grid so colour reaches every card and not only the middle ones */
+.toolbox::before{
+  content:''; position:absolute; inset:-8% -4% -10%; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(34% 40% at 12% 18%,color-mix(in oklab, var(--amber) 34%, transparent),transparent 70%),
+    radial-gradient(32% 44% at 86% 30%,rgba(94,177,255,.30),transparent 72%),
+    radial-gradient(40% 36% at 50% 92%,rgba(79,183,158,.26),transparent 72%);
+  filter:blur(48px)
+}
+.tbgrid{position:relative; z-index:1}
 /* **Eight benches, and the colour says which.** Fifty-seven cards under one
    accent is a wall to be read line by line; the headings already name the
    groups in words, so the hue is what lets somebody find the enzyme bench
@@ -1895,13 +1906,25 @@ section.plain h2{font-size:clamp(26px,3.4vw,36px); margin-top:14px}
    own line now, which also makes the title the first thing read and takes a
    row's worth of height out of every card: measured at 1440 px, the first grid
    522 -> 360 px and the whole section 5,102 -> 3,721. */
+/* **The cards are glass, in the sense css.glass means it.** Its recipe is a
+   translucent white fill, a blur of what is behind, a white hairline and one
+   soft shadow — and that is what these are, at the strengths a dark page can
+   carry: a fifth of white would be a light grey card here, so the fill is a
+   fourteenth and the hairline a seventh. The inset line along the top is the
+   same light every other surface on the page catches. Blur only shows what it
+   is blurring, so `.toolbox` puts colour behind the grid for it to work on. */
 .tbcard{
   display:grid; grid-template-columns:auto 1fr; column-gap:10px;
   align-items:start; align-content:start; padding:16px 18px 18px;
-  border:1px solid var(--hair); border-radius:16px; background:var(--ground);
-  transition:border-color .15s ease, transform .15s ease;
+  border:1px solid rgba(255,255,255,.14); border-radius:16px;
+  background:rgba(255,255,255,.07);
+  -webkit-backdrop-filter:blur(14px) saturate(1.3);
+  backdrop-filter:blur(14px) saturate(1.3);
+  box-shadow:0 4px 30px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.14);
+  transition:border-color .15s ease, background-color .15s ease, transform .15s ease;
 }
-.tbcard:hover{border-color:var(--line); transform:translateY(-2px)}
+.tbcard:hover{border-color:rgba(255,255,255,.28); background:rgba(255,255,255,.105);
+  transform:translateY(-2px)}
 /* the glyph is optically on the title's *first* line — centring it against a
    two-line title floats it into the gap between them */
 .tbico{
@@ -2826,8 +2849,11 @@ section.feat, section.plain, .flow, .contact{padding-block:clamp(84px,11vw,150px
 :root[data-theme="light"] .qs details{box-shadow:none}
 :root[data-theme="light"] .qs details:hover{box-shadow:0 0 0 1px var(--line) inset}
 :root[data-theme="light"] .ccard{box-shadow:none}
-:root[data-theme="light"] .card, :root[data-theme="light"] .tbcard{border-color:transparent}
-:root[data-theme="light"] .tbcard:hover{border-color:var(--line)}
+:root[data-theme="light"] .card{border-color:transparent}
+:root[data-theme="light"] .tbcard{
+  border-color:rgba(255,255,255,.85); background:rgba(255,255,255,.52);
+  box-shadow:0 4px 30px rgba(38,67,84,.14), inset 0 1px 0 #FFFFFF}
+:root[data-theme="light"] .tbcard:hover{border-color:#FFFFFF; background:rgba(255,255,255,.7)}
 :root[data-theme="light"] .wall blockquote{box-shadow:0 1px 2px rgba(17,24,25,.05), 0 0 0 1px var(--hair) inset}
 /* the capsule nav on a white page is the reference's own: white, one hairline */
 :root[data-theme="light"] .rail .wrap{background:rgba(255,255,255,.86); border-color:var(--hair);
