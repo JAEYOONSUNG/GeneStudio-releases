@@ -2678,6 +2678,10 @@ footer{padding:clamp(48px,7vw,76px) 0 0}
   border-top:1px solid var(--hair); font-size:13px; color:var(--faint);
 }
 .footver{font-family:var(--mono); font-size:12px; letter-spacing:-.01em}
+/* the credit sits after the terms as a quieter clause, not as a second line
+   of them */
+.footcred{display:inline-block; margin-left:10px; color:var(--faint)}
+.footcred a{color:inherit; text-decoration-color:color-mix(in oklab, currentColor 45%, transparent)}
 
 /* ── the light theme's answers for all of the above ─────────────────────────
    The rules above are the dark theme and they reach light too, which is the

@@ -54,7 +54,7 @@ document.documentElement.dataset.theme=t;})()</script>
 <link rel="preload" href="font/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="font/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="font/fonts.css?v=20260828">
-<link rel="stylesheet" href="base.css?v=20260903u">
+<link rel="stylesheet" href="base.css?v=20260903v">
 </head>
 <body>
 
@@ -1856,7 +1856,13 @@ document.documentElement.dataset.theme=t;})()</script>
         Gene Studio
       </a>
       <p>A plasmid workbench that opens what your lab already has — GenBank, SnapGene <code>.dna</code>, FASTA and Sanger traces — and writes them back without losing what was in them.</p>
-      <p class="footfine">Free to use for research; copying, changing or passing it on needs written permission. Third-party components keep their own terms, including the <a href="font/OFL.txt">Inter font licence</a> and <a href="icon/tabler/LICENSE.txt">Tabler icon licence</a>.</p>
+      <!-- **A footer is not the place to explain a font licence.** The page ships
+           two third-party things — the Inter faces and the Tabler icons — and both
+           licences ask only that their text travel with the files, which it does at
+           the two links. So the links stay, as a credit, and the sentence about
+           them goes; the app names every one of its own components itself. -->
+      <p class="footfine">Free to use for research; copying, changing or passing it on needs written permission.
+        <span class="footcred">Type <a href="font/OFL.txt">Inter</a> · Icons <a href="icon/tabler/LICENSE.txt">Tabler</a></span></p>
     </div>
     <nav class="footcols" aria-label="Site">
       <div class="footcol">
