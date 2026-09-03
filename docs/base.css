@@ -698,7 +698,10 @@ figcaption:not(.reel-caption){
    same 50°, which
    is what makes each one a true segment of one cylinder rather than a bowed
    card that happens to be near it. Move one and the other must move with it. */
-.hero-reel{--reel-angle:0deg; --reel-radius:min(92.9vw,1066px); margin:0; text-align:left}
+/* the drum was leaving 125 px of empty glass down each side and 66 top and
+   bottom; at 1,010 it fills the pane it is mounted in. The radius is the same
+   1.1459 × W it has to be for the frames to lie on one cylinder. */
+.hero-reel{--reel-angle:0deg; --reel-radius:min(98.6vw,1157px); margin:0; text-align:left}
 .reel-viewport{
   position:relative; isolation:isolate; height:clamp(452px,58vw,714px); overflow:hidden;
   /* **The vanishing point sits on the drum's own axis, not four per cent above
@@ -741,30 +744,22 @@ figcaption:not(.reel-caption){
    `outline` at a fixed offset reads as a margin marker somebody left in — the
    one thing a piece of glass never has. Thickness is carried by the lit rim
    and the specular alone. */
-/* **This pane still had the sweeping band the windows lost.** The gloss on
-   `.frame` was rebuilt as a light that sits on the surface and wanders, and
-   this one — the largest piece of glass on the page — was left crossing itself
-   on a thirteen second rail, which is the effect that was called cheap. Same
-   treatment: one soft specular drawn larger than the pane, moved across two
-   thirds of that spare room on both axes, never reaching an edge and so never
-   arriving or leaving. */
 .reel-viewport::before{
   background:
-    radial-gradient(58% 92% at 50% 50%,rgba(255,255,255,.22),
-      rgba(255,255,255,.05) 40%,transparent 68%),
+    linear-gradient(112deg,transparent 4%,rgba(255,255,255,.24) 15%,
+      rgba(255,255,255,.05) 24%,transparent 40%,transparent 64%,
+      rgba(255,255,255,.07) 78%,transparent 92%),
     linear-gradient(90deg,rgba(4,10,12,.44),transparent 21%,transparent 79%,rgba(4,10,12,.44)),
     radial-gradient(62% 76% at 50% 46%,transparent 46%,rgba(4,10,12,.14) 78%,rgba(4,9,11,.52) 100%);
-  background-size:200% 185%,auto,auto;
-  background-position:20% 16%,0 0,0 0
+  background-size:215% 100%,auto,auto;
+  background-position:128% 0,0 0,0 0
 }
 @media (prefers-reduced-motion:no-preference){
-  .reel-viewport::before{animation:paneWander 27s ease-in-out infinite}
+  .reel-viewport::before{animation:paneSheen 13s ease-in-out infinite}
 }
-@keyframes paneWander{
-  0%,100%{background-position:20% 16%,0 0,0 0}
-  26%    {background-position:66% 34%,0 0,0 0}
-  51%    {background-position:80% 68%,0 0,0 0}
-  77%    {background-position:32% 78%,0 0,0 0}
+@keyframes paneSheen{
+  0%,100%{background-position:130% 0,0 0,0 0}
+  50%{background-position:-30% 0,0 0,0 0}
 }
 .reel-viewport::after{
   inset:auto 8% 4%; height:17%; border-radius:50%;
@@ -772,7 +767,7 @@ figcaption:not(.reel-caption){
   filter:blur(17px); opacity:.62
 }
 .reel-ring{
-  position:absolute; z-index:2; left:50%; top:50%; width:min(81vw,930px); aspect-ratio:8/5;
+  position:absolute; z-index:2; left:50%; top:50%; width:min(86vw,1010px); aspect-ratio:8/5;
   transform-style:preserve-3d;
   transform:translate3d(-50%,-50%,calc(0px - var(--reel-radius))) rotateY(var(--reel-angle));
 }
@@ -785,12 +780,12 @@ figcaption:not(.reel-caption){
      of its shape change in the last third of the turn, so that is the third
      that needs the time. The number lives here and in `SPIN`, and the two
      have to be changed together. */
-  transition:transform 1400ms cubic-bezier(.3,.28,.18,1); will-change:transform;
+  transition:transform 1400ms cubic-bezier(.45,.05,.3,1); will-change:transform;
   /* The camera pulls back as the drum comes round and rides in again as it
      lands — a turn seen at one distance reads as a slide, whatever the maths
      underneath say. `scale` is its own property, so this dip composes with the
      transform the transition owns instead of fighting it for the same slot. */
-  animation:reelDolly 1460ms cubic-bezier(.3,.28,.18,1) both
+  animation:reelDolly 1460ms cubic-bezier(.45,.05,.3,1) both
 }
 /* **The axis leans while it turns, so the frames climb rather than click.**
    Upright, six panels at 60° come round the front one after another at the
@@ -1006,24 +1001,29 @@ figcaption:not(.reel-caption){
 /* **The clip was behind the curve, so the front of the drum never moved.**
    The slices and this slot are siblings in one 3D context and the slices sit
    within a pixel of z = 0, which was enough for the sort to put an `<img>` on
-   top of the video — measured on the live page: `elementFromPoint` at the dead
+   top of the video — measured on the live page, `elementFromPoint` at the dead
    centre of a playing clip returned IMG. A pixel forward settles it, and is
    invisible on a face that is itself at z = 0. */
 .reel-live-slot{position:absolute; inset:0; overflow:hidden;
   border-radius:clamp(14px,1.8vw,23px); transform:translateZ(1px)}
-/* and the stand-in steps aside while the clip is up: a flat rectangle over a
-   curved one disagrees at the edges, and only one of them can be right */
-.hero-reel[data-state="playing"] .reel-face.is-active .reel-curve{visibility:hidden}
 /* **The clip is flat, and it is the one thing on the face that cannot bend.**
    A `<video>` is a single plane; it cannot be cut into slices and laid on the
-   arc the way its own poster can. Left showing through a turn it covered the
-   curve with a flat rectangle — and, because it is moved into the *arriving*
-   face at the start of the turn, that rectangle was usually a clip still
-   loading, so the face swinging in was blank. It stands down while anything is
-   moving and the curved poster stands in. The poster is the clip's last frame,
-   so there is nothing to see at the cut. */
-.hero-reel[data-state="spinning"] .reel-live-slot,
-.hero-reel[data-intro] .reel-live-slot{visibility:hidden}
+   arc the way its own poster can, so it stands down while anything is moving
+   and the curved poster stands in.
+
+   **The handover is what made the unfolding feel abrupt.** Switched on
+   `visibility`, the curved still became a flat clip between two frames, at the
+   end of a turn that had spent 1.4 s easing — so the last of the flattening
+   arrived as a cut rather than as the end of a movement. The clip fades up
+   over the curve instead, and the curve is only taken away once it is covered:
+   `visibility` cannot tween, but it can be delayed, and a delay is all this
+   needs. Going the other way it returns with no delay, so the curve is already
+   standing before the clip fades out. */
+.reel-live-slot{opacity:0; transition:opacity .55s ease}
+.hero-reel[data-state="playing"] .reel-face.is-active .reel-live-slot{opacity:1}
+.reel-curve{transition:visibility 0s linear 0s}
+.hero-reel[data-state="playing"] .reel-face.is-active .reel-curve{
+  visibility:hidden; transition:visibility 0s linear .58s}
 .reel-live-slot video{opacity:0; transition:opacity .16s ease}
 .reel-live-slot video[data-ready="true"]{opacity:1}
 .reel-viewport > [data-reel-video]{display:none}
@@ -1142,11 +1142,12 @@ figcaption:not(.reel-caption){
 }
 :root[data-theme="light"] .reel-viewport::before{
   background:
-    radial-gradient(58% 92% at 50% 50%,rgba(255,255,255,.78),
-      rgba(255,255,255,.22) 40%,transparent 68%),
+    linear-gradient(112deg,transparent 4%,rgba(255,255,255,.86) 15%,
+      rgba(255,255,255,.24) 24%,transparent 40%,transparent 64%,
+      rgba(255,255,255,.30) 78%,transparent 92%),
     linear-gradient(90deg,rgba(49,70,82,.16),transparent 19%,transparent 81%,rgba(49,70,82,.16)),
     radial-gradient(62% 76% at 50% 46%,transparent 48%,rgba(66,89,103,.07) 80%,rgba(49,70,82,.19) 100%);
-  background-size:200% 185%,auto,auto
+  background-size:215% 100%,auto,auto
 }
 :root[data-theme="light"] .reel-viewport::after{
   background:radial-gradient(closest-side,rgba(39,64,78,.24),transparent 74%)
