@@ -397,7 +397,7 @@ header.rail{
    section opened in a typeface that appears nowhere else on the page. Mono is
    kept for what earns it — code, file names, version numbers, tabular figures
    — and the labels join the rest of the writing. */
-  font:500 11.5px/1 var(--ui); letter-spacing:.14em; text-transform:uppercase;
+  font:500 12.5px/1 var(--ui); letter-spacing:-.005em;
   color:var(--amber); background:color-mix(in oklab, var(--amber) 13%, transparent);
   border:1px solid color-mix(in oklab, var(--amber) 28%, transparent)}
 /* Lighter and tighter than a left column's headline: centred display type is
@@ -425,8 +425,7 @@ h1{font-size:clamp(34px,5.1vw,58px); font-weight:500; letter-spacing:-.025em;
 .download-offer{width:min(100%,650px); margin:24px auto 0}
 .download-offer.hero-download{width:min(100%,1120px)}
 .release-once{display:flex; align-items:baseline; justify-content:center; gap:8px;
-  margin:0; color:var(--slate); font:600 10.5px/1 var(--ui);
-  letter-spacing:.1em; text-transform:uppercase}
+  margin:0; color:var(--slate); font:600 12px/1 var(--ui); letter-spacing:-.005em}
 .release-once b{color:var(--ink); font:600 12px/1 var(--mono);
   letter-spacing:.02em; font-variant-numeric:tabular-nums}
 .hero .platform-rows{display:grid; grid-template-columns:minmax(0,1fr); gap:8px;
@@ -504,7 +503,14 @@ h1{font-size:clamp(34px,5.1vw,58px); font-weight:500; letter-spacing:-.025em;
    out behind it. */
 .shot{margin:clamp(44px,7vw,84px) auto 0; max-width:var(--wide); padding:0 var(--pad)}
 /* the window follows the promise rather than sitting a screen below it */
-.hero .shot{position:relative; z-index:1; margin-top:clamp(16px,2.2vw,28px);
+/* **The headline's vignette was lying over the product.** `.hero::after` is a
+   radial dark that settles the type on the field; it sits at z-index 1, and so
+   did this block, and a pseudo-element paints after the children it shares a
+   level with — so the one thing on the first screen that is the product was
+   read through a 26 % shade. Measured on the front frame at rest: 213 to 220
+   where the screenshot is 254, and 254 with the vignette off. The type is at
+   z-index 2 and was never under it; the picture goes to the same level. */
+.hero .shot{position:relative; z-index:2; margin-top:clamp(16px,2.2vw,28px);
   padding-bottom:clamp(40px,6vw,86px)}
 .hero-meta{display:grid; justify-items:center; gap:12px;
   margin:clamp(18px,2.4vw,28px) auto clamp(32px,5vw,62px)}
@@ -701,7 +707,29 @@ figcaption:not(.reel-caption){
    same 50°, which
    is what makes each one a true segment of one cylinder rather than a bowed
    card that happens to be near it. Move one and the other must move with it. */
-.hero-reel{--reel-angle:0deg; --reel-radius:min(92.9vw,1066px); margin:0; text-align:left}
+/* the drum was leaving 125 px of empty glass down each side and 66 top and
+   bottom; at 1,010 it fills the pane it is mounted in. The radius is the same
+   1.1459 × W it has to be for the frames to lie on one cylinder. */
+/* ── one rule for every movement the reel makes ────────────────────────────
+   The timings had grown one at a time and no two agreed: two easing curves for
+   the same rotation, a dolly sixty milliseconds longer than the turn it
+   belonged to for no reason, and four fades picked by eye. There is one curve
+   and one base duration now, and everything else is a fraction of it.
+
+   `--turn` is one face, 60°. The arrival is seven faces and takes `--turn ×
+   √7` — not seven times as long, because a drum already turning does not need
+   the easing again for every face, and not one turn's worth either. 1,400 ×
+   2.646 = 3,700, which is where the arrival had already been tuned by hand, so
+   the rule agrees with what was arrived at by ear. CSS cannot take a square
+   root, which is why the number is written out and this note is here. */
+.hero-reel{
+  --reel-angle:0deg; --reel-radius:min(98.6vw,1157px);
+  --turn:1400ms;
+  --arrive:3700ms;
+  --settle:200ms;
+  --turn-ease:cubic-bezier(.45,.05,.3,1);
+  margin:0; text-align:left
+}
 .reel-viewport{
   position:relative; isolation:isolate; height:clamp(452px,58vw,714px); overflow:hidden;
   /* **The vanishing point sits on the drum's own axis, not four per cent above
@@ -744,22 +772,37 @@ figcaption:not(.reel-caption){
    `outline` at a fixed offset reads as a margin marker somebody left in — the
    one thing a piece of glass never has. Thickness is carried by the lit rim
    and the specular alone. */
+/* **This pane still had the sweeping band the windows lost.** The gloss on
+   `.frame` was rebuilt as a light that sits on the surface and wanders, and
+   this one — the largest piece of glass on the page — was left crossing itself
+   on a thirteen second rail, which is the effect that was called cheap. Same
+   treatment: one soft specular drawn larger than the pane, moved across two
+   thirds of that spare room on both axes, never reaching an edge and so never
+   arriving or leaving. */
 .reel-viewport::before{
   background:
-    linear-gradient(112deg,transparent 4%,rgba(255,255,255,.24) 15%,
-      rgba(255,255,255,.05) 24%,transparent 40%,transparent 64%,
-      rgba(255,255,255,.07) 78%,transparent 92%),
-    linear-gradient(90deg,rgba(4,10,12,.44),transparent 21%,transparent 79%,rgba(4,10,12,.44)),
-    radial-gradient(62% 76% at 50% 46%,transparent 46%,rgba(4,10,12,.14) 78%,rgba(4,9,11,.52) 100%);
-  background-size:215% 100%,auto,auto;
-  background-position:128% 0,0 0,0 0
+    radial-gradient(58% 92% at 50% 50%,rgba(255,255,255,.22),
+      rgba(255,255,255,.05) 40%,transparent 68%),
+    /* **The vignette was tuned for a drum that sat in clear glass, and the
+       drum now fills the pane.** Its side bands reached 21 % in from each edge
+       and its centre fell off from 46 %, which was the empty glass then and is
+       the picture now — measured on the front frame at rest: 173 at the edges
+       against 227 with the vignette off, a quarter of the light gone from the
+       thing the pane exists to show. Both are pulled back to the sliver of
+       glass still visible round the frame. */
+    linear-gradient(90deg,rgba(4,10,12,.30),transparent 5.5%,transparent 94.5%,rgba(4,10,12,.30)),
+    radial-gradient(62% 76% at 50% 46%,transparent 86%,rgba(4,10,12,.10) 96%,rgba(4,9,11,.30) 100%);
+  background-size:200% 185%,auto,auto;
+  background-position:20% 16%,0 0,0 0
 }
 @media (prefers-reduced-motion:no-preference){
-  .reel-viewport::before{animation:paneSheen 13s ease-in-out infinite}
+  .reel-viewport::before{animation:paneWander 27s ease-in-out infinite}
 }
-@keyframes paneSheen{
-  0%,100%{background-position:130% 0,0 0,0 0}
-  50%{background-position:-30% 0,0 0,0 0}
+@keyframes paneWander{
+  0%,100%{background-position:20% 16%,0 0,0 0}
+  26%    {background-position:66% 34%,0 0,0 0}
+  51%    {background-position:80% 68%,0 0,0 0}
+  77%    {background-position:32% 78%,0 0,0 0}
 }
 .reel-viewport::after{
   inset:auto 8% 4%; height:17%; border-radius:50%;
@@ -767,7 +810,7 @@ figcaption:not(.reel-caption){
   filter:blur(17px); opacity:.62
 }
 .reel-ring{
-  position:absolute; z-index:2; left:50%; top:50%; width:min(81vw,930px); aspect-ratio:8/5;
+  position:absolute; z-index:2; left:50%; top:50%; width:min(86vw,1010px); aspect-ratio:8/5;
   transform-style:preserve-3d;
   transform:translate3d(-50%,-50%,calc(0px - var(--reel-radius))) rotateY(var(--reel-angle));
 }
@@ -780,12 +823,12 @@ figcaption:not(.reel-caption){
      of its shape change in the last third of the turn, so that is the third
      that needs the time. The number lives here and in `SPIN`, and the two
      have to be changed together. */
-  transition:transform 1400ms cubic-bezier(.3,.28,.18,1); will-change:transform;
+  transition:transform var(--turn) var(--turn-ease); will-change:transform;
   /* The camera pulls back as the drum comes round and rides in again as it
      lands — a turn seen at one distance reads as a slide, whatever the maths
      underneath say. `scale` is its own property, so this dip composes with the
      transform the transition owns instead of fighting it for the same slot. */
-  animation:reelDolly 1460ms cubic-bezier(.3,.28,.18,1) both
+  animation:reelDolly calc(var(--turn) + var(--settle)) var(--turn-ease) both
 }
 /* **The axis leans while it turns, so the frames climb rather than click.**
    Upright, six panels at 60° come round the front one after another at the
@@ -808,6 +851,44 @@ figcaption:not(.reel-caption){
   100%{rotate:0deg}
 }
 
+/* ── flat, after the arrival ────────────────────────────────────────────────
+   Once the drum has shown all six it is put away, and the reel becomes a row
+   of pages behind one window: the front page at `--dx` 0, the rest parked off
+   to the side, and a change one page slid across. Only the two pages involved
+   carry a transition — the others are moved without one, so a page being
+   re-parked never crosses the window. The curved stand-ins are not needed on a
+   flat page and the plain picture takes their place, with the screen's own
+   chrome back on it. */
+.hero-reel[data-mode="flat"] .reel-ring{
+  transform:translate(-50%,-50%); transform-style:flat;
+  transition:none; animation:none; scale:1; rotate:0deg
+}
+/* **One step has to be wider than the pane, not wider than the page.** At 106 %
+   a page one step over still showed a strip of itself down the pane's edge —
+   the pane is 1,180 wide and the page 1,010, so anything under 117 % of the
+   page is still inside it. 122 % clears the pane with a margin at every width
+   this is drawn at. */
+.hero-reel[data-mode="flat"] .reel-face{
+  transform:translateX(calc(var(--dx,3) * 122%)); transition:none;
+  backface-visibility:visible
+}
+.hero-reel[data-mode="flat"] .reel-face.is-sliding{
+  transition:transform var(--turn) var(--turn-ease)
+}
+.hero-reel[data-mode="flat"] .reel-curve{display:none}
+.hero-reel[data-mode="flat"] .reel-face[data-curved] .reel-screen > picture{display:block}
+/* the screen clips again on a flat page: `overflow:hidden` was taken off it
+   because it flattens 3D, and a flat page has no 3D to flatten — without it
+   the picture's square corners sat proud of the rounded frame */
+.hero-reel[data-mode="flat"] .reel-face[data-curved] .reel-screen{
+  overflow:hidden;
+  background:#F7FAFC; border-color:rgba(52,75,87,.30);
+  box-shadow:0 1px 0 rgba(255,255,255,.94) inset,0 4px 12px rgba(3,11,14,.20),
+    0 42px 84px -34px rgba(0,0,0,.72)
+}
+/* no camera move on a page turn */
+.hero-reel[data-mode="flat"][data-state="spinning"] .reel-ring{animation:none}
+
 /* ── the arrival ────────────────────────────────────────────────────────────
    The drum comes in from two full turns back and lands, so the six screens are
    all read once before the caption says anything about the first. Every face
@@ -828,9 +909,9 @@ figcaption:not(.reel-caption){
      the first version had nothing readable in it. This one leaves the faces
      legible the whole way round and still lands soft. The scale runs the turn
      plus the settle, so the drum is easing forward as the rotation finishes. */
-  transition:transform 3000ms cubic-bezier(.3,.28,.18,1),
-             scale 3200ms cubic-bezier(.3,.28,.18,1);
-  animation:reelHelix 3200ms cubic-bezier(.3,.28,.18,1) both;
+  transition:transform var(--arrive) var(--turn-ease),
+             scale calc(var(--arrive) + var(--settle)) var(--turn-ease);
+  animation:reelHelix calc(var(--arrive) + var(--settle)) var(--turn-ease) both;
   scale:1; will-change:transform
 }
 /* **A transition fades from the first frame; a skim needs the light to hold.**
@@ -840,7 +921,7 @@ figcaption:not(.reel-caption){
    lit for the first two thirds — the part that is actually the skim — and take
    them down to their resting values only over the last of it. */
 .hero-reel[data-intro="run"] .reel-fill{
-  animation:introFace 3200ms cubic-bezier(.3,.28,.18,1) both
+  animation:introFace calc(var(--arrive) + var(--settle)) var(--turn-ease) both
 }
 .hero-reel[data-intro="run"] .reel-face.is-active .reel-fill{animation-name:introFaceOn}
 /* **The drum is being read while it turns, so it is not dimmed to a silhouette.**
@@ -851,7 +932,7 @@ figcaption:not(.reel-caption){
   0%  {filter:brightness(.84)}
   58% {filter:brightness(.88)}
   78% {filter:brightness(.7) saturate(.8)}
-  100%{filter:brightness(.4) saturate(.72)}
+  100%{filter:brightness(.66) saturate(.85)}
 }
 @keyframes introFaceOn{
   0%  {filter:brightness(.9)}
@@ -882,8 +963,12 @@ figcaption:not(.reel-caption){
    hands `is-active` over at its midpoint, and at .22 s that landed as a step
    in the middle of a movement that is otherwise continuous */
 .reel-fill, .reel-face:not([data-curved]) .reel-screen > picture{
-  filter:brightness(.4) saturate(.72);
-  transition:filter .5s ease}
+/* **A frame that is not the front one is still a frame, not a shadow.** At .4
+   the drum rested as a dark band with one lit panel in it, which is why the
+   whole thing read as dark by default. Two thirds is quiet enough to say which
+   one is being read and bright enough that the others are still screens. */
+  filter:brightness(.66) saturate(.85);
+  transition:filter calc(var(--turn) * .36) ease}
 .reel-face.is-active .reel-fill,
 .reel-face.is-active:not([data-curved]) .reel-screen > picture{
   filter:saturate(.98) brightness(1)}
@@ -998,18 +1083,32 @@ figcaption:not(.reel-caption){
 .reel-screen picture img,.reel-live-slot video{object-fit:cover; object-position:50% 50%; background:#F7FAFC}
 .reel-face[data-fit="tall"] .reel-screen picture img,
 .reel-face[data-fit="tall"] .reel-live-slot video{object-position:50% 0}
+/* **The clip was behind the curve, so the front of the drum never moved.**
+   The slices and this slot are siblings in one 3D context and the slices sit
+   within a pixel of z = 0, which was enough for the sort to put an `<img>` on
+   top of the video — measured on the live page: `elementFromPoint` at the dead
+   centre of a playing clip returned IMG. A pixel forward settles it, and is
+   invisible on a face that is itself at z = 0. */
 .reel-live-slot{position:absolute; inset:0; overflow:hidden;
-  border-radius:clamp(14px,1.8vw,23px)}
+  border-radius:clamp(14px,1.8vw,23px); transform:translateZ(1px)}
 /* **The clip is flat, and it is the one thing on the face that cannot bend.**
    A `<video>` is a single plane; it cannot be cut into slices and laid on the
-   arc the way its own poster can. Left showing through a turn it covered the
-   curve with a flat rectangle — and, because it is moved into the *arriving*
-   face at the start of the turn, that rectangle was usually a clip still
-   loading, so the face swinging in was blank. It stands down while anything is
-   moving and the curved poster stands in. The poster is the clip's last frame,
-   so there is nothing to see at the cut. */
-.hero-reel[data-state="spinning"] .reel-live-slot,
-.hero-reel[data-intro] .reel-live-slot{visibility:hidden}
+   arc the way its own poster can, so it stands down while anything is moving
+   and the curved poster stands in.
+
+   **The handover is what made the unfolding feel abrupt.** Switched on
+   `visibility`, the curved still became a flat clip between two frames, at the
+   end of a turn that had spent 1.4 s easing — so the last of the flattening
+   arrived as a cut rather than as the end of a movement. The clip fades up
+   over the curve instead, and the curve is only taken away once it is covered:
+   `visibility` cannot tween, but it can be delayed, and a delay is all this
+   needs. Going the other way it returns with no delay, so the curve is already
+   standing before the clip fades out. */
+.reel-live-slot{opacity:0; transition:opacity calc(var(--turn) * .4) ease}
+.hero-reel[data-state="playing"] .reel-face.is-active .reel-live-slot{opacity:1}
+.reel-curve{transition:visibility 0s linear 0s}
+.hero-reel[data-state="playing"] .reel-face.is-active .reel-curve{
+  visibility:hidden; transition:visibility 0s linear calc(var(--turn) * .42)}
 .reel-live-slot video{opacity:0; transition:opacity .16s ease}
 .reel-live-slot video[data-ready="true"]{opacity:1}
 .reel-viewport > [data-reel-video]{display:none}
@@ -1021,8 +1120,8 @@ figcaption:not(.reel-caption){
 }
 /* the projector striking up: one pass of light across the gate as the reel
    comes in, and the same sweep on every turn after it */
-.hero-reel[data-state="spinning"] .reel-streak{animation:reelWhoosh 620ms cubic-bezier(.18,.82,.22,1) both}
-.hero-reel[data-intro="run"] .reel-streak{animation:reelWhoosh 1900ms cubic-bezier(.3,.28,.18,1) both}
+.hero-reel[data-state="spinning"] .reel-streak{animation:reelWhoosh calc(var(--turn) * .62) var(--turn-ease) both}
+.hero-reel[data-intro="run"] .reel-streak{animation:reelWhoosh calc(var(--arrive) * .63) var(--turn-ease) both}
 @keyframes reelWhoosh{
   0%{opacity:0; transform:skewX(-12deg) translateX(-260%)}
   28%{opacity:.86}
@@ -1128,12 +1227,11 @@ figcaption:not(.reel-caption){
 }
 :root[data-theme="light"] .reel-viewport::before{
   background:
-    linear-gradient(112deg,transparent 4%,rgba(255,255,255,.86) 15%,
-      rgba(255,255,255,.24) 24%,transparent 40%,transparent 64%,
-      rgba(255,255,255,.30) 78%,transparent 92%),
-    linear-gradient(90deg,rgba(49,70,82,.16),transparent 19%,transparent 81%,rgba(49,70,82,.16)),
-    radial-gradient(62% 76% at 50% 46%,transparent 48%,rgba(66,89,103,.07) 80%,rgba(49,70,82,.19) 100%);
-  background-size:215% 100%,auto,auto
+    radial-gradient(58% 92% at 50% 50%,rgba(255,255,255,.78),
+      rgba(255,255,255,.22) 40%,transparent 68%),
+    linear-gradient(90deg,rgba(49,70,82,.12),transparent 5.5%,transparent 94.5%,rgba(49,70,82,.12)),
+    radial-gradient(62% 76% at 50% 46%,transparent 86%,rgba(66,89,103,.05) 96%,rgba(49,70,82,.12) 100%);
+  background-size:200% 185%,auto,auto
 }
 :root[data-theme="light"] .reel-viewport::after{
   background:radial-gradient(closest-side,rgba(39,64,78,.24),transparent 74%)
@@ -1673,7 +1771,7 @@ section.plain h2{font-size:clamp(26px,3.4vw,36px); margin-top:14px}
 .cmp col.p{width:20.75%}
 .cmp th, .cmp td{padding:15px 16px; text-align:left; border-bottom:1px solid var(--hair); vertical-align:top}
 .cmp thead th{
-  font:500 11.5px/1.3 var(--ui); letter-spacing:.1em; text-transform:uppercase;
+  font:500 12.5px/1.3 var(--ui); letter-spacing:-.005em;
   color:var(--faint); border-bottom:1px solid var(--line); white-space:nowrap;
 }
 .cmp tbody th{font-weight:500; color:var(--slate); font-size:14.5px}
@@ -1722,7 +1820,7 @@ section.plain h2{font-size:clamp(26px,3.4vw,36px); margin-top:14px}
   .cmp tbody th{color:var(--ink); font-size:15.5px; font-weight:600; padding-top:14px}
   .cmp td::before{
     content:attr(data-of) ' ';
-    font:500 10.5px/1 var(--ui); letter-spacing:.1em; text-transform:uppercase;
+    font:500 12px/1 var(--ui); letter-spacing:-.005em;
     color:var(--faint); display:block; margin-bottom:5px;
   }
   .cmp .us{border-radius:8px; padding-left:10px; padding-right:10px; margin:2px -10px}
@@ -1737,7 +1835,18 @@ section.plain h2{font-size:clamp(26px,3.4vw,36px); margin-top:14px}
    it holds and the eye can decide what to read. The icon is a symbol reused from
    one inline sprite rather than a file per card: the page fetches from nobody. */
 .tbsprite{display:none}
-.toolbox{margin-top:34px}
+.toolbox{margin-top:34px; position:relative}
+/* the light the cards blur: three soft pools in the section's own hues, wider
+   than the grid so colour reaches every card and not only the middle ones */
+.toolbox::before{
+  content:''; position:absolute; inset:-8% -4% -10%; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(34% 40% at 12% 18%,color-mix(in oklab, var(--amber) 34%, transparent),transparent 70%),
+    radial-gradient(32% 44% at 86% 30%,rgba(94,177,255,.30),transparent 72%),
+    radial-gradient(40% 36% at 50% 92%,rgba(79,183,158,.26),transparent 72%);
+  filter:blur(48px)
+}
+.tbgrid{position:relative; z-index:1}
 /* **Eight benches, and the colour says which.** Fifty-seven cards under one
    accent is a wall to be read line by line; the headings already name the
    groups in words, so the hue is what lets somebody find the enzyme bench
@@ -1762,13 +1871,19 @@ section.plain h2{font-size:clamp(26px,3.4vw,36px); margin-top:14px}
    gesture. Fifty-seven cards laid out is longer and answers the question. */
 .tbhead{
   display:flex; align-items:baseline; gap:10px; margin:38px 0 14px;
-  font:500 11.5px/1 var(--ui); letter-spacing:.16em; text-transform:uppercase;
+  /* **Same family, and it still read as a different face.** The label was
+     already Inter — checked on the live page with the platform-font probe,
+     21 glyphs of Inter Medium — and was still being seen as foreign, because
+     11.5 px capitals tracked at .16 em are a different *setting*, and a
+     setting is what the eye calls a font. It is set the way the line under it
+     is now: sentence case, no tracking, a size up. The colour is what marks
+     it as the label. */
+  font:500 13px/1.2 var(--ui); letter-spacing:-.005em;
   color:var(--tb,var(--amber));
 }
 .tbhead:first-child{margin-top:0}
 .tbhead::after{content:''; flex:1; height:1px; background:var(--hair)}
-.tbhead i{font:400 11.5px/1 var(--ui); font-style:normal; color:var(--faint);
-  letter-spacing:.1em; font-variant-numeric:tabular-nums}
+.tbhead i{font:400 13px/1.2 var(--ui); font-style:normal; color:var(--faint)}
 .tbgrid{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px}
 @media (max-width:1000px){ .tbgrid{grid-template-columns:repeat(2,minmax(0,1fr))} }
 @media (max-width:640px){ .tbgrid{grid-template-columns:1fr} }
@@ -1794,13 +1909,25 @@ section.plain h2{font-size:clamp(26px,3.4vw,36px); margin-top:14px}
    own line now, which also makes the title the first thing read and takes a
    row's worth of height out of every card: measured at 1440 px, the first grid
    522 -> 360 px and the whole section 5,102 -> 3,721. */
+/* **The cards are glass, in the sense css.glass means it.** Its recipe is a
+   translucent white fill, a blur of what is behind, a white hairline and one
+   soft shadow — and that is what these are, at the strengths a dark page can
+   carry: a fifth of white would be a light grey card here, so the fill is a
+   fourteenth and the hairline a seventh. The inset line along the top is the
+   same light every other surface on the page catches. Blur only shows what it
+   is blurring, so `.toolbox` puts colour behind the grid for it to work on. */
 .tbcard{
   display:grid; grid-template-columns:auto 1fr; column-gap:10px;
   align-items:start; align-content:start; padding:16px 18px 18px;
-  border:1px solid var(--hair); border-radius:16px; background:var(--ground);
-  transition:border-color .15s ease, transform .15s ease;
+  border:1px solid rgba(255,255,255,.14); border-radius:16px;
+  background:rgba(255,255,255,.07);
+  -webkit-backdrop-filter:blur(14px) saturate(1.3);
+  backdrop-filter:blur(14px) saturate(1.3);
+  box-shadow:0 4px 30px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.14);
+  transition:border-color .15s ease, background-color .15s ease, transform .15s ease;
 }
-.tbcard:hover{border-color:var(--line); transform:translateY(-2px)}
+.tbcard:hover{border-color:rgba(255,255,255,.28); background:rgba(255,255,255,.105);
+  transform:translateY(-2px)}
 /* the glyph is optically on the title's *first* line — centring it against a
    two-line title floats it into the gap between them */
 .tbico{
@@ -2577,6 +2704,10 @@ footer{padding:clamp(48px,7vw,76px) 0 0}
   border-top:1px solid var(--hair); font-size:13px; color:var(--faint);
 }
 .footver{font-family:var(--mono); font-size:12px; letter-spacing:-.01em}
+/* the credit sits after the terms as a quieter clause, not as a second line
+   of them */
+.footcred{display:inline-block; margin-left:10px; color:var(--faint)}
+.footcred a{color:inherit; text-decoration-color:color-mix(in oklab, currentColor 45%, transparent)}
 
 /* ── the light theme's answers for all of the above ─────────────────────────
    The rules above are the dark theme and they reach light too, which is the
@@ -2721,8 +2852,11 @@ section.feat, section.plain, .flow, .contact{padding-block:clamp(84px,11vw,150px
 :root[data-theme="light"] .qs details{box-shadow:none}
 :root[data-theme="light"] .qs details:hover{box-shadow:0 0 0 1px var(--line) inset}
 :root[data-theme="light"] .ccard{box-shadow:none}
-:root[data-theme="light"] .card, :root[data-theme="light"] .tbcard{border-color:transparent}
-:root[data-theme="light"] .tbcard:hover{border-color:var(--line)}
+:root[data-theme="light"] .card{border-color:transparent}
+:root[data-theme="light"] .tbcard{
+  border-color:rgba(255,255,255,.85); background:rgba(255,255,255,.52);
+  box-shadow:0 4px 30px rgba(38,67,84,.14), inset 0 1px 0 #FFFFFF}
+:root[data-theme="light"] .tbcard:hover{border-color:#FFFFFF; background:rgba(255,255,255,.7)}
 :root[data-theme="light"] .wall blockquote{box-shadow:0 1px 2px rgba(17,24,25,.05), 0 0 0 1px var(--hair) inset}
 /* the capsule nav on a white page is the reference's own: white, one hairline */
 :root[data-theme="light"] .rail .wrap{background:rgba(255,255,255,.86); border-color:var(--hair);

@@ -54,7 +54,7 @@ document.documentElement.dataset.theme=t;})()</script>
 <link rel="preload" href="font/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="font/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="font/fonts.css?v=20260828">
-<link rel="stylesheet" href="base.css?v=20260904a">
+<link rel="stylesheet" href="base.css?v=20260904b">
 </head>
 <body>
 
@@ -1856,7 +1856,13 @@ document.documentElement.dataset.theme=t;})()</script>
         Gene Studio
       </a>
       <p>A plasmid workbench that opens what your lab already has — GenBank, SnapGene <code>.dna</code>, FASTA and Sanger traces — and writes them back without losing what was in them.</p>
-      <p class="footfine">Free to use for research; copying, changing or passing it on needs written permission. Third-party components keep their own terms, including the <a href="font/OFL.txt">Inter font licence</a> and <a href="icon/tabler/LICENSE.txt">Tabler icon licence</a>.</p>
+      <!-- **A footer is not the place to explain a font licence.** The page ships
+           two third-party things — the Inter faces and the Tabler icons — and both
+           licences ask only that their text travel with the files, which it does at
+           the two links. So the links stay, as a credit, and the sentence about
+           them goes; the app names every one of its own components itself. -->
+      <p class="footfine">Free to use for research; copying, changing or passing it on needs written permission.
+        <span class="footcred">Type <a href="font/OFL.txt">Inter</a> · Icons <a href="icon/tabler/LICENSE.txt">Tabler</a></span></p>
     </div>
     <nav class="footcols" aria-label="Site">
       <div class="footcol">
@@ -2057,7 +2063,10 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
        450 ms at the fastest and longer as it slows — enough to see what it is,
        and slow enough to read as a reel running rather than a cylinder being
        cocked. */
-    const ARRIVE = 3000, SETTLE = 200, ARRIVE_TURN = 420;
+    /* these three are `--turn`, `--arrive` and `--settle` in the stylesheet;
+       the rule that ties them is written there and both sides have to move
+       together, since one drives the transition and the other the clock */
+    const ARRIVE = 3700, SETTLE = 200, ARRIVE_TURN = 420;
     const words = [
       ['Find the file, or the exact site inside it.',
        'Home searches favorite folders by filename or recognition sequence, locally and without an import step.'],
@@ -2158,6 +2167,35 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
     };
     let prepared = null, pending = null;
 
+    /* ── after the arrival, the drum is put away ──────────────────────────
+       The cylinder is for the first look: one turn that shows all six. After
+       that a scene change is a page turned, not a drum spun — the current face
+       slides out one step and the next slides in, flat. Every face keeps a
+       `--dx` in face widths from the front position: 0 is the front, ±1 is the
+       neighbour just off the edge, ±3 is parked well away. A change is always
+       exactly one step in the asked-for direction whatever the distance
+       between the two indexes: the incoming face is first *put* one step to
+       that side without a transition, and only then do the two of them slide.
+       Every other face is parked without one, so nothing crosses the pane on
+       its way to a new parking place. */
+    const parkFlat = (cur) => {
+      faces.forEach((f, i) => {
+        f.classList.remove('is-sliding');
+        f.style.setProperty('--dx', i === cur ? '0' : '3');
+      });
+    };
+    const slideFlat = (from, to, dir) => {
+      faces.forEach((f, i) => {
+        f.classList.remove('is-sliding');
+        f.style.setProperty('--dx', i === to ? String(dir) : i === from ? '0' : String(dir * 3));
+      });
+      void ring.offsetWidth;
+      faces[from].classList.add('is-sliding');
+      faces[to].classList.add('is-sliding');
+      faces[from].style.setProperty('--dx', String(-dir));
+      faces[to].style.setProperty('--dx', '0');
+    };
+
     /* Runs once, on the first time the reel is actually looked at. It drives
        the same `--reel-angle` every other movement here drives, so the faces,
        the caption and the controls need to know nothing about it. */
@@ -2173,6 +2211,9 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
         ring.style.setProperty('--reel-angle', target + 'deg');
         setTimeout(() => {
           delete reel.dataset.intro;
+          /* the drum has done its one job; from here the reel is flat */
+          parkFlat(index);
+          reel.dataset.mode = 'flat';
           /* the caption has been holding the first scene through the whole
              skim; it resolves as the drum stops, so the two land together */
           captioned = true;
@@ -2345,14 +2386,23 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
       prepare(next);
       reel.dataset.direction = delta > 0 ? 'next' : 'previous';
       setState('spinning', 'Changing product view');
-      const targetAngle = angle - delta * 60;
-      requestAnimationFrame(() => requestAnimationFrame(() => {
-        angle = targetAngle;
-        ring.style.setProperty('--reel-angle', angle + 'deg');
-      }));
+      if(reel.dataset.mode === 'flat'){
+        /* a page turned: one step sideways, and the angle is left alone so
+           the drum is exactly where it was should it ever be wanted again */
+        slideFlat(index, next, delta > 0 ? 1 : -1);
+      } else {
+        const targetAngle = angle - delta * 60;
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          angle = targetAngle;
+          ring.style.setProperty('--reel-angle', angle + 'deg');
+        }));
+      }
       middleTimer = setTimeout(() => sync(next), Math.round(SPIN * .48));
       finishTimer = setTimeout(() => {
         if(index !== next) sync(next);
+        /* the page that slid out is re-parked; it is already off the pane, so
+           this moves nothing anybody can see */
+        if(reel.dataset.mode === 'flat') parkFlat(index);
         setState('loading', faces[index].dataset.label + ' · loading');
         /* A full turn is the same pose. Normalize only after the transition has
            been removed, or the browser helpfully spins it back to zero. */
@@ -2376,6 +2426,7 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
         sync(target); angle = -target * 60;
         setState('paused', message);
         ring.style.setProperty('--reel-angle', angle + 'deg');
+        if(reel.dataset.mode === 'flat') parkFlat(target);
       }else setState('paused', message);
       reel.dataset.auto = 'off';
     };
@@ -2623,6 +2674,312 @@ if('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion:redu
     }
   }
 }
+
+/* ── the three-move rail ────────────────────────────────────────────────────
+   It advances by itself and any step can be pressed. Three rules make that
+   bearable rather than fidgety: it only runs **while it is on screen** (a page
+   cycling in a tab nobody is looking at is work for nothing), a press stops the
+   advance for good — somebody who has chosen a step is reading it, and moving
+   them off it is the fault this whole page's notes keep naming — and a reader
+   who has asked for less motion gets no advance at all, only the presses.
+
+   A step is a real button rather than a `<li>` with a click handler, so the
+   keyboard reaches it and says what it is; the markup stays a list because
+   three steps in order is what a list is. */
+{
+  const flow = document.querySelector('[data-flow]');
+  if(flow){
+    const steps = [...flow.querySelectorAll('.step')];
+    const clips = [...flow.querySelectorAll('[data-flow-clip]')];
+    const name  = flow.querySelector('[data-flow-name]');
+    const names = ['Home · Files / Recognition sequence',
+                   'annotated_operon.gb · Features · Full + computed',
+                   'pDEMO-T7 · Fold · 51 nt · −10.6 kcal/mol'];
+    const still = matchMedia('(prefers-reduced-motion: reduce)');
+    /* `driven` is the reader's scroll having taken over from the timer: the
+       rail introduces itself on its own until the first scroll actually chooses
+       a step, and after that the clock is the reader's. */
+    let at = 0, timer = 0, stopped = false, driven = false;
+
+    /* the paragraph is what the button labels, so the button is the title and
+       the paragraph is described by it rather than swallowed into the name */
+    steps.forEach((li, i) => {
+      const b = li.querySelector('b');
+      if(b){
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'stepbtn';
+        btn.append(...b.childNodes);
+        b.append(btn);
+      }
+      li.addEventListener('click', () => { stopped = true; clearTimeout(timer); show(i); });
+    });
+
+    function show(i){
+      at = i;
+      steps.forEach((li, k) => {
+        li.classList.toggle('on', k === i);
+        li.classList.toggle('done', k < i);
+        const btn = li.querySelector('.stepbtn');
+        if(btn) btn.setAttribute('aria-current', k === i ? 'step' : 'false');
+      });
+      clips.forEach((box, k) => {
+        box.classList.toggle('on', k === i);
+        /* a step off screen keeps decoding otherwise, and three clips decoding
+           at once is what the page's own clip armer already exists to avoid */
+        if(k !== i) for(const v of box.querySelectorAll('video')) v.pause?.();
+      });
+      if(name) name.textContent = names[i] || names[0];
+      /* the clip that has just been shown may never have been armed: the armer
+         asks whether a video is *drawn*, and until this moment it was not */
+      armClips?.();
+      if(!stopped && !still.matches) queue();
+    }
+    function queue(){
+      clearTimeout(timer);
+      if(stopped || driven) return;
+      timer = setTimeout(() => show((at + 1) % steps.length), 5200);
+    }
+
+    if('IntersectionObserver' in window && !still.matches){
+      new IntersectionObserver(es => {
+        for(const e of es){
+          if(e.isIntersecting && !stopped) queue();
+          else clearTimeout(timer);
+        }
+      }, {threshold:.35}).observe(flow);
+    }
+
+    /* **Scrolling is what should advance a walkthrough.** It ran on a timer, so
+       the step you were reading changed under you at five seconds whether or
+       not you had finished, and reading it at your own pace meant pressing a
+       button. The reader's own scroll is the better clock: the step whose
+       heading is nearest the middle of the screen is the step being read, which
+       is how the reference drives its own gallery.
+
+       The timer stays as what runs before the section has been scrolled
+       *through* — it is what makes the rail introduce itself — and the first
+       scroll that actually chooses a step takes over for good. A click still
+       stops both, since a press is a decision. */
+    if(!still.matches && matchMedia('(min-width:820px)').matches){
+      let frame = 0;
+      const follow = () => {
+        frame = 0;
+        if(stopped) return;
+        const box = flow.getBoundingClientRect();
+        /* only while the rail is the thing on screen: outside that the nearest
+           heading is whichever one the section ended on, which would drag the
+           step back every time the reader left */
+        if(box.bottom < innerHeight * 0.25 || box.top > innerHeight * 0.75) return;
+        const mid = innerHeight / 2;
+        let best = 0, near = Infinity;
+        steps.forEach((li, i) => {
+          const r = li.getBoundingClientRect();
+          const d = Math.abs(r.top + r.height / 2 - mid);
+          if(d < near){ near = d; best = i; }
+        });
+        if(best !== at){ driven = true; clearTimeout(timer); show(best); }
+      };
+      addEventListener('scroll', () => { if(!frame) frame = requestAnimationFrame(follow); },
+                       {passive:true});
+    }
+  }
+}
+
+/* ── what may move, and only while it is on screen ─────────────────────────
+   One observer arms the wall's drift and the glyphs' animations when their
+   section is reached and disarms them when it leaves, which is what keeps a
+   page in a background tab from running six animations for nobody. The class
+   is the whole switch — every keyframe in the stylesheet is keyed on it — so
+   nothing here knows what any of the animations are.
+
+   **A reader who has asked for less motion is never armed at all.** The
+   stylesheet stops them anyway, and this stops them being started. */
+if('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion:reduce)').matches){
+  /* the wall's track is the column's own contents twice: -50 % then lands the
+     copy exactly where the original started, and the loop has no seam. The
+     copy is made here rather than written twice in the markup — a duplicated
+     list is two things for a screen reader to read and one to forget to keep
+     in step — and each column is given a length of its own, or four columns
+     drifting at one speed read as a single sliding block. */
+  for(const wall of document.querySelectorAll('[data-drift]')){
+    const cols = [...wall.querySelectorAll('.wallcol')];
+    cols.forEach((col, i) => {
+      const track = document.createElement('div');
+      track.className = 'walltrack';
+      while(col.firstChild) track.append(col.firstChild);
+      /* **The second half is hidden from a reader, card by card.** Cloning the
+         track and moving its children in loses the `aria-hidden` that was on
+         the wrapper — and then every claim on this wall is read out twice,
+         which is worse than not having the motion. Each clone carries its own,
+         and both halves live in the one track so the -50 % is exact whatever
+         the cards happen to measure. */
+      for(const card of [...track.children]){
+        const copy = card.cloneNode(true);
+        copy.setAttribute('aria-hidden', 'true');
+        track.append(copy);
+      }
+      col.append(track);
+      track.style.setProperty('--dur', (58 + i * 9) + 's');
+    });
+    /* the wall is taller than the screen, so a threshold is the wrong test:
+       it is on screen when any of it is */
+    new IntersectionObserver(es => {
+      for(const e of es) wall.classList.toggle('on', e.isIntersecting);
+    }, {rootMargin:'80px'}).observe(wall);
+  }
+
+  for(const list of document.querySelectorAll('[data-glyphs]')){
+    const observer = new IntersectionObserver(es => {
+      for(const e of es){
+        if(list.hasAttribute('data-glyphs-once')){
+          /* The Workbench is an introduction, not an ambient animation. Once
+             its six instruments have assembled they stay complete for as long
+             as the reader wants to inspect them; scrolling a few pixels must
+             not rewind and flash the row again. */
+          if(e.isIntersecting){ list.classList.add('on'); observer.unobserve(list); }
+        }else list.classList.toggle('on', e.isIntersecting);
+      }
+    }, {rootMargin:'80px'});
+    observer.observe(list);
+  }
+
+  /* the hero's two lights, armed the same way as everything else — a first
+     screen scrolled past should not go on animating behind the reader */
+  const hero = document.querySelector('.hero');
+  if(hero) new IntersectionObserver(es => {
+    for(const e of es) hero.toggleAttribute('data-lit', e.isIntersecting);
+  }, {rootMargin:'40px'}).observe(hero);
+}
+
+/* ── the four figures, counted up ───────────────────────────────────────────
+   They are measurements, and a measurement that lands by counting to itself
+   reads as one being taken. It runs once, when the band is reached, and never
+   for a reader who has asked for less motion — and what it counts is the
+   **number tokens inside the text**, so `400 / 400`, `1,113` and `1.2 s` each
+   keep their own separators, decimals and units without any of them being
+   described twice. The final text is restored verbatim at the end rather than
+   rebuilt, since a rebuilt string is a second description of the figure. */
+if('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion:reduce)').matches){
+  const io = new IntersectionObserver(es => {
+    for(const e of es){
+      if(!e.isIntersecting) continue;
+      io.unobserve(e.target);
+      const el = e.target, final = el.textContent;
+      const parts = final.split(/(\d[\d,]*(?:\.\d+)?)/);
+      const nums = parts.map(p => /^\d/.test(p) ? p : null);
+      if(!nums.some(Boolean)) continue;
+      /* the box must not resize as the digits change: a figure that reflows
+         the caption under it while it counts is worse than one that does not
+         count at all. `tabular-nums` is already on these, so reserving the
+         final string's width is enough. */
+      el.style.minWidth = el.getBoundingClientRect().width + 'px';
+      const t0 = performance.now(), dur = 900;
+      const tick = now => {
+        const k = Math.min(1, (now - t0) / dur);
+        /* eased out, so it decelerates onto the answer rather than stopping */
+        const e2 = 1 - Math.pow(1 - k, 3);
+        el.textContent = parts.map((p, i) => {
+          if(!nums[i]) return p;
+          const dec = (p.split('.')[1] || '').length;
+          const v = parseFloat(p.replace(/,/g, '')) * e2;
+          const s = v.toFixed(dec);
+          return p.includes(',') ? Number(s).toLocaleString('en-US',
+                   {minimumFractionDigits:dec, maximumFractionDigits:dec}) : s;
+        }).join('');
+        if(k < 1) requestAnimationFrame(tick);
+        else { el.textContent = final; el.style.minWidth = ''; }
+      };
+      requestAnimationFrame(tick);
+    }
+  }, {threshold:.6});
+  for(const b of document.querySelectorAll('.stats b')) io.observe(b);
+}
+/* ── the figure decks ──────────────────────────────────────────────────────
+   Sequence and Digest are three figures each; `.deck` makes them pages of one
+   horizontal scroller and this puts the dots under it. They are built here
+   rather than written into the markup so a page with no script gets a plain
+   scrollable deck and no control that does nothing — and so the count can
+   never disagree with the number of figures actually there. Each dot is
+   labelled with its own figure's caption, because "page 2 of 3" tells a
+   screen reader nothing about what it would move to. */
+(function(){
+  const decks = document.querySelectorAll('.feat .deck');
+  if(!decks.length) return;
+  const still = matchMedia('(prefers-reduced-motion:reduce)').matches;
+  decks.forEach(deck => {
+    const pages = [...deck.children].filter(el => el.tagName === 'FIGURE');
+    if(pages.length < 2) return;
+    /* **Not a `ul`.** `.feat li` gives every list item in these sections a green
+       square marker and `.feat ul` lays them out in two columns — which is
+       right for the four claims beside the heading and made the dots come out
+       as a two-column grid of green squares with a dot beside each. A row of
+       buttons in a labelled group owes nothing to either rule. */
+    const dots = document.createElement('div');
+    dots.className = 'deckdots';
+    dots.setAttribute('role', 'group');
+    dots.setAttribute('aria-label', 'Figures in this section');
+    const buttons = pages.map((page, i) => {
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'deckdot';
+      const cap = (page.querySelector('figcaption')?.textContent || '').trim();
+      const short = cap.split(/[—.]/)[0].trim().slice(0, 70);
+      b.setAttribute('aria-label', `Figure ${i + 1} of ${pages.length}` + (short ? ' — ' + short : ''));
+      b.addEventListener('click', () => {
+        deck.scrollTo({left: page.offsetLeft - pages[0].offsetLeft, behavior: still ? 'auto' : 'smooth'});
+      });
+      dots.append(b); return b;
+    });
+    deck.after(dots);
+    /* Which page is on screen is read off the scroller rather than counted: a
+       page is the current one when its own middle is nearest the deck's. The
+       same distance drives the effect — `--away` is 0 for the page under the
+       eye and 1 for one a full deck away, so the page being left shrinks and
+       fades *as the finger moves*. One pass per frame, transform and opacity
+       only; a scroll handler that wrote layout would fight the drag it is
+       answering. */
+    let queued = false;
+    const sync = () => {
+      queued = false;
+      /* **The origin is the first page, not the deck.** `offsetLeft` is measured
+         from the nearest positioned ancestor, and the deck and its figures do
+         not share one — subtracting `deck.offsetLeft` left the resting page
+         194 px from where it was thought to be, so it sat at 0.89 opacity and
+         a 0.99 scale with nobody touching it. Page one is at content-x 0 by
+         construction. */
+      const base = pages[0].offsetLeft;
+      const mid = deck.scrollLeft + deck.clientWidth / 2, span = deck.clientWidth || 1;
+      let best = 0, near = Infinity;
+      pages.forEach((page, i) => {
+        const c = page.offsetLeft - base + page.offsetWidth / 2;
+        const d = Math.abs(c - mid);
+        if(d < near){ near = d; best = i; }
+        if(!still) page.style.setProperty('--away', Math.min(1, d / span).toFixed(3));
+      });
+      buttons.forEach((b, i) => b.setAttribute('aria-current', String(i === best)));
+      dots.hidden = deck.scrollWidth <= deck.clientWidth + 1;
+    };
+    const onScroll = () => {
+      if(queued) return;
+      queued = true; requestAnimationFrame(sync);
+    };
+    deck.addEventListener('scroll', onScroll, {passive:true});
+    if('ResizeObserver' in window) new ResizeObserver(onScroll).observe(deck);
+    else addEventListener('resize', onScroll);
+    /* ← → move a page when the deck itself has the keyboard */
+    deck.tabIndex = 0;
+    deck.setAttribute('role', 'group');
+    deck.setAttribute('aria-label', 'Figures — use the arrow keys');
+    deck.addEventListener('keydown', e => {
+      const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+      if(!d) return;
+      e.preventDefault();
+      const now = buttons.findIndex(b => b.getAttribute('aria-current') === 'true');
+      buttons[Math.min(pages.length - 1, Math.max(0, now + d))].click();
+    });
+    sync();
+  });
+})();
 
 /* ── the three-move rail ────────────────────────────────────────────────────
    It advances by itself and any step can be pressed. Three rules make that
