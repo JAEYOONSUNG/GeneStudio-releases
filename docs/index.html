@@ -222,12 +222,12 @@ document.documentElement.dataset.theme=t;})()</script>
               <div class="reel-live-slot reel-fill" data-reel-live-slot></div>
             </div>
           </div>
-          <div class="reel-face" data-reel-face data-scene="sanger"
+          <div class="reel-face" data-reel-face data-scene="sanger" data-fit="tall"
                data-video="clip/sanger.mp4" data-phone-video="clip/sanger-phone.mp4"
                data-label="Sanger" style="--face-angle:300deg">
             <div class="reel-screen">
               <picture><source media="(max-width:760px)" srcset="clip/sanger-phone.webp">
-                <img src="clip/sanger.webp" width="2400" height="1500" alt=""></picture>
+                <img src="clip/sanger.webp" width="2400" height="2280" alt=""></picture>
               <div class="reel-live-slot reel-fill" data-reel-live-slot></div>
             </div>
           </div>
@@ -605,10 +605,10 @@ document.documentElement.dataset.theme=t;})()</script>
     </div>
     <figure class="rise settle">
       <div class="frame">
-        <video class="wide" data-clip="clip/sanger.mp4" data-poster="clip/sanger.webp" width="1200" height="750"
+        <video class="wide" data-clip="clip/sanger.mp4" data-poster="clip/sanger.webp" width="1200" height="1140"
                muted loop playsinline preload="none"
                aria-label="Two .ab1 reads attached to the construct: the table gives what each used, where it is good, where it lands and its verdict; the map shows both reads coloured by quality with the differences marked; the pileup carries the chromatogram under the letters."></video>
-        <video class="narrow" data-clip="clip/sanger-phone.mp4" data-poster="clip/sanger-phone.webp" width="390" height="287"
+        <video class="narrow" data-clip="clip/sanger-phone.mp4" data-poster="clip/sanger-phone.webp" width="390" height="242"
                muted loop playsinline preload="none" aria-label="The Sanger view: a table of reads with quality and verdict, a map of where each read lands, and the pileup with chromatograms."></video>
       </div>
       <figcaption>Two real <code>.ab1</code> files in: 587 of 620 bases used, good over 7–593 at Q38, landing at 247–833 forward — and the difference it found marked on the read where the read is worth believing.</figcaption>
@@ -2315,7 +2315,14 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
         return;
       }
       if(!prepared.src){ holdPoster(faces[index].dataset.label + ' · poster'); return; }
-      if(!prepared.ready){ setState('loading', faces[index].dataset.label + ' · loading'); return; }
+      /* **The tour held a poster on every phone, and this line is why.** iOS
+         treats `preload` as `none` whatever the attribute says: `load()` fetches
+         nothing, so `onloadeddata` never fires, so `prepared.ready` never
+         becomes true and the scene returned here on every advance. The play
+         request is what starts the fetch, so it is made whether or not data has
+         arrived — the state simply says "loading" until the promise settles,
+         and a real failure still lands on the poster in the `catch`. */
+      if(!prepared.ready) setState('loading', faces[index].dataset.label + ' · loading');
       for(const other of document.querySelectorAll('video[data-clip]')) other.pause?.();
       video.dataset.ready = 'true';
       video.play().then(() => {
@@ -2578,7 +2585,14 @@ let armClips;   /* the rail advances to a clip that has never been armed */
     v.dataset.clipVisible = String(visible);
     if(!visible){ v.removeAttribute('autoplay'); v.pause?.(); return; }
     ensure(v);
-    if(v.readyState >= 2) playOne(v);
+    /* **`loadeddata` is not a promise, and on a phone it never came.** iOS
+       treats `preload` as `none` whatever the attribute says and `load()`
+       fetches nothing at all there — so a player that waits for data before
+       asking to play waits for ever, and every clip on the page stayed a
+       still. It is the *play request* that starts the fetch, so it is made as
+       soon as the clip is on screen; `loadeddata` above stays as the belt for
+       a browser that armed the source while it was still out of view. */
+    playOne(v);
   };
   const observer = 'IntersectionObserver' in window ? new IntersectionObserver(entries => {
     for(const entry of entries) setVisible(entry.target,
@@ -2684,312 +2698,6 @@ if('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion:redu
     }
   }
 }
-
-/* ── the three-move rail ────────────────────────────────────────────────────
-   It advances by itself and any step can be pressed. Three rules make that
-   bearable rather than fidgety: it only runs **while it is on screen** (a page
-   cycling in a tab nobody is looking at is work for nothing), a press stops the
-   advance for good — somebody who has chosen a step is reading it, and moving
-   them off it is the fault this whole page's notes keep naming — and a reader
-   who has asked for less motion gets no advance at all, only the presses.
-
-   A step is a real button rather than a `<li>` with a click handler, so the
-   keyboard reaches it and says what it is; the markup stays a list because
-   three steps in order is what a list is. */
-{
-  const flow = document.querySelector('[data-flow]');
-  if(flow){
-    const steps = [...flow.querySelectorAll('.step')];
-    const clips = [...flow.querySelectorAll('[data-flow-clip]')];
-    const name  = flow.querySelector('[data-flow-name]');
-    const names = ['Home · Files / Recognition sequence',
-                   'annotated_operon.gb · Features · Full + computed',
-                   'pDEMO-T7 · Fold · 51 nt · −10.6 kcal/mol'];
-    const still = matchMedia('(prefers-reduced-motion: reduce)');
-    /* `driven` is the reader's scroll having taken over from the timer: the
-       rail introduces itself on its own until the first scroll actually chooses
-       a step, and after that the clock is the reader's. */
-    let at = 0, timer = 0, stopped = false, driven = false;
-
-    /* the paragraph is what the button labels, so the button is the title and
-       the paragraph is described by it rather than swallowed into the name */
-    steps.forEach((li, i) => {
-      const b = li.querySelector('b');
-      if(b){
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = 'stepbtn';
-        btn.append(...b.childNodes);
-        b.append(btn);
-      }
-      li.addEventListener('click', () => { stopped = true; clearTimeout(timer); show(i); });
-    });
-
-    function show(i){
-      at = i;
-      steps.forEach((li, k) => {
-        li.classList.toggle('on', k === i);
-        li.classList.toggle('done', k < i);
-        const btn = li.querySelector('.stepbtn');
-        if(btn) btn.setAttribute('aria-current', k === i ? 'step' : 'false');
-      });
-      clips.forEach((box, k) => {
-        box.classList.toggle('on', k === i);
-        /* a step off screen keeps decoding otherwise, and three clips decoding
-           at once is what the page's own clip armer already exists to avoid */
-        if(k !== i) for(const v of box.querySelectorAll('video')) v.pause?.();
-      });
-      if(name) name.textContent = names[i] || names[0];
-      /* the clip that has just been shown may never have been armed: the armer
-         asks whether a video is *drawn*, and until this moment it was not */
-      armClips?.();
-      if(!stopped && !still.matches) queue();
-    }
-    function queue(){
-      clearTimeout(timer);
-      if(stopped || driven) return;
-      timer = setTimeout(() => show((at + 1) % steps.length), 5200);
-    }
-
-    if('IntersectionObserver' in window && !still.matches){
-      new IntersectionObserver(es => {
-        for(const e of es){
-          if(e.isIntersecting && !stopped) queue();
-          else clearTimeout(timer);
-        }
-      }, {threshold:.35}).observe(flow);
-    }
-
-    /* **Scrolling is what should advance a walkthrough.** It ran on a timer, so
-       the step you were reading changed under you at five seconds whether or
-       not you had finished, and reading it at your own pace meant pressing a
-       button. The reader's own scroll is the better clock: the step whose
-       heading is nearest the middle of the screen is the step being read, which
-       is how the reference drives its own gallery.
-
-       The timer stays as what runs before the section has been scrolled
-       *through* — it is what makes the rail introduce itself — and the first
-       scroll that actually chooses a step takes over for good. A click still
-       stops both, since a press is a decision. */
-    if(!still.matches && matchMedia('(min-width:820px)').matches){
-      let frame = 0;
-      const follow = () => {
-        frame = 0;
-        if(stopped) return;
-        const box = flow.getBoundingClientRect();
-        /* only while the rail is the thing on screen: outside that the nearest
-           heading is whichever one the section ended on, which would drag the
-           step back every time the reader left */
-        if(box.bottom < innerHeight * 0.25 || box.top > innerHeight * 0.75) return;
-        const mid = innerHeight / 2;
-        let best = 0, near = Infinity;
-        steps.forEach((li, i) => {
-          const r = li.getBoundingClientRect();
-          const d = Math.abs(r.top + r.height / 2 - mid);
-          if(d < near){ near = d; best = i; }
-        });
-        if(best !== at){ driven = true; clearTimeout(timer); show(best); }
-      };
-      addEventListener('scroll', () => { if(!frame) frame = requestAnimationFrame(follow); },
-                       {passive:true});
-    }
-  }
-}
-
-/* ── what may move, and only while it is on screen ─────────────────────────
-   One observer arms the wall's drift and the glyphs' animations when their
-   section is reached and disarms them when it leaves, which is what keeps a
-   page in a background tab from running six animations for nobody. The class
-   is the whole switch — every keyframe in the stylesheet is keyed on it — so
-   nothing here knows what any of the animations are.
-
-   **A reader who has asked for less motion is never armed at all.** The
-   stylesheet stops them anyway, and this stops them being started. */
-if('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion:reduce)').matches){
-  /* the wall's track is the column's own contents twice: -50 % then lands the
-     copy exactly where the original started, and the loop has no seam. The
-     copy is made here rather than written twice in the markup — a duplicated
-     list is two things for a screen reader to read and one to forget to keep
-     in step — and each column is given a length of its own, or four columns
-     drifting at one speed read as a single sliding block. */
-  for(const wall of document.querySelectorAll('[data-drift]')){
-    const cols = [...wall.querySelectorAll('.wallcol')];
-    cols.forEach((col, i) => {
-      const track = document.createElement('div');
-      track.className = 'walltrack';
-      while(col.firstChild) track.append(col.firstChild);
-      /* **The second half is hidden from a reader, card by card.** Cloning the
-         track and moving its children in loses the `aria-hidden` that was on
-         the wrapper — and then every claim on this wall is read out twice,
-         which is worse than not having the motion. Each clone carries its own,
-         and both halves live in the one track so the -50 % is exact whatever
-         the cards happen to measure. */
-      for(const card of [...track.children]){
-        const copy = card.cloneNode(true);
-        copy.setAttribute('aria-hidden', 'true');
-        track.append(copy);
-      }
-      col.append(track);
-      track.style.setProperty('--dur', (58 + i * 9) + 's');
-    });
-    /* the wall is taller than the screen, so a threshold is the wrong test:
-       it is on screen when any of it is */
-    new IntersectionObserver(es => {
-      for(const e of es) wall.classList.toggle('on', e.isIntersecting);
-    }, {rootMargin:'80px'}).observe(wall);
-  }
-
-  for(const list of document.querySelectorAll('[data-glyphs]')){
-    const observer = new IntersectionObserver(es => {
-      for(const e of es){
-        if(list.hasAttribute('data-glyphs-once')){
-          /* The Workbench is an introduction, not an ambient animation. Once
-             its six instruments have assembled they stay complete for as long
-             as the reader wants to inspect them; scrolling a few pixels must
-             not rewind and flash the row again. */
-          if(e.isIntersecting){ list.classList.add('on'); observer.unobserve(list); }
-        }else list.classList.toggle('on', e.isIntersecting);
-      }
-    }, {rootMargin:'80px'});
-    observer.observe(list);
-  }
-
-  /* the hero's two lights, armed the same way as everything else — a first
-     screen scrolled past should not go on animating behind the reader */
-  const hero = document.querySelector('.hero');
-  if(hero) new IntersectionObserver(es => {
-    for(const e of es) hero.toggleAttribute('data-lit', e.isIntersecting);
-  }, {rootMargin:'40px'}).observe(hero);
-}
-
-/* ── the four figures, counted up ───────────────────────────────────────────
-   They are measurements, and a measurement that lands by counting to itself
-   reads as one being taken. It runs once, when the band is reached, and never
-   for a reader who has asked for less motion — and what it counts is the
-   **number tokens inside the text**, so `400 / 400`, `1,113` and `1.2 s` each
-   keep their own separators, decimals and units without any of them being
-   described twice. The final text is restored verbatim at the end rather than
-   rebuilt, since a rebuilt string is a second description of the figure. */
-if('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion:reduce)').matches){
-  const io = new IntersectionObserver(es => {
-    for(const e of es){
-      if(!e.isIntersecting) continue;
-      io.unobserve(e.target);
-      const el = e.target, final = el.textContent;
-      const parts = final.split(/(\d[\d,]*(?:\.\d+)?)/);
-      const nums = parts.map(p => /^\d/.test(p) ? p : null);
-      if(!nums.some(Boolean)) continue;
-      /* the box must not resize as the digits change: a figure that reflows
-         the caption under it while it counts is worse than one that does not
-         count at all. `tabular-nums` is already on these, so reserving the
-         final string's width is enough. */
-      el.style.minWidth = el.getBoundingClientRect().width + 'px';
-      const t0 = performance.now(), dur = 900;
-      const tick = now => {
-        const k = Math.min(1, (now - t0) / dur);
-        /* eased out, so it decelerates onto the answer rather than stopping */
-        const e2 = 1 - Math.pow(1 - k, 3);
-        el.textContent = parts.map((p, i) => {
-          if(!nums[i]) return p;
-          const dec = (p.split('.')[1] || '').length;
-          const v = parseFloat(p.replace(/,/g, '')) * e2;
-          const s = v.toFixed(dec);
-          return p.includes(',') ? Number(s).toLocaleString('en-US',
-                   {minimumFractionDigits:dec, maximumFractionDigits:dec}) : s;
-        }).join('');
-        if(k < 1) requestAnimationFrame(tick);
-        else { el.textContent = final; el.style.minWidth = ''; }
-      };
-      requestAnimationFrame(tick);
-    }
-  }, {threshold:.6});
-  for(const b of document.querySelectorAll('.stats b')) io.observe(b);
-}
-/* ── the figure decks ──────────────────────────────────────────────────────
-   Sequence and Digest are three figures each; `.deck` makes them pages of one
-   horizontal scroller and this puts the dots under it. They are built here
-   rather than written into the markup so a page with no script gets a plain
-   scrollable deck and no control that does nothing — and so the count can
-   never disagree with the number of figures actually there. Each dot is
-   labelled with its own figure's caption, because "page 2 of 3" tells a
-   screen reader nothing about what it would move to. */
-(function(){
-  const decks = document.querySelectorAll('.feat .deck');
-  if(!decks.length) return;
-  const still = matchMedia('(prefers-reduced-motion:reduce)').matches;
-  decks.forEach(deck => {
-    const pages = [...deck.children].filter(el => el.tagName === 'FIGURE');
-    if(pages.length < 2) return;
-    /* **Not a `ul`.** `.feat li` gives every list item in these sections a green
-       square marker and `.feat ul` lays them out in two columns — which is
-       right for the four claims beside the heading and made the dots come out
-       as a two-column grid of green squares with a dot beside each. A row of
-       buttons in a labelled group owes nothing to either rule. */
-    const dots = document.createElement('div');
-    dots.className = 'deckdots';
-    dots.setAttribute('role', 'group');
-    dots.setAttribute('aria-label', 'Figures in this section');
-    const buttons = pages.map((page, i) => {
-      const b = document.createElement('button');
-      b.type = 'button'; b.className = 'deckdot';
-      const cap = (page.querySelector('figcaption')?.textContent || '').trim();
-      const short = cap.split(/[—.]/)[0].trim().slice(0, 70);
-      b.setAttribute('aria-label', `Figure ${i + 1} of ${pages.length}` + (short ? ' — ' + short : ''));
-      b.addEventListener('click', () => {
-        deck.scrollTo({left: page.offsetLeft - pages[0].offsetLeft, behavior: still ? 'auto' : 'smooth'});
-      });
-      dots.append(b); return b;
-    });
-    deck.after(dots);
-    /* Which page is on screen is read off the scroller rather than counted: a
-       page is the current one when its own middle is nearest the deck's. The
-       same distance drives the effect — `--away` is 0 for the page under the
-       eye and 1 for one a full deck away, so the page being left shrinks and
-       fades *as the finger moves*. One pass per frame, transform and opacity
-       only; a scroll handler that wrote layout would fight the drag it is
-       answering. */
-    let queued = false;
-    const sync = () => {
-      queued = false;
-      /* **The origin is the first page, not the deck.** `offsetLeft` is measured
-         from the nearest positioned ancestor, and the deck and its figures do
-         not share one — subtracting `deck.offsetLeft` left the resting page
-         194 px from where it was thought to be, so it sat at 0.89 opacity and
-         a 0.99 scale with nobody touching it. Page one is at content-x 0 by
-         construction. */
-      const base = pages[0].offsetLeft;
-      const mid = deck.scrollLeft + deck.clientWidth / 2, span = deck.clientWidth || 1;
-      let best = 0, near = Infinity;
-      pages.forEach((page, i) => {
-        const c = page.offsetLeft - base + page.offsetWidth / 2;
-        const d = Math.abs(c - mid);
-        if(d < near){ near = d; best = i; }
-        if(!still) page.style.setProperty('--away', Math.min(1, d / span).toFixed(3));
-      });
-      buttons.forEach((b, i) => b.setAttribute('aria-current', String(i === best)));
-      dots.hidden = deck.scrollWidth <= deck.clientWidth + 1;
-    };
-    const onScroll = () => {
-      if(queued) return;
-      queued = true; requestAnimationFrame(sync);
-    };
-    deck.addEventListener('scroll', onScroll, {passive:true});
-    if('ResizeObserver' in window) new ResizeObserver(onScroll).observe(deck);
-    else addEventListener('resize', onScroll);
-    /* ← → move a page when the deck itself has the keyboard */
-    deck.tabIndex = 0;
-    deck.setAttribute('role', 'group');
-    deck.setAttribute('aria-label', 'Figures — use the arrow keys');
-    deck.addEventListener('keydown', e => {
-      const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
-      if(!d) return;
-      e.preventDefault();
-      const now = buttons.findIndex(b => b.getAttribute('aria-current') === 'true');
-      buttons[Math.min(pages.length - 1, Math.max(0, now + d))].click();
-    });
-    sync();
-  });
-})();
 
 /* ── the three-move rail ────────────────────────────────────────────────────
    It advances by itself and any step can be pressed. Three rules make that
