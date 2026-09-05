@@ -669,7 +669,11 @@ figcaption:not(.reel-caption){
    is the *decoration* of a still: the poster is the last frame, so a browser
    that will not play it, a phone on a slow network and a reader who has asked
    for less motion all get the picture the clip ends on rather than a grey box. */
-.frame video{display:block; width:100%; height:auto; background:var(--sunk)}
+/* under 760 px the clip in a frame is an animated image, not a video (iOS
+   decides per device whether a video may start; an image is outside that
+   decision), and it lays out as the video does or the frame changes shape at
+   the breakpoint */
+.frame video, .frame img.narrow{display:block; width:100%; height:auto; background:var(--sunk)}
 /* ── the whole product as one cylindrical reel ─────────────────────────────
    The hero used to spend its entire visual argument on one Map. The workbench
    is six connected acts, so six *real* light-workspace posters now occupy one
@@ -1112,6 +1116,17 @@ figcaption:not(.reel-caption){
 .reel-live-slot video{opacity:0; transition:opacity .16s ease}
 .reel-live-slot video[data-ready="true"]{opacity:1}
 .reel-viewport > [data-reel-video]{display:none}
+/* **On a phone the live thing in the slot is an animated image**, moved between
+   the faces the way the one video is, and it wears the video's rules to the
+   letter — cover, the tall fit, the fade — or the handover from poster to loop
+   would be the one cut in a tour that otherwise never cuts. Scoped to the
+   slot: `.reel-screen img` is every image in the screen, a slice's included,
+   and that is the trap the note above already names. */
+.reel-live-slot img{display:block; width:100%; height:100%; object-fit:cover;
+  object-position:50% 50%; background:#F7FAFC; opacity:0; transition:opacity .16s ease}
+.reel-face[data-fit="tall"] .reel-live-slot img{object-position:50% 0}
+.reel-live-slot img[data-ready="true"]{opacity:1}
+.reel-viewport > [data-reel-loop]{display:none}
 .reel-streak{
   position:absolute; z-index:5; top:-18%; bottom:-18%; left:43%; width:14%;
   opacity:0; pointer-events:none; transform:skewX(-12deg) translateX(-240%);

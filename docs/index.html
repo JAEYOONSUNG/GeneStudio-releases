@@ -180,7 +180,7 @@ document.documentElement.dataset.theme=t;})()</script>
       <div class="reel-viewport" data-reel-viewport>
         <div class="reel-ring" data-reel-ring aria-hidden="true">
           <div class="reel-face is-active" data-reel-face data-scene="home"
-               data-video="clip/home.mp4" data-phone-video="clip/home-phone.mp4"
+               data-video="clip/home.mp4" data-phone-anim="clip/home-phone.anim.webp"
                data-label="Home" style="--face-angle:0deg">
             <div class="reel-screen">
               <picture><source media="(max-width:760px)" srcset="clip/home-phone.webp">
@@ -189,7 +189,7 @@ document.documentElement.dataset.theme=t;})()</script>
             </div>
           </div>
           <div class="reel-face" data-reel-face data-scene="map"
-               data-video="clip/map.mp4" data-phone-video="clip/map-phone.mp4"
+               data-video="clip/map.mp4" data-phone-anim="clip/map-phone.anim.webp"
                data-label="Map" style="--face-angle:60deg">
             <div class="reel-screen">
               <picture><source media="(max-width:760px)" srcset="clip/map-phone.webp">
@@ -198,7 +198,7 @@ document.documentElement.dataset.theme=t;})()</script>
             </div>
           </div>
           <div class="reel-face" data-reel-face data-scene="feature"
-               data-video="clip/feature.mp4" data-phone-video="clip/feature-phone.mp4"
+               data-video="clip/feature.mp4" data-phone-anim="clip/feature-phone.anim.webp"
                data-label="Features" style="--face-angle:120deg">
             <div class="reel-screen">
               <picture><source media="(max-width:760px)" srcset="clip/feature-phone.webp">
@@ -207,7 +207,7 @@ document.documentElement.dataset.theme=t;})()</script>
             </div>
           </div>
           <div class="reel-face" data-reel-face data-scene="digest" data-fit="tall"
-               data-video="clip/digest.mp4" data-phone-video="clip/digest-phone.mp4"
+               data-video="clip/digest.mp4" data-phone-anim="clip/digest-phone.anim.webp"
                data-label="Digest" style="--face-angle:180deg">
             <div class="reel-screen">
               <picture><source media="(max-width:760px)" srcset="clip/digest-phone.webp">
@@ -216,7 +216,7 @@ document.documentElement.dataset.theme=t;})()</script>
             </div>
           </div>
           <div class="reel-face" data-reel-face data-scene="guides"
-               data-video="clip/guides.mp4" data-phone-video="clip/guides-phone.mp4"
+               data-video="clip/guides.mp4" data-phone-anim="clip/guides-phone.anim.webp"
                data-label="Guides" style="--face-angle:240deg">
             <div class="reel-screen">
               <picture><source media="(max-width:760px)" srcset="clip/guides-phone.webp">
@@ -225,7 +225,7 @@ document.documentElement.dataset.theme=t;})()</script>
             </div>
           </div>
           <div class="reel-face" data-reel-face data-scene="sanger" data-fit="tall"
-               data-video="clip/sanger.mp4" data-phone-video="clip/sanger-phone.mp4"
+               data-video="clip/sanger.mp4" data-phone-anim="clip/sanger-phone.anim.webp"
                data-label="Sanger" style="--face-angle:300deg">
             <div class="reel-screen">
               <picture><source media="(max-width:760px)" srcset="clip/sanger-phone.webp">
@@ -444,25 +444,22 @@ document.documentElement.dataset.theme=t;})()</script>
             <video class="wide" data-clip="clip/home.mp4" data-poster="clip/home.webp" width="1200" height="750"
                    muted loop playsinline preload="none"
                    aria-label="Gene Studio Home filtering the Screening Runs folder, then finding EcoRI and GATC across four local sequence files and reporting 3 exact matching files with forward and reverse counts."></video>
-            <video class="narrow" data-clip="clip/home-phone.mp4" data-poster="clip/home-phone.webp" width="390" height="312"
-                   muted loop playsinline preload="none"
-                   aria-label="Gene Studio Home filtering a folder, then reporting 3 exact matching files for EcoRI and GATC with forward and reverse counts."></video>
+            <img class="narrow" src="clip/home-phone.webp" data-anim="clip/home-phone.anim.webp" width="390" height="312"
+                 loading="lazy" decoding="async" alt="Gene Studio Home filtering a folder, then reporting 3 exact matching files for EcoRI and GATC with forward and reverse counts.">
           </div>
           <div class="flowclip" data-flow-clip="1">
             <video class="wide" data-clip="clip/feature.mp4" data-poster="clip/feature.webp" width="1200" height="750"
                    muted loop playsinline preload="none"
                    aria-label="The real Features view changing from Record to Full plus computed, then scrolling from computed molecular properties to merged Pfam and SUPERFAMILY annotation while Name and locus tag stay pinned."></video>
-            <video class="narrow" data-clip="clip/feature-phone.mp4" data-poster="clip/feature-phone.webp" width="390" height="312"
-                   muted loop playsinline preload="none"
-                   aria-label="The expanded Features table scrolling through computed values and merged InterPro signatures with identity columns pinned."></video>
+            <img class="narrow" src="clip/feature-phone.webp" data-anim="clip/feature-phone.anim.webp" width="390" height="312"
+                 loading="lazy" decoding="async" alt="The expanded Features table scrolling through computed values and merged InterPro signatures with identity columns pinned.">
           </div>
           <div class="flowclip" data-flow-clip="2">
             <video class="wide" data-clip="clip/fold.mp4" data-poster="clip/fold.webp" width="1108" height="824"
                    muted loop playsinline preload="none"
                    aria-label="A region folded and drawn as a structure, ready to be taken out as vector."></video>
-            <video class="narrow" data-clip="clip/fold-phone.mp4" data-poster="clip/fold-phone.webp" width="390" height="312"
-                   muted loop playsinline preload="none"
-                   aria-label="A region folded and drawn as a structure, ready to be taken out as vector."></video>
+            <img class="narrow" src="clip/fold-phone.webp" data-anim="clip/fold-phone.anim.webp" width="390" height="312"
+                 loading="lazy" decoding="async" alt="A region folded and drawn as a structure, ready to be taken out as vector.">
           </div>
         </div>
       </figure>
@@ -494,8 +491,8 @@ document.documentElement.dataset.theme=t;})()</script>
         <video class="wide" data-clip="clip/drag.mp4" data-poster="clip/drag.webp" width="1200" height="750"
                muted loop playsinline preload="none"
                aria-label="Someone dragging across the His6 tag: the stretch lights up, a card follows the pointer with its length, melting temperature and GC, and the bar along the bottom spells the residues out."></video>
-        <video class="narrow" data-clip="clip/drag-phone.mp4" data-poster="clip/drag-phone.webp" width="390" height="312"
-               muted loop playsinline preload="none" aria-label="The sequence view: enzyme names above the bases, primers as stepped arrows, both strands, translations under their own codons."></video>
+        <img class="narrow" src="clip/drag-phone.webp" data-anim="clip/drag-phone.anim.webp" width="390" height="312"
+             loading="lazy" decoding="async" alt="The sequence view: enzyme names above the bases, primers as stepped arrows, both strands, translations under their own codons.">
       </div>
       <figcaption>Dragging across the His6 tag. Nothing was pressed first — the figures are what a selection says about itself.</figcaption>
     </figure>
@@ -504,8 +501,8 @@ document.documentElement.dataset.theme=t;})()</script>
         <video class="wide" data-clip="clip/find.mp4" data-poster="clip/find.webp" width="1200" height="750"
                muted loop playsinline preload="none"
                aria-label="A motif being typed into the find bar, and every place it matches lighting up along the sequence."></video>
-        <video class="narrow" data-clip="clip/find-phone.mp4" data-poster="clip/find-phone.webp" width="390" height="312"
-               muted loop playsinline preload="none" aria-label="A motif being typed into the find bar, and every place it matches lighting up along the sequence."></video>
+        <img class="narrow" src="clip/find-phone.webp" data-anim="clip/find-phone.anim.webp" width="390" height="312"
+             loading="lazy" decoding="async" alt="A motif being typed into the find bar, and every place it matches lighting up along the sequence.">
       </div>
       <figcaption>And a motif being typed into ⌘F, every match lighting up as the query grows.</figcaption>
     </figure>
@@ -514,8 +511,8 @@ document.documentElement.dataset.theme=t;})()</script>
         <video class="wide" data-clip="clip/primer.mp4" data-poster="clip/primer.webp" width="1200" height="750"
                muted loop playsinline preload="none"
                aria-label="A primer opened by double-clicking it: the dialog draws the construct under the oligo at the site it binds, and the figures move as the sequence is typed."></video>
-        <video class="narrow" data-clip="clip/primer-phone.mp4" data-poster="clip/primer-phone.webp" width="390" height="312"
-               muted loop playsinline preload="none" aria-label="A primer opened by double-clicking it: the dialog draws the construct under the oligo at the site it binds, and the figures move as the sequence is typed."></video>
+        <img class="narrow" src="clip/primer-phone.webp" data-anim="clip/primer-phone.anim.webp" width="390" height="312"
+             loading="lazy" decoding="async" alt="A primer opened by double-clicking it: the dialog draws the construct under the oligo at the site it binds, and the figures move as the sequence is typed.">
       </div>
       <figcaption>Double-click any primer and it opens against what it binds — the ruler, the genes it sits under, both strands, and the figures moving as you type.</figcaption>
     </figure>
@@ -555,9 +552,8 @@ document.documentElement.dataset.theme=t;})()</script>
       <video class="wide" data-clip="clip/digest.mp4" data-poster="clip/digest.webp" width="1200" height="990"
              muted loop playsinline preload="none"
              aria-label="The whole Digest view with a digest running. Above, the selected stretch 413 to 1,129 — 717 bp — with the Enzynomics catalogue narrowed to the 46 enzymes that have a complete recognition site inside it, six of them listed with the site they recognise, the base they cut at, the end they leave and the two pieces the stretch becomes. Below left, the gel filling as the running time goes up: EcoRI, HindIII, XhoI and BamHI, six cuts, six fragments against a 1 kb ladder. Below right, the molecule drawn as its six coloured pieces with what each carries, the fragment table giving size, span, ends, self-ligation and GC, the compatible ends, and the methylation table judging each of the four enzymes on this construct."></video>
-      <video class="narrow" data-clip="clip/digest-phone.mp4" data-poster="clip/digest-phone.webp" width="390" height="312"
-             muted loop playsinline preload="none"
-             aria-label="The Digest view with a digest running: the gel filling against a 1 kb ladder as the running time goes up, the molecule drawn as its six coloured pieces, and the first columns of the fragment table."></video>
+      <img class="narrow" src="clip/digest-phone.webp" data-anim="clip/digest-phone.anim.webp" width="390" height="312"
+           loading="lazy" decoding="async" alt="The Digest view with a digest running: the gel filling against a 1 kb ladder as the running time goes up, the molecule drawn as its six coloured pieces, and the first columns of the fragment table.">
       <figcaption>The Digest view, running — the stretch and the enzymes of your set that cut inside it, the gel as the run goes up, the molecule divided into pieces, and what the host's methylation does to each enzyme.</figcaption>
     </figure>
     <figure>
@@ -565,8 +561,8 @@ document.documentElement.dataset.theme=t;})()</script>
         <video class="wide" data-clip="clip/enzdb.mp4" data-poster="clip/enzdb.webp" width="1200" height="750"
                muted loop playsinline preload="none"
                aria-label="The enzyme database searched: a card per enzyme with its cut drawn on both strands, the overhang, who sells it, what a methyl mark does to it, and what one digest costs."></video>
-        <video class="narrow" data-clip="clip/enzdb-phone.mp4" data-poster="clip/enzdb-phone.webp" width="390" height="312"
-               muted loop playsinline preload="none" aria-label="The enzyme database searched: a card per enzyme with its cut drawn on both strands, the overhang, who sells it, what a methyl mark does to it, and what one digest costs."></video>
+        <img class="narrow" src="clip/enzdb-phone.webp" data-anim="clip/enzdb-phone.anim.webp" width="390" height="312"
+             loading="lazy" decoding="async" alt="The enzyme database searched: a card per enzyme with its cut drawn on both strands, the overhang, who sells it, what a methyl mark does to it, and what one digest costs.">
       </div>
       <figcaption>A card per enzyme — the cut on both strands, the overhang, who sells it, and what one digest costs from the catalogue it was read off.</figcaption>
     </figure>
@@ -575,8 +571,8 @@ document.documentElement.dataset.theme=t;})()</script>
         <video class="wide" data-clip="clip/methyl.mp4" data-poster="clip/methyl.webp" width="1200" height="750"
                muted loop playsinline preload="none"
                aria-label="The methylation window: the strain the DNA was grown in and the one it is going into, and a row per methylase saying which sites here carry the mark and which enzymes it stops."></video>
-        <video class="narrow" data-clip="clip/methyl-phone.mp4" data-poster="clip/methyl-phone.webp" width="390" height="312"
-               muted loop playsinline preload="none" aria-label="The methylation window: the strain the DNA was grown in and the one it is going into, and a row per methylase saying which sites here carry the mark and which enzymes it stops."></video>
+        <img class="narrow" src="clip/methyl-phone.webp" data-anim="clip/methyl-phone.anim.webp" width="390" height="312"
+             loading="lazy" decoding="async" alt="The methylation window: the strain the DNA was grown in and the one it is going into, and a row per methylase saying which sites here carry the mark and which enzymes it stops.">
       </div>
       <figcaption>And what the host did to it — a row per system, how many sites of <em>this</em> construct carry the mark, and which enzymes in hand it stops.</figcaption>
     </figure>
@@ -585,8 +581,8 @@ document.documentElement.dataset.theme=t;})()</script>
         <video class="wide" data-clip="clip/strain.mp4" data-poster="clip/strain.webp" width="1200" height="750"
                muted loop playsinline preload="none"
                aria-label="The Strain DB panel: a REBASE organism record imported as a strain profile, then the R–M tab — a row per system with the site it reads, the base that takes the mark, and whether the call is resolved."></video>
-        <video class="narrow" data-clip="clip/strain-phone.mp4" data-poster="clip/strain-phone.webp" width="390" height="312"
-               muted loop playsinline preload="none" aria-label="The Strain DB panel: a REBASE organism record imported as a strain profile, then the R–M tab — a row per system with the site it reads, the base that takes the mark, and whether the call is resolved."></video>
+        <img class="narrow" src="clip/strain-phone.webp" data-anim="clip/strain-phone.anim.webp" width="390" height="312"
+             loading="lazy" decoding="async" alt="The Strain DB panel: a REBASE organism record imported as a strain profile, then the R–M tab — a row per system with the site it reads, the base that takes the mark, and whether the call is resolved.">
       </div>
       <figcaption>A host is a genotype, not a checkbox — every R–M system the strain carries, read off REBASE, with the ones still unresolved said so rather than guessed.</figcaption>
     </figure>
@@ -613,8 +609,8 @@ document.documentElement.dataset.theme=t;})()</script>
         <video class="wide" data-clip="clip/sanger.mp4" data-poster="clip/sanger.webp" width="1200" height="1140"
                muted loop playsinline preload="none"
                aria-label="Two .ab1 reads attached to the construct: the table gives what each used, where it is good, where it lands and its verdict; the map shows both reads coloured by quality with the differences marked; the pileup carries the chromatogram under the letters."></video>
-        <video class="narrow" data-clip="clip/sanger-phone.mp4" data-poster="clip/sanger-phone.webp" width="390" height="312"
-               muted loop playsinline preload="none" aria-label="The Sanger view: a table of reads with quality and verdict, a map of where each read lands, and the pileup with chromatograms."></video>
+        <img class="narrow" src="clip/sanger-phone.webp" data-anim="clip/sanger-phone.anim.webp" width="390" height="312"
+             loading="lazy" decoding="async" alt="The Sanger view: a table of reads with quality and verdict, a map of where each read lands, and the pileup with chromatograms.">
       </div>
       <figcaption>Two real <code>.ab1</code> files in: 587 of 620 bases used, good over 7–593 at Q38, landing at 247–833 forward — and the difference it found marked on the read where the read is worth believing.</figcaption>
     </figure>
@@ -640,8 +636,8 @@ document.documentElement.dataset.theme=t;})()</script>
         <video class="wide" data-clip="clip/guides.mp4" data-poster="clip/guides.webp" width="1200" height="750"
                muted loop playsinline preload="none"
                aria-label="A deletion designed: the region is taken from the construct, Design and then Scan are pressed, and the candidate guides come back grouped by the feature they sit in."></video>
-        <video class="narrow" data-clip="clip/guides-phone.mp4" data-poster="clip/guides-phone.webp" width="390" height="312"
-               muted loop playsinline preload="none" aria-label="The guides view: target and nuclease, the editing vector with its gRNA and homology-arm sites, and the design controls."></video>
+        <img class="narrow" src="clip/guides-phone.webp" data-anim="clip/guides-phone.anim.webp" width="390" height="312"
+             loading="lazy" decoding="async" alt="The guides view: target and nuclease, the editing vector with its gRNA and homology-arm sites, and the design controls.">
       </div>
       <figcaption>Design, then Scan — and 11 guides come back from 35 protospacers, grouped by the feature they sit in, with what each was dropped for said out loud.</figcaption>
     </figure>
@@ -2283,9 +2279,23 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
       kinetic(copy, words[index][1]);
       captioned = true;
     };
+    /* **On a phone the live thing on a face is an animated image, not the
+       video.** iOS decides per device whether a `<video>` may start by
+       itself — Low Power Mode and the accessibility "auto-play video previews"
+       switch both say no, and the tour then held a poster on every face. An
+       animated WebP is outside that decision, so under 760 px the tour moves
+       one `<img>` between the faces exactly as it moves the one video: into
+       the active face's live slot, fading up over the poster once loaded. The
+       video is not touched at that width; `sourceFor` says so by answering
+       nothing for it. */
+    const loop = document.createElement('img');
+    loop.setAttribute('data-reel-loop', ''); loop.alt = ''; loop.decoding = 'async';
+    loop.setAttribute('aria-hidden', 'true');
+    video.parentNode.insertBefore(loop, video);
+    const loopFor = at => (compact.matches && !reduced.matches) ? (faces[at].dataset.phoneAnim || '') : '';
     const sourceFor = at => {
-      if(reduced.matches) return '';
-      return compact.matches ? (faces[at].dataset.phoneVideo || '') : (faces[at].dataset.video || '');
+      if(reduced.matches || compact.matches) return '';
+      return faces[at].dataset.video || '';
     };
     const releaseSource = () => {
       loadToken++;
@@ -2294,6 +2304,8 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
       video.removeAttribute('src');
       video.removeAttribute('data-ready');
       video.dataset.scene = '';
+      loop.removeAttribute('src');
+      loop.removeAttribute('data-ready');
       reel.dataset.source = '';
       video.load();
     };
@@ -2308,6 +2320,7 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
     };
     const holdPoster = (message = faces[index].dataset.label + ' poster') => {
       video.removeAttribute('data-ready');
+      loop.removeAttribute('data-ready');
       setState(userPaused ? 'paused' : 'holding', message);
       reel.dataset.auto = userPaused ? 'off' : 'waiting';
       queue(STILL_HOLD);
@@ -2320,6 +2333,15 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
         return;
       }
       if(!prepared.src){ holdPoster(faces[index].dataset.label + ' · poster'); return; }
+      if(prepared.loop){
+        if(!prepared.ready){ setState('loading', faces[index].dataset.label + ' · loading'); return; }
+        for(const other of document.querySelectorAll('video[data-clip]')) other.pause?.();
+        loop.dataset.ready = 'true';
+        setState('playing', faces[index].dataset.label + ' · in motion');
+        reel.dataset.auto = userPaused ? 'off' : 'running';
+        queue(PLAY_HOLD);
+        return;
+      }
       /* **The tour held a poster on every phone, and this line is why.** iOS
          treats `preload` as `none` whatever the attribute says: `load()` fetches
          nothing, so `onloadeddata` never fires, so `prepared.ready` never
@@ -2341,9 +2363,35 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
     };
     const prepare = at => {
       const token = ++loadToken;
+      const anim = loopFor(at);
+      if(anim){
+        video.pause(); video.removeAttribute('data-ready'); video.removeAttribute('src'); video.load();
+        loop.removeAttribute('data-ready');
+        faces[at].querySelector('[data-reel-live-slot]').append(loop);
+        reel.dataset.source = anim;
+        prepared = {index:at, token, src:anim, ready:false, loop:true};
+        loop.onload = () => {
+          if(!prepared || prepared.token !== token) return;
+          prepared.ready = true;
+          reel.dataset.videoReady = 'true';
+          if(reel.dataset.state !== 'spinning') startPrepared();
+        };
+        loop.onerror = () => {
+          if(!prepared || prepared.token !== token) return;
+          prepared.ready = false;
+          reel.dataset.videoReady = 'false';
+          if(reel.dataset.state !== 'spinning') holdPoster(faces[at].dataset.label + ' · poster');
+        };
+        /* a src that is already the one wanted fires no `load`, so the
+           attribute is dropped first and the image asked for afresh */
+        loop.removeAttribute('src');
+        loop.src = anim;
+        return;
+      }
       const src = sourceFor(at);
       video.pause();
       video.removeAttribute('data-ready');
+      loop.removeAttribute('data-ready');
       faces[at].querySelector('[data-reel-live-slot]').append(video);
       video.dataset.scene = faces[at].dataset.scene;
       reel.dataset.source = src;
@@ -2553,16 +2601,32 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
 
 /* ── a clip plays where a clip is worth playing ────────────────────────────
    The source is attached in script, not in the markup, so nothing is fetched
-   for a screen that will not show it (under 760 px the still is what is drawn)
-   and nothing plays for a reader who has asked for less motion. Both of those
-   land on the poster, which is the clip's own last frame — the answer, not an
-   empty gel. */
+   for a screen that will not show it and nothing plays for a reader who has
+   asked for less motion. Both of those land on the poster, which is the clip's
+   own last frame — the answer, not an empty gel.
+
+   **Under 760 px the clip is an animated image, not a video.** iOS decides per
+   device whether a `<video>` may start by itself — Low Power Mode and the
+   accessibility "auto-play video previews" switch both say no, `play()`
+   rejects, and the figure is a still whatever this script does. An animated
+   WebP is not a video and is outside that decision; it is what the reader
+   means by a GIF. So a phone figure is an `<img class="narrow">` whose `src`
+   is the still and whose `data-anim` is the loop, and the same observer that
+   starts a video swaps the loop in while the figure is on screen and the
+   still back when it leaves — one thing decoding at a time, as before. A
+   reader who has asked for less motion keeps the still. */
 let armClips;   /* the rail advances to a clip that has never been armed */
 {
   const wide = matchMedia('(min-width: 761px)');
   const still = matchMedia('(prefers-reduced-motion: reduce)');
   const videos = [...document.querySelectorAll('video[data-clip]')];
+  const loops = [...document.querySelectorAll('img[data-anim]')];
   const rendered = v => getComputedStyle(v).display !== 'none' && v.getClientRects().length > 0;
+  const setLoop = (img, visible) => {
+    if(!img.dataset.still) img.dataset.still = img.getAttribute('src');
+    const want = visible && !still.matches ? img.dataset.anim : img.dataset.still;
+    if(img.getAttribute('src') !== want) img.setAttribute('src', want);
+  };
   const playOne = v => {
     /* `loadeddata → play()` used to run for every source as it arrived. At the
        top of the page that meant ten invisible loops decoding together. A clip
@@ -2588,6 +2652,7 @@ let armClips;   /* the rail advances to a clip that has never been armed */
   };
   const setVisible = (v, visible) => {
     v.dataset.clipVisible = String(visible);
+    if(v.tagName === 'IMG'){ setLoop(v, visible); return; }
     if(!visible){ v.removeAttribute('autoplay'); v.pause?.(); return; }
     ensure(v);
     /* **`loadeddata` is not a promise, and on a phone it never came.** iOS
@@ -2604,7 +2669,7 @@ let armClips;   /* the rail advances to a clip that has never been armed */
       entry.isIntersecting && rendered(entry.target) && !still.matches);
   }, {rootMargin:'120px 0px', threshold:0}) : null;
   const arm = armClips = () => {
-    for(const v of videos){
+    for(const v of [...videos, ...loops]){
       if(!v.dataset.clipObserved && observer){ observer.observe(v); v.dataset.clipObserved = 'true'; }
       setVisible(v, visibleNow(v));
     }
