@@ -57,6 +57,57 @@ document.documentElement.dataset.theme=t;})()</script>
 <link rel="stylesheet" href="base.css?v=20260904c">
 </head>
 <body>
+<!-- **A phone reports its own state, so nobody has to guess at it.** Open the
+     page with ?diag and a box at the foot of the screen says what the device
+     is and does: the OS switch for motion, whether the hero got its loop,
+     whether the first figure on screen got its loop, and any script error.
+     The one thing no script can measure is whether the device *animates an
+     image at all* — drawing an animated image to a canvas gives the first
+     frame by specification, so a probe built that way says "no" on every
+     device, including ones that move — so that question is put to the eye:
+     a two-colour loop sits in the box, and it blinks or it does not.
+     It is a script block of its own, in old syntax, placed first: a syntax
+     error in the page's main script must not take the diagnosis down with
+     it, and this block's onerror is what would report that error. -->
+<script>
+(function(){
+  if(!/[?&]diag\b/.test(location.search)) return;
+  var errors = [];
+  window.addEventListener('error', function(e){ errors.push((e.message || 'error') + (e.filename ? ' @' + (e.lineno || '') : '')); });
+  var TINY = 'data:image/webp;base64,UklGRogAAABXRUJQVlA4WAoAAAACAAAABwAABwAAQU5JTQYAAAD/////AABBTk1GKgAAAAAAAAAAAAcAAAcAACwBAAJWUDhMEQAAAC8HwAEAB1CUchel/4GI6H8AAEFOTUYqAAAAAAAAAAAABwAABwAALAEAAFZQOEwRAAAALwfAAQAHUJ6ilLv/gYjofwAA';
+  function q(sel){ return document.querySelector(sel); }
+  function show(){
+    var reel = q('.hero-reel'), face = q('.reel-face.is-active'), lp = q('[data-reel-loop]'), imgs = document.querySelectorAll('img.narrow'), first = null, i;
+    for(i = 0; i < imgs.length; i++){ var r = imgs[i].getBoundingClientRect(); if(r.height > 0 && r.bottom > 0 && r.top < innerHeight){ first = imgs[i]; break; } }
+    var m = navigator.userAgent.match(/OS (\d+)_(\d+)/);
+    var lines = [
+      'Gene Studio · phone diagnosis',
+      'iOS ' + (m ? m[1] + '.' + m[2] : '?') + ' · ' + innerWidth + '×' + innerHeight + ' @' + (devicePixelRatio || 1) + 'x',
+      'reduce motion: ' + matchMedia('(prefers-reduced-motion:reduce)').matches + ' · play pressed: ' + document.documentElement.classList.contains('motion-on'),
+      'phone layout: ' + matchMedia('(max-width:760px)').matches,
+      'hero: ' + (reel ? (reel.dataset.state || '-') + ' / ' + (face ? face.dataset.scene : '-') + ' / ' + ((q('.reel-live-state') || {}).textContent || '').replace(/\s+/g, ' ').trim().slice(0, 30) : 'no hero'),
+      'hero loop: ' + (lp ? ((lp.getAttribute('src') || 'no src').split('/').pop() + ' ready=' + (lp.dataset.ready || '-') + ' ' + lp.naturalWidth + 'px') : 'no node'),
+      'figure on screen: ' + (first ? (first.getAttribute('src') || '').split('/').pop() + ' ' + first.naturalWidth + 'px' : 'none'),
+      'errors: ' + (errors.length ? errors.join(' | ').slice(0, 160) : 'none'),
+      '',
+      '이 네모가 빨강↔파랑으로 깜빡이면 이 기기는 움짤을 재생합니다.',
+      '깜빡이지 않으면 iOS 설정이 움직이는 이미지를 막고 있는 것입니다:',
+      '설정 › 손쉬운 사용 › 동작 › 움직이는 이미지 자동 재생 (켜기), 저전력 모드 (끄기)'
+    ];
+    var box = document.getElementById('gsdiag');
+    if(!box){ box = document.createElement('pre'); box.id = 'gsdiag';
+      box.style.cssText = 'position:fixed;left:8px;right:8px;bottom:8px;z-index:2147483647;margin:0;padding:10px 44px 10px 12px;background:#111;color:#9f9;font:11px/1.45 Menlo,monospace;white-space:pre-wrap;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,.5)';
+      var sw = document.createElement('img'); sw.id = 'gsdiagswatch'; sw.src = TINY; sw.alt = '';
+      sw.style.cssText = 'position:absolute;right:12px;bottom:12px;width:24px;height:24px;border-radius:4px;image-rendering:pixelated';
+      box.appendChild(sw); document.body.appendChild(box); }
+    var text = box.firstChild && box.firstChild.nodeType === 3 ? box.firstChild : box.insertBefore(document.createTextNode(''), box.firstChild);
+    text.nodeValue = lines.join('\n');
+  }
+  function start(){ show(); setInterval(show, 1500); }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
+})();
+</script>
+
 
 <header class="rail">
   <div class="wrap">
