@@ -207,9 +207,11 @@ document.documentElement.dataset.theme=t;})()</script>
             </div>
           </div>
           <div class="reel-face" data-reel-face data-scene="digest" data-fit="tall"
-               data-video="clip/digest.mp4" data-label="Digest" style="--face-angle:180deg">
+               data-video="clip/digest.mp4" data-phone-video="clip/digest-phone.mp4"
+               data-label="Digest" style="--face-angle:180deg">
             <div class="reel-screen">
-              <picture><img src="clip/digest.webp" width="2400" height="1980" alt=""></picture>
+              <picture><source media="(max-width:760px)" srcset="clip/digest-phone.webp">
+                <img src="clip/digest.webp" width="2400" height="1980" alt=""></picture>
               <div class="reel-live-slot reel-fill" data-reel-live-slot></div>
             </div>
           </div>
@@ -442,7 +444,7 @@ document.documentElement.dataset.theme=t;})()</script>
             <video class="wide" data-clip="clip/home.mp4" data-poster="clip/home.webp" width="1200" height="750"
                    muted loop playsinline preload="none"
                    aria-label="Gene Studio Home filtering the Screening Runs folder, then finding EcoRI and GATC across four local sequence files and reporting 3 exact matching files with forward and reverse counts."></video>
-            <video class="narrow" data-clip="clip/home-phone.mp4" data-poster="clip/home-phone.webp" width="390" height="268"
+            <video class="narrow" data-clip="clip/home-phone.mp4" data-poster="clip/home-phone.webp" width="390" height="312"
                    muted loop playsinline preload="none"
                    aria-label="Gene Studio Home filtering a folder, then reporting 3 exact matching files for EcoRI and GATC with forward and reverse counts."></video>
           </div>
@@ -450,7 +452,7 @@ document.documentElement.dataset.theme=t;})()</script>
             <video class="wide" data-clip="clip/feature.mp4" data-poster="clip/feature.webp" width="1200" height="750"
                    muted loop playsinline preload="none"
                    aria-label="The real Features view changing from Record to Full plus computed, then scrolling from computed molecular properties to merged Pfam and SUPERFAMILY annotation while Name and locus tag stay pinned."></video>
-            <video class="narrow" data-clip="clip/feature-phone.mp4" data-poster="clip/feature-phone.webp" width="390" height="247"
+            <video class="narrow" data-clip="clip/feature-phone.mp4" data-poster="clip/feature-phone.webp" width="390" height="312"
                    muted loop playsinline preload="none"
                    aria-label="The expanded Features table scrolling through computed values and merged InterPro signatures with identity columns pinned."></video>
           </div>
@@ -458,7 +460,7 @@ document.documentElement.dataset.theme=t;})()</script>
             <video class="wide" data-clip="clip/fold.mp4" data-poster="clip/fold.webp" width="1108" height="824"
                    muted loop playsinline preload="none"
                    aria-label="A region folded and drawn as a structure, ready to be taken out as vector."></video>
-            <video class="narrow" data-clip="clip/fold-phone.mp4" data-poster="clip/fold-phone.webp" width="390" height="390"
+            <video class="narrow" data-clip="clip/fold-phone.mp4" data-poster="clip/fold-phone.webp" width="390" height="312"
                    muted loop playsinline preload="none"
                    aria-label="A region folded and drawn as a structure, ready to be taken out as vector."></video>
           </div>
@@ -492,7 +494,7 @@ document.documentElement.dataset.theme=t;})()</script>
         <video class="wide" data-clip="clip/drag.mp4" data-poster="clip/drag.webp" width="1200" height="750"
                muted loop playsinline preload="none"
                aria-label="Someone dragging across the His6 tag: the stretch lights up, a card follows the pointer with its length, melting temperature and GC, and the bar along the bottom spells the residues out."></video>
-        <video class="narrow" data-clip="clip/drag-phone.mp4" data-poster="clip/drag-phone.webp" width="390" height="219"
+        <video class="narrow" data-clip="clip/drag-phone.mp4" data-poster="clip/drag-phone.webp" width="390" height="312"
                muted loop playsinline preload="none" aria-label="The sequence view: enzyme names above the bases, primers as stepped arrows, both strands, translations under their own codons."></video>
       </div>
       <figcaption>Dragging across the His6 tag. Nothing was pressed first — the figures are what a selection says about itself.</figcaption>
@@ -502,7 +504,7 @@ document.documentElement.dataset.theme=t;})()</script>
         <video class="wide" data-clip="clip/find.mp4" data-poster="clip/find.webp" width="1200" height="750"
                muted loop playsinline preload="none"
                aria-label="A motif being typed into the find bar, and every place it matches lighting up along the sequence."></video>
-        <video class="narrow" data-clip="clip/find-phone.mp4" data-poster="clip/find-phone.webp" width="390" height="287"
+        <video class="narrow" data-clip="clip/find-phone.mp4" data-poster="clip/find-phone.webp" width="390" height="312"
                muted loop playsinline preload="none" aria-label="A motif being typed into the find bar, and every place it matches lighting up along the sequence."></video>
       </div>
       <figcaption>And a motif being typed into ⌘F, every match lighting up as the query grows.</figcaption>
@@ -512,7 +514,7 @@ document.documentElement.dataset.theme=t;})()</script>
         <video class="wide" data-clip="clip/primer.mp4" data-poster="clip/primer.webp" width="1200" height="750"
                muted loop playsinline preload="none"
                aria-label="A primer opened by double-clicking it: the dialog draws the construct under the oligo at the site it binds, and the figures move as the sequence is typed."></video>
-        <video class="narrow" data-clip="clip/primer-phone.mp4" data-poster="clip/primer-phone.webp" width="390" height="287"
+        <video class="narrow" data-clip="clip/primer-phone.mp4" data-poster="clip/primer-phone.webp" width="390" height="312"
                muted loop playsinline preload="none" aria-label="A primer opened by double-clicking it: the dialog draws the construct under the oligo at the site it binds, and the figures move as the sequence is typed."></video>
       </div>
       <figcaption>Double-click any primer and it opens against what it binds — the ruler, the genes it sits under, both strands, and the figures moving as you type.</figcaption>
@@ -550,9 +552,12 @@ document.documentElement.dataset.theme=t;})()</script>
          1,980 that made this one figure overwhelm the rest. -->
     <div class="deck rise settle">
 <figure>
-      <video data-clip="clip/digest.mp4" data-poster="clip/digest.webp" width="1200" height="990"
+      <video class="wide" data-clip="clip/digest.mp4" data-poster="clip/digest.webp" width="1200" height="990"
              muted loop playsinline preload="none"
              aria-label="The whole Digest view with a digest running. Above, the selected stretch 413 to 1,129 — 717 bp — with the Enzynomics catalogue narrowed to the 46 enzymes that have a complete recognition site inside it, six of them listed with the site they recognise, the base they cut at, the end they leave and the two pieces the stretch becomes. Below left, the gel filling as the running time goes up: EcoRI, HindIII, XhoI and BamHI, six cuts, six fragments against a 1 kb ladder. Below right, the molecule drawn as its six coloured pieces with what each carries, the fragment table giving size, span, ends, self-ligation and GC, the compatible ends, and the methylation table judging each of the four enzymes on this construct."></video>
+      <video class="narrow" data-clip="clip/digest-phone.mp4" data-poster="clip/digest-phone.webp" width="390" height="312"
+             muted loop playsinline preload="none"
+             aria-label="The Digest view with a digest running: the gel filling against a 1 kb ladder as the running time goes up, the molecule drawn as its six coloured pieces, and the first columns of the fragment table."></video>
       <figcaption>The Digest view, running — the stretch and the enzymes of your set that cut inside it, the gel as the run goes up, the molecule divided into pieces, and what the host's methylation does to each enzyme.</figcaption>
     </figure>
     <figure>
@@ -560,7 +565,7 @@ document.documentElement.dataset.theme=t;})()</script>
         <video class="wide" data-clip="clip/enzdb.mp4" data-poster="clip/enzdb.webp" width="1200" height="750"
                muted loop playsinline preload="none"
                aria-label="The enzyme database searched: a card per enzyme with its cut drawn on both strands, the overhang, who sells it, what a methyl mark does to it, and what one digest costs."></video>
-        <video class="narrow" data-clip="clip/enzdb-phone.mp4" data-poster="clip/enzdb-phone.webp" width="390" height="287"
+        <video class="narrow" data-clip="clip/enzdb-phone.mp4" data-poster="clip/enzdb-phone.webp" width="390" height="312"
                muted loop playsinline preload="none" aria-label="The enzyme database searched: a card per enzyme with its cut drawn on both strands, the overhang, who sells it, what a methyl mark does to it, and what one digest costs."></video>
       </div>
       <figcaption>A card per enzyme — the cut on both strands, the overhang, who sells it, and what one digest costs from the catalogue it was read off.</figcaption>
@@ -570,7 +575,7 @@ document.documentElement.dataset.theme=t;})()</script>
         <video class="wide" data-clip="clip/methyl.mp4" data-poster="clip/methyl.webp" width="1200" height="750"
                muted loop playsinline preload="none"
                aria-label="The methylation window: the strain the DNA was grown in and the one it is going into, and a row per methylase saying which sites here carry the mark and which enzymes it stops."></video>
-        <video class="narrow" data-clip="clip/methyl-phone.mp4" data-poster="clip/methyl-phone.webp" width="390" height="310"
+        <video class="narrow" data-clip="clip/methyl-phone.mp4" data-poster="clip/methyl-phone.webp" width="390" height="312"
                muted loop playsinline preload="none" aria-label="The methylation window: the strain the DNA was grown in and the one it is going into, and a row per methylase saying which sites here carry the mark and which enzymes it stops."></video>
       </div>
       <figcaption>And what the host did to it — a row per system, how many sites of <em>this</em> construct carry the mark, and which enzymes in hand it stops.</figcaption>
@@ -580,7 +585,7 @@ document.documentElement.dataset.theme=t;})()</script>
         <video class="wide" data-clip="clip/strain.mp4" data-poster="clip/strain.webp" width="1200" height="750"
                muted loop playsinline preload="none"
                aria-label="The Strain DB panel: a REBASE organism record imported as a strain profile, then the R–M tab — a row per system with the site it reads, the base that takes the mark, and whether the call is resolved."></video>
-        <video class="narrow" data-clip="clip/strain-phone.mp4" data-poster="clip/strain-phone.webp" width="390" height="290"
+        <video class="narrow" data-clip="clip/strain-phone.mp4" data-poster="clip/strain-phone.webp" width="390" height="312"
                muted loop playsinline preload="none" aria-label="The Strain DB panel: a REBASE organism record imported as a strain profile, then the R–M tab — a row per system with the site it reads, the base that takes the mark, and whether the call is resolved."></video>
       </div>
       <figcaption>A host is a genotype, not a checkbox — every R–M system the strain carries, read off REBASE, with the ones still unresolved said so rather than guessed.</figcaption>
@@ -608,7 +613,7 @@ document.documentElement.dataset.theme=t;})()</script>
         <video class="wide" data-clip="clip/sanger.mp4" data-poster="clip/sanger.webp" width="1200" height="1140"
                muted loop playsinline preload="none"
                aria-label="Two .ab1 reads attached to the construct: the table gives what each used, where it is good, where it lands and its verdict; the map shows both reads coloured by quality with the differences marked; the pileup carries the chromatogram under the letters."></video>
-        <video class="narrow" data-clip="clip/sanger-phone.mp4" data-poster="clip/sanger-phone.webp" width="390" height="242"
+        <video class="narrow" data-clip="clip/sanger-phone.mp4" data-poster="clip/sanger-phone.webp" width="390" height="312"
                muted loop playsinline preload="none" aria-label="The Sanger view: a table of reads with quality and verdict, a map of where each read lands, and the pileup with chromatograms."></video>
       </div>
       <figcaption>Two real <code>.ab1</code> files in: 587 of 620 bases used, good over 7–593 at Q38, landing at 247–833 forward — and the difference it found marked on the read where the read is worth believing.</figcaption>
@@ -635,7 +640,7 @@ document.documentElement.dataset.theme=t;})()</script>
         <video class="wide" data-clip="clip/guides.mp4" data-poster="clip/guides.webp" width="1200" height="750"
                muted loop playsinline preload="none"
                aria-label="A deletion designed: the region is taken from the construct, Design and then Scan are pressed, and the candidate guides come back grouped by the feature they sit in."></video>
-        <video class="narrow" data-clip="clip/guides-phone.mp4" data-poster="clip/guides-phone.webp" width="390" height="213"
+        <video class="narrow" data-clip="clip/guides-phone.mp4" data-poster="clip/guides-phone.webp" width="390" height="312"
                muted loop playsinline preload="none" aria-label="The guides view: target and nuclease, the editing vector with its gRNA and homology-arm sites, and the design controls."></video>
       </div>
       <figcaption>Design, then Scan — and 11 guides come back from 35 protospacers, grouped by the feature they sit in, with what each was dropped for said out loud.</figcaption>

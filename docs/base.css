@@ -1240,7 +1240,13 @@ figcaption:not(.reel-caption){
 @media (max-width:760px){
   .hero-reel{--reel-radius:calc((100vw - 52px) * 1.1459)}
   .reel-viewport{height:clamp(316px,86vw,350px); perspective:760px; border-radius:22px}
-  .reel-ring{width:calc(100vw - 52px); aspect-ratio:1.22}
+  /* **The frame's shape is the clips' shape, and it is 5:4.** `object-fit:cover`
+     fills this box, so anything wider than it is thrown away off both sides —
+     at 1.22 against six phone crops of 1.23 to 1.83 that was a third of the
+     guides frame gone. `tools/clip.mjs` cuts every phone crop to `PHONE_AR`,
+     which is this number, and `tools/site.mjs` refuses to publish if the two
+     have come apart. Do not change one of them. */
+  .reel-ring{width:calc(100vw - 52px); aspect-ratio:5/4}
   .reel-screen{border-radius:16px}
   .reel-caption{margin-top:19px; padding-inline:3px}
   .reel-caption strong{font-size:21px}
