@@ -2117,6 +2117,17 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
     try{ if(localStorage.getItem('gs-site-motion') === 'on') document.documentElement.classList.add('motion-on'); }catch{}
     const reduced = {get matches(){ return reducedMedia.matches && !motionOn(); },
                      addEventListener:(type, fn) => reducedMedia.addEventListener?.(type, fn)};
+    /* **iOS has two switches, and this page had read them as one.** A phone
+       with Reduce Motion on sent back its own diagnosis: `reduce motion:
+       true`, and the two-colour test loop blinking — the OS was reducing
+       motion *and* allowing animated images, which are separate settings
+       there ("Auto-Play Animated Images" is its own line). Stilling the
+       loops on that phone was the page's decision, not the reader's. So on a
+       phone Reduce Motion means what it says — the drum does not spin and a
+       page turn is a cut, both already in the stylesheet — and the loops
+       play, governed by the switch the OS keeps for them. `stilled` is the
+       tour as a poster, which is Reduce Motion on a screen that plays video. */
+    const stilled = () => reduced.matches && !compact.matches;
     const enableMotion = () => {
       document.documentElement.classList.add('motion-on');
       try{ localStorage.setItem('gs-site-motion', 'on'); }catch{}
@@ -2318,7 +2329,7 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
     const updatePause = () => {
       reel.dataset.userPaused = String(userPaused);
       pauseButton?.setAttribute('aria-pressed', String(userPaused));
-      if(pauseLabel) pauseLabel.textContent = reducedMedia.matches && !motionOn() ? 'Play the tour'
+      if(pauseLabel) pauseLabel.textContent = stilled() ? 'Play the tour'
         : userPaused ? 'Resume tour' : 'Pause tour';
     };
     /* **The caption changes at the middle of a turn, so it changes the way the
@@ -2362,7 +2373,7 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
     loop.setAttribute('data-reel-loop', ''); loop.alt = ''; loop.decoding = 'async';
     loop.setAttribute('aria-hidden', 'true');
     video.parentNode.insertBefore(loop, video);
-    const loopFor = at => (compact.matches && !reduced.matches) ? (faces[at].dataset.phoneAnim || '') : '';
+    const loopFor = at => compact.matches ? (faces[at].dataset.phoneAnim || '') : '';
     const sourceFor = at => {
       if(reduced.matches || compact.matches) return '';
       return faces[at].dataset.video || '';
@@ -2379,7 +2390,7 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
       reel.dataset.source = '';
       video.load();
     };
-    const mayPlay = () => inView && pageVisible && !reduced.matches && !hardPaused;
+    const mayPlay = () => inView && pageVisible && !stilled() && !hardPaused;
     const mayAdvance = () => mayPlay() && !userPaused;
 
     const queue = delay => {
@@ -2399,7 +2410,7 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
       if(!prepared || prepared.index !== index || prepared.token !== loadToken) return;
       if(!mayPlay()){
         video.pause();
-        setState(reduced.matches ? 'still' : 'idle', reduced.matches ? 'Static product overview' : 'Overview paused');
+        setState(stilled() ? 'still' : 'idle', stilled() ? 'Static product overview' : 'Overview paused');
         return;
       }
       if(!prepared.src){ holdPoster(faces[index].dataset.label + ' · poster'); return; }
@@ -2501,7 +2512,7 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
     function requestScene(next, manual = true, directionHint = 0){
       next = (Number(next) + faces.length) % faces.length;
       if(manual){ userPaused = true; hardPaused = false; updatePause(); }
-      if(reduced.matches){
+      if(stilled()){
         clearClocks(); pending = null; sync(next);
         angle = -next * 60;
         ring.style.setProperty('--reel-angle', angle + 'deg');
@@ -2571,7 +2582,7 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
       reel.dataset.auto = 'off';
     };
     pauseButton?.addEventListener('click', () => {
-      if(reducedMedia.matches && !motionOn()){ enableMotion(); return; }
+      if(stilled()){ enableMotion(); return; }
       if(userPaused){
         userPaused = false; hardPaused = false; updatePause();
         if(prepared?.src && prepared.index === index && video.currentTime > 0 && !video.ended){
@@ -2604,7 +2615,7 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
       angle = -index * 60;
       ring.style.setProperty('--reel-angle', angle + 'deg');
       sync(index);
-      if(reduced.matches){
+      if(stilled()){
         reel.dataset.reduced = 'true';
         userPaused = false; hardPaused = false; updatePause();
         sync(1); angle = -60; ring.style.setProperty('--reel-angle', angle + 'deg');
@@ -2623,7 +2634,7 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
       pageVisible = !document.hidden;
       reel.dataset.pageVisible = String(pageVisible);
       if(!pageVisible) pauseHere('Overview paused');
-      else if(inView && !reduced.matches && !hardPaused){
+      else if(inView && !stilled() && !hardPaused){
         if(prepared?.ready) startPrepared(); else { prepare(index); startPrepared(); }
       }
     });
@@ -2632,7 +2643,7 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
     sync(index); updatePause();
     reel.dataset.reduced = String(reduced.matches);
     reel.dataset.pageVisible = String(pageVisible);
-    if(reduced.matches){
+    if(stilled()){
       faces[index].querySelector('[data-reel-live-slot]').append(video);
       releaseSource(); setState('still', 'Static product overview');
     }
@@ -2650,7 +2661,7 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
           inView = nextInView;
           reel.dataset.inView = String(inView);
           if(!inView){ pauseHere('Overview paused'); continue; }
-          if(reduced.matches){ releaseSource(); setState('still', 'Static product overview'); continue; }
+          if(stilled()){ releaseSource(); setState('still', 'Static product overview'); continue; }
           /* Caption and controls change the figure's height at the middle of a
              turn, which can make IntersectionObserver report the same visible
              reel again. That notification must not re-prepare the outgoing
@@ -2666,7 +2677,7 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
     }else{
       inView = true; reel.dataset.inView = 'true';
       arrive();
-      if(!reduced.matches){ prepare(index); startPrepared(); }
+      if(!stilled()){ prepare(index); startPrepared(); }
     }
   }
 }
@@ -2699,9 +2710,15 @@ let armClips;   /* the rail advances to a clip that has never been armed */
   const videos = [...document.querySelectorAll('video[data-clip]')];
   const loops = [...document.querySelectorAll('img[data-anim]')];
   const rendered = v => getComputedStyle(v).display !== 'none' && v.getClientRects().length > 0;
+  /* an image loop plays whatever the motion preference says: iOS keeps a
+     switch of its own for animated images and honours it in the decoder, so
+     the page has nothing to add — a phone that reduces motion and allows
+     animated images (measured, iOS 18.7) had its loops stilled by this page
+     and not by its owner. Video keeps the preference: that is a screen that
+     plays video, and there the reader opts in with the tour's button. */
   const setLoop = (img, visible) => {
     if(!img.dataset.still) img.dataset.still = img.getAttribute('src');
-    const want = visible && !still.matches ? img.dataset.anim : img.dataset.still;
+    const want = visible ? img.dataset.anim : img.dataset.still;
     if(img.getAttribute('src') !== want) img.setAttribute('src', want);
   };
   const playOne = v => {
@@ -2723,7 +2740,7 @@ let armClips;   /* the rail advances to a clip that has never been armed */
     v.load();
   };
   const visibleNow = v => {
-    if(!rendered(v) || still.matches) return false;
+    if(!rendered(v) || (still.matches && v.tagName !== 'IMG')) return false;
     const r = v.getBoundingClientRect();
     return r.bottom >= -120 && r.top <= innerHeight + 120;
   };
@@ -2743,7 +2760,7 @@ let armClips;   /* the rail advances to a clip that has never been armed */
   };
   const observer = 'IntersectionObserver' in window ? new IntersectionObserver(entries => {
     for(const entry of entries) setVisible(entry.target,
-      entry.isIntersecting && rendered(entry.target) && !still.matches);
+      entry.isIntersecting && rendered(entry.target) && (!still.matches || entry.target.tagName === 'IMG'));
   }, {rootMargin:'120px 0px', threshold:0}) : null;
   const arm = armClips = () => {
     for(const v of [...videos, ...loops]){
