@@ -1279,19 +1279,25 @@ figcaption:not(.reel-caption){
   .reel-ring{width:calc(100vw - 48px)}
   .hero-reel{--reel-radius:calc((100vw - 48px) * 1.1459)}
 }
+/* **Reduce Motion stills the tour, and the tour's own button is the way back
+   in.** Every rule here is scoped to `html:not(.motion-on)`: the script puts
+   that class on the root when the reader presses *Play the tour* (and keeps
+   it), and the drum, the faces and the clips then behave as on any other
+   device. The toggle used to be hidden here, which left a reader with the OS
+   switch on — common on a phone, and easy to forget — looking at a poster
+   with no way to ask for the clip. */
 @media (prefers-reduced-motion:reduce){
-  .hero-reel .reel-ring{transform:translate(-50%,-50%) !important; transform-style:flat;
+  html:not(.motion-on) .hero-reel .reel-ring{transform:translate(-50%,-50%) !important; transform-style:flat;
     transition:none !important; animation:none !important; scale:1 !important; will-change:auto}
-  .hero-reel .reel-face{transform:none !important; opacity:0; visibility:hidden; filter:none;
+  html:not(.motion-on) .hero-reel .reel-face{transform:none !important; opacity:0; visibility:hidden; filter:none;
     transition:none}
-  .hero-reel .reel-face.is-active{opacity:1; visibility:visible}
+  html:not(.motion-on) .hero-reel .reel-face.is-active{opacity:1; visibility:visible}
   /* no curve here: the drum is flat, so the slices would be nine strips of one
      picture laid side by side, which is the picture — script builds none */
-  .hero-reel .reel-fill{filter:none; transition:none; animation:none !important}
-  .hero-reel .reel-streak{display:none}
-  .hero-reel .reel-live-state i{animation:none}
-  .hero-reel .reel-scenes button::after{transition:none}
-  .hero-reel .reel-tour-toggle{display:none}
+  html:not(.motion-on) .hero-reel .reel-fill{filter:none; transition:none; animation:none !important}
+  html:not(.motion-on) .hero-reel .reel-streak{display:none}
+  html:not(.motion-on) .hero-reel .reel-live-state i{animation:none}
+  html:not(.motion-on) .hero-reel .reel-scenes button::after{transition:none}
 }
 /* under 760 px the wide clips are a window shrunk into a palm; the phone crop
    says the same thing legibly, and nothing is downloaded that is not shown */
