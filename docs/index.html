@@ -56,8 +56,10 @@ try{if(localStorage.getItem('gs-site-motion')==='on')document.documentElement.cl
 <link rel="preload" href="font/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="font/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="font/fonts.css?v=20260828">
-<link rel="stylesheet" href="base.css?v=20260911-comet1">
-<script src="hero-reel.js?v=20260911-comet1" defer></script>
+<link rel="stylesheet" href="base.css?v=20260911-cylinder1">
+<link rel="stylesheet" href="section-motion.css?v=20260911-cylinder1">
+<script src="hero-reel.js?v=20260911-cylinder1" defer></script>
+<script src="section-motion.js?v=20260911-cylinder1" defer></script>
 </head>
 <body>
 <!-- **A phone reports its own state, so nobody has to guess at it.** Open the
@@ -225,10 +227,9 @@ try{if(localStorage.getItem('gs-site-motion')==='on')document.documentElement.cl
 
   <div class="shot hero-reel-shot">
     <!-- Real product screens roll through one stage; one media element owns playback. -->
-    <figure class="hero-reel" data-hero-reel data-reel-mode="comet" data-mode="comet" data-reel-period="1400" data-reel-spacing="122" data-reel-blur="12" data-state="idle" data-index="0"
+    <figure class="hero-reel" data-hero-reel data-reel-mode="cylinder" data-mode="cylinder" data-reel-period="900" data-state="idle" data-index="0"
             data-in-view="false" data-user-paused="false" aria-labelledby="hero-reel-title">
       <div class="reel-viewport" data-reel-viewport>
-        <div class="reel-wordmark" aria-hidden="true">Gene Studio</div>
         <div class="reel-ring" data-reel-ring aria-hidden="true">
           <div class="reel-face is-active" data-reel-face data-scene="home"
                data-video="clip/home.mp4" data-phone-anim="clip/home-phone.anim.webp"
@@ -481,7 +482,7 @@ try{if(localStorage.getItem('gs-site-motion')==='on')document.documentElement.cl
           <p><span>Fold the exact region you selected, or export a map, table or sequence. Vector labels stay editable in Illustrator; the source construct stays a document you can save back.</span></p>
         </li>
       </ol>
-      <figure class="flowshot settle">
+      <figure class="flowshot settle" data-window-motion="fan">
         <div class="frame">
           <div class="bar"><i></i><i></i><i></i><span data-flow-name>Home · Files / Recognition sequence</span></div>
           <!-- **A step is a pair of clips, not a clip.** Every other figure on
@@ -535,7 +536,7 @@ try{if(localStorage.getItem('gs-site-motion')==='on')document.documentElement.cl
         <li><em>Find</em> reads IUPAC and regular expressions, and marks every hit on all three drawings.</li>
       </ul>
     </div>
-    <div class="deck rise settle">
+    <div class="deck rise settle" data-motion-deck="comet">
 <figure>
       <div class="frame">
         <video class="wide" data-clip="clip/drag.mp4" data-poster="clip/drag.webp" width="1200" height="750"
@@ -597,7 +598,7 @@ try{if(localStorage.getItem('gs-site-motion')==='on')document.documentElement.cl
          methylation table's sentence column wraps rather than taking its
          natural width, which is what let the pane be 1,478 px instead of the
          1,980 that made this one figure overwhelm the rest. -->
-    <div class="deck rise settle">
+    <div class="deck rise settle" data-motion-deck="stack">
 <figure>
       <video class="wide" data-clip="clip/digest.mp4" data-poster="clip/digest.webp" width="1200" height="990"
              muted loop playsinline preload="none"
@@ -654,7 +655,7 @@ try{if(localStorage.getItem('gs-site-motion')==='on')document.documentElement.cl
         <li><em>A .dna carrying aligned traces</em> brings them in — SnapGene keeps them inside the file, and they are read.</li>
       </ul>
     </div>
-    <figure class="rise settle">
+    <figure class="rise settle" data-window-motion="rise">
       <div class="frame">
         <video class="wide" data-clip="clip/sanger.mp4" data-poster="clip/sanger.webp" width="1200" height="1140"
                muted loop playsinline preload="none"
@@ -681,7 +682,7 @@ try{if(localStorage.getItem('gs-site-motion')==='on')document.documentElement.cl
         <li><em>The product opens as its own tab</em> — original, the exact replacement, and the transformed vector, one under the other.</li>
       </ul>
     </div>
-    <figure class="rise settle">
+    <figure class="rise settle" data-window-motion="tilt">
       <div class="frame">
         <video class="wide" data-clip="clip/guides.mp4" data-poster="clip/guides.webp" width="1200" height="750"
                muted loop playsinline preload="none"
@@ -708,7 +709,7 @@ try{if(localStorage.getItem('gs-site-motion')==='on')document.documentElement.cl
         <li><em>Terminators, RBS and rare codons</em> for every gene at once — the 3′ ends of a whole genome in under a second.</li>
       </ul>
     </div>
-    <figure class="rise settle">
+    <figure class="rise settle" data-window-motion="orbit">
       <div class="frame">
         <picture>
           <source media="(max-width:760px)" srcset="shot/lin-phone.webp">
@@ -2111,7 +2112,10 @@ let armClips;   /* the rail advances to a clip that has never been armed */
                  addEventListener:(type, fn) => stillMedia.addEventListener?.(type, fn)};
   const videos = [...document.querySelectorAll('video[data-clip]')];
   const loops = [...document.querySelectorAll('img[data-anim]')];
-  const rendered = v => getComputedStyle(v).display !== 'none' && v.getClientRects().length > 0;
+  for(const v of videos)if(!v.getAttribute('poster'))v.poster=v.dataset.poster;
+  const rendered = v => !v.closest('[hidden], [data-motion-inactive="true"]') && getComputedStyle(v).display !== 'none' && getComputedStyle(v).visibility !== 'hidden' && v.getClientRects().length > 0;
+  const motionAllowed = v => !still.matches || (v.tagName === 'IMG' &&
+    !v.closest('[data-motion-deck], [data-window-motion]'));
   /* an image loop plays whatever the motion preference says: iOS keeps a
      switch of its own for animated images and honours it in the decoder, so
      the page has nothing to add — a phone that reduces motion and allows
@@ -2124,6 +2128,7 @@ let armClips;   /* the rail advances to a clip that has never been armed */
     if(img.getAttribute('src') !== want) img.setAttribute('src', want);
   };
   const playOne = v => {
+    if(document.hidden || v.dataset.clipVisible !== 'true' || still.matches || !rendered(v)) return;
     /* `loadeddata → play()` used to run for every source as it arrived. At the
        top of the page that meant ten invisible loops decoding together. A clip
        now owns playback only while its own figure is near the viewport, and it
@@ -2142,7 +2147,7 @@ let armClips;   /* the rail advances to a clip that has never been armed */
     v.load();
   };
   const visibleNow = v => {
-    if(!rendered(v) || (still.matches && v.tagName !== 'IMG')) return false;
+    if(document.hidden || !rendered(v) || !motionAllowed(v)) return false;
     const r = v.getBoundingClientRect();
     return r.bottom >= -120 && r.top <= innerHeight + 120;
   };
@@ -2162,7 +2167,7 @@ let armClips;   /* the rail advances to a clip that has never been armed */
   };
   const observer = 'IntersectionObserver' in window ? new IntersectionObserver(entries => {
     for(const entry of entries) setVisible(entry.target,
-      entry.isIntersecting && rendered(entry.target) && (!still.matches || entry.target.tagName === 'IMG'));
+      !document.hidden && entry.isIntersecting && rendered(entry.target) && motionAllowed(entry.target));
   }, {rootMargin:'120px 0px', threshold:0}) : null;
   const arm = armClips = () => {
     for(const v of [...videos, ...loops]){
@@ -2174,6 +2179,8 @@ let armClips;   /* the rail advances to a clip that has never been armed */
   wide.addEventListener?.('change', arm);
   still.addEventListener?.('change', arm);
   addEventListener('gs-motion', arm);
+  addEventListener('gs-section-media', arm);
+  document.addEventListener('visibilitychange', arm);
   addEventListener('resize', arm, {passive:true});
 }
 
@@ -2495,7 +2502,7 @@ if('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion:redu
    labelled with its own figure's caption, because "page 2 of 3" tells a
    screen reader nothing about what it would move to. */
 (function(){
-  const decks = document.querySelectorAll('.feat .deck');
+  const decks = document.querySelectorAll('.feat .deck:not([data-motion-deck])');
   if(!decks.length) return;
   const still = matchMedia('(prefers-reduced-motion:reduce)').matches;
   decks.forEach(deck => {

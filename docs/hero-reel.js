@@ -1,17 +1,17 @@
-/* The product tour follows one clock: cards enter below, resolve at the
-   centre, then leave above. Media has one owner independently of the clock. */
+/* A tilted, continuously rotating cylinder of real product screens.
+   Curved leaves carry image/video textures; media still has a single owner. */
 (() => {
   'use strict';
 
   const reel = document.querySelector('[data-hero-reel]');
-  if (!reel || reel.dataset.controller === 'comet') return;
+  if (!reel || reel.dataset.controller === 'cylinder') return;
   const ring = reel.querySelector('[data-reel-ring]');
   const faces = [...reel.querySelectorAll('[data-reel-face]')];
   const video = reel.querySelector('[data-reel-video]');
   if (!ring || faces.length < 2 || !video) return;
 
-  reel.dataset.controller = 'comet';
-  reel.dataset.mode = 'comet';
+  reel.dataset.controller = 'cylinder';
+  reel.dataset.mode = 'cylinder';
   const buttons = [...reel.querySelectorAll('[data-reel-go]')];
   const pauseButton = reel.querySelector('[data-reel-pause]');
   const pauseLabel = reel.querySelector('[data-reel-pause-label]');
@@ -22,15 +22,15 @@
   const compact = matchMedia('(max-width:760px)');
   const reducedMedia = matchMedia('(prefers-reduced-motion:reduce)');
   const root = document.documentElement;
-  const total = faces.length;
+  const total = faces.length, panelCount = total * 2, sliceCount = 8, bend = 27;
+  const modulo = (value, count) => ((value % count) + count) % count;
   const number = (value, fallback, min, max) => {
     const parsed = Number(value);
     return value && Number.isFinite(parsed) ? Math.max(min, Math.min(max, parsed)) : fallback;
   };
-  const period = number(reel.dataset.reelPeriod, 2400, 600, 10000);
-  const spacing = number(reel.dataset.reelSpacing, 150, 115, 210);
-  const travelBlur = number(reel.dataset.reelBlur, 6, 0, 18);
-  const wrap = value => ((value % total) + total) % total;
+  const period = number(reel.dataset.reelPeriod, 900, 400, 10000);
+  const wrap = value => modulo(value, panelCount);
+  const sceneFor = value => modulo(Math.round(value), total);
   const ease = value => value * value * value * (value * (value * 6 - 15) + 10);
   const reduced = () => reducedMedia.matches && !root.classList.contains('motion-on');
   try {
@@ -76,6 +76,8 @@
   let hardPaused = false;
   let sourceToken = 0;
   let media = null;
+  let cardWidth = 0, cardHeight = 0, canvasFrame = 0;
+  const panels = [];
 
   const visible = () => inView && pageVisible;
   const mayPlay = () => visible() && !reduced() && !hardPaused;
@@ -106,7 +108,9 @@
   function showMedia(ready) {
     faces.forEach((face, at) => { face.dataset.live = String(ready && at === index); });
     reel.dataset.videoReady = String(ready);
+    updateTextures();
     updateState();
+    if (ready) scheduleCanvas();
   }
 
   function pauseMedia() {
@@ -230,6 +234,109 @@
     } else startVideo(media);
   }
 
+  function buildCylinder() {
+    reel.dataset.panelCount = String(panelCount);
+    for (let at = 0; at < panelCount; at++) {
+      const source = at % total;
+      const face = at < total ? faces[at] : faces[source].cloneNode(true);
+      if (at >= total) {
+        face.removeAttribute('data-reel-face');
+        face.classList.remove('is-active');
+        face.querySelectorAll('.cylinder-curve').forEach(node => node.remove());
+        face.querySelector('[data-reel-live-slot]').replaceChildren();
+        ring.append(face);
+      }
+      face.dataset.cylinderPanel = String(at);
+      face.dataset.sourceIndex = String(source);
+      face.style.setProperty('--panel-angle', `${-at * 360 / panelCount}deg`);
+      const curve = document.createElement('div');
+      curve.className = 'cylinder-curve';
+      curve.setAttribute('aria-hidden', 'true');
+      const leaves = [];
+      for (let part = 0; part < sliceCount; part++) {
+        const slice = document.createElement('div');
+        slice.className = 'cylinder-slice';
+        slice.style.setProperty('--slice-index', String(part));
+        slice.style.setProperty('--slice-angle', `${(part - (sliceCount - 1) / 2) * bend / sliceCount}deg`);
+        const img = document.createElement('img');
+        img.alt = ''; img.decoding = 'async';
+        const canvas = document.createElement('canvas');
+        canvas.className = 'cylinder-video';
+        slice.append(img, canvas); curve.append(slice);
+        leaves.push({slice,img,canvas,context:canvas.getContext('2d')});
+      }
+      face.querySelector('.reel-screen').prepend(curve);
+      panels.push({face,source,leaves});
+    }
+    for (const face of faces) face.querySelector('picture img').addEventListener('load', updateTextures);
+    updateTextures(); resizeCylinder();
+  }
+
+  function updateTextures() {
+    for (const panel of panels) {
+      const poster = faces[panel.source].querySelector('picture img');
+      const animated = media?.phone && media.playing && media.ready && mayPlay() && panel.source === index;
+      const src = animated ? media.src : (poster.currentSrc || poster.getAttribute('src'));
+      panel.face.dataset.phoneLive = String(!!animated);
+      if (!media?.ready || panel.source !== index || compact.matches) panel.face.dataset.canvasReady = 'false';
+      for (const leaf of panel.leaves) if (leaf.img.getAttribute('src') !== src) leaf.img.src = src;
+    }
+  }
+
+  function resizeCylinder() {
+    const width = ring.offsetWidth, height = ring.offsetHeight;
+    if (!width || !height) return;
+    cardWidth = width; cardHeight = height;
+    const step = bend / sliceCount * Math.PI / 180;
+    const radius = width / sliceCount / (2 * Math.tan(step / 2));
+    ring.style.setProperty('--cylinder-radius', `${radius.toFixed(3)}px`);
+    ring.style.setProperty('--slice-width', `${(width / sliceCount).toFixed(3)}px`);
+    ring.style.setProperty('--card-width', `${width}px`);
+    const density = Math.min(2, devicePixelRatio || 1);
+    for (const panel of panels) for (const leaf of panel.leaves) {
+      const pixelWidth = Math.ceil((width / sliceCount + 1) * density);
+      const pixelHeight = Math.ceil(height * density);
+      // Assigning an unchanged canvas dimension clears its frozen video frame.
+      // Pause/resume reconciles layout too, so resize only when it changed.
+      if (leaf.canvas.width !== pixelWidth || leaf.canvas.height !== pixelHeight) {
+        leaf.canvas.width = pixelWidth;
+        leaf.canvas.height = pixelHeight;
+        panel.face.dataset.canvasReady = 'false';
+      }
+    }
+    updateTextures(); paintVideo();
+  }
+
+  function paintVideo() {
+    if (!mayPlay() || compact.matches || !media?.playing || !media.ready || video.readyState < 2 || !cardWidth || !video.videoWidth) return;
+    const scale = Math.max(cardWidth / video.videoWidth, cardHeight / video.videoHeight);
+    const cropW = cardWidth / scale, cropH = cardHeight / scale;
+    const cropX = (video.videoWidth - cropW) / 2;
+    const cropY = faces[index].dataset.fit === 'tall' ? 0 : (video.videoHeight - cropH) / 2;
+    for (const panel of panels) {
+      if (panel.source !== index) continue;
+      let painted = true;
+      for (let at = 0; at < panel.leaves.length; at++) {
+        const leaf = panel.leaves[at];
+        if (!leaf.context) { painted = false; break; }
+        const x = Math.max(0, at * cardWidth / sliceCount - .5);
+        const width = Math.min(cardWidth - x, cardWidth / sliceCount + 1);
+        try {
+          leaf.context.drawImage(video, cropX + x / cardWidth * cropW, cropY,
+            width / cardWidth * cropW, cropH, 0, 0, leaf.canvas.width, leaf.canvas.height);
+        } catch { painted = false; }
+      }
+      panel.face.dataset.canvasReady = String(painted);
+    }
+  }
+
+  function scheduleCanvas() {
+    if (canvasFrame || compact.matches || !media?.playing || !mayPlay()) return;
+    canvasFrame = requestAnimationFrame(() => {
+      canvasFrame = 0; paintVideo(); scheduleCanvas();
+    });
+  }
+
   function syncScene(next) {
     if (next === index) return;
     index = next;
@@ -243,30 +350,19 @@
   }
 
   function render() {
-    syncScene(wrap(Math.round(position)));
+    syncScene(sceneFor(position));
+    const angle = wrap(position) * 360 / panelCount;
+    ring.style.setProperty('--cylinder-angle', `${angle.toFixed(5)}deg`);
+    reel.dataset.angle = angle.toFixed(5);
     reel.dataset.phase = wrap(position).toFixed(5);
-    faces.forEach((face, at) => {
-      let distance = wrap(at - position + total / 2) - total / 2;
-      if (reduced()) distance = at === index ? 0 : 3;
-      const magnitude = Math.abs(distance);
-      const near = magnitude < 1.75;
-      const kind = !near ? 'away' : at === index ? 'center' : 'neighbor';
-      if (kind === 'away' && face.dataset.reelPosition === 'away') return;
-      face.dataset.reelPosition = kind;
-      const travel = Math.max(0, Math.min(1, (magnitude - .2) / .95));
-      const values = {
-        '--reel-y': `${(distance * spacing).toFixed(3)}%`,
-        '--reel-x': `${(Math.sin(distance * 1.2) * 15).toFixed(3)}px`,
-        '--reel-tilt': `${(Math.max(-1.5, Math.min(1.5, distance)) * 5.5).toFixed(3)}deg`,
-        '--reel-pitch': `${(Math.max(-1.5, Math.min(1.5, distance)) * -10).toFixed(3)}deg`,
-        '--reel-scale': Math.max(.82, 1 - magnitude * .075).toFixed(4),
-        '--reel-depth': `${(-Math.min(magnitude, 2) * 65).toFixed(3)}px`,
-        '--reel-blur': `${(travel * travelBlur).toFixed(3)}px`,
-        '--reel-opacity': near ? String(Math.min(1, (1.75 - magnitude) / .35)) : '0'
-      };
-      for (const [name, value] of Object.entries(values)) face.style.setProperty(name, value);
-      face.style.zIndex = String(Math.round(100 - magnitude * 20));
-    });
+    for (const [at, panel] of panels.entries()) {
+      const relative = modulo(angle - at * 360 / panelCount + 180, 360) - 180;
+      const front = Math.round(wrap(position)) % panelCount === at;
+      panel.face.dataset.cylinderFront = String(front);
+      panel.face.dataset.reelPosition = Math.abs(relative) <= 90 ? (front ? 'center' : 'neighbor') : 'rear';
+      // Shading belongs on 2D leaves; opacity/filter on a 3D parent flattens the cylinder.
+      panel.face.style.setProperty('--panel-light', (0.68 + 0.32 * Math.max(0, Math.cos(relative * Math.PI / 180))).toFixed(3));
+    }
   }
 
   function tick(time) {
@@ -285,8 +381,7 @@
       }
     } else {
       phase = wrap(phase + elapsed / period);
-      const whole = Math.floor(phase);
-      position = whole + ease(phase - whole);
+      position = phase;
     }
     render();
     if (mayMove()) frame = requestAnimationFrame(tick);
@@ -302,6 +397,7 @@
       phase = position = wrap(Math.round(position));
       releaseMedia();
     }
+    resizeCylinder();
     render();
     ensureMedia();
     updateState();
@@ -309,10 +405,10 @@
   }
 
   function requestScene(next, direction = 0) {
-    next = wrap(next);
+    next = modulo(next, total);
     userPaused = true;
     hardPaused = false;
-    let target = position + (wrap(next - position + total / 2) - total / 2);
+    let target = position + (modulo(next - position + total / 2, total) - total / 2);
     if (direction > 0 && target <= position) target += total;
     if (direction < 0 && target >= position) target -= total;
     const distance = Math.abs(target - position);
@@ -344,8 +440,8 @@
     button.addEventListener('click', () => requestScene(at));
     button.addEventListener('keydown', event => {
       let next;
-      if (event.key === 'ArrowLeft') next = wrap(at - 1);
-      else if (event.key === 'ArrowRight') next = wrap(at + 1);
+      if (event.key === 'ArrowLeft') next = modulo(at - 1, total);
+      else if (event.key === 'ArrowRight') next = modulo(at + 1, total);
       else if (event.key === 'Home') next = 0;
       else if (event.key === 'End') next = total - 1;
       else return;
@@ -364,6 +460,9 @@
   addEventListener('pagehide', () => { pageVisible = false; reconcile(); });
   addEventListener('pageshow', () => { pageVisible = !document.hidden; reconcile(); });
 
+  buildCylinder();
+  if ('ResizeObserver' in window) new ResizeObserver(resizeCylinder).observe(ring);
+  compact.addEventListener('change', () => { updateTextures(); resizeCylinder(); });
   render();
   updateState();
   if ('IntersectionObserver' in window) {

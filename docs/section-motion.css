@@ -1,0 +1,85 @@
+/* The tour's other windows keep their own motion. The scientific view is
+   always flat and complete once it arrives; only the move between views bends. */
+.deck.motion-ready{
+  display:block; overflow:visible; scroll-snap-type:none; scroll-behavior:auto;
+  overscroll-behavior:auto; min-width:0;
+}
+.motion-stage{
+  display:grid; grid-template-columns:minmax(0,1fr); position:relative;
+  isolation:isolate; perspective:1600px; overflow:hidden;
+  border-radius:clamp(22px,2.4vw,30px);
+}
+.motion-stage > figure,
+.motion-stage > figure[hidden]{
+  display:grid; grid-area:1 / 1; grid-template-rows:minmax(0,1fr) auto;
+  gap:14px; min-width:0; width:100%; margin:0;
+  transform:none; opacity:1; transform-origin:50% 50%;
+  backface-visibility:hidden;
+}
+/* Hidden figures still size the grid. The tall, whole Digest view therefore
+   cannot jump the page when a shorter database window is selected. */
+.motion-stage > figure[hidden]{display:grid !important; visibility:hidden; pointer-events:none}
+.motion-stage > figure > video,
+.motion-stage > figure > .frame{
+  align-self:center; justify-self:center; width:100%; min-width:0;
+}
+.motion-stage > figure > figcaption{margin-top:0; align-self:end}
+.motion-stage > figure[data-motion-inactive="true"]{pointer-events:none}
+.motion-stage .frame{max-width:100%}
+/* The shared glass highlight stays still here. A second, perpetual paint
+   animation would keep hidden windows working after their own motion stops. */
+.motion-ready .frame::after,
+.window-motion-ready .frame::after{animation:none}
+.motion-controls{
+  display:flex; align-items:center; justify-content:center; gap:12px;
+  margin-top:15px; min-width:0; font:400 12px/1.3 var(--ui);
+  color:var(--slate); letter-spacing:-.01em;
+}
+.motion-tabs{display:flex; align-items:center; justify-content:center; gap:4px; min-width:0}
+.motion-tab,.motion-control{
+  appearance:none; font:inherit; color:inherit; border:0; cursor:pointer;
+  background:transparent; min-height:44px; border-radius:12px;
+}
+.motion-tab{padding:8px 13px; position:relative; white-space:nowrap}
+.motion-tab::after{
+  content:""; position:absolute; bottom:4px; left:13px; right:13px;
+  height:2px; border-radius:2px; background:transparent;
+}
+.motion-tab[aria-selected="true"]{color:var(--ink); background:var(--plate)}
+.motion-tab[aria-selected="true"]::after{background:var(--topic,var(--amber))}
+.motion-tab:hover,.motion-control:hover{color:var(--ink); background:var(--plate)}
+.motion-actions{display:flex; align-items:center; gap:3px; flex-shrink:0}
+.motion-control{display:grid; place-items:center; min-width:44px; padding:9px}
+.motion-control svg{display:block; width:16px; height:16px; stroke-width:1.7}
+.motion-control[data-motion-toggle]{margin-left:3px; box-shadow:inset 0 0 0 1px var(--line)}
+.motion-tab:focus-visible,.motion-control:focus-visible{
+  outline:2px solid var(--amber); outline-offset:2px;
+}
+.motion-sr{
+  position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%);
+  white-space:nowrap;
+}
+[data-window-motion].window-motion-ready{
+  transform:none; opacity:1; transition:none; perspective:1600px;
+}
+[data-window-motion].window-motion-ready > .frame{
+  transform-origin:50% 50%; backface-visibility:hidden;
+}
+.motion-fan-layer{
+  position:absolute; inset:0; z-index:0; border:1px solid var(--line);
+  border-radius:inherit; background-color:var(--ground);
+  background-size:contain; background-position:center; background-repeat:no-repeat;
+  opacity:0; pointer-events:none; transform-origin:50% 90%;
+}
+@media(max-width:760px){
+  .motion-controls{gap:7px; flex-wrap:wrap; margin-top:10px}
+  .motion-tabs{flex:1 1 100%; gap:2px}
+  .motion-tab{flex:1; padding-inline:7px; font-size:11px; white-space:normal}
+  .motion-tab::after{left:9px; right:9px}
+  .motion-actions{justify-content:center}
+  .motion-stage > figure,.motion-stage > figure[hidden]{gap:11px}
+}
+@media(prefers-reduced-motion:reduce){
+  .motion-stage,.window-motion-ready{perspective:none}
+  .motion-fan-layer{display:none}
+}

@@ -674,57 +674,47 @@ figcaption:not(.reel-caption){
    decision), and it lays out as the video does or the frame changes shape at
    the breakpoint */
 .frame video, .frame img.narrow{display:block; width:100%; height:auto; background:var(--sunk)}
-/* A continuous vertical showreel: the wordmark stays still while the real
-   screens arc through the centre. Each card is one plane and one image. */
+/* A real cylindrical ribbon: twelve curved panels, fixed camera tilt and
+   continuous rotation. Only the 2D leaves carry shading. */
 .hero-reel-shot{max-width:var(--wide);position:relative}
-.hero-reel{position:relative;margin:0;text-align:left}
+.hero-reel{position:relative;margin:0;text-align:left;--cylinder-roll:-16deg;--cylinder-pitch:-20deg}
 .reel-viewport{
-  position:relative;isolation:isolate;height:clamp(440px,56vw,660px);overflow:hidden;
-  perspective:1400px;perspective-origin:50% 50%;
-  border:1px solid var(--line);border-radius:28px;
-  background:linear-gradient(135deg,#1c303d,#111e29 70%,#152536);
-  box-shadow:0 20px 54px -38px #06111e70
+  position:relative;isolation:isolate;height:clamp(410px,49vw,610px);overflow:hidden;
+  perspective:1400px;perspective-origin:50% 50%;border:1px solid var(--line);border-radius:28px;
+  background:linear-gradient(135deg,#1b2935,#0e171f 75%);box-shadow:0 20px 54px -38px #06111e70
 }
-.reel-wordmark{
-  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-  pointer-events:none;user-select:none;white-space:nowrap;
-  font:550 clamp(68px,14.4vw,204px)/.9 var(--display);letter-spacing:-.07em;
-  color:#8194a2;opacity:.38
-}
+.reel-viewport::after{content:'';position:absolute;left:20%;right:20%;bottom:14%;height:12%;
+  border-radius:50%;background:#07121a40;filter:blur(30px);pointer-events:none}
 .reel-ring{
-  position:absolute;z-index:2;left:50%;top:50%;width:56%;max-width:760px;aspect-ratio:8/5;
-  transform:translate(-50%,-50%);transform-style:preserve-3d;pointer-events:none
+  position:absolute;z-index:2;left:50%;top:48%;width:17%;max-width:230px;aspect-ratio:8/5;
+  transform-style:preserve-3d;transform-origin:center;
+  transform:translate3d(-50%,-50%,calc(var(--cylinder-radius,380px) * -.18))
+    rotateZ(var(--cylinder-roll)) rotateX(var(--cylinder-pitch)) rotateY(var(--cylinder-angle,0deg));
+  will-change:transform;pointer-events:none
 }
-.reel-face{
-  position:absolute;inset:0;backface-visibility:hidden;visibility:hidden;
-  transform:translate3d(var(--reel-x,0px),var(--reel-y,0%),var(--reel-depth,0px))
-    rotateX(var(--reel-pitch,0deg)) rotateZ(var(--reel-tilt,0deg)) scale(var(--reel-scale,1));
-  opacity:var(--reel-opacity,0);filter:blur(var(--reel-blur,0px));
-  transform-origin:50% 50%
-}
-.reel-face.is-active{visibility:visible;--reel-opacity:1}
-.reel-face[data-reel-position="center"],.reel-face[data-reel-position="neighbor"]{
-  visibility:visible;will-change:transform,filter,opacity
-}
-.reel-face[data-reel-position="away"]{visibility:hidden;will-change:auto}
-.reel-screen{
-  position:absolute;inset:0;overflow:hidden;border:1px solid #7e94a44d;
-  border-radius:13px;background:#f7fafc;
-  box-shadow:0 12px 30px -18px #06132280,0 1px 0 #ffffff90 inset
-}
-.reel-screen picture,.reel-screen picture img,.reel-live-slot,.reel-live-slot video,.reel-live-slot img{
-  display:block;width:100%;height:100%
-}
-.reel-screen picture img,.reel-live-slot video,.reel-live-slot img{
-  object-fit:cover;object-position:50% 50%;background:#f7fafc
-}
-.reel-face[data-fit="tall"] .reel-screen picture img,
-.reel-face[data-fit="tall"] .reel-live-slot video,
-.reel-face[data-fit="tall"] .reel-live-slot img{object-position:50% 0}
-.reel-live-slot{position:absolute;inset:0;opacity:0;transition:opacity .16s ease}
-.reel-face[data-live="true"] .reel-live-slot{opacity:1}
+.reel-face{position:absolute;inset:0;transform-style:preserve-3d;
+  transform:rotateY(var(--panel-angle,0deg)) translateZ(var(--cylinder-radius,380px));backface-visibility:visible}
+.reel-screen{position:absolute;inset:0;transform-style:preserve-3d}
+.reel-screen picture,.reel-screen picture img{display:block;width:100%;height:100%}
+.reel-screen picture img{object-fit:cover;object-position:50% 50%}
+.reel-face[data-fit="tall"] .reel-screen picture img{object-position:50% 0}
+.reel-face[data-cylinder-panel] .reel-screen>picture{display:none}
+.cylinder-curve{position:absolute;inset:0;transform-style:preserve-3d;
+  transform:translateZ(calc(0px - var(--cylinder-radius)))}
+.cylinder-slice{position:absolute;top:0;bottom:0;left:50%;width:calc(var(--slice-width) + 1px);
+  margin-left:calc(var(--slice-width) * -.5 - .5px);overflow:hidden;background:#f7fafc;
+  transform:rotateY(var(--slice-angle)) translateZ(var(--cylinder-radius));backface-visibility:visible;
+  filter:brightness(var(--panel-light,1))}
+.cylinder-slice img{position:absolute;top:0;left:calc(.5px - var(--slice-index) * var(--slice-width));
+  width:var(--card-width);height:100%;max-width:none;object-fit:cover;object-position:center;display:block}
+.reel-face[data-fit="tall"] .cylinder-slice img{object-position:50% 0}
+.cylinder-slice:first-child{border-radius:5px 0 0 5px}.cylinder-slice:last-child{border-radius:0 5px 5px 0}
+.cylinder-video{position:absolute;inset:0;width:100%;height:100%;display:block;opacity:0}
+.reel-face[data-canvas-ready="true"] .cylinder-video{opacity:1}
+.reel-live-slot{position:absolute;inset:0;opacity:0;pointer-events:none}
+.reel-live-slot video,.reel-live-slot img{display:block;width:100%;height:100%;object-fit:cover}
 .reel-viewport>[data-reel-video],.reel-viewport>[data-reel-loop]{display:none}
-.hero-reel[data-state="paused"] .reel-face,.hero-reel[data-state="idle"] .reel-face{will-change:auto}
+.hero-reel[data-state="paused"] .reel-ring,.hero-reel[data-state="idle"] .reel-ring{will-change:auto}
 
 .reel-caption{min-height:124px;width:min(100%,760px); margin:clamp(20px,2.5vw,30px) auto 0;
   font-family:var(--ui); text-align:center; color:var(--slate)}
@@ -775,18 +765,16 @@ figcaption:not(.reel-caption){
   border-color:#d4e2ef;background:linear-gradient(135deg,#d8eafb,#f2f7fc 76%,#e2eef9);
   box-shadow:0 20px 54px -38px #45698750
 }
-:root[data-theme="light"] .reel-wordmark{color:#536c82;opacity:.38}
 
 @media (max-width:760px){
-  .reel-viewport{height:clamp(340px,104vw,430px);perspective:1000px;border-radius:22px}
-  .reel-wordmark{font-size:clamp(62px,16vw,122px);letter-spacing:-.075em}
+  .reel-viewport{height:clamp(280px,80vw,400px);perspective:1000px;border-radius:22px}
   /* **The frame's shape is the clips' shape, and it is 5:4.** `object-fit:cover`
      fills this box, so anything wider than it is thrown away off both sides —
      at 1.22 against six phone crops of 1.23 to 1.83 that was a third of the
      guides frame gone. `tools/clip.mjs` cuts every phone crop to `PHONE_AR`,
      which is this number, and `tools/site.mjs` refuses to publish if the two
      have come apart. Do not change one of them. */
-  .reel-ring{width:76%;aspect-ratio:5/4}
+  .reel-ring{width:19%;aspect-ratio:5/4}
   .reel-screen{border-radius:10px}
   .reel-caption{margin-top:19px;padding-inline:3px;min-height:154px}
   .reel-caption strong{font-size:21px}
@@ -802,11 +790,14 @@ figcaption:not(.reel-caption){
 @media (max-width:430px){
   .hero-reel-shot{padding-inline:14px}
 }
-/* The OS preference starts on one sharp poster; Play explicitly enables motion. */
+/* Reduced motion keeps one full-size, flat, readable product poster. */
 @media (prefers-reduced-motion:reduce){
-  html:not(.motion-on) .hero-reel .reel-face{transform:none;filter:none;opacity:0;visibility:hidden;will-change:auto}
+  html:not(.motion-on) .hero-reel .reel-ring{width:78%;max-width:900px;top:50%;transform:translate(-50%,-50%);will-change:auto}
+  html:not(.motion-on) .hero-reel .reel-face{transform:none;opacity:0;visibility:hidden}
   html:not(.motion-on) .hero-reel .reel-face.is-active{opacity:1;visibility:visible}
-  html:not(.motion-on) .hero-reel .reel-live-slot{transition:none}
+  html:not(.motion-on) .hero-reel .cylinder-curve{display:none}
+  html:not(.motion-on) .hero-reel .reel-screen>picture{display:block}
+  html:not(.motion-on) .hero-reel .reel-screen{overflow:hidden;border-radius:12px}
   html:not(.motion-on) .hero-reel .reel-live-state i{animation:none}
   html:not(.motion-on) .hero-reel .reel-scenes button::after{transition:none}
 }
