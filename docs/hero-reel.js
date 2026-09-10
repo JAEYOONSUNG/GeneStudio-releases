@@ -1,16 +1,15 @@
-/* A tilted, continuously rotating cylinder of real product screens.
-   Curved leaves carry image/video textures; media still has a single owner. */
+/* A light rotating overview, followed by a readable native product demo.
+   The chosen curved screen unrolls into focus and returns to its original pose. */
 (() => {
   'use strict';
-
   const reel = document.querySelector('[data-hero-reel]');
-  if (!reel || reel.dataset.controller === 'cylinder') return;
+  if (!reel || reel.dataset.controller === 'cylinder-focus') return;
   const ring = reel.querySelector('[data-reel-ring]');
+  const viewport = reel.querySelector('[data-reel-viewport]');
   const faces = [...reel.querySelectorAll('[data-reel-face]')];
   const video = reel.querySelector('[data-reel-video]');
-  if (!ring || faces.length < 2 || !video) return;
-
-  reel.dataset.controller = 'cylinder';
+  if (!ring || !viewport || faces.length < 2 || !video) return;
+  reel.dataset.controller = 'cylinder-focus';
   reel.dataset.mode = 'cylinder';
   const buttons = [...reel.querySelectorAll('[data-reel-go]')];
   const pauseButton = reel.querySelector('[data-reel-pause]');
@@ -22,21 +21,17 @@
   const compact = matchMedia('(max-width:760px)');
   const reducedMedia = matchMedia('(prefers-reduced-motion:reduce)');
   const root = document.documentElement;
-  const total = faces.length, panelCount = total * 2, sliceCount = 8, bend = 27;
-  const modulo = (value, count) => ((value % count) + count) % count;
-  const number = (value, fallback, min, max) => {
-    const parsed = Number(value);
-    return value && Number.isFinite(parsed) ? Math.max(min, Math.min(max, parsed)) : fallback;
-  };
-  const period = number(reel.dataset.reelPeriod, 900, 400, 10000);
-  const wrap = value => modulo(value, panelCount);
-  const sceneFor = value => modulo(Math.round(value), total);
-  const ease = value => value * value * value * (value * (value * 6 - 15) + 10);
+  try { if (localStorage.getItem('gs-site-motion') === 'on') root.classList.add('motion-on'); } catch {}
   const reduced = () => reducedMedia.matches && !root.classList.contains('motion-on');
-  try {
-    if (localStorage.getItem('gs-site-motion') === 'on') root.classList.add('motion-on');
-  } catch {}
-
+  const total = faces.length, panelCount = total * 2, sliceCount = 8, bend = 27;
+  const mod = (v, n) => ((v % n) + n) % n;
+  const clamp = v => Math.max(0, Math.min(1, v));
+  const ease = v => v * v * v * (10 + v * (-15 + v * 6));
+  const smooth = v => v * v * (3 - 2 * v);
+  const integral = v => v * v * v - .5 * v * v * v * v;
+  const period = Math.max(600, Math.min(2000, Number(reel.dataset.reelPeriod) || 900));
+  const speed = 1 / period, brakeDuration = 1600, expandDuration = 1400;
+  const focusDuration = 5200, collapseDuration = 1300, accelerationDuration = 800;
   const words = [
     ['Find the file, or the exact site inside it.',
       'Home searches favorite folders by filename or recognition sequence, locally and without an import step.'],
@@ -52,189 +47,55 @@
       'Sanger aligns forward and reverse reads, quality, differences and chromatograms against the construct.']
   ];
 
+
+  const veil = document.createElement('div');
+  veil.className = 'reel-detail-veil'; veil.setAttribute('aria-hidden', 'true');
+  const detail = document.createElement('div');
+  detail.className = 'reel-detail'; detail.setAttribute('data-reel-detail', '');
+  detail.setAttribute('aria-hidden', 'true');
+  const curve = document.createElement('div');
+  curve.className = 'detail-curve';
+  const plane = document.createElement('div');
+  plane.className = 'detail-plane'; plane.setAttribute('data-detail-plane', '');
+  const poster = document.createElement('img');
+  poster.setAttribute('data-detail-poster', ''); poster.alt = ''; poster.decoding = 'async';
   const loop = document.createElement('img');
-  loop.setAttribute('data-reel-loop', '');
-  loop.alt = '';
-  loop.decoding = 'async';
-  loop.setAttribute('aria-hidden', 'true');
-  video.parentNode.insertBefore(loop, video);
-  video.muted = true;
-  video.defaultMuted = true;
-  video.loop = true;
-  video.playsInline = true;
-  video.preload = 'none';
+  loop.setAttribute('data-reel-loop', ''); loop.alt = ''; loop.decoding = 'async';
+  plane.append(poster, video, loop); detail.append(curve, plane); viewport.append(veil, detail);
+  video.muted = video.defaultMuted = video.loop = video.playsInline = true;
+  video.preload = 'auto';
 
-  let phase = wrap(Number(reel.dataset.index) || 0);
-  let position = phase;
-  let index = -1;
-  let frame = 0;
-  let previousTime = 0;
-  let transition = null;
-  let inView = false;
-  let pageVisible = !document.hidden;
-  let userPaused = false;
-  let hardPaused = false;
-  let sourceToken = 0;
-  let media = null;
-  let cardWidth = 0, cardHeight = 0, canvasFrame = 0;
-  const panels = [];
-
+  const panels = [], leaves = [];
+  let position = 2, velocity = speed, index = 0, focusPanel = 0;
+  let stage = 'rotate', elapsed = 0, segment = null, focus = 0;
+  let rotation = null, pendingScene = null, manualHold = false, hardPaused = false;
+  let inView = false, pageVisible = !document.hidden, frame = 0, previousTime = 0;
+  let media = null, sourceToken = 0, snapshotReady = false;
+  let width = 0, height = 0, radius = 0, viewWidth = 0, viewHeight = 0;
+  let fullHeight = 0, focusScale = 1, lastAngle = null, lastFront = -1, lastFocus = -1;
+  let lastExtracted = -1;
   const visible = () => inView && pageVisible;
-  const mayPlay = () => visible() && !reduced() && !hardPaused;
-  const mayMove = () => visible() && !reduced() && !hardPaused && (!userPaused || transition);
-  const label = () => faces[index]?.dataset.label || 'Product overview';
+  const mayTick = () => visible() && !reduced() && !hardPaused && !(stage === 'focus' && manualHold);
+  const mayPlay = () => visible() && !reduced() && !hardPaused && stage === 'focus';
+  const sourcePoster = scene => {
+    const image = faces[scene].querySelector('picture img');
+    return image.currentSrc || image.getAttribute('src');
+  };
 
-  function updateState() {
-    let state;
-    let message;
-    if (reduced()) { state = 'still'; message = 'Static product overview'; }
-    else if (!visible()) { state = 'idle'; message = 'Overview paused'; }
-    else if (hardPaused) { state = 'paused'; message = 'Tour paused'; }
-    else if (mayMove()) { state = 'rolling'; message = label() + ' · in motion'; }
-    else if (media?.playing) { state = 'playing'; message = label() + ' · in motion'; }
-    else { state = 'holding'; message = label() + ' · preview'; }
-    reel.dataset.state = state;
-    reel.dataset.auto = mayMove() ? 'running' : 'off';
-    reel.dataset.userPaused = String(userPaused);
-    reel.dataset.reduced = String(reduced());
-    reel.dataset.inView = String(inView);
-    reel.dataset.pageVisible = String(pageVisible);
-    pauseButton?.setAttribute('aria-pressed', String(userPaused || reduced()));
-    if (pauseLabel) pauseLabel.textContent = reduced() ? 'Play the tour'
-      : userPaused ? 'Resume tour' : 'Pause tour';
-    if (status && status.textContent !== message) status.textContent = message;
+  function makeSlice(part, isDetail) {
+    const slice = document.createElement('div');
+    slice.className = 'cylinder-slice' + (isDetail ? ' detail-slice' : '');
+    slice.style.setProperty('--slice-index', String(part));
+    slice.style.setProperty('--slice-angle', ((part - 3.5) * bend / sliceCount) + 'deg');
+    const img = document.createElement('img');
+    img.alt = ''; img.decoding = 'async'; slice.append(img);
+    if (!isDetail) return {slice, img};
+    const canvas = document.createElement('canvas');
+    canvas.className = 'detail-snapshot'; slice.append(canvas);
+    return {slice, img, canvas};
   }
 
-  function showMedia(ready) {
-    faces.forEach((face, at) => { face.dataset.live = String(ready && at === index); });
-    reel.dataset.videoReady = String(ready);
-    updateTextures();
-    updateState();
-    if (ready) scheduleCanvas();
-  }
-
-  function pauseMedia() {
-    video.pause();
-    if (media) {
-      media.playing = false;
-      media.pending = false;
-      media.attempt = (media.attempt || 0) + 1;
-    }
-    // Animated images cannot pause. Removing the loop reveals its own still.
-    if (loop.hasAttribute('src')) loop.removeAttribute('src');
-    loop.removeAttribute('data-ready');
-    if (media?.phone) {
-      loop.onload = loop.onerror = null;
-      sourceToken++;
-      media = null;
-    }
-    showMedia(false);
-  }
-
-  function releaseMedia() {
-    sourceToken++;
-    video.onloadeddata = video.onerror = null;
-    loop.onload = loop.onerror = null;
-    pauseMedia();
-    video.removeAttribute('src');
-    video.removeAttribute('data-ready');
-    video.dataset.scene = '';
-    video.load();
-    media = null;
-    reel.dataset.source = '';
-  }
-
-  function pauseOtherVideos() {
-    for (const other of document.querySelectorAll('video')) {
-      if (other !== video) other.pause();
-    }
-  }
-
-  function startVideo(owner) {
-    if (owner !== media || !mayPlay() || owner.failed || owner.pending) return;
-    if (!video.paused && owner.ready) {
-      owner.playing = true;
-      showMedia(true);
-      return;
-    }
-    owner.pending = true;
-    const attempt = owner.attempt = (owner.attempt || 0) + 1;
-    pauseOtherVideos();
-    const token = owner.token;
-    video.play().then(() => {
-      if (media !== owner || sourceToken !== token || owner.attempt !== attempt) return;
-      owner.pending = false;
-      if (!mayPlay()) { pauseMedia(); return; }
-      owner.ready = true;
-      owner.playing = true;
-      video.dataset.ready = 'true';
-      showMedia(true);
-    }).catch(() => {
-      if (media !== owner || sourceToken !== token || owner.attempt !== attempt) return;
-      owner.pending = false;
-      // A pause during play() is an interruption, not an autoplay refusal.
-      if (!mayPlay()) return;
-      owner.failed = true;
-      owner.playing = false;
-      showMedia(false);
-    });
-  }
-
-  function ensureMedia() {
-    if (!mayPlay()) { pauseMedia(); return; }
-    const phone = compact.matches;
-    const src = phone ? faces[index].dataset.phoneAnim : faces[index].dataset.video;
-    const key = `${index}:${phone ? 'phone' : 'video'}`;
-    if (!media || media.key !== key) {
-      releaseMedia();
-      const token = ++sourceToken;
-      media = { key, token, phone, src, ready:false, playing:false, pending:false, failed:false };
-      const owner = media;
-      reel.dataset.source = src || '';
-      const slot = faces[index].querySelector('[data-reel-live-slot]');
-      if (!slot || !src) { owner.failed = true; showMedia(false); return; }
-      if (phone) {
-        slot.append(loop);
-        loop.onload = () => {
-          if (media !== owner || token !== sourceToken || !mayPlay()) return;
-          owner.ready = true;
-          owner.playing = true;
-          loop.dataset.ready = 'true';
-          pauseOtherVideos();
-          showMedia(true);
-        };
-        loop.onerror = () => {
-          if (media !== owner || token !== sourceToken || !loop.hasAttribute('src')) return;
-          owner.failed = true;
-          owner.playing = false;
-          showMedia(false);
-        };
-      } else {
-        slot.append(video);
-        video.dataset.scene = faces[index].dataset.scene;
-        video.onloadeddata = () => {
-          if (media !== owner || token !== sourceToken) return;
-          owner.ready = true;
-          if (mayPlay()) startVideo(owner);
-        };
-        video.onerror = () => {
-          if (media !== owner || token !== sourceToken) return;
-          owner.failed = true;
-          owner.playing = false;
-          showMedia(false);
-        };
-        video.src = src;
-        video.load();
-      }
-    }
-    if (media.failed) { showMedia(false); return; }
-    if (phone) {
-      if (!loop.hasAttribute('src')) loop.src = media.src;
-      else if (media.ready) { media.playing = true; showMedia(true); }
-    } else startVideo(media);
-  }
-
-  function buildCylinder() {
+  function build() {
     reel.dataset.panelCount = String(panelCount);
     for (let at = 0; at < panelCount; at++) {
       const source = at % total;
@@ -248,233 +109,457 @@
       }
       face.dataset.cylinderPanel = String(at);
       face.dataset.sourceIndex = String(source);
-      face.style.setProperty('--panel-angle', `${-at * 360 / panelCount}deg`);
-      const curve = document.createElement('div');
-      curve.className = 'cylinder-curve';
-      curve.setAttribute('aria-hidden', 'true');
-      const leaves = [];
+      face.style.setProperty('--panel-angle', (-at * 360 / panelCount) + 'deg');
+      const mesh = document.createElement('div');
+      mesh.className = 'cylinder-curve'; mesh.setAttribute('aria-hidden', 'true');
+      const parts = [];
       for (let part = 0; part < sliceCount; part++) {
-        const slice = document.createElement('div');
-        slice.className = 'cylinder-slice';
-        slice.style.setProperty('--slice-index', String(part));
-        slice.style.setProperty('--slice-angle', `${(part - (sliceCount - 1) / 2) * bend / sliceCount}deg`);
-        const img = document.createElement('img');
-        img.alt = ''; img.decoding = 'async';
-        const canvas = document.createElement('canvas');
-        canvas.className = 'cylinder-video';
-        slice.append(img, canvas); curve.append(slice);
-        leaves.push({slice,img,canvas,context:canvas.getContext('2d')});
+        const leaf = makeSlice(part, false); parts.push(leaf); mesh.append(leaf.slice);
       }
-      face.querySelector('.reel-screen').prepend(curve);
-      panels.push({face,source,leaves});
+      face.querySelector('.reel-screen').prepend(mesh);
+      panels.push({face, source, leaves:parts});
     }
-    for (const face of faces) face.querySelector('picture img').addEventListener('load', updateTextures);
-    updateTextures(); resizeCylinder();
+    for (let part = 0; part < sliceCount; part++) {
+      const leaf = makeSlice(part, true); leaves.push(leaf); curve.append(leaf.slice);
+    }
+    for (const face of faces) face.querySelector('picture img').addEventListener('load', () => {
+      updatePosters(); resize();
+    });
+    updatePosters();
   }
 
-  function updateTextures() {
+  function updatePosters() {
     for (const panel of panels) {
-      const poster = faces[panel.source].querySelector('picture img');
-      const animated = media?.phone && media.playing && media.ready && mayPlay() && panel.source === index;
-      const src = animated ? media.src : (poster.currentSrc || poster.getAttribute('src'));
-      panel.face.dataset.phoneLive = String(!!animated);
-      if (!media?.ready || panel.source !== index || compact.matches) panel.face.dataset.canvasReady = 'false';
+      const src = sourcePoster(panel.source);
       for (const leaf of panel.leaves) if (leaf.img.getAttribute('src') !== src) leaf.img.src = src;
     }
+    const src = sourcePoster(index);
+    if (poster.getAttribute('src') !== src) poster.src = src;
+    for (const leaf of leaves) if (leaf.img.getAttribute('src') !== src) leaf.img.src = src;
+    detail.dataset.sourceIndex = String(index);
+    detail.dataset.scene = faces[index].dataset.scene;
+    detail.dataset.fit = faces[index].dataset.fit || 'wide';
   }
 
-  function resizeCylinder() {
-    const width = ring.offsetWidth, height = ring.offsetHeight;
-    if (!width || !height) return;
-    cardWidth = width; cardHeight = height;
-    const step = bend / sliceCount * Math.PI / 180;
-    const radius = width / sliceCount / (2 * Math.tan(step / 2));
-    ring.style.setProperty('--cylinder-radius', `${radius.toFixed(3)}px`);
-    ring.style.setProperty('--slice-width', `${(width / sliceCount).toFixed(3)}px`);
-    ring.style.setProperty('--card-width', `${width}px`);
-    const density = Math.min(2, devicePixelRatio || 1);
-    for (const panel of panels) for (const leaf of panel.leaves) {
-      const pixelWidth = Math.ceil((width / sliceCount + 1) * density);
-      const pixelHeight = Math.ceil(height * density);
-      // Assigning an unchanged canvas dimension clears its frozen video frame.
-      // Pause/resume reconciles layout too, so resize only when it changed.
-      if (leaf.canvas.width !== pixelWidth || leaf.canvas.height !== pixelHeight) {
-        leaf.canvas.width = pixelWidth;
-        leaf.canvas.height = pixelHeight;
-        panel.face.dataset.canvasReady = 'false';
-      }
+  function resize() {
+    const nextWidth = ring.offsetWidth, nextHeight = ring.offsetHeight;
+    if (!nextWidth || !nextHeight) return;
+    width = nextWidth; height = nextHeight;
+    viewWidth = viewport.clientWidth; viewHeight = viewport.clientHeight;
+    radius = width / sliceCount / (2 * Math.tan(bend / sliceCount * Math.PI / 360));
+    for (const node of [ring]) {
+      node.style.setProperty('--cylinder-radius', radius + 'px');
+      node.style.setProperty('--slice-width', width / sliceCount + 'px');
+      node.style.setProperty('--card-width', width + 'px');
     }
-    updateTextures(); paintVideo();
+    const image = faces[index].querySelector('picture img');
+    const ratio = compact.matches ? 1.25 : Number(image.getAttribute('width')) / Number(image.getAttribute('height'));
+    fullHeight = width / (ratio || 1.6);
+    const margin = compact.matches ? 14 : 24;
+    focusScale = Math.floor(width * Math.min((viewWidth - margin * 2) / width,
+      (viewHeight - margin * 2) / fullHeight)) / width;
+    // Rasterize the extracted screen at its final readable size. Starting with
+    // a thumbnail-sized canvas and scaling it up made return frames blurry.
+    detail.style.setProperty('--slice-width', width * focusScale / sliceCount + 'px');
+    detail.style.setProperty('--card-width', width * focusScale + 'px');
+    lastFocus = -1;
+    renderDetail();
   }
 
-  function paintVideo() {
-    if (!mayPlay() || compact.matches || !media?.playing || !media.ready || video.readyState < 2 || !cardWidth || !video.videoWidth) return;
-    const scale = Math.max(cardWidth / video.videoWidth, cardHeight / video.videoHeight);
-    const cropW = cardWidth / scale, cropH = cardHeight / scale;
-    const cropX = (video.videoWidth - cropW) / 2;
-    const cropY = faces[index].dataset.fit === 'tall' ? 0 : (video.videoHeight - cropH) / 2;
-    for (const panel of panels) {
-      if (panel.source !== index) continue;
-      let painted = true;
-      for (let at = 0; at < panel.leaves.length; at++) {
-        const leaf = panel.leaves[at];
-        if (!leaf.context) { painted = false; break; }
-        const x = Math.max(0, at * cardWidth / sliceCount - .5);
-        const width = Math.min(cardWidth - x, cardWidth / sliceCount + 1);
-        try {
-          leaf.context.drawImage(video, cropX + x / cardWidth * cropW, cropY,
-            width / cardWidth * cropW, cropH, 0, 0, leaf.canvas.width, leaf.canvas.height);
-        } catch { painted = false; }
-      }
-      panel.face.dataset.canvasReady = String(painted);
-    }
-  }
-
-  function scheduleCanvas() {
-    if (canvasFrame || compact.matches || !media?.playing || !mayPlay()) return;
-    canvasFrame = requestAnimationFrame(() => {
-      canvasFrame = 0; paintVideo(); scheduleCanvas();
-    });
-  }
-
-  function syncScene(next) {
-    if (next === index) return;
-    index = next;
+  function choose(scene) {
+    index = mod(scene, total);
     reel.dataset.index = String(index);
     faces.forEach((face, at) => face.classList.toggle('is-active', at === index));
     buttons.forEach((button, at) => button.setAttribute('aria-current', String(at === index)));
-    if (count) count.textContent = `${String(index + 1).padStart(2, '0')} / ${String(total).padStart(2, '0')}`;
-    if (title) title.textContent = faces[index].dataset.title || words[index]?.[0] || label();
-    if (copy) copy.textContent = faces[index].dataset.copy || words[index]?.[1] || '';
-    ensureMedia();
+    count.textContent = String(index + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0');
+    snapshotReady = false; detail.dataset.snapshot = 'false';
+    updatePosters(); resize(); updateCaption();
+  }
+
+  function updateCaption() {
+    const overview = stage === 'rotate';
+    title.textContent = overview ? 'The workspace, from every angle.' : words[index][0];
+    copy.textContent = overview
+      ? 'Follow a closer look at each view, or choose one below to keep it open.'
+      : words[index][1];
+  }
+
+  function updateState() {
+    reel.dataset.stage = stage;
+    reel.dataset.focusPanel = String(focusPanel);
+    reel.dataset.userPaused = String(manualHold || hardPaused);
+    reel.dataset.reduced = String(reduced());
+    reel.dataset.inView = String(inView);
+    reel.dataset.pageVisible = String(pageVisible);
+    reel.dataset.auto = mayTick() ? 'running' : 'off';
+    reel.dataset.state = reduced() ? 'still' : !visible() ? 'idle' : hardPaused ? 'paused'
+      : stage === 'focus' ? (media?.playing ? 'playing' : 'holding') : 'rolling';
+    pauseButton?.setAttribute('aria-pressed', String(manualHold || hardPaused || reduced()));
+    if (pauseLabel) pauseLabel.textContent = reduced() ? 'Play the tour'
+      : manualHold || hardPaused ? 'Resume tour' : 'Pause tour';
+    const text = reduced() ? 'Static product overview' : hardPaused ? 'Tour paused'
+      : stage === 'rotate' ? 'Explore Gene Studio' : stage === 'focus'
+      ? faces[index].dataset.label + (media?.playing ? ' · a closer look' : ' · preview')
+      : faces[index].dataset.label + (stage === 'collapse' ? ' · back to the workspace' : ' · coming into view');
+    if (status.textContent !== text) status.textContent = text;
+  }
+
+  function setStage(next) {
+    stage = next; elapsed = 0; lastFocus = -1;
+    reel.dataset.stage = stage;
+    updateCaption(); updateState();
+  }
+
+  function pauseMedia() {
+    video.pause();
+    if (media) {
+      media.playing = false; media.pending = false; media.attempt = (media.attempt || 0) + 1;
+    }
+    if (loop.hasAttribute('src')) loop.removeAttribute('src');
+    loop.removeAttribute('data-ready');
+    if (media?.phone) {
+      sourceToken++; loop.onload = loop.onerror = null; media = null;
+    }
+    updateMediaVisibility();
+  }
+
+  function releaseMedia() {
+    sourceToken++; video.onloadeddata = video.onerror = null;
+    loop.onload = loop.onerror = null; pauseMedia();
+    if (video.hasAttribute('src')) { video.removeAttribute('src'); video.load(); }
+    video.removeAttribute('data-ready'); video.dataset.scene = '';
+    media = null; reel.dataset.source = ''; updateMediaVisibility();
+  }
+
+  function updateMediaVisibility() {
+    const native = stage === 'focus' && !media?.failed && !!media?.ready && (!media.phone || !!loop.getAttribute('src'));
+    detail.dataset.detailLive = String(native);
+    reel.dataset.videoReady = String(native);
+    faces.forEach((face, at) => face.dataset.live = String(native && at === index));
+    updateState();
+  }
+
+  function startMedia() {
+    const owner = media;
+    if (!owner || owner.failed || owner.pending || !mayPlay()) return;
+    if (owner.phone) {
+      if (loop.hasAttribute('src')) return;
+      const token = owner.token;
+      loop.onload = () => {
+        if (media !== owner || sourceToken !== token || !mayPlay()) return;
+        owner.ready = owner.playing = true; loop.dataset.ready = 'true'; updateMediaVisibility();
+      };
+      loop.onerror = () => {
+        if (media !== owner || sourceToken !== token) return;
+        owner.failed = true; owner.playing = false; updateMediaVisibility();
+      };
+      loop.src = owner.src;
+      return;
+    }
+    if (!video.paused && owner.ready) { owner.playing = true; updateMediaVisibility(); return; }
+    owner.pending = true;
+    const attempt = owner.attempt = (owner.attempt || 0) + 1, token = owner.token;
+    for (const other of document.querySelectorAll('video')) if (other !== video) other.pause();
+    video.play().then(() => {
+      if (owner !== media || token !== sourceToken || owner.attempt !== attempt) return;
+      owner.pending = false;
+      if (!mayPlay()) { pauseMedia(); return; }
+      owner.ready = owner.playing = true; video.dataset.ready = 'true'; updateMediaVisibility();
+    }).catch(() => {
+      if (owner !== media || token !== sourceToken || owner.attempt !== attempt) return;
+      owner.pending = false;
+      if (!mayPlay()) return;
+      owner.failed = true; owner.playing = false; updateMediaVisibility();
+    });
+  }
+
+  function prepareMedia() {
+    if (reduced()) { releaseMedia(); return; }
+    const phone = compact.matches, key = index + ':' + phone;
+    if (!media || media.key !== key) {
+      releaseMedia();
+      const src = phone ? faces[index].dataset.phoneAnim : faces[index].dataset.video;
+      const owner = media = {key, phone, src, token:++sourceToken, ready:false, playing:false, pending:false, failed:false};
+      reel.dataset.source = src; video.dataset.scene = faces[index].dataset.scene;
+      if (!phone) {
+        video.onloadeddata = () => {
+          if (owner !== media || owner.token !== sourceToken) return;
+          owner.ready = true; if (mayPlay()) startMedia();
+        };
+        video.onerror = () => {
+          if (owner !== media || owner.token !== sourceToken) return;
+          owner.failed = true; owner.playing = false; updateMediaVisibility();
+        };
+        video.src = src;
+      }
+    }
+    if (mayPlay()) startMedia();
+  }
+
+  function takeSnapshot() {
+    snapshotReady = false;
+    const source = compact.matches ? loop : video;
+    const sourceWidth = compact.matches ? loop.naturalWidth : video.videoWidth;
+    const sourceHeight = compact.matches ? loop.naturalHeight : video.videoHeight;
+    if (!media?.ready || !sourceWidth || !sourceHeight) return;
+    const density = Math.min(2, devicePixelRatio || 1);
+    const rasterWidth = width * focusScale;
+    const pixelWidth = Math.ceil((rasterWidth / sliceCount + 1) * density);
+    const pixelHeight = Math.ceil(fullHeight * focusScale * density);
+    try {
+      for (let at = 0; at < sliceCount; at++) {
+        const canvas = leaves[at].canvas;
+        if (canvas.width !== pixelWidth) canvas.width = pixelWidth;
+        if (canvas.height !== pixelHeight) canvas.height = pixelHeight;
+        const sampleLeft = at * rasterWidth / sliceCount - .5;
+        const sampleRight = (at + 1) * rasterWidth / sliceCount + .5;
+        const left = Math.max(0, sampleLeft), right = Math.min(rasterWidth, sampleRight);
+        const context = canvas.getContext('2d');
+        context.clearRect(0, 0, pixelWidth, pixelHeight);
+        context.drawImage(source, left / rasterWidth * sourceWidth, 0,
+          (right - left) / rasterWidth * sourceWidth, sourceHeight,
+          (left - sampleLeft) * density, 0, (right - left) * density, pixelHeight);
+      }
+      snapshotReady = true;
+    } catch { snapshotReady = false; }
+    detail.dataset.snapshot = String(snapshotReady);
+  }
+
+  function beginRotate(first = false) {
+    focus = 0; velocity = first ? speed : 0; pendingScene = null;
+    const next = first ? 0 : mod(index + 1, total);
+    let target = position + mod(next - position, total);
+    while (target - position < 3) target += total;
+    const accel = first ? 0 : accelerationDuration;
+    const brakeDistance = speed * brakeDuration / 2;
+    const constantDistance = target - position - speed * accel / 2 - brakeDistance;
+    rotation = {from:position, target, next, accel, cruise:constantDistance / speed};
+    setStage('rotate'); updateMediaVisibility();
+  }
+
+  function beginBrake(scene, target, manual = false) {
+    choose(scene); focusPanel = mod(Math.round(target), panelCount);
+    segment = {from:position, to:target, velocity, manual,
+      duration:manual ? Math.min(1600, 1100 + Math.abs(target - position) * 130) : brakeDuration};
+    setStage('brake');
+    prepareMedia();
+  }
+
+  function beginExpand() {
+    position = segment.to; velocity = 0; focus = 0;
+    setStage('expand'); prepareMedia(); render();
+  }
+
+  function beginCollapse() {
+    setStage('collapse');
+    segment = {fromFocus:focus, duration:Math.max(350, collapseDuration * focus)};
+    if (focus > .99) takeSnapshot();
+    pauseMedia(); renderDetail();
+  }
+
+  function manualBrake(scene) {
+    let target = position + mod(scene - position + total / 2, total) - total / 2;
+    beginBrake(scene, target, true);
+  }
+
+  function requestScene(scene) {
+    scene = mod(scene, total); manualHold = true; hardPaused = false;
+    if (media) media.failed = false;
+    if (reduced()) {
+      releaseMedia(); choose(scene); focusPanel = scene; position = scene; focus = 1;
+      setStage('focus'); render(); return;
+    }
+    if ((stage === 'focus' || stage === 'expand') && scene === index) {
+      prepareMedia(); reconcile(); return;
+    }
+    if (stage === 'collapse') pendingScene = scene;
+    else if (focus > 0 || stage === 'focus') { pendingScene = scene; beginCollapse(); }
+    else manualBrake(scene);
+    reconcile();
+  }
+
+  function renderDetail() {
+    if (!width || focus === lastFocus) return;
+    lastFocus = focus;
+    const active = stage === 'expand' || stage === 'focus' || stage === 'collapse';
+    detail.dataset.visible = String(active);
+    detail.dataset.flat = String(focus === 1 && stage === 'focus');
+    reel.dataset.focusProgress = focus.toFixed(6);
+    const f = focus, inverse = 1 - f;
+    const scale = 1 / focusScale + (1 - 1 / focusScale) * f;
+    detail.style.width = width * focusScale + 'px';
+    detail.style.height = (height + (fullHeight - height) * f) * focusScale + 'px';
+    detail.style.transform = 'translate3d(-50%,calc(-50% + ' + (.02 * viewHeight * f) +
+      'px),' + (-radius * .18 * inverse) + 'px) rotateZ(' + (-16 * inverse) +
+      'deg) rotateX(' + (-20 * inverse) + 'deg) translateZ(' + (radius * inverse) +
+      'px) scale3d(' + scale + ',' + scale + ',' + scale + ')';
+    veil.style.opacity = String(f * .94);
+    detail.style.setProperty('--snapshot-opacity', String(snapshotReady ? Math.min(1, f / .18) : 0));
+    for (let at = 0; at < sliceCount; at++) {
+      const angle = (at - 3.5) * bend / sliceCount * Math.PI / 180;
+      const curvedX = radius * Math.sin(angle), flatX = (at - 3.5) * width / sliceCount;
+      leaves[at].slice.style.transform = 'translate3d(' + ((curvedX * inverse + flatX * f) * focusScale) +
+        'px,0,' + (radius * (Math.cos(angle) - 1) * inverse * focusScale) + 'px) rotateY(' +
+        (angle * 180 / Math.PI * inverse) + 'deg)';
+    }
+    const extracted = active ? focusPanel : -1;
+    if (extracted !== lastExtracted) {
+      if (lastExtracted >= 0) panels[lastExtracted].face.removeAttribute('data-extracted');
+      if (extracted >= 0) panels[extracted].face.dataset.extracted = 'true';
+      lastExtracted = extracted;
+    }
   }
 
   function render() {
-    syncScene(sceneFor(position));
-    const angle = wrap(position) * 360 / panelCount;
-    ring.style.setProperty('--cylinder-angle', `${angle.toFixed(5)}deg`);
-    reel.dataset.angle = angle.toFixed(5);
-    reel.dataset.phase = wrap(position).toFixed(5);
-    for (const [at, panel] of panels.entries()) {
-      const relative = modulo(angle - at * 360 / panelCount + 180, 360) - 180;
-      const front = Math.round(wrap(position)) % panelCount === at;
-      panel.face.dataset.cylinderFront = String(front);
-      panel.face.dataset.reelPosition = Math.abs(relative) <= 90 ? (front ? 'center' : 'neighbor') : 'rear';
-      // Shading belongs on 2D leaves; opacity/filter on a 3D parent flattens the cylinder.
-      panel.face.style.setProperty('--panel-light', (0.68 + 0.32 * Math.max(0, Math.cos(relative * Math.PI / 180))).toFixed(3));
+    const angle = position * 360 / panelCount;
+    if (angle !== lastAngle) {
+      ring.style.setProperty('--cylinder-angle', angle.toFixed(6) + 'deg');
+      reel.dataset.phase = mod(position, panelCount).toFixed(6);
+      reel.dataset.angle = mod(angle, 360).toFixed(6);
+      lastAngle = angle;
+    }
+    const front = mod(Math.round(position), panelCount);
+    if (front !== lastFront) {
+      if (lastFront >= 0) panels[lastFront].face.dataset.cylinderFront = 'false';
+      panels[front].face.dataset.cylinderFront = 'true';
+      lastFront = front;
+    }
+    renderDetail();
+  }
+
+  function advance(delta) {
+    elapsed += delta;
+    if (stage === 'rotate') {
+      const {from, target, next, accel, cruise} = rotation;
+      if (accel && elapsed < accel) {
+        const u = elapsed / accel;
+        position = from + speed * accel * integral(u); velocity = speed * smooth(u);
+      } else if (elapsed < accel + cruise) {
+        position = from + speed * accel / 2 + speed * (elapsed - accel); velocity = speed;
+      } else {
+        position = target - speed * brakeDuration / 2; velocity = speed;
+        const carry = elapsed - accel - cruise;
+        beginBrake(next, target);
+        if (carry > 0) advance(carry);
+      }
+    } else if (stage === 'brake') {
+      const u = clamp(elapsed / segment.duration);
+      if (segment.manual) {
+        const d = segment.to - segment.from, v = segment.velocity * segment.duration;
+        position = segment.from + v * u + (10*d-6*v)*u**3 + (-15*d+8*v)*u**4 + (6*d-3*v)*u**5;
+        velocity = (v + 3*(10*d-6*v)*u**2 + 4*(-15*d+8*v)*u**3 + 5*(6*d-3*v)*u**4) / segment.duration;
+      } else {
+        position = segment.from + speed * segment.duration * (u - integral(u));
+        velocity = speed * (1 - smooth(u));
+      }
+      if (u === 1) {
+        const carry = elapsed - segment.duration;
+        beginExpand();
+        if (carry > 0) advance(carry);
+      }
+    } else if (stage === 'expand') {
+      focus = ease(clamp(elapsed / expandDuration));
+      if (focus === 1) {
+        const carry = elapsed - expandDuration;
+        setStage('focus'); prepareMedia();
+        if (carry > 0) advance(carry);
+      }
+    } else if (stage === 'focus') {
+      if (!manualHold && elapsed >= focusDuration) {
+        const carry = elapsed - focusDuration;
+        beginCollapse();
+        if (carry > 0) advance(carry);
+      }
+    } else if (stage === 'collapse') {
+      focus = segment.fromFocus * (1 - ease(clamp(elapsed / segment.duration)));
+      if (focus === 0) {
+        const carry = elapsed - segment.duration;
+        snapshotReady = false; detail.dataset.snapshot = 'false';
+        if (pendingScene !== null) {
+          const next = pendingScene; pendingScene = null; manualBrake(next);
+        } else beginRotate();
+        if (carry > 0) advance(carry);
+      }
     }
   }
 
   function tick(time) {
     frame = 0;
-    if (!mayMove()) { previousTime = 0; return; }
-    const elapsed = previousTime ? Math.min(80, Math.max(0, time - previousTime)) : 0;
+    if (!mayTick()) { previousTime = 0; return; }
+    const delta = previousTime ? Math.min(64, Math.max(0, time - previousTime)) : 0;
     previousTime = time;
-    if (transition) {
-      transition.elapsed += elapsed;
-      const progress = Math.min(1, transition.elapsed / transition.duration);
-      position = transition.from + (transition.to - transition.from) * ease(progress);
-      if (progress === 1) {
-        phase = wrap(transition.to);
-        position = phase;
-        transition = null;
-      }
-    } else {
-      phase = wrap(phase + elapsed / period);
-      position = phase;
-    }
-    render();
-    if (mayMove()) frame = requestAnimationFrame(tick);
+    advance(delta); render();
+    if (mayTick()) frame = requestAnimationFrame(tick);
     else { previousTime = 0; updateState(); }
   }
 
   function reconcile() {
     if (frame) cancelAnimationFrame(frame);
-    frame = 0;
-    previousTime = 0;
-    if (reduced()) {
-      transition = null;
-      phase = position = wrap(Math.round(position));
-      releaseMedia();
-    }
-    resizeCylinder();
-    render();
-    ensureMedia();
-    updateState();
-    if (mayMove()) frame = requestAnimationFrame(tick);
-  }
-
-  function requestScene(next, direction = 0) {
-    next = modulo(next, total);
-    userPaused = true;
-    hardPaused = false;
-    let target = position + (modulo(next - position + total / 2, total) - total / 2);
-    if (direction > 0 && target <= position) target += total;
-    if (direction < 0 && target >= position) target -= total;
-    const distance = Math.abs(target - position);
-    if (reduced() || !visible() || distance < .001) {
-      phase = position = next;
-      transition = null;
-    } else {
-      transition = { from:position, to:target, elapsed:0, duration:Math.min(1600, 850 + distance * 140) };
-    }
-    reconcile();
+    frame = 0; previousTime = 0;
+    if (!visible() || hardPaused) pauseMedia();
+    else if (stage === 'focus' || stage === 'expand' || stage === 'brake') prepareMedia();
+    updateState(); render();
+    if (mayTick()) frame = requestAnimationFrame(tick);
   }
 
   pauseButton?.addEventListener('click', () => {
     if (reduced()) {
       root.classList.add('motion-on');
       try { localStorage.setItem('gs-site-motion', 'on'); } catch {}
-      userPaused = hardPaused = false;
-      dispatchEvent(new Event('gs-motion'));
-      return;
+      manualHold = hardPaused = false;
+      beginCollapse(); dispatchEvent(new Event('gs-motion')); return;
     }
-    if (userPaused) userPaused = hardPaused = false;
-    else { userPaused = true; hardPaused = true; }
+    if (hardPaused) hardPaused = false;
+    else if (manualHold) {
+      manualHold = false;
+      if (stage === 'focus') beginCollapse();
+    } else hardPaused = true;
     if (media) media.failed = false;
     reconcile();
   });
-  reel.querySelector('[data-reel-prev]')?.addEventListener('click', () => requestScene(index - 1, -1));
-  reel.querySelector('[data-reel-next]')?.addEventListener('click', () => requestScene(index + 1, 1));
+  reel.querySelector('[data-reel-prev]')?.addEventListener('click', () => requestScene(index - 1));
+  reel.querySelector('[data-reel-next]')?.addEventListener('click', () => requestScene(index + 1));
   buttons.forEach((button, at) => {
     button.addEventListener('click', () => requestScene(at));
     button.addEventListener('keydown', event => {
       let next;
-      if (event.key === 'ArrowLeft') next = modulo(at - 1, total);
-      else if (event.key === 'ArrowRight') next = modulo(at + 1, total);
+      if (event.key === 'ArrowLeft') next = mod(at - 1, total);
+      else if (event.key === 'ArrowRight') next = mod(at + 1, total);
       else if (event.key === 'Home') next = 0;
       else if (event.key === 'End') next = total - 1;
       else return;
-      event.preventDefault();
-      buttons[next]?.focus();
-      requestScene(next);
+      event.preventDefault(); buttons[next].focus(); requestScene(next);
     });
   });
-  compact.addEventListener('change', () => { releaseMedia(); reconcile(); });
-  reducedMedia.addEventListener('change', reconcile);
-  addEventListener('gs-motion', reconcile);
-  document.addEventListener('visibilitychange', () => {
-    pageVisible = !document.hidden;
+  compact.addEventListener('change', () => {
+    releaseMedia(); snapshotReady = false; detail.dataset.snapshot = 'false';
+    updatePosters(); resize(); reconcile();
+  });
+  reducedMedia.addEventListener('change', () => {
+    if (reduced()) {
+      releaseMedia(); manualHold = false; hardPaused = false;
+      position = index; focusPanel = index; focus = 1; velocity = 0;
+      setStage('focus'); lastFocus = -1; render();
+    } else if (stage === 'focus') beginCollapse();
     reconcile();
   });
+  addEventListener('gs-motion', reconcile);
+  document.addEventListener('visibilitychange', () => { pageVisible = !document.hidden; reconcile(); });
   addEventListener('pagehide', () => { pageVisible = false; reconcile(); });
   addEventListener('pageshow', () => { pageVisible = !document.hidden; reconcile(); });
 
-  buildCylinder();
-  if ('ResizeObserver' in window) new ResizeObserver(resizeCylinder).observe(ring);
-  compact.addEventListener('change', () => { updateTextures(); resizeCylinder(); });
-  render();
-  updateState();
+  build(); choose(0); resize();
+  if (reduced()) {
+    position = 0; focus = 1; focusPanel = 0; velocity = 0; setStage('focus');
+  } else beginRotate(true);
+  lastFocus = -1; render(); updateState();
+  if ('ResizeObserver' in window) new ResizeObserver(resize).observe(viewport);
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(entries => {
       const entry = entries[entries.length - 1];
       const next = entry.isIntersecting && entry.intersectionRatio >= .12;
       if (next === inView) return;
-      inView = next;
-      reconcile();
-    }, { threshold:[0, .12] }).observe(reel.querySelector('[data-reel-viewport]') || reel);
-  } else {
-    inView = true;
-    reconcile();
-  }
+      inView = next; reconcile();
+    }, {threshold:[0,.12]}).observe(viewport);
+  } else { inView = true; reconcile(); }
 })();

@@ -56,10 +56,12 @@ try{if(localStorage.getItem('gs-site-motion')==='on')document.documentElement.cl
 <link rel="preload" href="font/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="font/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="font/fonts.css?v=20260828">
-<link rel="stylesheet" href="base.css?v=20260911-cylinder1">
-<link rel="stylesheet" href="section-motion.css?v=20260911-cylinder1">
-<script src="hero-reel.js?v=20260911-cylinder1" defer></script>
-<script src="section-motion.js?v=20260911-cylinder1" defer></script>
+<link rel="stylesheet" href="base.css?v=20260911-focus1">
+<link rel="stylesheet" href="ambient-ribbons.css?v=20260911-focus1">
+<link rel="stylesheet" href="section-motion.css?v=20260911-focus1">
+<script src="hero-reel.js?v=20260911-focus1" defer></script>
+<script src="section-motion.js?v=20260911-focus1" defer></script>
+<script src="ambient-ribbons.js?v=20260911-focus1" defer></script>
 </head>
 <body>
 <!-- **A phone reports its own state, so nobody has to guess at it.** Open the
@@ -187,6 +189,7 @@ try{if(localStorage.getItem('gs-site-motion')==='on')document.documentElement.cl
 <main id="top">
 
 <section class="hero">
+  <div data-ambient-ribbons="hero" aria-hidden="true"></div>
   <!-- two slow lights behind the headline, on different periods and in opposite
        directions, so the first screen breathes rather than being the one screen
        on this page that is painted once. They are `aria-hidden` by having no
@@ -230,6 +233,7 @@ try{if(localStorage.getItem('gs-site-motion')==='on')document.documentElement.cl
     <figure class="hero-reel" data-hero-reel data-reel-mode="cylinder" data-mode="cylinder" data-reel-period="900" data-state="idle" data-index="0"
             data-in-view="false" data-user-paused="false" aria-labelledby="hero-reel-title">
       <div class="reel-viewport" data-reel-viewport>
+        <div data-ambient-ribbons="reel" aria-hidden="true"></div>
         <div class="reel-ring" data-reel-ring aria-hidden="true">
           <div class="reel-face is-active" data-reel-face data-scene="home"
                data-video="clip/home.mp4" data-phone-anim="clip/home-phone.anim.webp"

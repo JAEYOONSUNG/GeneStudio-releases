@@ -674,8 +674,8 @@ figcaption:not(.reel-caption){
    decision), and it lays out as the video does or the frame changes shape at
    the breakpoint */
 .frame video, .frame img.narrow{display:block; width:100%; height:auto; background:var(--sunk)}
-/* A real cylindrical ribbon: twelve curved panels, fixed camera tilt and
-   continuous rotation. Only the 2D leaves carry shading. */
+/* A curved poster cylinder and a screen that unfolds into a readable detail.
+   Keep every 3D ancestor free of grouping filters and opacity. */
 .hero-reel-shot{max-width:var(--wide);position:relative}
 .hero-reel{position:relative;margin:0;text-align:left;--cylinder-roll:-16deg;--cylinder-pitch:-20deg}
 .reel-viewport{
@@ -704,17 +704,39 @@ figcaption:not(.reel-caption){
 .cylinder-slice{position:absolute;top:0;bottom:0;left:50%;width:calc(var(--slice-width) + 1px);
   margin-left:calc(var(--slice-width) * -.5 - .5px);overflow:hidden;background:#f7fafc;
   transform:rotateY(var(--slice-angle)) translateZ(var(--cylinder-radius));backface-visibility:visible;
-  filter:brightness(var(--panel-light,1))}
+  }
 .cylinder-slice img{position:absolute;top:0;left:calc(.5px - var(--slice-index) * var(--slice-width));
   width:var(--card-width);height:100%;max-width:none;object-fit:cover;object-position:center;display:block}
 .reel-face[data-fit="tall"] .cylinder-slice img{object-position:50% 0}
 .cylinder-slice:first-child{border-radius:5px 0 0 5px}.cylinder-slice:last-child{border-radius:0 5px 5px 0}
-.cylinder-video{position:absolute;inset:0;width:100%;height:100%;display:block;opacity:0}
-.reel-face[data-canvas-ready="true"] .cylinder-video{opacity:1}
 .reel-live-slot{position:absolute;inset:0;opacity:0;pointer-events:none}
 .reel-live-slot video,.reel-live-slot img{display:block;width:100%;height:100%;object-fit:cover}
 .reel-viewport>[data-reel-video],.reel-viewport>[data-reel-loop]{display:none}
-.hero-reel[data-state="paused"] .reel-ring,.hero-reel[data-state="idle"] .reel-ring{will-change:auto}
+
+.reel-face[data-extracted="true"]{visibility:hidden}
+.reel-detail-veil{position:absolute;inset:0;z-index:3;pointer-events:none;opacity:0;
+  background:linear-gradient(135deg,#1b2935,#0e171f 75%)}
+[data-theme="light"] .reel-detail-veil{background:linear-gradient(135deg,#dcecfb,#f0f6fc)}
+.reel-detail{position:absolute;left:50%;top:48%;z-index:4;
+  transform-style:preserve-3d;transform-origin:center;visibility:hidden;pointer-events:none;
+  will-change:transform}
+.reel-detail[data-visible="true"]{visibility:visible}
+.detail-curve{position:absolute;inset:0;transform-style:preserve-3d}
+.reel-detail .detail-slice{filter:none}
+.reel-detail[data-fit="tall"] .detail-slice img{object-position:50% 0}
+.detail-snapshot{position:absolute;inset:0;width:100%;height:100%;display:block;
+  opacity:var(--snapshot-opacity,0)}
+.detail-plane{position:absolute;inset:0;overflow:hidden;border-radius:5px;visibility:hidden;
+  background:#f7fafc;box-shadow:0 2px 6px #10202f1a}
+.detail-plane>img,.detail-plane>video{position:absolute;inset:0;display:block;width:100%;height:100%;
+  object-fit:contain}
+.detail-plane>[data-reel-video],.detail-plane>[data-reel-loop]{opacity:0}
+.reel-detail[data-flat="true"] .detail-plane{visibility:visible}
+.reel-detail[data-flat="true"] .detail-curve{visibility:hidden}
+.reel-detail[data-detail-live="true"] [data-reel-video][src],
+.reel-detail[data-detail-live="true"] [data-reel-loop][src]{opacity:1}
+.hero-reel:is([data-state="paused"],[data-state="idle"],[data-state="still"],[data-stage="focus"]) :is(.reel-ring,.reel-detail){will-change:auto}
+
 
 .reel-caption{min-height:124px;width:min(100%,760px); margin:clamp(20px,2.5vw,30px) auto 0;
   font-family:var(--ui); text-align:center; color:var(--slate)}
@@ -790,14 +812,9 @@ figcaption:not(.reel-caption){
 @media (max-width:430px){
   .hero-reel-shot{padding-inline:14px}
 }
-/* Reduced motion keeps one full-size, flat, readable product poster. */
+/* Reduced motion uses the same full-size detail plane, without a live decoder. */
 @media (prefers-reduced-motion:reduce){
-  html:not(.motion-on) .hero-reel .reel-ring{width:78%;max-width:900px;top:50%;transform:translate(-50%,-50%);will-change:auto}
-  html:not(.motion-on) .hero-reel .reel-face{transform:none;opacity:0;visibility:hidden}
-  html:not(.motion-on) .hero-reel .reel-face.is-active{opacity:1;visibility:visible}
-  html:not(.motion-on) .hero-reel .cylinder-curve{display:none}
-  html:not(.motion-on) .hero-reel .reel-screen>picture{display:block}
-  html:not(.motion-on) .hero-reel .reel-screen{overflow:hidden;border-radius:12px}
+  html:not(.motion-on) .hero-reel .reel-ring{visibility:hidden;will-change:auto}
   html:not(.motion-on) .hero-reel .reel-live-state i{animation:none}
   html:not(.motion-on) .hero-reel .reel-scenes button::after{transition:none}
 }
