@@ -674,512 +674,59 @@ figcaption:not(.reel-caption){
    decision), and it lays out as the video does or the frame changes shape at
    the breakpoint */
 .frame video, .frame img.narrow{display:block; width:100%; height:auto; background:var(--sunk)}
-/* ── the whole product as one cylindrical reel ─────────────────────────────
-   The hero used to spend its entire visual argument on one Map. The workbench
-   is six connected acts, so six *real* light-workspace posters now occupy one
-   six-sided cylinder. Only the face square to the reader carries motion; the
-   other five are images, and the one video element is physically moved into
-   the incoming face. The fast turn is the expressive moment. At rest the front
-   plane is untransformed relative to the camera, which keeps the application's
-   small coordinates and labels crisp enough to read. */
-/* **Glass needs something behind it, or it is just a dark box.** The pane sits
-   at the bottom of the hero, where the two drifting auras have already run out
-   and the field is a flat near-black — so a translucent panel over it looked
-   pixel for pixel like the opaque one it replaced. These are the pane's own
-   lights: large, heavily blurred, and wider than the panel on every side, so
-   some of the colour spills round the edge and the rest is read *through* the
-   glass. Without them every rule below this one is invisible. */
-.hero-reel-shot{max-width:var(--wide); position:relative}
-.hero-reel-shot::before{
-  content:''; position:absolute; z-index:0; inset:-7% 1% -12%; pointer-events:none;
-  background:
-    radial-gradient(38% 54% at 17% 24%,rgba(94,177,255,.66),transparent 70%),
-    radial-gradient(34% 48% at 85% 28%,rgba(79,183,158,.52),transparent 72%),
-    radial-gradient(56% 34% at 50% 4%,rgba(146,178,220,.44),transparent 74%),
-    radial-gradient(56% 40% at 52% 99%,rgba(94,177,255,.40),transparent 74%);
-  filter:blur(54px)
-}
-.hero-reel{position:relative; z-index:1}
-/* **The drum is a reel, so the frames do not touch.** The hexagon radius —
-   W / (2·tan 30°) — is the one at which six panels close into a solid prism
-   with no gap anywhere, and a solid prism is what it looked like: six pages
-   butted edge to edge with nothing between them. The radius here is larger, so
-   each frame takes only about 50° of the 60° it is given and the remaining 10°
-   is the gap you see through to the glass behind. Sixteen degrees of air read
-   as six chambers coming round one at a time; ten is a seam. `R = W / β` in
-   radians, and β is `CURVE_BEND` in the script — the frame's own bend is the
-   same 50°, which
-   is what makes each one a true segment of one cylinder rather than a bowed
-   card that happens to be near it. Move one and the other must move with it. */
-/* the drum was leaving 125 px of empty glass down each side and 66 top and
-   bottom; at 1,010 it fills the pane it is mounted in. The radius is the same
-   1.1459 × W it has to be for the frames to lie on one cylinder. */
-/* ── one rule for every movement the reel makes ────────────────────────────
-   The timings had grown one at a time and no two agreed: two easing curves for
-   the same rotation, a dolly sixty milliseconds longer than the turn it
-   belonged to for no reason, and four fades picked by eye. There is one curve
-   and one base duration now, and everything else is a fraction of it.
-
-   `--turn` is one face, 60°. The arrival is seven faces and takes `--turn ×
-   √7` — not seven times as long, because a drum already turning does not need
-   the easing again for every face, and not one turn's worth either. 1,400 ×
-   2.646 = 3,700, which is where the arrival had already been tuned by hand, so
-   the rule agrees with what was arrived at by ear. CSS cannot take a square
-   root, which is why the number is written out and this note is here. */
-.hero-reel{
-  --reel-angle:0deg; --reel-radius:min(98.6vw,1157px);
-  --turn:1400ms;
-  --arrive:3700ms;
-  --settle:200ms;
-  --turn-ease:cubic-bezier(.45,.05,.3,1);
-  margin:0; text-align:left
-}
+/* A continuous vertical showreel: the wordmark stays still while the real
+   screens arc through the centre. Each card is one plane and one image. */
+.hero-reel-shot{max-width:var(--wide);position:relative}
+.hero-reel{position:relative;margin:0;text-align:left}
 .reel-viewport{
-  position:relative; isolation:isolate; height:clamp(452px,58vw,714px); overflow:hidden;
-  /* **The vanishing point sits on the drum's own axis, not four per cent above
-     it.** Each slice is scaled up in Y to cancel what the projection takes off
-     it, and that cancellation is only exact for points level with the
-     perspective origin: away from it, a scaled slice's edge projects to
-     `y₀ + (y_c − y₀)/k − H/2`, which moves with `k`. With the origin at 46 %
-     the frame's top edge was therefore a different height on every slice — a
-     twelve-step sawtooth across the top and bottom of the picture. On the axis
-     the `(y_c − y₀)` term is zero and every slice's edge lands in the same
-     place whatever its depth, including part-way through a turn when the
-     depths are no longer the ones the scale was computed for. */
-  perspective:clamp(1000px,86vw,1300px); perspective-origin:50% 50%;
-  border:1px solid rgba(200,228,244,.20);
-  border-radius:clamp(24px,3vw,38px); color-scheme:light;
-  -webkit-backdrop-filter:blur(44px) saturate(1.75);
-  backdrop-filter:blur(44px) saturate(1.75);
-  background:
-    radial-gradient(124% 82% at 14% -20%,rgba(255,255,255,.20),
-      rgba(255,255,255,.05) 42%,transparent 68%),
-    radial-gradient(52% 76% at 50% 46%,rgba(94,177,255,.09),transparent 70%),
-    linear-gradient(152deg,rgba(34,56,68,.30) 0%,rgba(14,23,27,.44) 55%,rgba(8,14,17,.58) 100%);
-  /* The first two are the lit edge: a hard 1.5 px highlight down the top and
-     left, a fainter one returning along the bottom and right. An even ring all
-     the way round is a border; a ring that is bright on one side only is a
-     surface with a light above it. */
-  box-shadow:
-    1.5px 1.5px 0 rgba(240,251,255,.52) inset,
-    -1px -1px 0 rgba(240,251,255,.16) inset,
-    0 26px 54px -34px rgba(226,244,255,.55) inset,
-    0 -40px 70px -60px rgba(94,177,255,.40) inset,
-    0 34px 90px -42px rgba(0,0,0,.60),
-    0 70px 140px -80px rgba(94,177,255,.60);
+  position:relative;isolation:isolate;height:clamp(440px,56vw,660px);overflow:hidden;
+  perspective:1400px;perspective-origin:50% 50%;
+  border:1px solid var(--line);border-radius:28px;
+  background:linear-gradient(135deg,#1c303d,#111e29 70%,#152536);
+  box-shadow:0 20px 54px -38px #06111e70
 }
-.reel-viewport::before,.reel-viewport::after{
-  content:''; position:absolute; inset:0; z-index:4; pointer-events:none;
-  border-radius:inherit
-}
-/* **A drawn inner line is not glass thickness, it is a guide.** An inset
-   `outline` at a fixed offset reads as a margin marker somebody left in — the
-   one thing a piece of glass never has. Thickness is carried by the lit rim
-   and the specular alone. */
-/* **This pane still had the sweeping band the windows lost.** The gloss on
-   `.frame` was rebuilt as a light that sits on the surface and wanders, and
-   this one — the largest piece of glass on the page — was left crossing itself
-   on a thirteen second rail, which is the effect that was called cheap. Same
-   treatment: one soft specular drawn larger than the pane, moved across two
-   thirds of that spare room on both axes, never reaching an edge and so never
-   arriving or leaving. */
-.reel-viewport::before{
-  background:
-    radial-gradient(58% 92% at 50% 50%,rgba(255,255,255,.22),
-      rgba(255,255,255,.05) 40%,transparent 68%),
-    /* **The vignette was tuned for a drum that sat in clear glass, and the
-       drum now fills the pane.** Its side bands reached 21 % in from each edge
-       and its centre fell off from 46 %, which was the empty glass then and is
-       the picture now — measured on the front frame at rest: 173 at the edges
-       against 227 with the vignette off, a quarter of the light gone from the
-       thing the pane exists to show. Both are pulled back to the sliver of
-       glass still visible round the frame. */
-    linear-gradient(90deg,rgba(4,10,12,.30),transparent 5.5%,transparent 94.5%,rgba(4,10,12,.30)),
-    radial-gradient(62% 76% at 50% 46%,transparent 86%,rgba(4,10,12,.10) 96%,rgba(4,9,11,.30) 100%);
-  background-size:200% 185%,auto,auto;
-  background-position:20% 16%,0 0,0 0
-}
-@media (prefers-reduced-motion:no-preference){
-  .reel-viewport::before{animation:paneWander 27s ease-in-out infinite}
-}
-@keyframes paneWander{
-  0%,100%{background-position:20% 16%,0 0,0 0}
-  26%    {background-position:66% 34%,0 0,0 0}
-  51%    {background-position:80% 68%,0 0,0 0}
-  77%    {background-position:32% 78%,0 0,0 0}
-}
-.reel-viewport::after{
-  inset:auto 8% 4%; height:17%; border-radius:50%;
-  background:radial-gradient(closest-side,rgba(0,0,0,.48),transparent 74%);
-  filter:blur(17px); opacity:.62
+.reel-wordmark{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  pointer-events:none;user-select:none;white-space:nowrap;
+  font:550 clamp(68px,14.4vw,204px)/.9 var(--display);letter-spacing:-.07em;
+  color:#8194a2;opacity:.38
 }
 .reel-ring{
-  position:absolute; z-index:2; left:50%; top:50%; width:min(86vw,1010px); aspect-ratio:8/5;
-  transform-style:preserve-3d;
-  transform:translate3d(-50%,-50%,calc(0px - var(--reel-radius))) rotateY(var(--reel-angle));
+  position:absolute;z-index:2;left:50%;top:50%;width:56%;max-width:760px;aspect-ratio:8/5;
+  transform:translate(-50%,-50%);transform-style:preserve-3d;pointer-events:none
 }
-.hero-reel[data-state="spinning"] .reel-ring{
-  /* **The turn is the arrival's motion, one face's worth.** It had its own
-     curve and its own duration and read as a different gesture: the arrival
-     glides and lays its last degrees down slowly, while `.42,0` put the speed
-     in the middle and arrived with the frame still bending. The same curve as
-     the arrival, and long enough to use it — a face at this bend spends most
-     of its shape change in the last third of the turn, so that is the third
-     that needs the time. The number lives here and in `SPIN`, and the two
-     have to be changed together. */
-  transition:transform var(--turn) var(--turn-ease); will-change:transform;
-  /* The camera pulls back as the drum comes round and rides in again as it
-     lands — a turn seen at one distance reads as a slide, whatever the maths
-     underneath say. `scale` is its own property, so this dip composes with the
-     transform the transition owns instead of fighting it for the same slot. */
-  animation:reelDolly calc(var(--turn) + var(--settle)) var(--turn-ease) both
-}
-/* **The axis leans while it turns, so the frames climb rather than click.**
-   Upright, six panels at 60° come round the front one after another at the
-   same height and stop — which is a revolver cylinder, not a helix. A few
-   degrees of lean and the same rotation carries each frame up one side and
-   down the other, so the path a frame traces is a spiral rather than a circle.
-   It leans only while it is moving: at rest the frame the reader is reading
-   sits square, which is the one thing a lean must not cost. */
-/* the dip and the lean are halved: at 3.6° and .94 the drum was visibly
-   ducking on every turn, which is a gesture the reader did not ask for on a
-   scene change. Enough to be a camera, not enough to be a move. */
-@keyframes reelDolly{
-  0%  {scale:1;    rotate:0deg}
-  44% {scale:.968; rotate:-1.9deg}
-  100%{scale:1;    rotate:0deg}
-}
-@keyframes reelHelix{
-  0%  {rotate:-9.5deg}
-  46% {rotate:-5.2deg}
-  100%{rotate:0deg}
-}
-
-/* ── flat, after the arrival ────────────────────────────────────────────────
-   Once the drum has shown all six it is put away, and the reel becomes a row
-   of pages behind one window: the front page at `--dx` 0, the rest parked off
-   to the side, and a change one page slid across. Only the two pages involved
-   carry a transition — the others are moved without one, so a page being
-   re-parked never crosses the window. The curved stand-ins are not needed on a
-   flat page and the plain picture takes their place, with the screen's own
-   chrome back on it. */
-.hero-reel[data-mode="flat"] .reel-ring{
-  transform:translate(-50%,-50%); transform-style:flat;
-  transition:none; animation:none; scale:1; rotate:0deg
-}
-/* **One step has to be wider than the pane, not wider than the page.** At 106 %
-   a page one step over still showed a strip of itself down the pane's edge —
-   the pane is 1,180 wide and the page 1,010, so anything under 117 % of the
-   page is still inside it. 122 % clears the pane with a margin at every width
-   this is drawn at. */
-.hero-reel[data-mode="flat"] .reel-face{
-  transform:translateX(calc(var(--dx,3) * 122%)); transition:none;
-  backface-visibility:visible
-}
-.hero-reel[data-mode="flat"] .reel-face.is-sliding{
-  transition:transform var(--turn) var(--turn-ease)
-}
-.hero-reel[data-mode="flat"] .reel-curve{display:none}
-.hero-reel[data-mode="flat"] .reel-face[data-curved] .reel-screen > picture{display:block}
-/* the screen clips again on a flat page: `overflow:hidden` was taken off it
-   because it flattens 3D, and a flat page has no 3D to flatten — without it
-   the picture's square corners sat proud of the rounded frame */
-.hero-reel[data-mode="flat"] .reel-face[data-curved] .reel-screen{
-  overflow:hidden;
-  background:#F7FAFC; border-color:rgba(52,75,87,.30);
-  box-shadow:0 1px 0 rgba(255,255,255,.94) inset,0 4px 12px rgba(3,11,14,.20),
-    0 42px 84px -34px rgba(0,0,0,.72)
-}
-/* no camera move on a page turn */
-.hero-reel[data-mode="flat"][data-state="spinning"] .reel-ring{animation:none}
-
-/* ── the arrival ────────────────────────────────────────────────────────────
-   The drum comes in from two full turns back and lands, so the six screens are
-   all read once before the caption says anything about the first. Every face
-   is lit through the skim — at the .14 they rest at, a spinning drum is a dark
-   band with one bright panel in it and there is nothing to skim. `opacity` and
-   `filter` both force `transform-style:flat`, so neither may go on the ring;
-   the faces carry them, which is where the existing spin already puts them. */
-/* **A layer rasterised at .55 and scaled to 1 is a soft layer.** The drum is
-   composited once and then transformed, so the further the scale travels the
-   more of the arrival is spent looking at an enlarged bitmap of the frames
-   rather than at the frames. Eight tenths still reads as coming forward and
-   costs almost nothing in sharpness. */
-.hero-reel[data-intro="arrive"] .reel-ring{transition:none; scale:.8}
-.hero-reel[data-intro="arrive"] .reel-fill{filter:brightness(.82)}
-.hero-reel[data-intro="run"] .reel-ring{
-  /* Eased out, but not off a cliff. `cubic-bezier(.16,1,.3,1)` spends the
-     whole turn in its first third and the rest standing still, which is why
-     the first version had nothing readable in it. This one leaves the faces
-     legible the whole way round and still lands soft. The scale runs the turn
-     plus the settle, so the drum is easing forward as the rotation finishes. */
-  transition:transform var(--arrive) var(--turn-ease),
-             scale calc(var(--arrive) + var(--settle)) var(--turn-ease);
-  animation:reelHelix calc(var(--arrive) + var(--settle)) var(--turn-ease) both;
-  scale:1; will-change:transform
-}
-/* **A transition fades from the first frame; a skim needs the light to hold.**
-   Easing opacity from .8 to .14 across the turn meant the far faces were
-   already halfway gone by the time they reached the front, and the middle of
-   the arrival showed one screen and five ghosts. The keyframes hold every face
-   lit for the first two thirds — the part that is actually the skim — and take
-   them down to their resting values only over the last of it. */
-.hero-reel[data-intro="run"] .reel-fill{
-  animation:introFace calc(var(--arrive) + var(--settle)) var(--turn-ease) both
-}
-.hero-reel[data-intro="run"] .reel-face.is-active .reel-fill{animation-name:introFaceOn}
-/* **The drum is being read while it turns, so it is not dimmed to a silhouette.**
-   The first pass took the far faces to .18, which on a page whose argument is
-   that you can read the screenshots is the wrong end of the dial. They hold
-   near full light through the skim and only settle back at the end. */
-@keyframes introFace{
-  0%  {filter:brightness(.84)}
-  58% {filter:brightness(.88)}
-  78% {filter:brightness(.7) saturate(.8)}
-  100%{filter:brightness(.66) saturate(.85)}
-}
-@keyframes introFaceOn{
-  0%  {filter:brightness(.9)}
-  58% {filter:brightness(.98)}
-  100%{filter:saturate(.98) brightness(1)}
-}
-/* **A face may not carry `opacity` or `filter`, because either one flattens
-   what is inside it.** Both were on the face, which was harmless while a face
-   was one flat picture and fatal the moment it became a curve built out of
-   nine planes: the arc collapsed into the plane it was drawn on. They sit on
-   the leaves instead — the slices, the video, and the plain picture a face
-   falls back to — which are 2D anyway, and whose own placement in the drum is
-   unaffected by being grouped. Every state rule below targets `.reel-fill`
-   for the same reason. */
 .reel-face{
-  position:absolute; inset:0;
-  transform:rotateY(var(--face-angle)) translateZ(var(--reel-radius));
-  backface-visibility:hidden; transform-style:preserve-3d
+  position:absolute;inset:0;backface-visibility:hidden;visibility:hidden;
+  transform:translate3d(var(--reel-x,0px),var(--reel-y,0%),var(--reel-depth,0px))
+    rotateX(var(--reel-pitch,0deg)) rotateZ(var(--reel-tilt,0deg)) scale(var(--reel-scale,1));
+  opacity:var(--reel-opacity,0);filter:blur(var(--reel-blur,0px));
+  transform-origin:50% 50%
 }
-/* **A dimmed slice must not be a transparent one.** The slices overlap by two
-   pixels at every join so the seam has nothing to show — and the moment they
-   were given `opacity` to dim them, that overlap started compositing twice.
-   Two layers at .72 read .92 where they meet, which is a bright vertical band
-   at all eleven joins, the full height of the frame, brightest exactly when
-   the drum is moving. Every state below dims with `brightness` instead: the
-   slice stays opaque, the overlap shows one layer, and the join disappears. */
-/* half a second rather than a fifth: the light on a face changes when the turn
-   hands `is-active` over at its midpoint, and at .22 s that landed as a step
-   in the middle of a movement that is otherwise continuous */
-.reel-fill, .reel-face:not([data-curved]) .reel-screen > picture{
-/* **A frame that is not the front one is still a frame, not a shadow.** At .4
-   the drum rested as a dark band with one lit panel in it, which is why the
-   whole thing read as dark by default. Two thirds is quiet enough to say which
-   one is being read and bright enough that the others are still screens. */
-  filter:brightness(.66) saturate(.85);
-  transition:filter calc(var(--turn) * .36) ease}
-.reel-face.is-active .reel-fill,
-.reel-face.is-active:not([data-curved]) .reel-screen > picture{
-  filter:saturate(.98) brightness(1)}
-
-/* ── a page is bent, and six bent pages are a cylinder ──────────────────────
-   Six flat panels at 60° is a hexagonal prism: it turns on hard corners and
-   the silhouette is a hexagon, which is what it looked like. A page cannot be
-   bent in CSS, but it can be *built* bent — twelve vertical slices of the same
-   screenshot, each a plane of its own, laid on an arc. Fifty degrees is the
-   frame's share of the drum, so the panel is a real segment of the cylinder
-   and not a card leaning against one: the edges fall away about a ninth of the
-   frame's width in depth, which is what finally reads as round. Twelve slices
-   rather than nine because at this bend the earlier step showed its own
-   facets. The radius is `sliceWidth / (2·tan(step/2))`, the one value at
-   which neighbouring slices meet with no gap and no overlap, and it comes out
-   equal to the drum's own radius — which is the check that the geometry is
-   right. Script sets it in pixels because it is a function of the drum's
-   measured width. */
-/* the lap is declared once here rather than left to three fallbacks. Two
-   pixels closed the seam and doubled two pixels of picture at every join,
-   which shows on lettering; 1.25 is still two and a half device pixels at 2×,
-   which is enough to cover the join, and half as much picture drawn twice. */
-.reel-curve{--ov:1.25px; position:absolute; inset:0; transform-style:preserve-3d;
-  transform:translateZ(calc(0px - var(--curve-r,0px)))}
-/* **A slice holds a real `<img>`, not a slice of a background.** Sizing one
-   screenshot nine ways with `background-size` and a percentage offset is the
-   tidier-looking answer and it painted nothing: measured, every slice reported
-   the right url, the right 900% and the right offset, and eight of the nine
-   drew white. An image positioned inside an `overflow:hidden` box is the same
-   crop with none of that — and `overflow` here costs nothing, because a slice
-   is a leaf whose own place in the drum comes from its own transform. */
-.reel-slice{
-  /* **The overlap has to be the same pixels, not a scaled copy of them.**
-     Boxes that meet exactly leave a device-pixel gap at every join once they
-     are rotated and resampled, and twelve hairlines down a screenshot is the
-     first thing anybody sees turning. Scaling each slice 1 % closed the gap
-     and opened a worse one: the two sides of every join then showed the *same
-     picture at two sizes*, which is a seam that gets more visible the faster
-     it moves. The box is widened by a fixed hair on each side instead and the
-     picture inside is shifted back by exactly that, so the overlapping band is
-     one image drawn twice and the join has nothing to show. */
-  position:absolute; top:0; bottom:0; left:50%;
-  width:calc(var(--slice-w,0px) + 2 * var(--ov,2px));
-  margin-left:calc(-0.5 * var(--slice-w,0px) - var(--ov,2px));
-  transform:rotateY(var(--sa,0deg)) translateZ(var(--curve-r,0px));
-  /* **The face hiding its own back does not hide its children's.** Taken off
-     the slices to chase the seams, and the far side of the drum promptly came
-     through the gaps as mirrored screenshots. The seams were the overlap's
-     fault, not this property's, so it goes back. */
-  backface-visibility:hidden; overflow:hidden; background:#F7FAFC
+.reel-face.is-active{visibility:visible;--reel-opacity:1}
+.reel-face[data-reel-position="center"],.reel-face[data-reel-position="neighbor"]{
+  visibility:visible;will-change:transform,filter,opacity
 }
-.reel-slice img{
-  position:absolute; top:0;
-  left:calc(var(--ov,2px) - var(--sk,0) * var(--slice-w,0px));
-  width:calc(var(--slice-w,0px) * var(--curve-n,12)); max-width:none; height:100%;
-  object-fit:cover; object-position:50% 50%; display:block
-}
-/* Sprocket holes were drawn here once and taken out again: the curve and the
-   turn are what say film, and a perforated band under every screenshot says it
-   a second time, out loud, in a way nothing else on this page does. */
-.reel-face[data-fit="tall"] .reel-slice img{object-position:50% 0}
-.reel-slice.is-first{border-radius:clamp(14px,1.8vw,23px) 0 0 clamp(14px,1.8vw,23px)}
-.reel-slice.is-last{border-radius:0 clamp(14px,1.8vw,23px) clamp(14px,1.8vw,23px) 0}
-/* the flat picture is the fallback, and it steps aside once the curve is built */
-.reel-face[data-curved] .reel-screen > picture{display:none}
-/* **The screen stops painting once the slices do.** Its white ground, hairline
-   and shadow belong to the face, not to the fills — so when the dimming moved
-   off the face and onto the fills, they stayed at full strength and every
-   quiet face in the drum came out as a blank white card with a shadow. The
-   slices carry the whole picture edge to edge and round their own outer
-   corners; there is nothing left for the screen to draw. */
-.reel-face[data-curved] .reel-screen{background:transparent; border-color:transparent;
-  box-shadow:none}
-/* **The facet shading was a flat plate, and the facets are not flat any more.**
-   It shaded each face as a panel turning away — which was the right drawing
-   while a face *was* one flat panel, and became two faults the moment the face
-   became a curve. It sits at the face's own plane while the picture bends up
-   to a hundred pixels behind it, so it hangs in front of the frame instead of
-   lying on it; and it is a child, so the face hiding its own back does not
-   hide this, and every far-side face's plate carries on painting as a hard
-   rectangle floating inside the drum. Both of those are visible. The curve and
-   the brightness say what the gradient used to say, so it is gone. */
-/* while it turns the whole drum is the subject, so the far facets come up out
-   of the dark rather than staying the near-invisible .34 they rest at */
-/* **No blur on a turn.** A little of it was meant to read as motion and what
-   it actually did was hand the reader a soft picture for the whole second the
-   drum was moving — on a page whose entire argument is that you can read the
-   screenshots. Depth is carried by brightness alone now, and the frame square
-   to the reader keeps its own. */
-.hero-reel[data-state="spinning"] .reel-fill{filter:saturate(.86) brightness(.84)}
-.hero-reel[data-state="spinning"] .reel-face.is-active::after{opacity:.44}
-.hero-reel[data-state="spinning"] .reel-face.is-active .reel-fill{filter:none}
+.reel-face[data-reel-position="away"]{visibility:hidden;will-change:auto}
 .reel-screen{
-  position:absolute; inset:0; border:1px solid rgba(52,75,87,.30);
-  border-radius:clamp(14px,1.8vw,23px); background:#F7FAFC;
-  /* `overflow:hidden` is one of the values that forces `transform-style:flat`,
-     so the screen cannot clip its own contents any more. The slices round
-     their own outer corners instead, and the video keeps its own clip. */
-  transform-style:preserve-3d;
-  box-shadow:0 1px 0 rgba(255,255,255,.94) inset,0 4px 12px rgba(3,11,14,.20),
-    0 42px 84px -34px rgba(0,0,0,.72)
+  position:absolute;inset:0;overflow:hidden;border:1px solid #7e94a44d;
+  border-radius:13px;background:#f7fafc;
+  box-shadow:0 12px 30px -18px #06132280,0 1px 0 #ffffff90 inset
 }
-/* **`.reel-screen img` is every image in the screen, and a slice's is one.**
-   Both this and `.reel-slice img` are one class and one element, so the later
-   of the two won and every slice's picture came out one slice wide instead of
-   nine — the crop was right and there was nothing in it but the first ninth.
-   Scoped to the picture it was written for, it stops matching the slices at
-   all, which is the fix rather than a heavier selector on the other side. */
-.reel-screen picture,.reel-screen picture img,.reel-live-slot,.reel-live-slot video{
-  display:block; width:100%; height:100%
+.reel-screen picture,.reel-screen picture img,.reel-live-slot,.reel-live-slot video,.reel-live-slot img{
+  display:block;width:100%;height:100%
 }
-.reel-screen picture img,.reel-live-slot video{object-fit:cover; object-position:50% 50%; background:#F7FAFC}
+.reel-screen picture img,.reel-live-slot video,.reel-live-slot img{
+  object-fit:cover;object-position:50% 50%;background:#f7fafc
+}
 .reel-face[data-fit="tall"] .reel-screen picture img,
-.reel-face[data-fit="tall"] .reel-live-slot video{object-position:50% 0}
-/* **The clip was behind the curve, so the front of the drum never moved.**
-   The slices and this slot are siblings in one 3D context and the slices sit
-   within a pixel of z = 0, which was enough for the sort to put an `<img>` on
-   top of the video — measured on the live page: `elementFromPoint` at the dead
-   centre of a playing clip returned IMG. A pixel forward settles it, and is
-   invisible on a face that is itself at z = 0. */
-.reel-live-slot{position:absolute; inset:0; overflow:hidden;
-  border-radius:clamp(14px,1.8vw,23px); transform:translateZ(1px)}
-/* **The clip is flat, and it is the one thing on the face that cannot bend.**
-   A `<video>` is a single plane; it cannot be cut into slices and laid on the
-   arc the way its own poster can, so it stands down while anything is moving
-   and the curved poster stands in.
-
-   **The handover is what made the unfolding feel abrupt.** Switched on
-   `visibility`, the curved still became a flat clip between two frames, at the
-   end of a turn that had spent 1.4 s easing — so the last of the flattening
-   arrived as a cut rather than as the end of a movement. The clip fades up
-   over the curve instead, and the curve is only taken away once it is covered:
-   `visibility` cannot tween, but it can be delayed, and a delay is all this
-   needs. Going the other way it returns with no delay, so the curve is already
-   standing before the clip fades out. */
-.reel-live-slot{opacity:0; transition:opacity calc(var(--turn) * .4) ease}
-.hero-reel[data-state="playing"] .reel-face.is-active .reel-live-slot{opacity:1}
-.reel-curve{transition:visibility 0s linear 0s}
-.hero-reel[data-state="playing"] .reel-face.is-active .reel-curve{
-  visibility:hidden; transition:visibility 0s linear calc(var(--turn) * .42)}
-.reel-live-slot video{opacity:0; transition:opacity .16s ease}
-.reel-live-slot video[data-ready="true"]{opacity:1}
-.reel-viewport > [data-reel-video]{display:none}
-/* **On a phone the live thing in the slot is an animated image**, moved between
-   the faces the way the one video is, and it wears the video's rules to the
-   letter — cover, the tall fit, the fade — or the handover from poster to loop
-   would be the one cut in a tour that otherwise never cuts. Scoped to the
-   slot: `.reel-screen img` is every image in the screen, a slice's included,
-   and that is the trap the note above already names. */
-.reel-live-slot img{display:block; width:100%; height:100%; object-fit:cover;
-  object-position:50% 50%; background:#F7FAFC; opacity:0; transition:opacity .16s ease}
+.reel-face[data-fit="tall"] .reel-live-slot video,
 .reel-face[data-fit="tall"] .reel-live-slot img{object-position:50% 0}
-.reel-live-slot img[data-ready="true"]{opacity:1}
-.reel-viewport > [data-reel-loop]{display:none}
-.reel-streak{
-  position:absolute; z-index:5; top:-18%; bottom:-18%; left:43%; width:14%;
-  opacity:0; pointer-events:none; transform:skewX(-12deg) translateX(-240%);
-  background:linear-gradient(90deg,transparent,rgba(229,247,255,.34),rgba(94,177,255,.20),transparent);
-  filter:blur(10px); mix-blend-mode:screen
-}
-/* the projector striking up: one pass of light across the gate as the reel
-   comes in, and the same sweep on every turn after it */
-.hero-reel[data-state="spinning"] .reel-streak{animation:reelWhoosh calc(var(--turn) * .62) var(--turn-ease) both}
-.hero-reel[data-intro="run"] .reel-streak{animation:reelWhoosh calc(var(--arrive) * .63) var(--turn-ease) both}
-@keyframes reelWhoosh{
-  0%{opacity:0; transform:skewX(-12deg) translateX(-260%)}
-  28%{opacity:.86}
-  76%{opacity:.28}
-  100%{opacity:0; transform:skewX(-12deg) translateX(440%)}
-}
+.reel-live-slot{position:absolute;inset:0;opacity:0;transition:opacity .16s ease}
+.reel-face[data-live="true"] .reel-live-slot{opacity:1}
+.reel-viewport>[data-reel-video],.reel-viewport>[data-reel-loop]{display:none}
+.hero-reel[data-state="paused"] .reel-face,.hero-reel[data-state="idle"] .reel-face{will-change:auto}
 
-/* ── the caption resolves rather than swaps ────────────────────────────────
-   The line arrives out of focus and settles, and a caret holds at the end of
-   the title while it does. Three rules keep it from being decoration: it fires
-   only on a real change (the first paint gets none of it), it runs at the one
-   moment the drum is already moving, and it is `transform`, `opacity` and a
-   short `blur` — nothing that costs a layout. Reduced motion gets the text and
-   no animation at all, which is why the class is added in script rather than
-   bound to the text. */
-@keyframes kineticIn{
-  0%  {opacity:0; transform:translate3d(0,11px,0) scale(.986); filter:blur(10px)}
-  52% {opacity:1}
-  100%{opacity:1; transform:none; filter:blur(0)}
-}
-/* the count is a figure, so it rolls up into place rather than rising into it */
-@keyframes kineticRoll{
-  0%  {opacity:0; transform:translate3d(0,.52em,0); filter:blur(5px)}
-  100%{opacity:1; transform:none; filter:blur(0)}
-}
-@keyframes kineticCaret{0%,49%{opacity:1} 50%,100%{opacity:0}}
-@media (prefers-reduced-motion:no-preference){
-  .reel-caption strong.is-kinetic{animation:kineticIn 440ms cubic-bezier(.16,1,.3,1) both}
-  .reel-caption p.is-kinetic{animation:kineticIn 480ms cubic-bezier(.16,1,.3,1) 70ms both}
-  .reel-count.is-kinetic{animation:kineticRoll 360ms cubic-bezier(.16,1,.3,1) both}
-  .reel-caption strong.is-kinetic::after{animation:kineticCaret 760ms steps(1,end) 3}
-}
-/* the caret is always in the line so its 2 px never moves the text when it
-   lights; it simply has nothing to show except while the line is resolving */
-.reel-caption strong::after{
-  content:''; display:inline-block; width:2px; height:.82em; margin-left:.13em;
-  vertical-align:-.06em; border-radius:1px; background:var(--amber); opacity:0
-}
-
-/* The caption is outside the screen because any label over a data-dense view
-   hides the very thing it claims to explain. It changes when the incoming face
-   becomes the nearer one, then holds still while that clip is being read. */
-.reel-caption{width:min(100%,760px); margin:clamp(20px,2.5vw,30px) auto 0;
+.reel-caption{min-height:124px;width:min(100%,760px); margin:clamp(20px,2.5vw,30px) auto 0;
   font-family:var(--ui); text-align:center; color:var(--slate)}
 .reel-factline{display:flex; align-items:center; justify-content:center; gap:14px; margin-bottom:10px}
 .reel-count{font:600 11px/1.35 var(--ui); letter-spacing:.1em; color:var(--amber);
@@ -1188,7 +735,7 @@ figcaption:not(.reel-caption){
   font:500 10.5px/1.35 var(--ui); letter-spacing:.07em; text-transform:uppercase; color:var(--faint)}
 .reel-live-state i{display:block; width:6px; height:6px; border-radius:50%; background:var(--fwd);
   box-shadow:0 0 0 4px color-mix(in oklab,var(--fwd) 13%,transparent)}
-.hero-reel[data-state="playing"] .reel-live-state i{animation:reelLive 1.8s ease-in-out infinite}
+.hero-reel:is([data-state="playing"],[data-state="rolling"]) .reel-live-state i{animation:reelLive 1.8s ease-in-out infinite}
 @keyframes reelLive{0%,100%{opacity:.52}50%{opacity:1}}
 .reel-caption strong{display:block; color:var(--ink); font:500 clamp(20px,2.5vw,29px)/1.18 var(--display);
   letter-spacing:-.026em}
@@ -1225,45 +772,23 @@ figcaption:not(.reel-caption){
   border-top:5px solid transparent; border-bottom:5px solid transparent; border-left:8px solid currentColor}
 
 :root[data-theme="light"] .reel-viewport{
-  border-color:rgba(67,101,121,.26);
-  background:
-    radial-gradient(52% 74% at 50% 47%,rgba(10,102,194,.10),transparent 70%),
-    radial-gradient(52% 88% at 8% 68%,rgba(15,125,104,.07),transparent 72%),
-    radial-gradient(124% 82% at 14% -20%,rgba(255,255,255,.96),
-      rgba(255,255,255,.42) 42%,transparent 70%),
-    linear-gradient(152deg,rgba(252,254,255,.58) 0%,rgba(234,241,244,.50) 60%,rgba(221,231,236,.62) 100%);
-  box-shadow:
-    0 1px 0 #FFFFFF inset,
-    0 0 0 1px rgba(255,255,255,.62) inset,
-    0 60px 90px -70px rgba(10,102,194,.30) inset,
-    0 -1px 0 rgba(255,255,255,.85) inset,
-    0 34px 84px -42px rgba(38,67,84,.32),
-    0 90px 170px -112px rgba(10,102,194,.34)
+  border-color:#d4e2ef;background:linear-gradient(135deg,#d8eafb,#f2f7fc 76%,#e2eef9);
+  box-shadow:0 20px 54px -38px #45698750
 }
-:root[data-theme="light"] .reel-viewport::before{
-  background:
-    radial-gradient(58% 92% at 50% 50%,rgba(255,255,255,.78),
-      rgba(255,255,255,.22) 40%,transparent 68%),
-    linear-gradient(90deg,rgba(49,70,82,.12),transparent 5.5%,transparent 94.5%,rgba(49,70,82,.12)),
-    radial-gradient(62% 76% at 50% 46%,transparent 86%,rgba(66,89,103,.05) 96%,rgba(49,70,82,.12) 100%);
-  background-size:200% 185%,auto,auto
-}
-:root[data-theme="light"] .reel-viewport::after{
-  background:radial-gradient(closest-side,rgba(39,64,78,.24),transparent 74%)
-}
+:root[data-theme="light"] .reel-wordmark{color:#536c82;opacity:.38}
 
 @media (max-width:760px){
-  .hero-reel{--reel-radius:calc((100vw - 52px) * 1.1459)}
-  .reel-viewport{height:clamp(316px,86vw,350px); perspective:760px; border-radius:22px}
+  .reel-viewport{height:clamp(340px,104vw,430px);perspective:1000px;border-radius:22px}
+  .reel-wordmark{font-size:clamp(62px,16vw,122px);letter-spacing:-.075em}
   /* **The frame's shape is the clips' shape, and it is 5:4.** `object-fit:cover`
      fills this box, so anything wider than it is thrown away off both sides —
      at 1.22 against six phone crops of 1.23 to 1.83 that was a third of the
      guides frame gone. `tools/clip.mjs` cuts every phone crop to `PHONE_AR`,
      which is this number, and `tools/site.mjs` refuses to publish if the two
      have come apart. Do not change one of them. */
-  .reel-ring{width:calc(100vw - 52px); aspect-ratio:5/4}
-  .reel-screen{border-radius:16px}
-  .reel-caption{margin-top:19px; padding-inline:3px}
+  .reel-ring{width:76%;aspect-ratio:5/4}
+  .reel-screen{border-radius:10px}
+  .reel-caption{margin-top:19px;padding-inline:3px;min-height:154px}
   .reel-caption strong{font-size:21px}
   .reel-caption p{font-size:13.5px; max-width:44ch}
   .reel-controls{grid-template-columns:44px minmax(0,1fr) 44px; gap:5px; padding:6px}
@@ -1276,26 +801,12 @@ figcaption:not(.reel-caption){
 }
 @media (max-width:430px){
   .hero-reel-shot{padding-inline:14px}
-  .reel-ring{width:calc(100vw - 48px)}
-  .hero-reel{--reel-radius:calc((100vw - 48px) * 1.1459)}
 }
-/* **Reduce Motion stills the tour, and the tour's own button is the way back
-   in.** Every rule here is scoped to `html:not(.motion-on)`: the script puts
-   that class on the root when the reader presses *Play the tour* (and keeps
-   it), and the drum, the faces and the clips then behave as on any other
-   device. The toggle used to be hidden here, which left a reader with the OS
-   switch on — common on a phone, and easy to forget — looking at a poster
-   with no way to ask for the clip. */
+/* The OS preference starts on one sharp poster; Play explicitly enables motion. */
 @media (prefers-reduced-motion:reduce){
-  html:not(.motion-on) .hero-reel .reel-ring{transform:translate(-50%,-50%) !important; transform-style:flat;
-    transition:none !important; animation:none !important; scale:1 !important; will-change:auto}
-  html:not(.motion-on) .hero-reel .reel-face{transform:none !important; opacity:0; visibility:hidden; filter:none;
-    transition:none}
-  html:not(.motion-on) .hero-reel .reel-face.is-active{opacity:1; visibility:visible}
-  /* no curve here: the drum is flat, so the slices would be nine strips of one
-     picture laid side by side, which is the picture — script builds none */
-  html:not(.motion-on) .hero-reel .reel-fill{filter:none; transition:none; animation:none !important}
-  html:not(.motion-on) .hero-reel .reel-streak{display:none}
+  html:not(.motion-on) .hero-reel .reel-face{transform:none;filter:none;opacity:0;visibility:hidden;will-change:auto}
+  html:not(.motion-on) .hero-reel .reel-face.is-active{opacity:1;visibility:visible}
+  html:not(.motion-on) .hero-reel .reel-live-slot{transition:none}
   html:not(.motion-on) .hero-reel .reel-live-state i{animation:none}
   html:not(.motion-on) .hero-reel .reel-scenes button::after{transition:none}
 }

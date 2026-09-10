@@ -19,7 +19,9 @@
      is what answers when there is no stored choice. -->
 <script>(function(){var t;try{t=localStorage.getItem('gs-theme')}catch(e){}
 if(t!=='light'&&t!=='dark')t='light';
-document.documentElement.dataset.theme=t;})()</script>
+document.documentElement.dataset.theme=t;
+try{if(localStorage.getItem('gs-site-motion')==='on')document.documentElement.classList.add('motion-on')}catch(e){}
+})()</script>
 <meta property="og:title" content="Gene Studio">
 <meta property="og:description" content="A plasmid workbench that opens what your lab already has — GenBank, SnapGene .dna, FASTA and Sanger traces — and writes them back without losing what was in them.">
 <meta property="og:type" content="website">
@@ -54,7 +56,8 @@ document.documentElement.dataset.theme=t;})()</script>
 <link rel="preload" href="font/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="font/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="font/fonts.css?v=20260828">
-<link rel="stylesheet" href="base.css?v=20260904c">
+<link rel="stylesheet" href="base.css?v=20260911-comet1">
+<script src="hero-reel.js?v=20260911-comet1" defer></script>
 </head>
 <body>
 <!-- **A phone reports its own state, so nobody has to guess at it.** Open the
@@ -221,18 +224,15 @@ document.documentElement.dataset.theme=t;})()</script>
   </div>
 
   <div class="shot hero-reel-shot">
-    <!-- **One tour, not six videos.** Every face is a complete poster from the
-         real application. One muted video node is moved into whichever face is
-         arriving, so an inactive screen can never own a decoder. The cylinder
-         is decorative; the controls and the synchronized caption below it are
-         the accessible description of the same six-part product overview. -->
-    <figure class="hero-reel" data-hero-reel data-state="idle" data-index="0"
+    <!-- Real product screens roll through one stage; one media element owns playback. -->
+    <figure class="hero-reel" data-hero-reel data-reel-mode="comet" data-mode="comet" data-reel-period="1400" data-reel-spacing="122" data-reel-blur="12" data-state="idle" data-index="0"
             data-in-view="false" data-user-paused="false" aria-labelledby="hero-reel-title">
       <div class="reel-viewport" data-reel-viewport>
+        <div class="reel-wordmark" aria-hidden="true">Gene Studio</div>
         <div class="reel-ring" data-reel-ring aria-hidden="true">
           <div class="reel-face is-active" data-reel-face data-scene="home"
                data-video="clip/home.mp4" data-phone-anim="clip/home-phone.anim.webp"
-               data-label="Home" style="--face-angle:0deg">
+               data-label="Home">
             <div class="reel-screen">
               <picture><source media="(max-width:760px)" srcset="clip/home-phone.webp">
                 <img src="clip/home.webp" width="2400" height="1500" alt=""></picture>
@@ -241,7 +241,7 @@ document.documentElement.dataset.theme=t;})()</script>
           </div>
           <div class="reel-face" data-reel-face data-scene="map"
                data-video="clip/map.mp4" data-phone-anim="clip/map-phone.anim.webp"
-               data-label="Map" style="--face-angle:60deg">
+               data-label="Map">
             <div class="reel-screen">
               <picture><source media="(max-width:760px)" srcset="clip/map-phone.webp">
                 <img src="clip/map.webp" width="2400" height="1500" alt=""></picture>
@@ -250,7 +250,7 @@ document.documentElement.dataset.theme=t;})()</script>
           </div>
           <div class="reel-face" data-reel-face data-scene="feature"
                data-video="clip/feature.mp4" data-phone-anim="clip/feature-phone.anim.webp"
-               data-label="Features" style="--face-angle:120deg">
+               data-label="Features">
             <div class="reel-screen">
               <picture><source media="(max-width:760px)" srcset="clip/feature-phone.webp">
                 <img src="clip/feature.webp" width="2400" height="1500" alt=""></picture>
@@ -259,7 +259,7 @@ document.documentElement.dataset.theme=t;})()</script>
           </div>
           <div class="reel-face" data-reel-face data-scene="digest" data-fit="tall"
                data-video="clip/digest.mp4" data-phone-anim="clip/digest-phone.anim.webp"
-               data-label="Digest" style="--face-angle:180deg">
+               data-label="Digest">
             <div class="reel-screen">
               <picture><source media="(max-width:760px)" srcset="clip/digest-phone.webp">
                 <img src="clip/digest.webp" width="2400" height="1980" alt=""></picture>
@@ -268,7 +268,7 @@ document.documentElement.dataset.theme=t;})()</script>
           </div>
           <div class="reel-face" data-reel-face data-scene="guides"
                data-video="clip/guides.mp4" data-phone-anim="clip/guides-phone.anim.webp"
-               data-label="Guides" style="--face-angle:240deg">
+               data-label="Guides">
             <div class="reel-screen">
               <picture><source media="(max-width:760px)" srcset="clip/guides-phone.webp">
                 <img src="clip/guides.webp" width="2400" height="1500" alt=""></picture>
@@ -277,7 +277,7 @@ document.documentElement.dataset.theme=t;})()</script>
           </div>
           <div class="reel-face" data-reel-face data-scene="sanger" data-fit="tall"
                data-video="clip/sanger.mp4" data-phone-anim="clip/sanger-phone.anim.webp"
-               data-label="Sanger" style="--face-angle:300deg">
+               data-label="Sanger">
             <div class="reel-screen">
               <picture><source media="(max-width:760px)" srcset="clip/sanger-phone.webp">
                 <img src="clip/sanger.webp" width="2400" height="2280" alt=""></picture>
@@ -285,7 +285,6 @@ document.documentElement.dataset.theme=t;})()</script>
             </div>
           </div>
         </div>
-        <div class="reel-streak" aria-hidden="true"></div>
         <video data-reel-video muted playsinline preload="none" aria-hidden="true" tabindex="-1"></video>
       </div>
 
@@ -2083,604 +2082,7 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
   }else for(const a of document.querySelectorAll('[data-dl="nix"]')) a.hidden = true;
 }).catch(() => {});
 
-/* ── one whole-product reel, and exactly one decoder ───────────────────────
-   Six real screens occupy the six faces of a CSS cylinder. The pictures are
-   complete answers by themselves; motion is added by moving this one video
-   node into the face that is about to arrive. No inactive face can decode,
-   reduced motion never receives a source, and the phone's Digest stays on its
-   complete poster because the only existing phone crop is a gel, not Digest. */
-{
-  const reel = document.querySelector('[data-hero-reel]');
-  if(reel){
-    const ring = reel.querySelector('[data-reel-ring]');
-    const faces = [...reel.querySelectorAll('[data-reel-face]')];
-    const video = reel.querySelector('[data-reel-video]');
-    const count = reel.querySelector('[data-reel-count]');
-    const title = reel.querySelector('[data-reel-title]');
-    const copy = reel.querySelector('[data-reel-copy]');
-    const status = reel.querySelector('[data-reel-status]');
-    const sceneButtons = [...reel.querySelectorAll('[data-reel-go]')];
-    const pauseButton = reel.querySelector('[data-reel-pause]');
-    const pauseLabel = reel.querySelector('[data-reel-pause-label]');
-    const compact = matchMedia('(max-width:760px)');
-    /* **Reduce Motion is honoured, and it is not a locked door.** With the OS
-       switch on, every clip on this page is a still and the tour a poster —
-       which is right until the reader is the one asking why nothing moves,
-       and on a phone that is a common setting to have on without remembering
-       it. So the switch is respected by default and the tour's own button
-       becomes the way in: one press says *play*, the choice is kept for next
-       time, and everything that reads `reduced` sees it lifted. It is one
-       object read everywhere rather than a flag beside each check, because a
-       flag beside each check is the one that gets forgotten. */
-    const reducedMedia = matchMedia('(prefers-reduced-motion:reduce)');
-    const motionOn = () => document.documentElement.classList.contains('motion-on');
-    try{ if(localStorage.getItem('gs-site-motion') === 'on') document.documentElement.classList.add('motion-on'); }catch{}
-    const reduced = {get matches(){ return reducedMedia.matches && !motionOn(); },
-                     addEventListener:(type, fn) => reducedMedia.addEventListener?.(type, fn)};
-    /* **iOS has two switches, and this page had read them as one.** A phone
-       with Reduce Motion on sent back its own diagnosis: `reduce motion:
-       true`, and the two-colour test loop blinking — the OS was reducing
-       motion *and* allowing animated images, which are separate settings
-       there ("Auto-Play Animated Images" is its own line). Stilling the
-       loops on that phone was the page's decision, not the reader's. So on a
-       phone Reduce Motion means what it says — the drum does not spin and a
-       page turn is a cut, both already in the stylesheet — and the loops
-       play, governed by the switch the OS keeps for them. `stilled` is the
-       tour as a poster, which is Reduce Motion on a screen that plays video. */
-    const stilled = () => reduced.matches && !compact.matches;
-    const enableMotion = () => {
-      document.documentElement.classList.add('motion-on');
-      try{ localStorage.setItem('gs-site-motion', 'on'); }catch{}
-      dispatchEvent(new Event('gs-motion'));
-    };
-    /* **The clips are two to three seconds long and the turn now takes 1.4 of
-       them.** Played once and left on their last frame, the front of the drum
-       was a still picture for most of every cycle — measured over ten seconds
-       on the live page: 1.4 s of poster while the drum turns, 2 s of motion,
-       then a frozen frame until the next turn. It loops instead, and the
-       advance comes off a clock rather than off `ended`, so the face the
-       reader is looking at is moving the whole time it is the front one. */
-    const SPIN = 1400, HOLD = 460, STILL_HOLD = 2100, PLAY_HOLD = 5200;
-    /* **The arrival is a skim, not an entrance.** Coming in from a face and a
-       half showed the reader one screen arriving and said nothing about the
-       other five. It runs two full turns plus a face instead — 792° — so every
-       one of the six passes the front before it lands, and the whole product
-       is read once before a word of the caption is.
-
-       **A skim has a reading speed, and two turns is past it.** The first cut
-       ran 792° in 1,450 ms: measured off the frames, the fast third was a dark
-       smear with nothing legible in it, which is a whoosh, not a skim. One turn
-       and a face over 3 s puts each of the six square to the reader for about
-       450 ms at the fastest and longer as it slows — enough to see what it is,
-       and slow enough to read as a reel running rather than a cylinder being
-       cocked. */
-    /* these three are `--turn`, `--arrive` and `--settle` in the stylesheet;
-       the rule that ties them is written there and both sides have to move
-       together, since one drives the transition and the other the clock */
-    const ARRIVE = 3700, SETTLE = 200, ARRIVE_TURN = 420;
-    const words = [
-      ['Find the file, or the exact site inside it.',
-       'Home searches favorite folders by filename or recognition sequence, locally and without an import step.'],
-      ['Read the whole construct at once.',
-       'Map resolves the circular molecule, both feature strands and every restriction label as space opens.'],
-      ['Open the annotation beyond GenBank.',
-       'Features keeps identity pinned while computed properties, eggNOG and InterPro move into view.'],
-      ['Cut once. See every consequence.',
-       'Digest links the selected stretch, compatible enzymes, gel, fragment table and methylation verdict.'],
-      ['Design the edit and the oligos together.',
-       'Guides scans real candidates, ranks them and carries the selected design through to order-ready sequences.'],
-      ['Verify the clone where the trace says it changed.',
-       'Sanger aligns forward and reverse reads, quality, differences and chromatograms against the construct.']
-    ];
-
-    let index = reduced.matches ? 1 : 0;
-    let angle = -index * 60;
-    let timer = 0, middleTimer = 0, finishTimer = 0, loadToken = 0;
-    let inView = false, userPaused = false, hardPaused = false, pageVisible = !document.hidden;
-    let arrived = false, captioned = false;
-
-    /* ── the faces are curves, not panels ──────────────────────────────────
-       Twelve vertical slices of the same screenshot, each its own plane, laid
-       on an arc of 50° across the face — the frame's own share of the drum, so
-       each one is a true segment of the cylinder and the remaining 10° of its
-       60° is the gap between frames. `r = sliceWidth / (2·tan(step/2))` is the
-       radius at which neighbouring slices meet exactly; it comes out equal to
-       `--reel-radius`, which is the check that the two agree. It depends on the
-       drum's measured width, so it is set here rather than in the stylesheet
-       and re-set whenever that width changes. The plain `<picture>` stays in
-       the markup and is what a reader sees if this never runs. */
-    const CURVE_N = 12, CURVE_BEND = 50;
-    const curveStep = CURVE_BEND / CURVE_N;
-    const curveRatio = 1 / (CURVE_N * 2 * Math.tan(curveStep / 2 * Math.PI / 180));
-    /* **Do not try to correct the foreshortening per slice.** A slice was once
-       scaled up in Y by `(p + |z|) / p` on the theory that each flat facet
-       shrinks by one constant and therefore steps at every join. It does not:
-       a slice is rotated about Y, so depth varies across its own width and the
-       browser applies a real perspective transform to it — the projection is
-       already continuous through every join. The correction was solving a
-       problem that was not there, and it introduced one that was, since the
-       cancellation is only exact for points level with the perspective origin
-       and the frame's top and bottom edges are not. The result was a twelve
-       step sawtooth along both. The slices are left alone. */
-    const sizeCurves = () => {
-      /* **`offsetWidth`, not the bounding rect.** The ring is scaled and turned
-         in 3D, so its client rect is the *projected* box — measured mid-arrival
-         it read 292 px against a real 928, and every slice was laid on a circle
-         a fifth of the right size, which stacks them instead of tiling them. */
-      const w = ring.offsetWidth;
-      if(!w) return;
-      const r = w * curveRatio;
-      for(const face of faces){
-        const curve = face.querySelector('.reel-curve');
-        if(!curve) continue;
-        curve.style.setProperty('--curve-r', r.toFixed(2) + 'px');
-        /* the picture is offset per slice in pixels, so it needs the slice's
-           real width rather than a percentage of it */
-        curve.style.setProperty('--slice-w', (w / CURVE_N).toFixed(3) + 'px');
-      }
-    };
-    const buildCurves = () => {
-      if(reduced.matches) return;
-      for(const face of faces){
-        const screen = face.querySelector('.reel-screen');
-        const img = face.querySelector('img');
-        const src = img && (img.currentSrc || img.getAttribute('src'));
-        if(!screen || !src) continue;
-        let curve = screen.querySelector('.reel-curve');
-        if(!curve){
-          curve = document.createElement('div');
-          curve.className = 'reel-curve';
-          curve.style.setProperty('--curve-n', String(CURVE_N));
-          for(let i = 0; i < CURVE_N; i++){
-            const slice = document.createElement('div');
-            slice.className = 'reel-slice reel-fill' +
-              (i === 0 ? ' is-first' : i === CURVE_N - 1 ? ' is-last' : '');
-            slice.style.setProperty('--sa',
-              ((i - (CURVE_N - 1) / 2) * curveStep).toFixed(4) + 'deg');
-            /* the picture is the width of the whole face inside a box one
-               N-th of it, pushed left by this slice's share */
-            slice.style.setProperty('--sk', String(i));
-            const shot = document.createElement('img');
-            shot.alt = '';
-            shot.decoding = 'async';
-            slice.appendChild(shot);
-            curve.appendChild(slice);
-          }
-          screen.insertBefore(curve, screen.firstChild);
-        }
-        for(const slice of curve.children){
-          const shot = slice.firstElementChild;
-          if(shot && shot.getAttribute('src') !== src) shot.setAttribute('src', src);
-        }
-        face.dataset.curved = 'true';
-      }
-      sizeCurves();
-    };
-    let prepared = null, pending = null;
-
-    /* ── after the arrival, the drum is put away ──────────────────────────
-       The cylinder is for the first look: one turn that shows all six. After
-       that a scene change is a page turned, not a drum spun — the current face
-       slides out one step and the next slides in, flat. Every face keeps a
-       `--dx` in face widths from the front position: 0 is the front, ±1 is the
-       neighbour just off the edge, ±3 is parked well away. A change is always
-       exactly one step in the asked-for direction whatever the distance
-       between the two indexes: the incoming face is first *put* one step to
-       that side without a transition, and only then do the two of them slide.
-       Every other face is parked without one, so nothing crosses the pane on
-       its way to a new parking place. */
-    const parkFlat = (cur) => {
-      faces.forEach((f, i) => {
-        f.classList.remove('is-sliding');
-        f.style.setProperty('--dx', i === cur ? '0' : '3');
-      });
-    };
-    const slideFlat = (from, to, dir) => {
-      faces.forEach((f, i) => {
-        f.classList.remove('is-sliding');
-        f.style.setProperty('--dx', i === to ? String(dir) : i === from ? '0' : String(dir * 3));
-      });
-      void ring.offsetWidth;
-      faces[from].classList.add('is-sliding');
-      faces[to].classList.add('is-sliding');
-      faces[from].style.setProperty('--dx', String(-dir));
-      faces[to].style.setProperty('--dx', '0');
-    };
-
-    /* Runs once, on the first time the reel is actually looked at. It drives
-       the same `--reel-angle` every other movement here drives, so the faces,
-       the caption and the controls need to know nothing about it. */
-    const arrive = () => {
-      if(arrived) return;
-      arrived = true;
-      if(reduced.matches) return;
-      const target = angle;
-      reel.dataset.intro = 'arrive';
-      ring.style.setProperty('--reel-angle', (target + ARRIVE_TURN) + 'deg');
-      requestAnimationFrame(() => requestAnimationFrame(() => {
-        reel.dataset.intro = 'run';
-        ring.style.setProperty('--reel-angle', target + 'deg');
-        setTimeout(() => {
-          delete reel.dataset.intro;
-          /* the drum has done its one job; from here the reel is flat */
-          parkFlat(index);
-          reel.dataset.mode = 'flat';
-          /* the caption has been holding the first scene through the whole
-             skim; it resolves as the drum stops, so the two land together */
-          captioned = true;
-          for(const el of [count, title, copy]){
-            if(!el) continue;
-            el.classList.remove('is-kinetic');
-            void el.offsetWidth;
-            el.classList.add('is-kinetic');
-          }
-        }, ARRIVE + SETTLE + 40);
-      }));
-    };
-
-    const clearClocks = () => {
-      clearTimeout(timer); clearTimeout(middleTimer); clearTimeout(finishTimer);
-      timer = middleTimer = finishTimer = 0;
-    };
-    const setState = (next, message) => {
-      reel.dataset.state = next;
-      if(status && message) status.textContent = message;
-    };
-    const updatePause = () => {
-      reel.dataset.userPaused = String(userPaused);
-      pauseButton?.setAttribute('aria-pressed', String(userPaused));
-      if(pauseLabel) pauseLabel.textContent = stilled() ? 'Play the tour'
-        : userPaused ? 'Resume tour' : 'Pause tour';
-    };
-    /* **The caption changes at the middle of a turn, so it changes the way the
-       turn does.** Setting `textContent` swaps a sentence for another one
-       between two frames, which under a drum that is visibly moving reads as a
-       glitch rather than as the same event. The line resolves out of a blur
-       instead, and a caret sits at the end of the title while it does — the
-       kinetic-type figure this kind of montage is built on. Removing the class
-       and reading `offsetWidth` is what restarts a CSS animation; without the
-       reflow between, the browser sees no change and the second turn does
-       nothing. The first call is the page's initial state and gets none of it. */
-    const kinetic = (el, text) => {
-      if(!el) return;
-      el.textContent = text;
-      if(reduced.matches || !captioned) return;
-      el.classList.remove('is-kinetic');
-      void el.offsetWidth;
-      el.classList.add('is-kinetic');
-    };
-    const sync = next => {
-      index = (next + faces.length) % faces.length;
-      reel.dataset.index = String(index);
-      faces.forEach((face, at) => face.classList.toggle('is-active', at === index));
-      sceneButtons.forEach((button, at) => button.setAttribute('aria-current', String(at === index)));
-      kinetic(count, String(index + 1).padStart(2, '0') + ' / ' +
-        String(faces.length).padStart(2, '0'));
-      kinetic(title, words[index][0]);
-      kinetic(copy, words[index][1]);
-      captioned = true;
-    };
-    /* **On a phone the live thing on a face is an animated image, not the
-       video.** iOS decides per device whether a `<video>` may start by
-       itself — Low Power Mode and the accessibility "auto-play video previews"
-       switch both say no, and the tour then held a poster on every face. An
-       animated WebP is outside that decision, so under 760 px the tour moves
-       one `<img>` between the faces exactly as it moves the one video: into
-       the active face's live slot, fading up over the poster once loaded. The
-       video is not touched at that width; `sourceFor` says so by answering
-       nothing for it. */
-    const loop = document.createElement('img');
-    loop.setAttribute('data-reel-loop', ''); loop.alt = ''; loop.decoding = 'async';
-    loop.setAttribute('aria-hidden', 'true');
-    video.parentNode.insertBefore(loop, video);
-    const loopFor = at => compact.matches ? (faces[at].dataset.phoneAnim || '') : '';
-    const sourceFor = at => {
-      if(reduced.matches || compact.matches) return '';
-      return faces[at].dataset.video || '';
-    };
-    const releaseSource = () => {
-      loadToken++;
-      prepared = null;
-      video.pause();
-      video.removeAttribute('src');
-      video.removeAttribute('data-ready');
-      video.dataset.scene = '';
-      loop.removeAttribute('src');
-      loop.removeAttribute('data-ready');
-      reel.dataset.source = '';
-      video.load();
-    };
-    const mayPlay = () => inView && pageVisible && !stilled() && !hardPaused;
-    const mayAdvance = () => mayPlay() && !userPaused;
-
-    const queue = delay => {
-      clearTimeout(timer); timer = 0;
-      if(!mayAdvance()) return;
-      reel.dataset.auto = 'waiting';
-      timer = setTimeout(() => requestScene((index + 1) % faces.length, false, 1), delay);
-    };
-    const holdPoster = (message = faces[index].dataset.label + ' poster') => {
-      video.removeAttribute('data-ready');
-      loop.removeAttribute('data-ready');
-      setState(userPaused ? 'paused' : 'holding', message);
-      reel.dataset.auto = userPaused ? 'off' : 'waiting';
-      queue(STILL_HOLD);
-    };
-    const startPrepared = () => {
-      if(!prepared || prepared.index !== index || prepared.token !== loadToken) return;
-      if(!mayPlay()){
-        video.pause();
-        setState(stilled() ? 'still' : 'idle', stilled() ? 'Static product overview' : 'Overview paused');
-        return;
-      }
-      if(!prepared.src){ holdPoster(faces[index].dataset.label + ' · poster'); return; }
-      if(prepared.loop){
-        if(!prepared.ready){ setState('loading', faces[index].dataset.label + ' · loading'); return; }
-        for(const other of document.querySelectorAll('video[data-clip]')) other.pause?.();
-        loop.dataset.ready = 'true';
-        setState('playing', faces[index].dataset.label + ' · in motion');
-        reel.dataset.auto = userPaused ? 'off' : 'running';
-        queue(PLAY_HOLD);
-        return;
-      }
-      /* **The tour held a poster on every phone, and this line is why.** iOS
-         treats `preload` as `none` whatever the attribute says: `load()` fetches
-         nothing, so `onloadeddata` never fires, so `prepared.ready` never
-         becomes true and the scene returned here on every advance. The play
-         request is what starts the fetch, so it is made whether or not data has
-         arrived — the state simply says "loading" until the promise settles,
-         and a real failure still lands on the poster in the `catch`. */
-      if(!prepared.ready) setState('loading', faces[index].dataset.label + ' · loading');
-      for(const other of document.querySelectorAll('video[data-clip]')) other.pause?.();
-      video.dataset.ready = 'true';
-      video.play().then(() => {
-        if(prepared && prepared.index === index){
-          setState('playing', faces[index].dataset.label + ' · in motion');
-          reel.dataset.auto = userPaused ? 'off' : 'running';
-          /* the clock the tour runs on now that the clip never ends */
-          queue(PLAY_HOLD);
-        }
-      }).catch(() => holdPoster(faces[index].dataset.label + ' · poster'));
-    };
-    const prepare = at => {
-      const token = ++loadToken;
-      const anim = loopFor(at);
-      if(anim){
-        video.pause(); video.removeAttribute('data-ready'); video.removeAttribute('src'); video.load();
-        loop.removeAttribute('data-ready');
-        faces[at].querySelector('[data-reel-live-slot]').append(loop);
-        reel.dataset.source = anim;
-        prepared = {index:at, token, src:anim, ready:false, loop:true};
-        loop.onload = () => {
-          if(!prepared || prepared.token !== token) return;
-          prepared.ready = true;
-          reel.dataset.videoReady = 'true';
-          if(reel.dataset.state !== 'spinning') startPrepared();
-        };
-        loop.onerror = () => {
-          if(!prepared || prepared.token !== token) return;
-          prepared.ready = false;
-          reel.dataset.videoReady = 'false';
-          if(reel.dataset.state !== 'spinning') holdPoster(faces[at].dataset.label + ' · poster');
-        };
-        /* a src that is already the one wanted fires no `load`, so the
-           attribute is dropped first and the image asked for afresh */
-        loop.removeAttribute('src');
-        loop.src = anim;
-        return;
-      }
-      const src = sourceFor(at);
-      video.pause();
-      video.removeAttribute('data-ready');
-      loop.removeAttribute('data-ready');
-      faces[at].querySelector('[data-reel-live-slot]').append(video);
-      video.dataset.scene = faces[at].dataset.scene;
-      reel.dataset.source = src;
-      /* it runs until the scene is handed on, rather than once */
-      video.loop = true;
-      prepared = {index:at, token, src, ready:false};
-      video.onloadeddata = () => {
-        if(!prepared || prepared.token !== token) return;
-        prepared.ready = true;
-        reel.dataset.videoReady = 'true';
-        if(reel.dataset.state !== 'spinning') startPrepared();
-      };
-      video.onerror = () => {
-        if(!prepared || prepared.token !== token) return;
-        prepared.ready = false;
-        reel.dataset.videoReady = 'false';
-        if(reel.dataset.state !== 'spinning') holdPoster(faces[at].dataset.label + ' · poster');
-      };
-      /* kept for a browser that ignores `loop`, and for a source that turns
-         out not to be seekable: without it such a clip would stop and the tour
-         would stop with it */
-      video.onended = () => {
-        if(!prepared || prepared.token !== token || prepared.index !== index) return;
-        video.removeAttribute('data-ready');
-        setState(userPaused ? 'paused' : 'holding', faces[index].dataset.label + ' · complete');
-        if(mayAdvance()) queue(HOLD);
-      };
-      if(!src){
-        video.removeAttribute('src'); video.load();
-        reel.dataset.videoReady = 'false';
-        return;
-      }
-      video.src = src;
-      video.load();
-    };
-
-    function requestScene(next, manual = true, directionHint = 0){
-      next = (Number(next) + faces.length) % faces.length;
-      if(manual){ userPaused = true; hardPaused = false; updatePause(); }
-      if(stilled()){
-        clearClocks(); pending = null; sync(next);
-        angle = -next * 60;
-        ring.style.setProperty('--reel-angle', angle + 'deg');
-        faces[next].querySelector('[data-reel-live-slot]').append(video);
-        releaseSource(); setState('still', faces[next].dataset.label + ' · poster');
-        return;
-      }
-      if(reel.dataset.state === 'spinning'){
-        pending = {next, manual, directionHint};
-        return;
-      }
-      if(next === index){
-        if(!prepared || prepared.index !== index) prepare(index);
-        startPrepared();
-        return;
-      }
-      clearClocks(); pending = null;
-      let delta = next - index;
-      if(directionHint) delta = directionHint;
-      else { if(delta > faces.length / 2) delta -= faces.length;
-             if(delta < -faces.length / 2) delta += faces.length; }
-      prepare(next);
-      reel.dataset.direction = delta > 0 ? 'next' : 'previous';
-      setState('spinning', 'Changing product view');
-      if(reel.dataset.mode === 'flat'){
-        /* a page turned: one step sideways, and the angle is left alone so
-           the drum is exactly where it was should it ever be wanted again */
-        slideFlat(index, next, delta > 0 ? 1 : -1);
-      } else {
-        const targetAngle = angle - delta * 60;
-        requestAnimationFrame(() => requestAnimationFrame(() => {
-          angle = targetAngle;
-          ring.style.setProperty('--reel-angle', angle + 'deg');
-        }));
-      }
-      middleTimer = setTimeout(() => sync(next), Math.round(SPIN * .48));
-      finishTimer = setTimeout(() => {
-        if(index !== next) sync(next);
-        /* the page that slid out is re-parked; it is already off the pane, so
-           this moves nothing anybody can see */
-        if(reel.dataset.mode === 'flat') parkFlat(index);
-        setState('loading', faces[index].dataset.label + ' · loading');
-        /* A full turn is the same pose. Normalize only after the transition has
-           been removed, or the browser helpfully spins it back to zero. */
-        if(Math.abs(angle) >= 360){
-          angle %= 360;
-          if(angle > 180) angle -= 360;
-          if(angle < -180) angle += 360;
-          ring.style.setProperty('--reel-angle', angle + 'deg');
-        }
-        startPrepared();
-        const queued = pending; pending = null;
-        if(queued) requestScene(queued.next, queued.manual, queued.directionHint);
-      }, SPIN + 36);
-    }
-
-    const pauseHere = message => {
-      clearClocks(); video.pause();
-      pending = null;
-      if(reel.dataset.state === 'spinning'){
-        const target = prepared?.index ?? index;
-        sync(target); angle = -target * 60;
-        setState('paused', message);
-        ring.style.setProperty('--reel-angle', angle + 'deg');
-        if(reel.dataset.mode === 'flat') parkFlat(target);
-      }else setState('paused', message);
-      reel.dataset.auto = 'off';
-    };
-    pauseButton?.addEventListener('click', () => {
-      if(stilled()){ enableMotion(); return; }
-      if(userPaused){
-        userPaused = false; hardPaused = false; updatePause();
-        if(prepared?.src && prepared.index === index && video.currentTime > 0 && !video.ended){
-          video.play().then(() => setState('playing', faces[index].dataset.label + ' · in motion'))
-            .catch(() => holdPoster());
-        }else{
-          prepare(index); startPrepared();
-        }
-      }else{
-        userPaused = true; hardPaused = true; updatePause(); pauseHere('Tour paused');
-      }
-    });
-    reel.querySelector('[data-reel-prev]')?.addEventListener('click', () => requestScene(index - 1, true, -1));
-    reel.querySelector('[data-reel-next]')?.addEventListener('click', () => requestScene(index + 1, true, 1));
-    sceneButtons.forEach((button, at) => {
-      button.addEventListener('click', () => requestScene(at, true));
-      button.addEventListener('keydown', event => {
-        let next = null;
-        if(event.key === 'ArrowLeft') next = (at - 1 + faces.length) % faces.length;
-        if(event.key === 'ArrowRight') next = (at + 1) % faces.length;
-        if(event.key === 'Home') next = 0;
-        if(event.key === 'End') next = faces.length - 1;
-        if(next === null) return;
-        event.preventDefault(); sceneButtons[next].focus(); requestScene(next, true);
-      });
-    });
-
-    const resetForMedia = () => {
-      clearClocks(); pending = null; video.pause();
-      angle = -index * 60;
-      ring.style.setProperty('--reel-angle', angle + 'deg');
-      sync(index);
-      if(stilled()){
-        reel.dataset.reduced = 'true';
-        userPaused = false; hardPaused = false; updatePause();
-        sync(1); angle = -60; ring.style.setProperty('--reel-angle', angle + 'deg');
-        faces[1].querySelector('[data-reel-live-slot]').append(video);
-        releaseSource(); setState('still', 'Static product overview');
-      }else{
-        reel.dataset.reduced = 'false';
-        if(inView){ prepare(index); startPrepared(); }
-        else { releaseSource(); setState('idle', 'Overview paused'); }
-      }
-    };
-    compact.addEventListener?.('change', resetForMedia);
-    reduced.addEventListener?.('change', resetForMedia);
-    addEventListener('gs-motion', () => { updatePause(); resetForMedia(); });
-    document.addEventListener('visibilitychange', () => {
-      pageVisible = !document.hidden;
-      reel.dataset.pageVisible = String(pageVisible);
-      if(!pageVisible) pauseHere('Overview paused');
-      else if(inView && !stilled() && !hardPaused){
-        if(prepared?.ready) startPrepared(); else { prepare(index); startPrepared(); }
-      }
-    });
-
-    ring.style.setProperty('--reel-angle', angle + 'deg');
-    sync(index); updatePause();
-    reel.dataset.reduced = String(reduced.matches);
-    reel.dataset.pageVisible = String(pageVisible);
-    if(stilled()){
-      faces[index].querySelector('[data-reel-live-slot]').append(video);
-      releaseSource(); setState('still', 'Static product overview');
-    }
-    buildCurves();
-    /* `currentSrc` is empty until the picture has picked a source, and the
-       source itself changes at the phone breakpoint — so rebuild on both */
-    addEventListener('load', buildCurves, {once:true});
-    compact.addEventListener?.('change', buildCurves);
-    if('ResizeObserver' in window) new ResizeObserver(sizeCurves).observe(ring);
-
-    if('IntersectionObserver' in window){
-      new IntersectionObserver(entries => {
-        for(const entry of entries){
-          const nextInView = entry.isIntersecting && entry.intersectionRatio >= .12;
-          inView = nextInView;
-          reel.dataset.inView = String(inView);
-          if(!inView){ pauseHere('Overview paused'); continue; }
-          if(stilled()){ releaseSource(); setState('still', 'Static product overview'); continue; }
-          /* Caption and controls change the figure's height at the middle of a
-             turn, which can make IntersectionObserver report the same visible
-             reel again. That notification must not re-prepare the outgoing
-             scene over the incoming source while the cylinder is spinning. */
-          if(reel.dataset.state === 'spinning') continue;
-          arrive();
-          if(!hardPaused){
-            if(!prepared || prepared.index !== index) prepare(index);
-            startPrepared();
-          }
-        }
-      }, {threshold:[0,.12,.35]}).observe(reel);
-    }else{
-      inView = true; reel.dataset.inView = 'true';
-      arrive();
-      if(!stilled()){ prepare(index); startPrepared(); }
-    }
-  }
-}
+/* The hero has its own shared animation and media lifecycle in hero-reel.js. */
 
 /* ── a clip plays where a clip is worth playing ────────────────────────────
    The source is attached in script, not in the markup, so nothing is fetched
