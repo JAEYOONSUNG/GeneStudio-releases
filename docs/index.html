@@ -56,12 +56,12 @@ try{if(localStorage.getItem('gs-site-motion')==='on')document.documentElement.cl
 <link rel="preload" href="font/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="font/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="font/fonts.css?v=20260828">
-<link rel="stylesheet" href="base.css?v=20260911-gallery1">
-<link rel="stylesheet" href="ambient-ribbons.css?v=20260911-gallery1">
-<link rel="stylesheet" href="section-motion.css?v=20260911-gallery1">
-<script src="hero-reel.js?v=20260911-gallery1" defer></script>
-<script src="section-motion.js?v=20260911-gallery1" defer></script>
-<script src="ambient-ribbons.js?v=20260911-gallery1" defer></script>
+<link rel="stylesheet" href="base.css?v=20260911-dna-glass1">
+<link rel="stylesheet" href="ambient-ribbons.css?v=20260911-dna-glass1">
+<link rel="stylesheet" href="section-motion.css?v=20260911-dna-glass1">
+<script src="hero-reel.js?v=20260911-dna-glass1" defer></script>
+<script src="section-motion.js?v=20260911-dna-glass1" defer></script>
+<script src="ambient-ribbons.js?v=20260911-dna-glass1" defer></script>
 </head>
 <body>
 <!-- **A phone reports its own state, so nobody has to guess at it.** Open the
@@ -1617,79 +1617,167 @@ try{if(localStorage.getItem('gs-site-motion')==='on')document.documentElement.cl
          gaps puts one, which is what the reference does with the same six-up
          shape and is why its feature grid reads as a table of one thing
          rather than as a row of tiles. -->
-    <!-- **Six file specimens, not six generic file icons.** A GenBank record
-         carries feature rails and ORIGIN ticks; a SnapGene file is a packet
-         stack with its plasmid intact; FASTA is one indexed record drawn out of
-         a long stack; AB1 is four chromatogram channels; export passes through
-         a gate into three honest outputs; local storage is a sample cartridge
-         whose latch closes without an outbound line. They share the workbench's
-         precision grid, not its subject, so the twelve read as one instrument
-         language without repeating one picture. -->
+    <!-- Six optical-glass specimens: an annotated record, a plasmid packet
+         stack, an indexed FASTA record, four trace channels, an export gate,
+         and a closed local cartridge. Their surfaces share one light source;
+         the coloured records remain visible through the clear front faces. -->
     <div class="gridlines rise" data-glyphs>
       <div>
-        <span class="gico lg" data-glyph="genbank"><svg viewBox="0 0 64 64" aria-hidden="true">
-          <g class="depth"><path class="plate" d="M14 9h30l9 9v39H14z"/></g>
-          <g class="face"><path class="plate" d="M10 6h30l10 10v40H10z"/><path class="edge" d="M40 6v10h10"/>
-            <path class="micro" d="M16 15h15M16 20h21M16 47h3M22 47h3M28 47h3M34 47h3M40 47h3"/>
-            <path class="ink" d="M16 26h25M16 34h25M16 42h25"/></g>
-          <g class="mov"><path class="feature-fill" d="M17 24h13l4 2.5-4 2.5H17zM25 32h14l4 2.5-4 2.5H25zM16 40h10l4 2.5-4 2.5H16z"/></g>
+        <span class="gico lg" data-glyph="genbank"><svg viewBox="0 0 80 80" aria-hidden="true">
+          <defs>
+            <linearGradient id="genbank-pane" x1="0" y1="0" x2="1" y2="1"><stop class="glass-top"/><stop offset=".34" class="glass-clear"/><stop offset=".72" class="glass-tint"/><stop offset="1" class="glass-base"/></linearGradient>
+            <linearGradient id="genbank-side" x1="0" y1="0" x2=".8" y2="1"><stop class="glass-side-top"/><stop offset="1" class="glass-side-base"/></linearGradient>
+            <linearGradient id="genbank-edge" x1="0" y1="0" x2=".65" y2="1"><stop class="glass-edge-top"/><stop offset=".44" class="glass-edge-mid"/><stop offset="1" class="glass-edge-base"/></linearGradient>
+            <linearGradient id="genbank-shine" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#fff" stop-opacity=".66"/><stop offset=".47" stop-color="#fff" stop-opacity=".12"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+            <linearGradient id="genbank-signal" x1="0" y1="0" x2=".7" y2="1"><stop class="glass-signal-top"/><stop offset=".48" class="glass-signal-mid"/><stop offset="1" class="glass-signal-base"/></linearGradient>
+            <radialGradient id="genbank-contact"><stop class="glass-contact-core"/><stop offset="1" class="glass-contact-edge"/></radialGradient>
+          </defs>
+          <ellipse class="glass-ground" cx="40" cy="72" rx="29" ry="5" fill="url(#genbank-contact)"/>
+          <g class="depth"><path class="glass-back" d="M23 13h28l13 13v38a4 4 0 0 1-4 4H23a4 4 0 0 1-4-4V17a4 4 0 0 1 4-4Z" fill="url(#genbank-pane)" stroke="url(#genbank-edge)"/>
+            <path d="m58 21 6 5v38a4 4 0 0 1-4 4H23l-6-3h37a4 4 0 0 0 4-4Z" fill="url(#genbank-side)"/></g>
+          <g class="face"><path class="glass-shell" d="M17 7h27l14 14v40a4 4 0 0 1-4 4H17a4 4 0 0 1-4-4V11a4 4 0 0 1 4-4Z" fill="url(#genbank-pane)" stroke="url(#genbank-edge)"/>
+            <path class="glass-polish" d="M17 8h26v13h14v6L14 47V12a4 4 0 0 1 3-4Z" fill="url(#genbank-shine)"/>
+            <path class="glass-fold" d="M44 7v10a4 4 0 0 0 4 4h10Z" fill="url(#genbank-side)" stroke="url(#genbank-edge)"/>
+            <path class="glass-engrave" d="M21 18h14M21 23h9M21 56h6m5 0h6m5 0h6"/>
+            <path class="glass-rim" d="M14.5 43V12a3.5 3.5 0 0 1 3.5-3.5h21"/></g>
+          <g class="mov"><path class="glass-mark" d="M21 30h18l5 3-5 3H21Zm8 10h17l5 3-5 3H29Zm-8 10h10l4 3-4 3H21Z" fill="url(#genbank-signal)"/>
+            <path class="glass-signal-glint" d="M22 30.7h16M30 40.7h15M22 50.7h8"/></g>
         </svg></span>
         <h3><code>.gb .gbk .gbff</code></h3>
         <p>The record above FEATURES is kept whole — accession, organism, lineage, the papers, the structured comments — and written back as it arrived. Saving twice gives a byte-identical file.</p>
       </div>
       <div>
-        <span class="gico lg" data-glyph="dna"><svg viewBox="0 0 64 64" aria-hidden="true">
-          <g class="depth"><path class="plate" d="m8 39 24 13 24-13-24-13z"/><path class="edge" d="m8 48 24 12 24-12"/></g>
-          <g class="face"><path class="plate" d="m8 24 24 13 24-13-24-13z"/><path class="edge" d="m8 32 24 13 24-13"/>
-            <path class="ink" d="M32 17a8 8 0 1 1-5.7 2.3"/><circle class="accent-fill" cx="32" cy="17" r="2.1"/>
-            <path class="micro" d="M17 47h3M23 50h3M29 53h3"/></g>
-          <g class="mov"><path class="accent" d="m17 29 15 8 15-8"/><circle class="packet" cx="32" cy="37" r="2.5"/></g>
+        <span class="gico lg" data-glyph="dna"><svg viewBox="0 0 80 80" aria-hidden="true">
+          <defs>
+            <linearGradient id="dna-pane" x1="0" y1="0" x2="1" y2="1"><stop class="glass-top"/><stop offset=".34" class="glass-clear"/><stop offset=".72" class="glass-tint"/><stop offset="1" class="glass-base"/></linearGradient>
+            <linearGradient id="dna-side" x1="0" y1="0" x2=".8" y2="1"><stop class="glass-side-top"/><stop offset="1" class="glass-side-base"/></linearGradient>
+            <linearGradient id="dna-edge" x1="0" y1="0" x2=".65" y2="1"><stop class="glass-edge-top"/><stop offset=".44" class="glass-edge-mid"/><stop offset="1" class="glass-edge-base"/></linearGradient>
+            <linearGradient id="dna-shine" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#fff" stop-opacity=".66"/><stop offset=".47" stop-color="#fff" stop-opacity=".12"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+            <linearGradient id="dna-signal" x1="0" y1="0" x2=".7" y2="1"><stop class="glass-signal-top"/><stop offset=".48" class="glass-signal-mid"/><stop offset="1" class="glass-signal-base"/></linearGradient>
+            <radialGradient id="dna-contact"><stop class="glass-contact-core"/><stop offset="1" class="glass-contact-edge"/></radialGradient>
+          </defs>
+          <ellipse class="glass-ground" cx="40" cy="73" rx="33" ry="5" fill="url(#dna-contact)"/>
+          <g class="depth"><path class="glass-shell" d="m8 48 31-17 31 17v5L39 70 8 53Z" fill="url(#dna-side)" stroke="url(#dna-edge)"/>
+            <path class="glass-shell" d="m8 48 31-17 31 17-31 17Z" fill="url(#dna-pane)" stroke="url(#dna-edge)"/>
+            <path class="glass-shell" d="m8 37 31-17 31 17v5L39 59 8 42Z" fill="url(#dna-side)" stroke="url(#dna-edge)"/>
+            <path class="glass-shell" d="m8 37 31-17 31 17-31 17Z" fill="url(#dna-pane)" stroke="url(#dna-edge)"/></g>
+          <g class="face"><path class="glass-shell" d="m8 25 31-17 31 17v6L39 48 8 31Z" fill="url(#dna-side)" stroke="url(#dna-edge)"/>
+            <path class="glass-shell" d="m8 25 31-17 31 17-31 17Z" fill="url(#dna-pane)" stroke="url(#dna-edge)"/>
+            <path class="glass-polish" d="M9 25 39 9l18 10-42 9Z" fill="url(#dna-shine)"/>
+            <path class="glass-rim" d="m10 25 29-16 13 7M10 37l29 16M10 48l29 16"/></g>
+          <g class="mov"><ellipse cx="39" cy="27" rx="12" ry="7" fill="none" stroke="url(#dna-side)" stroke-width="6"/>
+            <ellipse cx="39" cy="24.5" rx="12" ry="7" fill="none" stroke="url(#dna-signal)" stroke-width="5.5"/>
+            <path class="glass-signal-glint" d="M28 22c2-4 11-6 18-2"/>
+            <path d="m46 27 5-3 1 5Z" fill="url(#dna-signal)" stroke="url(#dna-edge)" stroke-width=".6"/>
+            <circle cx="29" cy="21" r="2.5" class="glass-bead"/></g>
         </svg></span>
         <h3><code>.dna</code></h3>
         <p>SnapGene files are read and written packet for packet: the colours, the edit history, the aligned traces and every packet this reader does not interpret ride through untouched.</p>
       </div>
       <div>
-        <span class="gico lg" data-glyph="fasta"><svg viewBox="0 0 64 64" aria-hidden="true">
-          <g class="depth"><rect class="plate" x="18" y="9" width="38" height="42" rx="3"/><rect class="plate" x="14" y="14" width="38" height="42" rx="3"/></g>
-          <g class="face"><rect class="plate" x="7" y="19" width="39" height="38" rx="3"/>
-            <path class="accent" d="m13 27 4 3-4 3"/><path class="ink" d="M22 27h16M22 33h12M13 41h25M13 47h22"/>
-            <path class="micro" d="M13 52h3M19 52h3M25 52h3M31 52h3M37 52h3"/></g>
-          <g class="mov"><circle class="signal-fill" cx="48" cy="29" r="2.5"/><path class="signal" d="M48 34v13"/></g>
+        <span class="gico lg" data-glyph="fasta"><svg viewBox="0 0 80 80" aria-hidden="true">
+          <defs>
+            <linearGradient id="fasta-pane" x1="0" y1="0" x2="1" y2="1"><stop class="glass-top"/><stop offset=".34" class="glass-clear"/><stop offset=".72" class="glass-tint"/><stop offset="1" class="glass-base"/></linearGradient>
+            <linearGradient id="fasta-side" x1="0" y1="0" x2=".8" y2="1"><stop class="glass-side-top"/><stop offset="1" class="glass-side-base"/></linearGradient>
+            <linearGradient id="fasta-edge" x1="0" y1="0" x2=".65" y2="1"><stop class="glass-edge-top"/><stop offset=".44" class="glass-edge-mid"/><stop offset="1" class="glass-edge-base"/></linearGradient>
+            <linearGradient id="fasta-shine" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#fff" stop-opacity=".66"/><stop offset=".47" stop-color="#fff" stop-opacity=".12"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+            <linearGradient id="fasta-signal" x1="0" y1="0" x2=".7" y2="1"><stop class="glass-signal-top"/><stop offset=".48" class="glass-signal-mid"/><stop offset="1" class="glass-signal-base"/></linearGradient>
+            <radialGradient id="fasta-contact"><stop class="glass-contact-core"/><stop offset="1" class="glass-contact-edge"/></radialGradient>
+          </defs>
+          <ellipse class="glass-ground" cx="39" cy="72" rx="31" ry="5" fill="url(#fasta-contact)"/>
+          <g class="depth"><rect class="glass-back" x="27" y="8" width="41" height="51" rx="5" fill="url(#fasta-pane)" stroke="url(#fasta-edge)"/>
+            <rect class="glass-shell" x="19" y="13" width="42" height="51" rx="5" fill="url(#fasta-pane)" stroke="url(#fasta-edge)"/>
+            <path d="M56 19h4v41a4 4 0 0 1-4 4H23l-6-4h34a5 5 0 0 0 5-5Z" fill="url(#fasta-side)"/></g>
+          <g class="face"><rect class="glass-shell" x="10" y="19" width="43" height="48" rx="5" fill="url(#fasta-pane)" stroke="url(#fasta-edge)"/>
+            <path class="glass-polish" d="M15 20h33a4 4 0 0 1 4 4v9L11 50V24a4 4 0 0 1 4-4Z" fill="url(#fasta-shine)"/>
+            <path class="glass-rim" d="M11.5 46V25a4.5 4.5 0 0 1 4.5-4.5h27"/>
+            <path class="glass-engrave glass-record" d="M31 31h13M31 38h10M19 49h25M19 56h18"/>
+            <path class="glass-mark" d="m18 29 8 5.5-8 5.5v-4l3-1.5-3-1.5Z" fill="url(#fasta-signal)"/></g>
+          <g class="mov"><rect class="glass-mark" x="57" y="27" width="6" height="23" rx="3" fill="url(#fasta-signal)"/>
+            <path class="glass-signal-glint" d="M58.5 45V31"/><circle cx="60" cy="27" r="4" class="glass-bead"/></g>
         </svg></span>
         <h3><code>.fa .fasta .fna</code></h3>
         <p>A file carrying 85,142 records is listed and read a record at a time, in milliseconds — because splitting is cheap and parsing everything is not.</p>
       </div>
       <div>
-        <span class="gico lg" data-glyph="ab1"><svg viewBox="0 0 64 64" aria-hidden="true">
-          <g class="depth"><path class="plate" d="M6 47h52v8H6z"/></g>
-          <g class="face"><path class="micro" d="M6 47h52M12 47v5M22 47v5M32 47v5M42 47v5M52 47v5"/>
-            <path class="trace trace-a" d="M6 46c5 0 5-16 10-16s5 16 10 16"/><path class="trace trace-c" d="M15 46c5 0 5-29 10-29s5 29 10 29"/>
-            <path class="trace trace-g" d="M29 46c5 0 5-22 10-22s5 22 10 22"/><path class="trace trace-t" d="M41 46c5 0 5-14 9-14s4 14 8 14"/></g>
-          <g class="mov"><path class="signal" d="M36 11v40"/><circle class="signal-fill" cx="36" cy="22" r="2.5"/></g>
+        <span class="gico lg" data-glyph="ab1"><svg viewBox="0 0 80 80" aria-hidden="true">
+          <defs>
+            <linearGradient id="ab1-pane" x1="0" y1="0" x2="1" y2="1"><stop class="glass-top"/><stop offset=".34" class="glass-clear"/><stop offset=".72" class="glass-tint"/><stop offset="1" class="glass-base"/></linearGradient>
+            <linearGradient id="ab1-side" x1="0" y1="0" x2=".8" y2="1"><stop class="glass-side-top"/><stop offset="1" class="glass-side-base"/></linearGradient>
+            <linearGradient id="ab1-edge" x1="0" y1="0" x2=".65" y2="1"><stop class="glass-edge-top"/><stop offset=".44" class="glass-edge-mid"/><stop offset="1" class="glass-edge-base"/></linearGradient>
+            <linearGradient id="ab1-shine" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#fff" stop-opacity=".66"/><stop offset=".47" stop-color="#fff" stop-opacity=".12"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+            <linearGradient id="ab1-signal" x1="0" y1="0" x2=".7" y2="1"><stop class="glass-signal-top"/><stop offset=".48" class="glass-signal-mid"/><stop offset="1" class="glass-signal-base"/></linearGradient>
+            <radialGradient id="ab1-contact"><stop class="glass-contact-core"/><stop offset="1" class="glass-contact-edge"/></radialGradient>
+          </defs>
+          <ellipse class="glass-ground" cx="40" cy="71" rx="33" ry="5" fill="url(#ab1-contact)"/>
+          <g class="depth"><path class="glass-shell" d="m7 54 9-5h48l9 5v9l-9 5H16l-9-5Z" fill="url(#ab1-side)" stroke="url(#ab1-edge)"/>
+            <path class="glass-shell" d="m7 54 9-5h48l9 5-9 5H16Z" fill="url(#ab1-pane)" stroke="url(#ab1-edge)"/></g>
+          <g class="face"><rect class="glass-shell" x="10" y="12" width="59" height="45" rx="5" fill="url(#ab1-pane)" stroke="url(#ab1-edge)"/>
+            <path class="glass-polish" d="M15 13h48a5 5 0 0 1 5 5v6L11 44V18a5 5 0 0 1 4-5Z" fill="url(#ab1-shine)"/>
+            <path class="glass-rim" d="M11.5 36V18a4.5 4.5 0 0 1 4.5-4.5h40"/>
+            <path class="glass-engrave" d="M17 61h6m6 0h6m6 0h6m6 0h6"/>
+            <path class="trace trace-a" d="M15 48c4 0 4-13 8-13s4 13 9 13"/>
+            <path class="trace trace-c" d="M21 48c5 0 4-25 10-25s5 25 11 25"/>
+            <path class="trace trace-g" d="M34 48c6 0 5-18 11-18s5 18 10 18"/>
+            <path class="trace trace-t" d="M46 48c5 0 5-11 9-11s4 11 9 11"/></g>
+          <g class="mov"><path class="glass-reader" d="M42 19v34"/><circle cx="42" cy="19" r="3" class="glass-bead"/></g>
         </svg></span>
         <h3><code>.ab1</code></h3>
         <p>Read as a read <em>of the construct</em>, not as a document of its own: end-trimmed by quality, aligned both ways round, and kept with the plasmid it was read against.</p>
       </div>
       <div>
-        <span class="gico lg" data-glyph="out"><svg viewBox="0 0 64 64" aria-hidden="true">
-          <g class="depth"><path class="plate" d="M44 8h10l4 4v13H44zM43 39h15v15H43z"/><path class="plate" d="M43 28h15v8H43z"/></g>
-          <g class="face"><path class="plate" d="M7 12h21l7 7v32H7z"/><path class="edge" d="M28 12v7h7"/>
-            <path class="ink" d="M13 27h15M13 33h12M13 39h14"/><rect class="plate" x="35" y="22" width="6" height="20" rx="2"/>
-            <path class="micro" d="M47 13h7M47 43h8M47 48h4M46 31h9"/></g>
-          <g class="mov"><path class="accent" d="M28 32h11M41 26l4-7M41 32h4M41 38l4 8"/><circle class="packet" cx="38" cy="32" r="2.6"/>
-            <path class="signal" d="M46 51c3-6 5 1 9-5"/></g>
+        <span class="gico lg" data-glyph="out"><svg viewBox="0 0 80 80" aria-hidden="true">
+          <defs>
+            <linearGradient id="out-pane" x1="0" y1="0" x2="1" y2="1"><stop class="glass-top"/><stop offset=".34" class="glass-clear"/><stop offset=".72" class="glass-tint"/><stop offset="1" class="glass-base"/></linearGradient>
+            <linearGradient id="out-side" x1="0" y1="0" x2=".8" y2="1"><stop class="glass-side-top"/><stop offset="1" class="glass-side-base"/></linearGradient>
+            <linearGradient id="out-edge" x1="0" y1="0" x2=".65" y2="1"><stop class="glass-edge-top"/><stop offset=".44" class="glass-edge-mid"/><stop offset="1" class="glass-edge-base"/></linearGradient>
+            <linearGradient id="out-shine" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#fff" stop-opacity=".66"/><stop offset=".47" stop-color="#fff" stop-opacity=".12"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+            <linearGradient id="out-signal" x1="0" y1="0" x2=".7" y2="1"><stop class="glass-signal-top"/><stop offset=".48" class="glass-signal-mid"/><stop offset="1" class="glass-signal-base"/></linearGradient>
+            <radialGradient id="out-contact"><stop class="glass-contact-core"/><stop offset="1" class="glass-contact-edge"/></radialGradient>
+          </defs>
+          <ellipse class="glass-ground" cx="40" cy="72" rx="33" ry="5" fill="url(#out-contact)"/>
+          <g class="depth"><path class="glass-shell" d="M51 8h15l6 6v15H51Z" fill="url(#out-pane)" stroke="url(#out-edge)"/>
+            <rect class="glass-shell" x="51" y="34" width="21" height="11" rx="3" fill="url(#out-pane)" stroke="url(#out-edge)"/>
+            <rect class="glass-shell" x="51" y="50" width="21" height="16" rx="3" fill="url(#out-pane)" stroke="url(#out-edge)"/>
+            <path class="glass-engrave" d="M56 16h8M56 22h5M56 39.5h10"/>
+            <path class="glass-reader" d="m56 60 3-4 3 2 5-4"/>
+            <path d="m39 21 5 4v38l-5 4H12l-4-4h26a5 5 0 0 0 5-5Z" fill="url(#out-side)"/></g>
+          <g class="face"><path class="glass-shell" d="M12 10h16l11 11v40a4 4 0 0 1-4 4H12a4 4 0 0 1-4-4V14a4 4 0 0 1 4-4Z" fill="url(#out-pane)" stroke="url(#out-edge)"/>
+            <path class="glass-polish" d="M12 11h15v10h11v7L9 45V15a4 4 0 0 1 3-4Z" fill="url(#out-shine)"/>
+            <path class="glass-fold" d="M28 10v8a3 3 0 0 0 3 3h8Z" fill="url(#out-side)" stroke="url(#out-edge)"/>
+            <path class="glass-rim" d="M9.5 42V15a3.5 3.5 0 0 1 3.5-3.5h10"/>
+            <path class="glass-engrave glass-record" d="M15 30h15M15 38h11M15 46h14"/>
+            <rect class="glass-shell" x="39" y="29" width="8" height="22" rx="4" fill="url(#out-side)" stroke="url(#out-edge)"/></g>
+          <g class="mov"><path class="glass-flow" d="M29 40h18m0-4 7-12m-7 16h7m-7 4 7 10"/>
+            <path class="glass-mark" d="m52 35 6 5-6 5Z" fill="url(#out-signal)"/><circle class="packet glass-bead" cx="43" cy="40" r="3.5"/></g>
         </svg></span>
         <h3><code>out</code></h3>
         <p>GenBank — and a separate sharing copy that says what it left behind — SnapGene <code>.dna</code>, FASTA, an <code>.xlsx</code> workbook, and every drawing as vector.</p>
       </div>
       <div>
-        <span class="gico lg" data-glyph="local"><svg viewBox="0 0 64 64" aria-hidden="true">
-          <g class="depth"><path class="plate" d="M10 15h43l5 5v32H6V19z"/></g>
-          <g class="face"><path class="plate" d="M8 12h42l6 6v32H8z"/><path class="edge" d="M50 12v6h6"/>
-            <path class="ink" d="M31 22a10 10 0 1 1-7 2.9"/><circle class="accent-fill" cx="31" cy="22" r="2.3"/>
-            <path class="micro" d="M15 43h4M22 43h4M29 43h4M36 43h4M43 43h4"/></g>
-          <g class="mov"><path class="signal" d="M44 28h7v12h-7"/><path class="signal" d="M47 28v-3a3 3 0 0 1 6 0v3"/>
-            <circle class="signal-fill" cx="15" cy="18" r="2.5"/></g>
+        <span class="gico lg" data-glyph="local"><svg viewBox="0 0 80 80" aria-hidden="true">
+          <defs>
+            <linearGradient id="local-pane" x1="0" y1="0" x2="1" y2="1"><stop class="glass-top"/><stop offset=".34" class="glass-clear"/><stop offset=".72" class="glass-tint"/><stop offset="1" class="glass-base"/></linearGradient>
+            <linearGradient id="local-side" x1="0" y1="0" x2=".8" y2="1"><stop class="glass-side-top"/><stop offset="1" class="glass-side-base"/></linearGradient>
+            <linearGradient id="local-edge" x1="0" y1="0" x2=".65" y2="1"><stop class="glass-edge-top"/><stop offset=".44" class="glass-edge-mid"/><stop offset="1" class="glass-edge-base"/></linearGradient>
+            <linearGradient id="local-shine" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#fff" stop-opacity=".66"/><stop offset=".47" stop-color="#fff" stop-opacity=".12"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+            <linearGradient id="local-signal" x1="0" y1="0" x2=".7" y2="1"><stop class="glass-signal-top"/><stop offset=".48" class="glass-signal-mid"/><stop offset="1" class="glass-signal-base"/></linearGradient>
+            <radialGradient id="local-contact"><stop class="glass-contact-core"/><stop offset="1" class="glass-contact-edge"/></radialGradient>
+          </defs>
+          <ellipse class="glass-ground" cx="40" cy="72" rx="33" ry="5" fill="url(#local-contact)"/>
+          <g class="depth"><path class="glass-shell" d="m10 22 7-7h46l9 9v39l-7 5H15l-5-5Z" fill="url(#local-side)" stroke="url(#local-edge)"/>
+            <path class="glass-shell" d="m10 22 7-7h46l9 9-7 5H15Z" fill="url(#local-pane)" stroke="url(#local-edge)"/></g>
+          <g class="face"><rect class="glass-shell" x="8" y="22" width="58" height="43" rx="5" fill="url(#local-pane)" stroke="url(#local-edge)"/>
+            <path class="glass-polish" d="M13 23h48a4 4 0 0 1 4 4v6L9 54V27a4 4 0 0 1 4-4Z" fill="url(#local-shine)"/>
+            <path class="glass-rim" d="M9.5 48V28a4.5 4.5 0 0 1 4.5-4.5h40"/>
+            <circle cx="32" cy="42" r="10" fill="none" stroke="url(#local-side)" stroke-width="6"/>
+            <circle cx="32" cy="40" r="10" fill="none" stroke="url(#local-signal)" stroke-width="4.5"/>
+            <path class="glass-signal-glint" d="M23 37a9.5 9.5 0 0 1 13-6"/>
+            <path class="glass-engrave" d="M16 58h8m5 0h8m5 0h8"/></g>
+          <g class="mov"><path class="glass-lock" d="M52 40v-6a5 5 0 0 1 10 0v6"/>
+            <rect class="glass-mark" x="48" y="38" width="18" height="17" rx="4" fill="url(#local-signal)"/>
+            <path class="glass-signal-glint" d="M50 46v-4a2 2 0 0 1 2-2h8"/>
+            <path class="glass-key" d="M57 46v3"/><circle cx="16" cy="29" r="2.5" class="glass-bead"/></g>
         </svg></span>
         <h3><code>on your machine</code></h3>
         <p>Your files are read from disk and stay there. Nothing is uploaded, and the only outbound requests are the ones you press — BLAST, InterProScan, eggNOG — each named before it is made.</p>

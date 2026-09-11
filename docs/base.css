@@ -2796,3 +2796,140 @@ html.js [data-glyphs]:not(.on) .lg svg{opacity:0; transform:translateY(3px)}
   .lg .accent,.lg .signal,.lg .cut-stroke,.lg .trace{stroke:Highlight}
   .lg .accent-fill,.lg .signal-fill,.lg .packet,.lg .feature-fill,.lg .cut-dot{fill:Highlight}
 }
+
+/* ── file specimens, cast in optical glass ──────────────────────────────────
+   The object itself carries the material. Clear faces reveal a coloured rear
+   plane, a darker side gives each sheet thickness, and a single upper-left
+   reflection is interrupted by its fold or bevel. The six silhouettes stand
+   directly on the page; there is no enclosing app tile. All paint is local
+   SVG, so the smaller mobile specimens retain their edges and reflections. */
+#formats .gico.lg{
+  --glass-color:#88C9F6; --glass-deep:#347CC3; --glass-bright:#D1EDFF;
+  --glass-ink:#DCEFF9; --glass-shadow:rgba(1,9,18,.42);
+  --glass-contact:rgba(17,54,83,.58);
+  width:80px; height:80px;
+  border:0; border-radius:0; background:none; box-shadow:none;
+  transition:transform .3s cubic-bezier(.2,.7,.2,1);
+}
+#formats .gico.lg::before,#formats .gico.lg::after{content:none}
+#formats .gico.lg svg{
+  width:84px; height:84px; overflow:visible;
+  filter:drop-shadow(1px 5px 4px var(--glass-shadow));
+}
+#formats .gico.lg[data-glyph="dna"]{
+  --glass-color:#83D8E9; --glass-deep:#247E9D; --glass-bright:#C3F3F8;
+}
+#formats .gico.lg[data-glyph="fasta"]{
+  --glass-color:#A8B6F6; --glass-deep:#667EC5; --glass-bright:#E3E5FF;
+}
+#formats .gico.lg[data-glyph="ab1"]{
+  --glass-color:#9CCDD9; --glass-deep:#437988; --glass-bright:#DAF3F6;
+}
+#formats .gico.lg[data-glyph="out"]{
+  --glass-color:#E8C18C; --glass-deep:#AC783D; --glass-bright:#FFE8C6;
+}
+#formats .gico.lg[data-glyph="local"]{
+  --glass-color:#8ED8C2; --glass-deep:#328D7B; --glass-bright:#D8F7E9;
+}
+#formats .glass-top{stop-color:var(--glass-bright); stop-opacity:.58}
+#formats .glass-clear{stop-color:var(--glass-color); stop-opacity:.12}
+#formats .glass-tint{stop-color:var(--glass-color); stop-opacity:.27}
+#formats .glass-base{stop-color:var(--glass-deep); stop-opacity:.65}
+#formats .glass-side-top{stop-color:var(--glass-color); stop-opacity:.75}
+#formats .glass-side-base{stop-color:var(--glass-deep); stop-opacity:.72}
+#formats .glass-edge-top{stop-color:#fff; stop-opacity:.95}
+#formats .glass-edge-mid{stop-color:var(--glass-color); stop-opacity:.55}
+#formats .glass-edge-base{stop-color:var(--glass-color); stop-opacity:.3}
+#formats .glass-signal-top{stop-color:var(--glass-bright)}
+#formats .glass-signal-mid{stop-color:var(--glass-color)}
+#formats .glass-signal-base{stop-color:var(--glass-deep)}
+#formats .glass-contact-core{stop-color:var(--glass-contact)}
+#formats .glass-contact-edge{stop-color:var(--glass-contact); stop-opacity:0}
+#formats .glass-shell,#formats .glass-back,#formats .glass-fold{
+  stroke-width:.85; stroke-linejoin:round;
+}
+#formats .glass-back{opacity:.78}
+#formats .glass-rim{
+  fill:none; stroke:#fff; stroke-width:1; stroke-linecap:round; opacity:.65;
+}
+#formats .glass-engrave{
+  fill:none; stroke:var(--glass-ink); stroke-width:1.5;
+  stroke-linecap:round; opacity:.56;
+}
+#formats .glass-record{stroke-width:2; opacity:.83}
+#formats .glass-mark{stroke:var(--glass-bright); stroke-opacity:.4; stroke-width:.55}
+#formats .glass-signal-glint{
+  fill:none; stroke:#fff; stroke-width:.85; stroke-linecap:round; opacity:.8;
+}
+#formats .glass-bead{
+  fill:var(--glass-bright); stroke:#fff; stroke-width:.65; stroke-opacity:.8;
+}
+#formats .glass-reader{
+  fill:none; stroke:var(--glass-bright); stroke-width:1.7; stroke-linecap:round;
+}
+#formats .glass-flow{
+  fill:none; stroke:var(--glass-color); stroke-width:2.4;
+  stroke-linecap:round; stroke-linejoin:round;
+}
+#formats .glass-lock{
+  fill:none; stroke:var(--glass-bright); stroke-width:3; stroke-linecap:round;
+}
+#formats .glass-key{stroke:var(--glass-deep); stroke-width:2; stroke-linecap:round}
+#formats .lg .trace{stroke-width:2.5}
+#formats .lg .trace-a{stroke:#77DCAD}
+#formats .lg .trace-c{stroke:#7AC0FF}
+#formats .lg .trace-g{stroke:#EDCF83}
+#formats .lg .trace-t{stroke:#EE9296}
+
+:root[data-theme="light"] #formats .gico.lg{
+  --glass-ink:#284D65; --glass-shadow:rgba(30,70,101,.15);
+  --glass-contact:rgba(48,87,112,.27);
+  background:none;
+}
+:root[data-theme="light"] #formats .glass-top{stop-opacity:.87}
+:root[data-theme="light"] #formats .glass-clear{stop-opacity:.21}
+:root[data-theme="light"] #formats .glass-tint{stop-opacity:.4}
+:root[data-theme="light"] #formats .glass-base{stop-opacity:.51}
+:root[data-theme="light"] #formats .glass-edge-mid{
+  stop-color:var(--glass-deep); stop-opacity:.5;
+}
+:root[data-theme="light"] #formats .glass-edge-base{
+  stop-color:var(--glass-deep); stop-opacity:.48;
+}
+:root[data-theme="light"] #formats .glass-polish{opacity:.77}
+:root[data-theme="light"] #formats .glass-rim{opacity:.98}
+:root[data-theme="light"] #formats .glass-reader{stroke:var(--glass-deep)}
+:root[data-theme="light"] #formats .glass-flow{stroke:var(--glass-deep)}
+:root[data-theme="light"] #formats .lg .trace-a{stroke:#198D60}
+:root[data-theme="light"] #formats .lg .trace-c{stroke:#337BC6}
+:root[data-theme="light"] #formats .lg .trace-g{stroke:#AA781A}
+:root[data-theme="light"] #formats .lg .trace-t{stroke:#C05E6A}
+@media (hover:hover) and (pointer:fine){
+  #formats .gridlines > div:hover .gico.lg{
+    transform:translateY(-2px); border:0; background:none; box-shadow:none;
+  }
+}
+@media (max-width:600px){
+  #formats .gico.lg{width:70px; height:70px}
+  #formats .gico.lg svg{width:74px; height:74px}
+}
+@media (prefers-reduced-motion:reduce){
+  #formats .gico.lg,#formats .gridlines > div:hover .gico.lg{
+    transform:none; transition:none;
+  }
+}
+@media (forced-colors:active){
+  #formats .gico.lg{background:none; forced-color-adjust:auto}
+  #formats .gico.lg svg{filter:none}
+  #formats :where([fill^="url("]){fill:Canvas; stroke:CanvasText}
+  #formats .glass-ground,#formats .glass-polish,#formats .glass-rim,
+  #formats .glass-signal-glint{display:none}
+  #formats .glass-shell,#formats .glass-back,#formats .glass-fold{
+    fill:Canvas; stroke:CanvasText; opacity:1;
+  }
+  #formats .glass-engrave,#formats .glass-key{stroke:CanvasText; opacity:1}
+  #formats .glass-mark,#formats .glass-bead{fill:Highlight; stroke:CanvasText}
+  #formats .glass-reader,#formats .glass-flow,#formats .glass-lock,
+  #formats .lg .trace{stroke:Highlight}
+  #formats .gico.lg ellipse[stroke],#formats .gico.lg path[stroke-width]{stroke:Highlight}
+}
