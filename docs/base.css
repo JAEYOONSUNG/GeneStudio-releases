@@ -721,6 +721,8 @@ figcaption:not(.reel-caption){
   transform-style:preserve-3d;transform-origin:center;visibility:hidden;pointer-events:none;
   will-change:transform}
 .reel-detail[data-visible="true"]{visibility:visible}
+.reel-detail[data-flat="true"]{overflow:hidden;border-radius:5px}
+.hero-reel:is([data-stage="focus"],[data-stage="slide"]) .reel-ring{visibility:hidden}
 .detail-curve{position:absolute;inset:0;transform-style:preserve-3d}
 .reel-detail .detail-slice{filter:none}
 .reel-detail[data-fit="tall"] .detail-slice img{object-position:50% 0}
@@ -735,6 +737,13 @@ figcaption:not(.reel-caption){
 .reel-detail[data-flat="true"] .detail-curve{visibility:hidden}
 .reel-detail[data-detail-live="true"] [data-reel-video][src],
 .reel-detail[data-detail-live="true"] [data-reel-loop][src]{opacity:1}
+.gallery-outgoing{position:absolute;inset:0;visibility:hidden;overflow:hidden;
+  background:#f7fafc;border-radius:5px;pointer-events:none}
+.gallery-outgoing[data-visible="true"]{visibility:visible}
+.gallery-outgoing>img,.gallery-outgoing>canvas{position:absolute;inset:0;
+  display:block;width:100%;height:100%;object-fit:contain}
+.gallery-outgoing>canvas{opacity:0}
+.gallery-outgoing[data-frame-ready="true"]>canvas{opacity:1}
 .hero-reel:is([data-state="paused"],[data-state="idle"],[data-state="still"],[data-stage="focus"]) :is(.reel-ring,.reel-detail){will-change:auto}
 
 

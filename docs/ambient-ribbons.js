@@ -61,7 +61,7 @@
   }
   function reconcile(){
     const paused = reel?.dataset.userPaused === 'true' || reel?.dataset.state === 'paused';
-    const focused = ['expand','focus','collapse'].includes(reel?.dataset.stage);
+    const focused = ['expand','focus','slide','collapse'].includes(reel?.dataset.stage);
     for(const record of records){
       const {host} = record;
       const state = reduced.matches ? 'reduced' : document.hidden ? 'hidden'

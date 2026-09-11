@@ -1,5 +1,5 @@
 /* A light rotating overview, followed by a readable native product demo.
-   The chosen curved screen unrolls into focus and returns to its original pose. */
+   One curved screen opens a horizontal walkthrough; the last view rejoins the ring. */
 (() => {
   'use strict';
   const reel = document.querySelector('[data-hero-reel]');
@@ -31,7 +31,7 @@
   const integral = v => v * v * v - .5 * v * v * v * v;
   const period = Math.max(600, Math.min(2000, Number(reel.dataset.reelPeriod) || 900));
   const speed = 1 / period, brakeDuration = 1600, expandDuration = 1400;
-  const focusDuration = 5200, collapseDuration = 1300, accelerationDuration = 800;
+  const focusDuration = 5200, collapseDuration = 1300, accelerationDuration = 800, slideDuration = 900;
   const words = [
     ['Find the file, or the exact site inside it.',
       'Home searches favorite folders by filename or recognition sequence, locally and without an import step.'],
@@ -61,19 +61,28 @@
   poster.setAttribute('data-detail-poster', ''); poster.alt = ''; poster.decoding = 'async';
   const loop = document.createElement('img');
   loop.setAttribute('data-reel-loop', ''); loop.alt = ''; loop.decoding = 'async';
-  plane.append(poster, video, loop); detail.append(curve, plane); viewport.append(veil, detail);
+  const outgoing = document.createElement('div');
+  outgoing.className = 'gallery-outgoing'; outgoing.setAttribute('data-gallery-outgoing', '');
+  outgoing.dataset.visible = 'false';
+  const outgoingPoster = document.createElement('img');
+  outgoingPoster.setAttribute('data-gallery-poster', ''); outgoingPoster.alt = '';
+  const outgoingCanvas = document.createElement('canvas');
+  outgoingCanvas.setAttribute('data-gallery-snapshot', '');
+  outgoing.append(outgoingPoster, outgoingCanvas);
+  plane.append(poster, video, loop); detail.append(curve, plane, outgoing); viewport.append(veil, detail);
   video.muted = video.defaultMuted = video.loop = video.playsInline = true;
   video.preload = 'auto';
 
   const panels = [], leaves = [];
   let position = 2, velocity = speed, index = 0, focusPanel = 0;
   let stage = 'rotate', elapsed = 0, segment = null, focus = 0;
-  let rotation = null, pendingScene = null, manualHold = false, hardPaused = false;
+  let rotation = null, gallerySlide = null, pendingScene = null, pendingDirection = 0, manualHold = false, hardPaused = false;
   let inView = false, pageVisible = !document.hidden, frame = 0, previousTime = 0;
   let media = null, sourceToken = 0, snapshotReady = false;
   let width = 0, height = 0, radius = 0, viewWidth = 0, viewHeight = 0;
   let fullHeight = 0, focusScale = 1, lastAngle = null, lastFront = -1, lastFocus = -1;
   let lastExtracted = -1;
+  let lastSlideProgress = null;
   const visible = () => inView && pageVisible;
   const mayTick = () => visible() && !reduced() && !hardPaused && !(stage === 'focus' && manualHold);
   const mayPlay = () => visible() && !reduced() && !hardPaused && stage === 'focus';
@@ -133,6 +142,10 @@
       const src = sourcePoster(panel.source);
       for (const leaf of panel.leaves) if (leaf.img.getAttribute('src') !== src) leaf.img.src = src;
     }
+    if (gallerySlide) {
+      const previous = sourcePoster(gallerySlide.fromIndex);
+      if (outgoingPoster.getAttribute('src') !== previous) outgoingPoster.src = previous;
+    }
     const src = sourcePoster(index);
     if (poster.getAttribute('src') !== src) poster.src = src;
     for (const leaf of leaves) if (leaf.img.getAttribute('src') !== src) leaf.img.src = src;
@@ -152,9 +165,9 @@
       node.style.setProperty('--slice-width', width / sliceCount + 'px');
       node.style.setProperty('--card-width', width + 'px');
     }
-    const image = faces[index].querySelector('picture img');
-    const ratio = compact.matches ? 1.25 : Number(image.getAttribute('width')) / Number(image.getAttribute('height'));
-    fullHeight = width / (ratio || 1.6);
+    // All six scenes share one enlarged frame. Tall sources are contained,
+    // including their letterboxing, rather than resizing between slides.
+    fullHeight = height;
     const margin = compact.matches ? 14 : 24;
     focusScale = Math.floor(width * Math.min((viewWidth - margin * 2) / width,
       (viewHeight - margin * 2) / fullHeight)) / width;
@@ -169,6 +182,7 @@
   function choose(scene) {
     index = mod(scene, total);
     reel.dataset.index = String(index);
+    reel.dataset.galleryIndex = String(index);
     faces.forEach((face, at) => face.classList.toggle('is-active', at === index));
     buttons.forEach((button, at) => button.setAttribute('aria-current', String(at === index)));
     count.textContent = String(index + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0');
@@ -200,7 +214,7 @@
     const text = reduced() ? 'Static product overview' : hardPaused ? 'Tour paused'
       : stage === 'rotate' ? 'Explore Gene Studio' : stage === 'focus'
       ? faces[index].dataset.label + (media?.playing ? ' · a closer look' : ' · preview')
-      : faces[index].dataset.label + (stage === 'collapse' ? ' · back to the workspace' : ' · coming into view');
+      : faces[index].dataset.label + (stage === 'collapse' ? ' · back to the workspace' : stage === 'slide' ? ' · next view' : ' · coming into view');
     if (status.textContent !== text) status.textContent = text;
   }
 
@@ -296,37 +310,92 @@
     if (mayPlay()) startMedia();
   }
 
+  function snapshotSource() {
+    if (detail.dataset.detailLive === 'true' && media?.ready && !media.failed) {
+      if (compact.matches && loop.naturalWidth && loop.hasAttribute('src')) return loop;
+      if (!compact.matches && video.readyState >= 2 && video.videoWidth) return video;
+    }
+    return poster.complete && poster.naturalWidth ? poster : null;
+  }
+
+  function drawContained(canvas, source, left, right) {
+    const sourceWidth = source.videoWidth || source.naturalWidth;
+    const sourceHeight = source.videoHeight || source.naturalHeight;
+    const density = Math.min(2, devicePixelRatio || 1);
+    const frameWidth = width * focusScale, frameHeight = fullHeight * focusScale;
+    const pixelWidth = Math.ceil((right - left) * density), pixelHeight = Math.ceil(frameHeight * density);
+    if (canvas.width !== pixelWidth) canvas.width = pixelWidth;
+    if (canvas.height !== pixelHeight) canvas.height = pixelHeight;
+    const context = canvas.getContext('2d');
+    context.fillStyle = '#f7fafc'; context.fillRect(0, 0, pixelWidth, pixelHeight);
+    const scale = Math.min(frameWidth / sourceWidth, frameHeight / sourceHeight);
+    const imageWidth = sourceWidth * scale, imageHeight = sourceHeight * scale;
+    const imageLeft = (frameWidth - imageWidth) / 2, imageTop = (frameHeight - imageHeight) / 2;
+    const a = Math.max(left, imageLeft), b = Math.min(right, imageLeft + imageWidth);
+    if (b > a) context.drawImage(source, (a - imageLeft) / scale, 0,
+      (b - a) / scale, sourceHeight, (a - left) * density, imageTop * density,
+      (b - a) * density, imageHeight * density);
+  }
+
   function takeSnapshot() {
     snapshotReady = false;
-    const source = compact.matches ? loop : video;
-    const sourceWidth = compact.matches ? loop.naturalWidth : video.videoWidth;
-    const sourceHeight = compact.matches ? loop.naturalHeight : video.videoHeight;
-    if (!media?.ready || !sourceWidth || !sourceHeight) return;
-    const density = Math.min(2, devicePixelRatio || 1);
-    const rasterWidth = width * focusScale;
-    const pixelWidth = Math.ceil((rasterWidth / sliceCount + 1) * density);
-    const pixelHeight = Math.ceil(fullHeight * focusScale * density);
+    const source = snapshotSource();
+    if (!source) return;
+    const frameWidth = width * focusScale;
     try {
-      for (let at = 0; at < sliceCount; at++) {
-        const canvas = leaves[at].canvas;
-        if (canvas.width !== pixelWidth) canvas.width = pixelWidth;
-        if (canvas.height !== pixelHeight) canvas.height = pixelHeight;
-        const sampleLeft = at * rasterWidth / sliceCount - .5;
-        const sampleRight = (at + 1) * rasterWidth / sliceCount + .5;
-        const left = Math.max(0, sampleLeft), right = Math.min(rasterWidth, sampleRight);
-        const context = canvas.getContext('2d');
-        context.clearRect(0, 0, pixelWidth, pixelHeight);
-        context.drawImage(source, left / rasterWidth * sourceWidth, 0,
-          (right - left) / rasterWidth * sourceWidth, sourceHeight,
-          (left - sampleLeft) * density, 0, (right - left) * density, pixelHeight);
-      }
+      for (let at = 0; at < sliceCount; at++)
+        drawContained(leaves[at].canvas, source, at * frameWidth / sliceCount - .5,
+          (at + 1) * frameWidth / sliceCount + .5);
       snapshotReady = true;
     } catch { snapshotReady = false; }
     detail.dataset.snapshot = String(snapshotReady);
   }
 
+  function beginSlide(scene, direction = 0) {
+    const previous = index;
+    scene = mod(scene, total);
+    if (scene === previous) { setStage('focus'); prepareMedia(); return; }
+    direction ||= scene > previous ? 1 : -1;
+    const distance = direction > 0 ? mod(scene - previous, total) : -mod(previous - scene, total);
+    gallerySlide = {fromIndex:previous, from:position, to:position + distance, direction};
+    setStage('slide');
+    outgoing.dataset.sourceIndex = String(previous);
+    outgoing.dataset.scene = faces[previous].dataset.scene;
+    outgoingPoster.src = sourcePoster(previous);
+    let ready = false;
+    const source = snapshotSource();
+    if (source) {
+      try { drawContained(outgoingCanvas, source, 0, width * focusScale); ready = true; } catch {}
+    }
+    outgoing.dataset.frameReady = String(ready);
+    pauseMedia();
+    focusPanel = mod(Math.round(gallerySlide.to), panelCount);
+    choose(scene);
+    prepareMedia(); render();
+  }
+
+  function renderGallery() {
+    const sliding = stage === 'slide' && !!gallerySlide;
+    if (!sliding) {
+      if (lastSlideProgress === null) return;
+      outgoing.dataset.visible = 'false';
+      plane.style.transform = 'none'; outgoing.style.transform = 'none';
+      reel.dataset.slideProgress = '0';
+      lastSlideProgress = null;
+      return;
+    }
+    const progress = ease(clamp(elapsed / slideDuration)), direction = gallerySlide.direction;
+    if (progress === lastSlideProgress) return;
+    outgoing.dataset.visible = 'true';
+    lastSlideProgress = progress;
+    plane.style.transform = 'translate3d(' + ((1 - progress) * direction * 100) + '%,0,0)';
+    outgoing.style.transform = 'translate3d(' + (-progress * direction * 100) + '%,0,0)';
+    reel.dataset.slideProgress = progress.toFixed(6);
+    reel.dataset.slideDirection = String(direction);
+  }
+
   function beginRotate(first = false) {
-    focus = 0; velocity = first ? speed : 0; pendingScene = null;
+    focus = 0; velocity = first ? speed : 0; pendingScene = null; gallerySlide = null;
     const next = first ? 0 : mod(index + 1, total);
     let target = position + mod(next - position, total);
     while (target - position < 3) target += total;
@@ -362,28 +431,29 @@
     beginBrake(scene, target, true);
   }
 
-  function requestScene(scene) {
+  function requestScene(scene, direction = 0) {
     scene = mod(scene, total); manualHold = true; hardPaused = false;
     if (media) media.failed = false;
     if (reduced()) {
-      releaseMedia(); choose(scene); focusPanel = scene; position = scene; focus = 1;
+      pendingScene = null; gallerySlide = null; releaseMedia(); choose(scene);
+      focusPanel = scene; position = scene; focus = 1;
       setStage('focus'); render(); return;
     }
-    if ((stage === 'focus' || stage === 'expand') && scene === index) {
-      prepareMedia(); reconcile(); return;
-    }
-    if (stage === 'collapse') pendingScene = scene;
-    else if (focus > 0 || stage === 'focus') { pendingScene = scene; beginCollapse(); }
-    else manualBrake(scene);
+    if (stage === 'slide' || stage === 'expand' || stage === 'collapse') {
+      pendingScene = scene; pendingDirection = direction;
+    } else if (stage === 'focus') {
+      if (scene !== index) beginSlide(scene, direction);
+      else prepareMedia();
+    } else manualBrake(scene);
     reconcile();
   }
 
   function renderDetail() {
     if (!width || focus === lastFocus) return;
     lastFocus = focus;
-    const active = stage === 'expand' || stage === 'focus' || stage === 'collapse';
+    const active = stage === 'expand' || stage === 'focus' || stage === 'slide' || stage === 'collapse';
     detail.dataset.visible = String(active);
-    detail.dataset.flat = String(focus === 1 && stage === 'focus');
+    detail.dataset.flat = String(focus === 1 && (stage === 'focus' || stage === 'slide'));
     reel.dataset.focusProgress = focus.toFixed(6);
     const f = focus, inverse = 1 - f;
     const scale = 1 / focusScale + (1 - 1 / focusScale) * f;
@@ -393,7 +463,7 @@
       'px),' + (-radius * .18 * inverse) + 'px) rotateZ(' + (-16 * inverse) +
       'deg) rotateX(' + (-20 * inverse) + 'deg) translateZ(' + (radius * inverse) +
       'px) scale3d(' + scale + ',' + scale + ',' + scale + ')';
-    veil.style.opacity = String(f * .94);
+    veil.style.opacity = String(f);
     detail.style.setProperty('--snapshot-opacity', String(snapshotReady ? Math.min(1, f / .18) : 0));
     for (let at = 0; at < sliceCount; at++) {
       const angle = (at - 3.5) * bend / sliceCount * Math.PI / 180;
@@ -424,7 +494,7 @@
       panels[front].face.dataset.cylinderFront = 'true';
       lastFront = front;
     }
-    renderDetail();
+    renderDetail(); renderGallery();
   }
 
   function advance(delta) {
@@ -461,14 +531,32 @@
       focus = ease(clamp(elapsed / expandDuration));
       if (focus === 1) {
         const carry = elapsed - expandDuration;
-        setStage('focus'); prepareMedia();
-        if (carry > 0) advance(carry);
+        setStage('focus');
+        if (pendingScene !== null && pendingScene !== index) {
+          const next = pendingScene, direction = pendingDirection; pendingScene = null;
+          beginSlide(next, direction);
+        } else { pendingScene = null; prepareMedia(); }
+        if (carry > 0 && mayTick()) advance(carry);
       }
     } else if (stage === 'focus') {
       if (!manualHold && elapsed >= focusDuration) {
         const carry = elapsed - focusDuration;
-        beginCollapse();
+        if (index < total - 1) beginSlide(index + 1, 1);
+        else beginCollapse();
         if (carry > 0) advance(carry);
+      }
+    } else if (stage === 'slide') {
+      const progress = ease(clamp(elapsed / slideDuration));
+      position = gallerySlide.from + (gallerySlide.to - gallerySlide.from) * progress;
+      if (elapsed >= slideDuration) {
+        const carry = elapsed - slideDuration;
+        position = gallerySlide.to;
+        setStage('focus');
+        if (pendingScene !== null && pendingScene !== index) {
+          const next = pendingScene, direction = pendingDirection; pendingScene = null;
+          beginSlide(next, direction);
+        } else { pendingScene = null; prepareMedia(); }
+        if (carry > 0 && mayTick()) advance(carry);
       }
     } else if (stage === 'collapse') {
       focus = segment.fromFocus * (1 - ease(clamp(elapsed / segment.duration)));
@@ -497,7 +585,7 @@
     if (frame) cancelAnimationFrame(frame);
     frame = 0; previousTime = 0;
     if (!visible() || hardPaused) pauseMedia();
-    else if (stage === 'focus' || stage === 'expand' || stage === 'brake') prepareMedia();
+    else if (stage === 'focus' || stage === 'slide' || stage === 'expand' || stage === 'brake') prepareMedia();
     updateState(); render();
     if (mayTick()) frame = requestAnimationFrame(tick);
   }
@@ -512,13 +600,13 @@
     if (hardPaused) hardPaused = false;
     else if (manualHold) {
       manualHold = false;
-      if (stage === 'focus') beginCollapse();
+      if (stage === 'focus') elapsed = 0;
     } else hardPaused = true;
     if (media) media.failed = false;
     reconcile();
   });
-  reel.querySelector('[data-reel-prev]')?.addEventListener('click', () => requestScene(index - 1));
-  reel.querySelector('[data-reel-next]')?.addEventListener('click', () => requestScene(index + 1));
+  reel.querySelector('[data-reel-prev]')?.addEventListener('click', () => requestScene((pendingScene ?? index) - 1, -1));
+  reel.querySelector('[data-reel-next]')?.addEventListener('click', () => requestScene((pendingScene ?? index) + 1, 1));
   buttons.forEach((button, at) => {
     button.addEventListener('click', () => requestScene(at));
     button.addEventListener('keydown', event => {
@@ -528,16 +616,16 @@
       else if (event.key === 'Home') next = 0;
       else if (event.key === 'End') next = total - 1;
       else return;
-      event.preventDefault(); buttons[next].focus(); requestScene(next);
+      event.preventDefault(); buttons[next].focus(); requestScene(next, event.key === 'ArrowRight' ? 1 : event.key === 'ArrowLeft' ? -1 : next > index ? 1 : -1);
     });
   });
   compact.addEventListener('change', () => {
-    releaseMedia(); snapshotReady = false; detail.dataset.snapshot = 'false';
+    releaseMedia(); snapshotReady = false; detail.dataset.snapshot = 'false'; outgoing.dataset.frameReady = 'false';
     updatePosters(); resize(); reconcile();
   });
   reducedMedia.addEventListener('change', () => {
     if (reduced()) {
-      releaseMedia(); manualHold = false; hardPaused = false;
+      releaseMedia(); manualHold = false; hardPaused = false; pendingScene = null; gallerySlide = null;
       position = index; focusPanel = index; focus = 1; velocity = 0;
       setStage('focus'); lastFocus = -1; render();
     } else if (stage === 'focus') beginCollapse();
