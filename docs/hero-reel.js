@@ -96,6 +96,7 @@
     slice.className = 'cylinder-slice' + (isDetail ? ' detail-slice' : '');
     slice.style.setProperty('--slice-index', String(part));
     slice.style.setProperty('--slice-angle', ((part - 3.5) * bend / sliceCount) + 'deg');
+    if(part === 0 || part === sliceCount - 1) slice.dataset.edge = part === 0 ? 'start' : 'end';
     const img = document.createElement('img');
     img.alt = ''; img.decoding = 'async'; slice.append(img);
     if (!isDetail) return {slice, img};
@@ -119,11 +120,24 @@
       face.dataset.cylinderPanel = String(at);
       face.dataset.sourceIndex = String(source);
       face.style.setProperty('--panel-angle', (-at * 360 / panelCount) + 'deg');
+      face.style.setProperty('--panel-glint-delay', (-at * .73) + 's');
       const mesh = document.createElement('div');
       mesh.className = 'cylinder-curve'; mesh.setAttribute('aria-hidden', 'true');
       const parts = [];
       for (let part = 0; part < sliceCount; part++) {
         const leaf = makeSlice(part, false); parts.push(leaf); mesh.append(leaf.slice);
+        // A separate curved surface lets light spill outside the screen while
+        // the original slices retain their crisp clipping and 3D geometry.
+        const light = document.createElement('span');
+        light.className = 'panel-light-slice';
+        light.style.setProperty('--slice-index', String(part));
+        light.style.setProperty('--slice-angle', ((part - 3.5) * bend / sliceCount) + 'deg');
+        if(part === 0 || part === sliceCount - 1) {
+          light.dataset.edge = part === 0 ? 'start' : 'end';
+          const corner = document.createElement('i');
+          corner.className = 'panel-corner-light'; light.append(corner);
+        }
+        mesh.append(light);
       }
       face.querySelector('.reel-screen').prepend(mesh);
       panels.push({face, source, leaves:parts});
