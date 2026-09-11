@@ -153,7 +153,10 @@
 
   function updatePosters() {
     for (const panel of panels) {
-      const src = sourcePoster(panel.source);
+      // The ring displays small previews; the full source stays reserved for
+      // the extracted detail and its native video, not 96 rotating textures.
+      const src = !compact.matches && faces[panel.source].dataset.poster
+        ? faces[panel.source].dataset.poster : sourcePoster(panel.source);
       for (const leaf of panel.leaves) if (leaf.img.getAttribute('src') !== src) leaf.img.src = src;
     }
     if (gallerySlide) {
@@ -497,7 +500,10 @@
   function render() {
     const angle = position * 360 / panelCount;
     if (angle !== lastAngle) {
-      ring.style.setProperty('--cylinder-angle', angle.toFixed(6) + 'deg');
+      // Transform is not inherited. Updating an angle custom property here
+      // invalidated the computed styles of every slice and light below it.
+      ring.style.transform = 'translate3d(-50%,-50%,calc(var(--cylinder-radius,380px) * -.18)) ' +
+        'rotateZ(var(--cylinder-roll)) rotateX(var(--cylinder-pitch)) rotateY(' + angle.toFixed(6) + 'deg)';
       reel.dataset.phase = mod(position, panelCount).toFixed(6);
       reel.dataset.angle = mod(angle, 360).toFixed(6);
       lastAngle = angle;

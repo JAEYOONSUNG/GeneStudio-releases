@@ -56,12 +56,12 @@ try{if(localStorage.getItem('gs-site-motion')==='on')document.documentElement.cl
 <link rel="preload" href="font/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="font/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="font/fonts.css?v=20260828">
-<link rel="stylesheet" href="base.css?v=20260911-panel-light1">
-<link rel="stylesheet" href="ambient-ribbons.css?v=20260911-panel-light1">
-<link rel="stylesheet" href="section-motion.css?v=20260911-panel-light1">
-<script src="hero-reel.js?v=20260911-panel-light1" defer></script>
-<script src="section-motion.js?v=20260911-panel-light1" defer></script>
-<script src="ambient-ribbons.js?v=20260911-panel-light1" defer></script>
+<link rel="stylesheet" href="base.css?v=20260911-smooth1">
+<link rel="stylesheet" href="ambient-ribbons.css?v=20260911-smooth1">
+<link rel="stylesheet" href="section-motion.css?v=20260911-smooth1">
+<script src="hero-reel.js?v=20260911-smooth1" defer></script>
+<script src="section-motion.js?v=20260911-smooth1" defer></script>
+<script src="ambient-ribbons.js?v=20260911-smooth1" defer></script>
 </head>
 <body>
 <!-- **A phone reports its own state, so nobody has to guess at it.** Open the
@@ -236,7 +236,7 @@ try{if(localStorage.getItem('gs-site-motion')==='on')document.documentElement.cl
         <div data-ambient-ribbons="reel" aria-hidden="true"></div>
         <div class="reel-ring" data-reel-ring aria-hidden="true">
           <div class="reel-face is-active" data-reel-face data-scene="home"
-               data-video="clip/home.mp4" data-phone-anim="clip/home-phone.anim.webp"
+               data-poster="clip/home-reel.webp" data-video="clip/home.mp4" data-phone-anim="clip/home-phone.anim.webp"
                data-label="Home">
             <div class="reel-screen">
               <picture><source media="(max-width:760px)" srcset="clip/home-phone.webp">
@@ -245,7 +245,7 @@ try{if(localStorage.getItem('gs-site-motion')==='on')document.documentElement.cl
             </div>
           </div>
           <div class="reel-face" data-reel-face data-scene="map"
-               data-video="clip/map.mp4" data-phone-anim="clip/map-phone.anim.webp"
+               data-poster="clip/map-reel.webp" data-video="clip/map.mp4" data-phone-anim="clip/map-phone.anim.webp"
                data-label="Map">
             <div class="reel-screen">
               <picture><source media="(max-width:760px)" srcset="clip/map-phone.webp">
@@ -254,7 +254,7 @@ try{if(localStorage.getItem('gs-site-motion')==='on')document.documentElement.cl
             </div>
           </div>
           <div class="reel-face" data-reel-face data-scene="feature"
-               data-video="clip/feature.mp4" data-phone-anim="clip/feature-phone.anim.webp"
+               data-poster="clip/feature-reel.webp" data-video="clip/feature.mp4" data-phone-anim="clip/feature-phone.anim.webp"
                data-label="Features">
             <div class="reel-screen">
               <picture><source media="(max-width:760px)" srcset="clip/feature-phone.webp">
@@ -263,7 +263,7 @@ try{if(localStorage.getItem('gs-site-motion')==='on')document.documentElement.cl
             </div>
           </div>
           <div class="reel-face" data-reel-face data-scene="digest" data-fit="tall"
-               data-video="clip/digest.mp4" data-phone-anim="clip/digest-phone.anim.webp"
+               data-poster="clip/digest-reel.webp" data-video="clip/digest.mp4" data-phone-anim="clip/digest-phone.anim.webp"
                data-label="Digest">
             <div class="reel-screen">
               <picture><source media="(max-width:760px)" srcset="clip/digest-phone.webp">
@@ -272,7 +272,7 @@ try{if(localStorage.getItem('gs-site-motion')==='on')document.documentElement.cl
             </div>
           </div>
           <div class="reel-face" data-reel-face data-scene="guides"
-               data-video="clip/guides.mp4" data-phone-anim="clip/guides-phone.anim.webp"
+               data-poster="clip/guides-reel.webp" data-video="clip/guides.mp4" data-phone-anim="clip/guides-phone.anim.webp"
                data-label="Guides">
             <div class="reel-screen">
               <picture><source media="(max-width:760px)" srcset="clip/guides-phone.webp">
@@ -281,7 +281,7 @@ try{if(localStorage.getItem('gs-site-motion')==='on')document.documentElement.cl
             </div>
           </div>
           <div class="reel-face" data-reel-face data-scene="sanger" data-fit="tall"
-               data-video="clip/sanger.mp4" data-phone-anim="clip/sanger-phone.anim.webp"
+               data-poster="clip/sanger-reel.webp" data-video="clip/sanger.mp4" data-phone-anim="clip/sanger-phone.anim.webp"
                data-label="Sanger">
             <div class="reel-screen">
               <picture><source media="(max-width:760px)" srcset="clip/sanger-phone.webp">

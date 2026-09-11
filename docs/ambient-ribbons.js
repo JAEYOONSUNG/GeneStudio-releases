@@ -27,6 +27,12 @@
     let width = 0, height = 0, scale = 1, time = 0, last = 0, frame = 0, running = false;
     let particles = [], field = [], palette = [], light = false;
     const TAU = Math.PI * 2;
+    const DEPTHS = 5, COLORS = 3, ALPHAS = 10, FIELD_ALPHAS = 4;
+    // Reuse linked buckets: a particle is visited once to project it and once
+    // to paint it, with one fill per material rather than one fill per star.
+    const heads = new Int32Array(DEPTHS * COLORS * ALPHAS);
+    const fieldHeads = new Int32Array(FIELD_ALPHAS);
+    let next = new Int32Array(0), fieldNext = new Int32Array(0), glints = new Int32Array(0);
     // Seed once: resizing preserves the composition rather than making it pop.
     let seed = 42137;
     const random = () => ((seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0) / 4294967296);
@@ -73,14 +79,32 @@
         field.push({x:random(), y:random(), radius:.35 + random() * .8,
           phase:random() * TAU, speed:.3 + random() * .7});
       }
-    }
-    function project(u, angle, across = 1) {
-      const depth = Math.cos(angle) * across;
-      return {
-        x:width * (-.09 + 1.18 * u) + depth * width * .022,
-        y:height * (.88 - .76 * u + .035 * Math.sin(u * Math.PI)) + Math.sin(angle) * across * height * .19,
-        depth
-      };
+      for(const p of particles) {
+        const angle = p.u * TAU * 2.15 + p.strand * Math.PI;
+        const across = p.cross < 0 ? 1 : 1 - 2 * p.cross;
+        const centerSine = Math.sin(p.u * Math.PI);
+        const thickness = height * (p.cross < 0 ? .014 : .006);
+        p.cosAngle = Math.cos(angle) * across;
+        p.sinAngle = Math.sin(angle) * across;
+        p.cosPhase = Math.cos(p.phase);
+        p.sinPhase = Math.sin(p.phase);
+        p.baseX = width * (-.09 + 1.18 * p.u) + p.offset * thickness;
+        p.baseY = height * (.88 - .76 * p.u + .035 * centerSine) + p.spread * thickness;
+        p.driftGain = .3 + .7 * centerSine * centerSine;
+        p.driftX *= width;
+        p.driftY *= height;
+        p.size *= phone ? .85 : 1;
+        p.fade = smooth(0, .1, p.u) * (1 - smooth(.9, 1, p.u)) * (p.cross < 0 ? 1 : .54);
+        p.glint = p.shimmer > .982 && p.cross < 0;
+      }
+      for(const star of field) {
+        star.cosPhase = Math.cos(star.phase);
+        star.sinPhase = Math.sin(star.phase);
+        star.px = 0; star.py = 0;
+      }
+      next = new Int32Array(particles.length);
+      fieldNext = new Int32Array(field.length);
+      glints = new Int32Array(particles.length);
     }
     function draw() {
       if(!width || !height) return;
@@ -92,47 +116,85 @@
       // remains readable. Reduced motion gets the fully assembled specimen.
       const release = reduced.matches ? 0 : smooth(15, 19, cycle) * (1 - smooth(22, 27.5, cycle));
       const spin = time * .19 + .35;
+      // Angle addition keeps all per-star geometry and phases cached between
+      // resizes. Only these shared clocks need trigonometry on each frame.
+      const spinCos = Math.cos(spin), spinSin = Math.sin(spin);
+      const driftCos = Math.cos(time * .6), driftSin = Math.sin(time * .6);
+      const twinkleCos = Math.cos(time * .85), twinkleSin = Math.sin(time * .85);
+      const fieldCos = Math.cos(time * .04), fieldSin = Math.sin(time * .04);
+      const fieldTwinkleCos = Math.cos(time * .5), fieldTwinkleSin = Math.sin(time * .5);
+      const fieldOpacity = light ? .22 : .32, opacity = light ? .82 : 1;
+      fieldHeads.fill(-1);
+      for(let i = 0; i < field.length; i++) {
+        const star = field[i];
+        star.px = ((star.x + (fieldSin * star.cosPhase + fieldCos * star.sinPhase) * .008 + 1) % 1) * width;
+        star.py = ((star.y - (time * .0014 * star.speed % 1) + 1) % 1) * height;
+        const twinkle = fieldTwinkleSin * star.cosPhase + fieldTwinkleCos * star.sinPhase;
+        const bucket = Math.min(FIELD_ALPHAS - 1, Math.floor((.58 + .42 * twinkle * twinkle) * FIELD_ALPHAS));
+        fieldNext[i] = fieldHeads[bucket];
+        fieldHeads[bucket] = i;
+      }
       ctx.fillStyle = palette[0];
-      for(const star of field) {
-        const x = ((star.x + Math.sin(time * .04 + star.phase) * .008 + 1) % 1) * width;
-        const y = ((star.y - (time * .0014 * star.speed % 1) + 1) % 1) * height;
-        ctx.globalAlpha = (light ? .22 : .32) * (.58 + .42 * Math.sin(time * .5 + star.phase) ** 2);
-        ctx.beginPath(); ctx.arc(x, y, star.radius, 0, TAU); ctx.fill();
+      for(let bucket = 0; bucket < FIELD_ALPHAS; bucket++) {
+        if(fieldHeads[bucket] < 0) continue;
+        ctx.globalAlpha = fieldOpacity * (bucket + .5) / FIELD_ALPHAS;
+        ctx.beginPath();
+        for(let i = fieldHeads[bucket]; i >= 0; i = fieldNext[i]) {
+          const star = field[i];
+          ctx.moveTo(star.px + star.radius, star.py);
+          ctx.arc(star.px, star.py, star.radius, 0, TAU);
+        }
+        ctx.fill();
       }
-      for(const p of particles) {
-        const angle = p.u * TAU * 2.15 + spin + p.strand * Math.PI;
-        const across = p.cross < 0 ? 1 : 1 - 2 * p.cross;
-        const point = project(p.u, angle, across);
-        const drift = release * (.3 + .7 * Math.sin(p.u * Math.PI) ** 2);
-        const thickness = height * (p.cross < 0 ? .014 : .006);
-        p.x = point.x + p.offset * thickness + p.driftX * width * drift;
-        p.y = point.y + p.spread * thickness + p.driftY * height * drift
-          + Math.sin(time * .6 + p.phase) * (1 + drift * 6);
-        p.depth = point.depth;
-        p.radius = p.size * (.82 + .28 * (point.depth + 1)) * (width < 600 ? .85 : 1);
-        const endFade = smooth(0, .1, p.u) * (1 - smooth(.9, 1, p.u));
-        const twinkle = .76 + .24 * Math.sin(time * .85 + p.phase) ** 2;
-        p.alpha = endFade * twinkle * (.43 + .25 * (point.depth + 1)) * (1 - drift * .45)
-          * (p.cross < 0 ? 1 : .54) * (light ? .82 : 1);
+      heads.fill(-1);
+      let glintCount = 0;
+      for(let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        const depth = p.cosAngle * spinCos - p.sinAngle * spinSin;
+        const sway = p.sinAngle * spinCos + p.cosAngle * spinSin;
+        const drift = release * p.driftGain;
+        const jitter = driftSin * p.cosPhase + driftCos * p.sinPhase;
+        const twinkle = twinkleSin * p.cosPhase + twinkleCos * p.sinPhase;
+        p.x = p.baseX + depth * width * .022 + p.driftX * drift;
+        p.y = p.baseY + sway * height * .19 + p.driftY * drift + jitter * (1 + drift * 6);
+        p.radius = p.size * (1.1 + .28 * depth);
+        p.alpha = p.fade * (.76 + .24 * twinkle * twinkle) * (.68 + .25 * depth) * (1 - drift * .45) * opacity;
+        // Fade out the almost invisible ends before quantizing their opacity.
+        if(p.alpha < .018) continue;
+        const layer = Math.min(DEPTHS - 1, Math.floor((depth + 1) * DEPTHS / 2));
+        const alpha = Math.min(ALPHAS - 1, Math.floor(p.alpha * ALPHAS));
+        const bucket = (layer * COLORS + p.color) * ALPHAS + alpha;
+        next[i] = heads[bucket];
+        heads[bucket] = i;
+        if(p.glint && depth > 0) glints[glintCount++] = i;
       }
-      // Paint back-to-front in a few buckets, avoiding thousands of glow
-      // filters or DOM nodes while keeping each star a sharp point of light.
-      for(let layer = 0; layer < 5; layer++) {
-        for(let color = 0; color < palette.length; color++) {
+      // Preserve the front/back shimmer with batched, subpixel circular stars.
+      for(let layer = 0; layer < DEPTHS; layer++) {
+        for(let color = 0; color < COLORS; color++) {
           ctx.fillStyle = palette[color];
-          for(const p of particles) {
-            if(p.color !== color || Math.min(4, Math.floor((p.depth + 1) * 2.5)) !== layer) continue;
-            ctx.globalAlpha = p.alpha;
-            ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, TAU); ctx.fill();
-            if(p.shimmer > .982 && p.cross < 0 && p.depth > 0) {
-              ctx.globalAlpha = p.alpha * .09;
-              ctx.beginPath(); ctx.arc(p.x, p.y, p.radius * 4.5, 0, TAU); ctx.fill();
-              ctx.globalAlpha = p.alpha * .34;
-              ctx.fillRect(p.x - p.radius * 3.1, p.y - .3, p.radius * 6.2, .6);
-              ctx.fillRect(p.x - .3, p.y - p.radius * 3.1, .6, p.radius * 6.2);
+          for(let alpha = 0; alpha < ALPHAS; alpha++) {
+            const bucket = (layer * COLORS + color) * ALPHAS + alpha;
+            if(heads[bucket] < 0) continue;
+            ctx.globalAlpha = (alpha + .5) / ALPHAS;
+            ctx.beginPath();
+            for(let i = heads[bucket]; i >= 0; i = next[i]) {
+              const p = particles[i];
+              ctx.moveTo(p.x + p.radius, p.y);
+              ctx.arc(p.x, p.y, p.radius, 0, TAU);
             }
+            ctx.fill();
           }
         }
+      }
+      // Only the sparse brightest stars need an individual halo and cross.
+      for(let i = 0; i < glintCount; i++) {
+        const p = particles[glints[i]];
+        ctx.fillStyle = palette[p.color];
+        ctx.globalAlpha = p.alpha * .09;
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.radius * 4.5, 0, TAU); ctx.fill();
+        ctx.globalAlpha = p.alpha * .34;
+        ctx.fillRect(p.x - p.radius * 3.1, p.y - .3, p.radius * 6.2, .6);
+        ctx.fillRect(p.x - .3, p.y - p.radius * 3.1, .6, p.radius * 6.2);
       }
       ctx.globalAlpha = 1;
     }
@@ -140,11 +202,9 @@
       frame = 0;
       if(!running) return;
       if(!last) last = now;
-      const elapsed = now - last;
-      if(elapsed >= 1000 / 30) {
-        time += Math.min(elapsed, 80) / 1000;
-        last = now; draw();
-      }
+      time += Math.min(now - last, 80) / 1000;
+      last = now;
+      draw();
       frame = requestAnimationFrame(tick);
     }
     function setRunning(value) {
@@ -156,7 +216,7 @@
     }
     function resize() {
       const box = host.getBoundingClientRect();
-      const nextScale = Math.min(devicePixelRatio || 1, 1.5);
+      const nextScale = Math.min(devicePixelRatio || 1, box.width < 600 ? 1.25 : 1.5);
       if(width === box.width && height === box.height && scale === nextScale) return;
       width = box.width; height = box.height; scale = nextScale;
       canvas.width = Math.max(1, Math.round(width * scale));
