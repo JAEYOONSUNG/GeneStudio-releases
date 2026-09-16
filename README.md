@@ -158,3 +158,17 @@ SeqFold and Aioli run locally under their own licences; full notices ship with
 the application. The `.dna` reader was worked out from the bytes of real files
 for interoperability — Gene Studio contains no SnapGene code and is not
 connected with, or endorsed by, SnapGene or Dotmatics.
+
+<!-- gene-studio:release-notes:begin -->
+## Release notes
+
+Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
+
+<!-- gene-studio:release:1.3.81:begin published-at=2026-09-16T21:00:56.000Z -->
+### [1.3.81](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.3.81) — 2026-09-16
+
+- Separate actual recognition patterns from notes and annotation evidence in strain R–M details, with explicit modification and restriction activity labels.
+- Open a saved strain's R–M editor directly, or duplicate a built-in strain to edit its copy. The editor explains which record changes require **Save changes**.
+- Save display preferences for notes, annotation evidence, uncertain details and compact row spacing.
+<!-- gene-studio:release:1.3.81:end -->
+<!-- gene-studio:release-notes:end -->
