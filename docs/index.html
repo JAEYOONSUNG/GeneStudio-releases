@@ -29,6 +29,29 @@ window.gsMotion={
 preference.addEventListener('change',function(){window.dispatchEvent(new Event('gs-motion'))});
 document.addEventListener('visibilitychange',function(){document.documentElement.dataset.pageHidden=String(document.hidden)});
 })()</script>
+<!-- Reload opens the introduction; ordinary section links and history keep
+     their own destinations. Run before layout can restore an old position. -->
+<script>
+(() => {
+  const navigation = performance.getEntriesByType('navigation')[0];
+  if(navigation?.type !== 'reload') return;
+  const restoration = history.scrollRestoration;
+  history.scrollRestoration = 'manual';
+  if(location.hash) history.replaceState(history.state, '', location.pathname + location.search);
+  const startAtTop = () => scrollTo({top:0, left:0, behavior:'instant'});
+  startAtTop();
+  document.addEventListener('DOMContentLoaded', startAtTop, {once:true});
+  addEventListener('pageshow', event => {
+    if(event.persisted) return;
+    startAtTop();
+    // Persisted scroll restoration can follow pageshow in the browser.
+    requestAnimationFrame(() => {
+      startAtTop();
+      history.scrollRestoration = restoration;
+    });
+  }, {once:true});
+})();
+</script>
 <meta property="og:title" content="Gene Studio">
 <meta property="og:description" content="A plasmid workbench that opens what your lab already has — GenBank, SnapGene .dna, FASTA and Sanger traces — and writes them back without losing what was in them.">
 <meta property="og:type" content="website">
@@ -63,13 +86,13 @@ document.addEventListener('visibilitychange',function(){document.documentElement
 <link rel="preload" href="font/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="font/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="font/fonts.css?v=20260828">
-<link rel="stylesheet" href="base.css?v=20260918-hero1">
-<link rel="stylesheet" href="ambient-ribbons.css?v=20260918-hero1">
-<link rel="stylesheet" href="section-motion.css?v=20260918-hero1">
-<link rel="stylesheet" href="hero.css?v=20260918-hero1">
-<script src="hero-reel.js?v=20260918-hero1" defer></script>
-<script src="section-motion.js?v=20260918-hero1" defer></script>
-<script src="ambient-ribbons.js?v=20260918-hero1" defer></script>
+<link rel="stylesheet" href="base.css?v=20260918-scroll1">
+<link rel="stylesheet" href="ambient-ribbons.css?v=20260918-scroll1">
+<link rel="stylesheet" href="section-motion.css?v=20260918-scroll1">
+<link rel="stylesheet" href="hero.css?v=20260918-scroll1">
+<script src="hero-reel.js?v=20260918-scroll1" defer></script>
+<script src="section-motion.js?v=20260918-scroll1" defer></script>
+<script src="ambient-ribbons.js?v=20260918-scroll1" defer></script>
 </head>
 <body>
 <!-- **A phone reports its own state, so nobody has to guess at it.** Open the
