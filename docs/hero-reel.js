@@ -610,6 +610,18 @@
     if (mayTick()) frame = requestAnimationFrame(tick);
   }
 
+  // The opening action selects the actual Map view using the tour's normal
+  // lifecycle, so loading, pause and reduced motion share the same behavior.
+  for (const link of document.querySelectorAll('[data-reel-open]')) {
+    link.addEventListener('click', event => {
+      event.preventDefault();
+      const scene = Number(link.dataset.reelOpen);
+      requestScene(scene);
+      buttons[scene]?.focus({preventScroll:true});
+      viewport.scrollIntoView({block:'center', behavior:reduced() ? 'instant' : 'smooth'});
+    });
+  }
+
   pauseButton?.addEventListener('click', () => {
     if (reduced()) {
       root.classList.add('motion-on');
