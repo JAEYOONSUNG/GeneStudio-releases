@@ -164,6 +164,16 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.3.84:begin published-at=2026-09-17T13:15:52.000Z -->
+### [1.3.84](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.3.84) — 2026-09-17
+
+- Replace vector suitability heuristics with a strain-bound design audit: supported checks earn completeness points while unknown evidence stays in the denominator. Keep identified conflicts separate from the score, and never present it as transformation or expression success probability.
+- Evaluate each annotated CDS against the selected strain's saved codon and 16S anti-SD evidence. Read actual DNA with its strand, joined/circular coordinates, phase and genetic code; expose partial, ambiguous, unsupported and exceptional annotations, missing reference families and internal stops instead of using a generic host or stored protein text as proof.
+- Carry source methylation, target R-M and modification-dependent defense uncertainty into the vector audit. Review replication/integration/transient intent, target selection, delivery, regulation and verification with explicit researcher evidence that requires reconfirmation after the construct or host context changes.
+- Show compact R-M system summaries with activity, recognition motif and linked genome loci together. Expand system details and individual M/R/S/C annotation rows when needed, with source provenance and genome navigation preserved.
+- Keep the application version in the top bar and remove its build date and time.
+<!-- gene-studio:release:1.3.84:end -->
+
 <!-- gene-studio:release:1.3.83:begin published-at=2026-09-17T10:26:23.000Z -->
 ### [1.3.83](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.3.83) — 2026-09-17
 
