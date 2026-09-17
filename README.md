@@ -164,6 +164,16 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.3.83:begin published-at=2026-09-17T10:26:23.000Z -->
+### [1.3.83](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.3.83) — 2026-09-17
+
+- Show R-M M/R/S/C genome loci in collapsed cards and annotation pickers, preserving joined, circular, partial and remote locations. Open a source-verified locus map, copy its coordinates and provenance, and return to the same strain draft without losing unsaved edits.
+- Assess predicted target-DNA methylation for guide candidates on both physical DNA strands, including motifs crossing PAM and circular-genome boundaries. Separate possible interference, unresolved overlap, limited-context tolerance and incomplete coverage; apply literature rules only to compatible, explicitly identified Cas enzymes and retain guide scores.
+- Remember explicit methylation-profile choices for each exact target genome. Recheck results when the target, annotation, profile, definition or Cas evidence changes, and preserve the selected occurrence and locus for repeated spacers or overlapping annotations.
+- Search every library candidate by gene, locus, coordinates, spacer, PAM or methylation system. Review evidence in bounded pages, compare scores and spacer-match counts, select candidates beyond the table display limit, and return from base inspection to the same review and keyboard focus.
+- Retain assessment provenance in copied tables, oligo orders, added guide features and completed vectors. Connect workbook status, evidence and deduplicated order rows with stable design IDs, and include a review-summary sheet with target, Cas and interpretation context.
+<!-- gene-studio:release:1.3.83:end -->
+
 <!-- gene-studio:release:1.3.82:begin published-at=2026-09-17T04:15:21.000Z -->
 ### [1.3.82](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.3.82) — 2026-09-17
 
