@@ -74,7 +74,7 @@
   [data-ambient-ribbons="reel"]{--ribbon-strength:.16}
 }
 @media(prefers-reduced-motion:reduce){
-  [data-ambient-ribbons]{transition:none}
-  [data-ambient-ribbons] .ribbon-drift,
-  [data-ambient-ribbons] .ribbon-glint{animation:none}
+  html:not(.motion-on) [data-ambient-ribbons]{transition:none}
+  html:not(.motion-on) [data-ambient-ribbons] .ribbon-drift,
+  html:not(.motion-on) [data-ambient-ribbons] .ribbon-glint{animation:none}
 }

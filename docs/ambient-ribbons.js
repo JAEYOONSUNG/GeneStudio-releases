@@ -5,7 +5,7 @@
   const hosts = [...document.querySelectorAll('[data-ambient-ribbons]')];
   if(!hosts.length) return;
   const reel = document.querySelector('[data-hero-reel]');
-  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  const reduced = window.gsMotion || matchMedia('(prefers-reduced-motion: reduce)');
   const NS = 'http://www.w3.org/2000/svg';
   const create = (name, attributes = {}) => {
     const node = document.createElementNS(NS, name);

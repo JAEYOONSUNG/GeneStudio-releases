@@ -2,7 +2,7 @@
    Each transition has an end. No screen or caption rocks while it is read. */
 (() => {
   'use strict';
-  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  const reduced = window.gsMotion || matchMedia('(prefers-reduced-motion: reduce)');
   const decks = [];
   const windows = [];
   const refreshMedia = () => window.dispatchEvent(new Event('gs-section-media'));
@@ -188,6 +188,7 @@
     next.addEventListener('click', () => show(index + 1, 1));
     toggle.addEventListener('click', () => {
       paused = !paused;
+      if(!paused){ focused = false; hovered = false; }
       settle();
       updateControls();
       queue();
@@ -206,8 +207,11 @@
     });
     deck.addEventListener('pointerenter', event => { if(event.pointerType !== 'touch'){ hovered = true; queue(); } });
     deck.addEventListener('pointerleave', () => { hovered = false; queue(); });
-    deck.addEventListener('focusin', () => { focused = true; queue(); });
-    deck.addEventListener('focusout', () => queueMicrotask(() => { focused = deck.contains(document.activeElement); queue(); }));
+    deck.addEventListener('focusin', event => {
+      focused = event.target.matches(':focus-visible');
+      queue();
+    });
+    deck.addEventListener('focusout', () => queueMicrotask(() => { focused = deck.contains(document.activeElement) && document.activeElement.matches(':focus-visible'); queue(); }));
     let touchStart = null;
     stage.addEventListener('pointerdown', event => { if(event.pointerType === 'touch') touchStart = {x:event.clientX,y:event.clientY}; }, {passive:true});
     stage.addEventListener('pointerup', event => {
@@ -307,7 +311,7 @@
       new IntersectionObserver(entries => {
         visible = entries.some(entry => entry.isIntersecting);
         lifecycle();
-      }, {threshold:0}).observe(figure);
+      }, {rootMargin:'0px 0px -14% 0px', threshold:0}).observe(figure);
     } else lifecycle();
     if(kind === 'fan'){
       let activeClip = figure.querySelector('.flowclip.on');

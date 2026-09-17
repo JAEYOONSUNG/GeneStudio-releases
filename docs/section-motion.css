@@ -80,6 +80,7 @@
   .motion-stage > figure,.motion-stage > figure[hidden]{gap:11px}
 }
 @media(prefers-reduced-motion:reduce){
-  .motion-stage,.window-motion-ready{perspective:none}
-  .motion-fan-layer{display:none}
+  html:not(.motion-on) .motion-stage,
+  html:not(.motion-on) .window-motion-ready{perspective:none}
+  html:not(.motion-on) .motion-fan-layer{display:none}
 }

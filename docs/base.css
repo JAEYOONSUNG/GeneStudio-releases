@@ -109,8 +109,10 @@ html.js .rise{opacity:0; transform:translateY(10px); will-change:transform;
   transition:opacity .5s ease, transform .5s ease}
 html.js .rise.in{opacity:1; transform:none}
 @media (prefers-reduced-motion:reduce){
-  html{scroll-behavior:auto}
-  .feature-popover,.feature-trigger svg,.feature-card{transition:none}
+  html:not(.motion-on){scroll-behavior:auto}
+  html:not(.motion-on) .feature-popover,
+  html:not(.motion-on) .feature-trigger svg,
+  html:not(.motion-on) .feature-card{transition:none}
 }
 
 /* ── the strip along the top ─────────────────────────────────────────────── */
@@ -364,9 +366,9 @@ header.rail{
   to  {opacity:.5;  transform:translate3d(-6%, -4%, 0) scale(.92)}
 }
 @media (prefers-reduced-motion:reduce){
-  /* at rest and still lit: the light is part of the picture, only its drift is
+/* at rest and still lit: the light is part of the picture, only its drift is
      the motion — a hero that goes flat is a different design, not a calmer one */
-  .hero[data-lit] .aura{animation:none; opacity:.75}
+html:not(.motion-on) .hero[data-lit] .aura{animation:none; opacity:.75}
 }
 /* a vignette so the centred type is read on a settled ground rather than on
    whichever gradient happens to be under that line */
@@ -786,8 +788,9 @@ figcaption:not(.reel-caption){
   .panel-corner-light{box-shadow:0 0 3px 1px #d9f6ff,0 0 8px 2px var(--panel-light)}
 }
 @media(prefers-reduced-motion:reduce){
-  .hero-reel .panel-light-slice{transition:none}
-  .hero-reel .panel-corner-light,.hero-reel .reel-face .cylinder-slice::after{animation:none}
+  html:not(.motion-on) .hero-reel .panel-light-slice{transition:none}
+  html:not(.motion-on) .hero-reel .panel-corner-light,
+  html:not(.motion-on) .hero-reel .reel-face .cylinder-slice::after{animation:none}
 }
 @media(forced-colors:active){
   .panel-light-slice,.reel-face .cylinder-slice::after{display:none}
@@ -1169,7 +1172,8 @@ section.plain.onplate .tbcard, .beta .betabox{--faint:#89999C}
 .deckdot:hover::before{background:var(--ink)}
 .deckdot[aria-current="true"]::before{width:26px; background:var(--topic,var(--amber))}
 .deckdot:focus-visible{outline:1px solid var(--amber); outline-offset:-8px}
-@media (prefers-reduced-motion:reduce){ .deckdot::before{transition:none} }
+@media (prefers-reduced-motion:reduce){
+  html:not(.motion-on) .deckdot::before{transition:none} }
 /* **A frame is the window round a drawing, so where the drawing is narrower
    than the column the frame goes with it.** The gel is cropped to its plate and
    its ladder — 448 px, deliberately, since blown up it is a blurrier gel and not
@@ -1889,7 +1893,9 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--p
 .mqrow{display:flex; flex:0 0 auto; align-items:center; gap:clamp(26px,4vw,54px);
   width:max-content; padding-left:clamp(26px,4vw,54px)}
 .marquee[data-on] .mqrow{animation:mq 42s linear infinite}
-.marquee:hover .mqrow{animation-play-state:paused}
+@media (hover:hover) and (pointer:fine){
+  .marquee:hover .mqrow{animation-play-state:paused}
+}
 /* **A name is a claim; a link is a claim somebody can check.** These are the
    readers, databases and pipelines this app's answers were measured against,
    and the strongest thing the row can do for a reader who doubts it is take
@@ -1912,11 +1918,11 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--p
 .mqrow a:hover svg{opacity:1; stroke:var(--amber)}
 @keyframes mq{ from{transform:translateX(0)} to{transform:translateX(-100%)} }
 @media (prefers-reduced-motion:reduce){
-  .marquee[data-on] .mqrow{animation:none}
-  /* stopped, a max-content row would run off the edge; wrapped, it is a list */
-  .marquee{display:block}
-  .mqrow{flex-wrap:wrap; width:auto; justify-content:center; row-gap:14px; padding:0}
-  .marquee{-webkit-mask-image:none; mask-image:none}
+  html:not(.motion-on) .marquee[data-on] .mqrow{animation:none}
+/* stopped, a max-content row would run off the edge; wrapped, it is a list */
+html:not(.motion-on) .marquee{display:block}
+  html:not(.motion-on) .mqrow{flex-wrap:wrap; width:auto; justify-content:center; row-gap:14px; padding:0}
+  html:not(.motion-on) .marquee{-webkit-mask-image:none; mask-image:none}
 }
 
 /* ── the chapter break ──────────────────────────────────────────────────────
@@ -2014,7 +2020,7 @@ footer{border-top:1px solid var(--hair); padding:44px 0 60px; background:var(--p
    arrival, rather than a second effect being added beside the first. Without
    JavaScript, and under reduced motion, the rail is simply there. */
 @media (prefers-reduced-motion:no-preference){
-  html.js .verbs:not(.on) li::after{transform:scaleX(0)}
+  html.js .verbs > li:not(.glyph-in)::after{transform:scaleX(0)}
   html.js .verbs li::after{transform-origin:left center;
     transition:transform .38s cubic-bezier(.3,.72,.2,1) var(--g-delay,0ms)}
 }
@@ -2575,7 +2581,9 @@ html.js .rise.settle.in{transform:none}
 .wall[data-drift].on .wallcol:nth-child(even) .walltrack{animation-direction:reverse}
 /* a wall that keeps moving while somebody is reading one of its cards is a
    wall nobody can read */
-.wall[data-drift]:hover .walltrack{animation-play-state:paused}
+@media (hover:hover) and (pointer:fine){
+  .wall[data-drift]:hover .walltrack{animation-play-state:paused}
+}
 @keyframes drift{ from{transform:translateY(0)} to{transform:translateY(-50%)} }
 
 /* ── the optical bench glyph footprint ─────────────────────────────────────
@@ -2590,10 +2598,12 @@ html.js .rise.settle.in{transform:none}
    glyph with no line in it, so the dash is cleared too, and a figure that is
    held at `translateY(26px)` is put back rather than left mid-arrival. */
 @media (prefers-reduced-motion:reduce){
-  html.js .settle, html.js .rise.settle{opacity:1 !important; transform:none !important; transition:none}
-  .wall[data-drift].on .walltrack,
-  .wall[data-drift].on .wallcol:nth-child(even) .walltrack{animation:none}
-  [data-glyphs].on [class*="g-"]{animation:none !important; stroke-dashoffset:0 !important;
+  html:not(.motion-on).js .rise,
+  html:not(.motion-on).js .settle,
+  html:not(.motion-on).js .rise.settle{opacity:1 !important; transform:none !important; transition:none}
+  html:not(.motion-on) .wall[data-drift].on .walltrack,
+  html:not(.motion-on) .wall[data-drift].on .wallcol:nth-child(even) .walltrack{animation:none}
+  html:not(.motion-on) [data-glyphs] > .glyph-in [class*="g-"]{animation:none !important; stroke-dashoffset:0 !important;
     stroke-dasharray:none !important; transform:none !important; opacity:1}
 }
 
@@ -2626,8 +2636,8 @@ html.js .rise.settle.in{transform:none}
   }
 }
 @media (prefers-reduced-motion:reduce){
-  .tbcard:hover .tbico svg,
-  .rail nav .feature-card:hover .feature-icon svg{animation:none}
+  html:not(.motion-on) .tbcard:hover .tbico svg,
+  html:not(.motion-on) .rail nav .feature-card:hover .feature-icon svg{animation:none}
 }
 
 /* ════════════════════════════════════════════════════════════════════════════
@@ -2752,14 +2762,14 @@ html.js .rise.settle.in{transform:none}
 .lg .depth,.lg .face,.lg .mov{opacity:1}
 
 /* ── it arrives, and then it is still ─────────────────────────────────────── */
-html.js [data-glyphs]:not(.on) .lg svg{opacity:0; transform:translateY(3px)}
+html.js [data-glyph-items] > :not(.glyph-in) .lg svg{opacity:0; transform:translateY(3px)}
 [data-glyphs] > :nth-child(1){--g-delay:0ms}[data-glyphs] > :nth-child(2){--g-delay:45ms}
 [data-glyphs] > :nth-child(3){--g-delay:90ms}[data-glyphs] > :nth-child(4){--g-delay:135ms}
 [data-glyphs] > :nth-child(5){--g-delay:180ms}[data-glyphs] > :nth-child(6){--g-delay:225ms}
-[data-glyphs].on .lg svg{animation:lgIn 440ms cubic-bezier(.22,.75,.2,1) var(--g-delay,0ms) both}
-[data-glyphs].on .lg .depth{animation:lgDepth 470ms cubic-bezier(.22,.75,.2,1) calc(var(--g-delay,0ms) + 35ms) both}
-[data-glyphs].on .lg .face{animation:lgFace 440ms cubic-bezier(.22,.75,.2,1) calc(var(--g-delay,0ms) + 75ms) both}
-[data-glyphs].on .lg .mov{animation:lgMove 420ms cubic-bezier(.22,.75,.2,1) calc(var(--g-delay,0ms) + 120ms) both}
+[data-glyphs] > .glyph-in .lg svg{animation:lgIn 440ms cubic-bezier(.22,.75,.2,1) var(--g-delay,0ms) both}
+[data-glyphs] > .glyph-in .lg .depth{animation:lgDepth 470ms cubic-bezier(.22,.75,.2,1) calc(var(--g-delay,0ms) + 35ms) both}
+[data-glyphs] > .glyph-in .lg .face{animation:lgFace 440ms cubic-bezier(.22,.75,.2,1) calc(var(--g-delay,0ms) + 75ms) both}
+[data-glyphs] > .glyph-in .lg .mov{animation:lgMove 420ms cubic-bezier(.22,.75,.2,1) calc(var(--g-delay,0ms) + 120ms) both}
 @keyframes lgIn{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
 @keyframes lgDepth{from{opacity:0;transform:translate(2px,2px)}to{opacity:1;transform:none}}
 @keyframes lgFace{from{opacity:0;transform:translateY(2px)}to{opacity:1;transform:none}}
@@ -2785,34 +2795,34 @@ html.js [data-glyphs]:not(.on) .lg svg{opacity:0; transform:translateY(3px)}
 .verbs > :nth-child(1){--g-delay:0ms}.verbs > :nth-child(2){--g-delay:150ms}
 .verbs > :nth-child(3){--g-delay:300ms}.verbs > :nth-child(4){--g-delay:450ms}
 .verbs > :nth-child(5){--g-delay:600ms}.verbs > :nth-child(6){--g-delay:750ms}
-.verbs.on .lg svg{
+.verbs > .glyph-in .lg svg{
   animation:wbIn 820ms cubic-bezier(.16,.78,.2,1) var(--g-delay) both;
 }
-.verbs.on .lg .depth{
+.verbs > .glyph-in .lg .depth{
   animation:wbDepth 900ms cubic-bezier(.16,.78,.2,1) calc(var(--g-delay) + 90ms) both;
 }
-.verbs.on .lg .face{
+.verbs > .glyph-in .lg .face{
   animation:wbFace 860ms cubic-bezier(.16,.78,.2,1) calc(var(--g-delay) + 230ms) both;
 }
-.verbs.on .lg .mov{
+.verbs > .glyph-in .lg .mov{
   animation:wbMove 940ms cubic-bezier(.16,.78,.2,1) calc(var(--g-delay) + 390ms) both;
 }
-.verbs.on [data-glyph="open"] .mov{
+.verbs > .glyph-in [data-glyph="open"] .mov{
   animation:gOpen 1040ms cubic-bezier(.16,.78,.2,1) calc(var(--g-delay) + 390ms) both;
 }
-.verbs.on [data-glyph="read"] .mov{
+.verbs > .glyph-in [data-glyph="read"] .mov{
   animation:gScan 1120ms cubic-bezier(.16,.78,.2,1) calc(var(--g-delay) + 390ms) both;
 }
-.verbs.on [data-glyph="cut"] .mov{
+.verbs > .glyph-in [data-glyph="cut"] .mov{
   animation:gCut 1000ms cubic-bezier(.16,.78,.2,1) calc(var(--g-delay) + 390ms) both;
 }
-.verbs.on [data-glyph="design"] .mov{
+.verbs > .glyph-in [data-glyph="design"] .mov{
   animation:gModule 1080ms cubic-bezier(.16,.78,.2,1) calc(var(--g-delay) + 390ms) both;
 }
-.verbs.on [data-glyph="check"] .trace{
+.verbs > .glyph-in [data-glyph="check"] .trace{
   animation:gTrace 1120ms cubic-bezier(.16,.78,.2,1) calc(var(--g-delay) + 390ms) both;
 }
-.verbs.on [data-glyph="share"] .packet{
+.verbs > .glyph-in [data-glyph="share"] .packet{
   animation:gPacket 1040ms cubic-bezier(.16,.78,.2,1) calc(var(--g-delay) + 390ms) both;
 }
 
@@ -2861,16 +2871,22 @@ html.js [data-glyphs]:not(.on) .lg svg{opacity:0; transform:translateY(3px)}
 @keyframes gTrace{from{stroke-dasharray:80;stroke-dashoffset:80}to{stroke-dasharray:80;stroke-dashoffset:0}}
 
 @media (prefers-reduced-motion:reduce){
-  html.js [data-glyphs]:not(.on) .lg svg{opacity:1; transform:none}
-  [data-glyphs].on .lg svg,[data-glyphs].on .lg .depth,
-  [data-glyphs].on .lg .face,[data-glyphs].on .lg .mov,
-  .verbs.on .lg .trace,.verbs.on .lg .packet,
-  .verbs a:hover .lg .mov,.gridlines > div:hover .lg .mov,
-  .verbs a:hover .lg .trace,.gridlines > div:hover .lg .trace{
+  html:not(.motion-on).js [data-glyph-items] > :not(.glyph-in) .lg svg{opacity:1; transform:none}
+  html:not(.motion-on) [data-glyphs] > .glyph-in .lg svg,
+  html:not(.motion-on) [data-glyphs] > .glyph-in .lg .depth,
+  html:not(.motion-on) [data-glyphs] > .glyph-in .lg .face,
+  html:not(.motion-on) [data-glyphs] > .glyph-in .lg .mov,
+  html:not(.motion-on) .verbs > .glyph-in .lg .trace,
+  html:not(.motion-on) .verbs > .glyph-in .lg .packet,
+  html:not(.motion-on) .verbs a:hover .lg .mov,
+  html:not(.motion-on) .gridlines > div:hover .lg .mov,
+  html:not(.motion-on) .verbs a:hover .lg .trace,
+  html:not(.motion-on) .gridlines > div:hover .lg .trace{
     animation:none !important; opacity:1 !important; transform:none !important;
     stroke-dasharray:none !important; stroke-dashoffset:0 !important;
   }
-  .verbs a:hover .lg,.gridlines > div:hover .lg{transform:none}
+  html:not(.motion-on) .verbs a:hover .lg,
+  html:not(.motion-on) .gridlines > div:hover .lg{transform:none}
 }
 @media (forced-colors:active){
   .lg{background:Canvas; border-color:CanvasText; box-shadow:none}
@@ -2997,7 +3013,8 @@ html.js [data-glyphs]:not(.on) .lg svg{opacity:0; transform:translateY(3px)}
   #formats .gico.lg svg{width:74px; height:74px}
 }
 @media (prefers-reduced-motion:reduce){
-  #formats .gico.lg,#formats .gridlines > div:hover .gico.lg{
+  html:not(.motion-on) #formats .gico.lg,
+  html:not(.motion-on) #formats .gridlines > div:hover .gico.lg{
     transform:none; transition:none;
   }
 }
@@ -3015,4 +3032,44 @@ html.js [data-glyphs]:not(.on) .lg svg{opacity:0; transform:translateY(3px)}
   #formats .glass-reader,#formats .glass-flow,#formats .glass-lock,
   #formats .lg .trace{stroke:Highlight}
   #formats .gico.lg ellipse[stroke],#formats .gico.lg path[stroke-width]{stroke:Highlight}
+}
+
+/* On a phone the window stays in view while the three steps are read.
+   Stable step heights keep scroll selection from moving its own target. */
+@media (max-width:900px) and (min-height:600px){
+  .flowgrid{display:flex; flex-direction:column; align-items:stretch; gap:24px}
+  .flowgrid .flowshot{order:0; overflow:clip; position:sticky; top:80px; z-index:3; margin:0;
+    width:100%; max-width:min(100%,calc((100svh - 300px) * 1.1)); align-self:center}
+  .flowgrid > .rail{order:1}
+  .flowgrid .step{min-height:40svh; margin:0; padding-top:22px}
+  .flowgrid .step p{grid-template-rows:1fr; opacity:1; padding-bottom:22px}
+  .flowgrid .step b{padding-bottom:10px}
+  .flowgrid .stepno{opacity:1; height:auto; padding-block:6px; margin-bottom:10px}
+}
+@media (max-width:900px){
+  [data-glyphs] > :nth-child(n){--g-delay:0ms}
+}
+@media (prefers-reduced-motion:reduce){
+  html:not(.motion-on) .mqrow[aria-hidden="true"]{display:none}
+}
+
+/* The product is the hero: put its moving workspace above download choices
+   on a phone, keeping the same introduction and real product tour. */
+@media (max-width:760px){
+  .hero{display:flex; flex-direction:column; padding-top:88px}
+  .hero > .hero-intro{order:0}
+  .hero > .hero-reel-shot{order:1; width:100%; margin-top:24px}
+  .hero > .hero-download-wrap{order:2}
+  .hero .hero-intro h1{font-size:clamp(30px,8.3vw,42px); line-height:1.1; letter-spacing:-.035em}
+  .hero .hero-intro .sub{font-size:16px; line-height:1.55; margin-top:16px}
+  .hero .eyebrow{font-size:11px; margin-bottom:15px}
+  .hero .hero-download{margin-top:24px}
+}
+
+.marquee[data-running="false"] .mqrow{animation-play-state:paused}
+html[data-page-hidden="true"] .wall[data-drift].on .walltrack{animation-play-state:paused}
+
+.tbico.icon-in svg{animation:tbDraw .85s cubic-bezier(.35,0,.2,1)}
+@media (prefers-reduced-motion:reduce){
+  html:not(.motion-on) .tbico.icon-in svg{animation:none}
 }
