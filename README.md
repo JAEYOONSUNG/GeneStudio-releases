@@ -164,6 +164,16 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.3.82:begin published-at=2026-09-17T04:15:21.000Z -->
+### [1.3.82](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.3.82) — 2026-09-17
+
+- Make SignalP settings, installation instructions and pipeline status readable across narrow windows, with independent options for versions 5 and 6, reliable setup rechecks and clear numeric validation.
+- Keep running SignalP settings fixed, cancel when closing, ignore late results and reject failed or interrupted runs. Save the generated prediction tables, mature-chain FASTA and plots from the results dialog.
+- Add M/R/S/C subunit annotation links to strain R–M systems, including editing, save/reload and profile export. Keep annotation evidence separate from M/R activity and identify inherited reference-genome evidence explicitly.
+- Open the exact linked genome feature after checking its accession, contig, locus, coordinates and source signature, including large genomes and multi-contig records. Recognize explicitly annotated specificity and controller proteins without inventing fused enzyme roles.
+- Correct close-button alignment and touch targets across dialogs, preserve PGAP drafts during setup checks, and improve keyboard focus, error recovery and full external-tool listings.
+<!-- gene-studio:release:1.3.82:end -->
+
 <!-- gene-studio:release:1.3.81:begin published-at=2026-09-16T21:00:56.000Z -->
 ### [1.3.81](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.3.81) — 2026-09-16
 
