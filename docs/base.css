@@ -2896,6 +2896,81 @@ html.js [data-glyph-items] > :not(.glyph-in) .lg svg{opacity:0; transform:transl
   .lg .accent-fill,.lg .signal-fill,.lg .packet,.lg .feature-fill,.lg .cut-dot{fill:Highlight}
 }
 
+/* ── one inspection frame along the workbench ──────────────────────────────
+   The instruments share a quiet mount. A single set of corner marks follows
+   pointer or keyboard focus; their short descriptions explain each destination. */
+.chapter .bench-route{
+  --bench-accent:#62AED8;
+  position:relative; isolation:isolate; max-width:960px; overflow:hidden; overflow:clip;
+  margin:clamp(38px,5vw,58px) auto 0; padding:24px 20px 0;
+  border:1px solid #2C3B41; border-radius:16px;
+  background:linear-gradient(135deg,#162126,#111B20 68%);
+  text-align:left;
+}
+.bench-route .verbs{position:relative; z-index:1; width:100%; margin:0; --vgap:12px}
+.bench-route .verbs a{
+  padding:var(--vpad) 5px 16px; grid-template-rows:var(--vtile) auto 1fr;
+  gap:8px; border-radius:10px; min-height:142px; text-align:center;
+}
+.chapter .bench-route .verbs a:hover{background:none}
+.bench-route .verbs .lg{
+  border-radius:10px; background:#172329; box-shadow:none; transition:none;
+}
+.bench-route .verbs .lg::after{content:none}
+.bench-route .verbs a:hover .lg{transform:none; background:#172329; border-color:var(--vedge)}
+.bench-route .verb-label{font-size:14px; line-height:1.3; color:#C6D2D5; transition:color .2s ease}
+.bench-route .verb-caption{max-width:13ch; font-size:11px; line-height:1.45; color:#8D9FA5}
+.bench-route .verbs .sr{color:#C6D2D5}
+.bench-route .verbs .is-inspected .verb-label{color:#F1F5F6}
+.bench-route .verbs .is-inspected .verb-caption{color:var(--bench-accent)}
+.bench-focus{
+  position:absolute; z-index:0; top:0; left:0; pointer-events:none;
+  border-radius:10px; opacity:0;
+  background:color-mix(in srgb,var(--bench-accent) 5%,transparent);
+}
+.bench-ready .bench-focus{opacity:1;
+  transition:transform .4s cubic-bezier(.22,.75,.2,1),width .4s ease,height .4s ease,background .3s ease}
+.bench-route.bench-reflow .bench-focus{transition:none}
+.bench-focus i{position:absolute; width:17px; height:17px;
+  border:1px solid var(--bench-accent); opacity:.75; transition:border-color .3s ease}
+.bench-focus i:nth-child(1){top:0; left:0; border-right:0; border-bottom:0; border-radius:10px 0 0 0}
+.bench-focus i:nth-child(2){top:0; right:0; border-left:0; border-bottom:0; border-radius:0 10px 0 0}
+.bench-focus i:nth-child(3){bottom:0; left:0; border-right:0; border-top:0; border-radius:0 0 0 10px}
+.bench-focus i:nth-child(4){bottom:0; right:0; border-left:0; border-top:0; border-radius:0 0 10px 0}
+.bench-note{
+  display:flex; align-items:center; gap:12px; min-height:66px;
+  margin-top:17px; padding:16px 6px;
+  border-top:1px solid #2C3B41; font:400 13px/1.5 var(--ui); color:#B9C8CF;
+}
+.bench-note-mark{width:20px; height:2px; flex:none; background:var(--bench-accent); transition:background .3s ease}
+.bench-note [data-bench-note]{flex:1}
+.bench-note svg{flex:none; width:18px; height:18px; stroke:var(--bench-accent); stroke-width:1.4; stroke-linecap:round; stroke-linejoin:round}
+@media(max-width:900px){
+  .chapter .bench-route{max-width:560px}
+  .bench-route .verbs{grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px 12px}
+}
+@media(max-width:620px){
+  .chapter .bench-route{padding:14px 10px 0; border-radius:13px}
+  .bench-route .verbs{--vgap:6px; gap:8px 6px}
+  .bench-route .verbs a{min-height:132px; padding-inline:2px; padding-bottom:12px}
+  .bench-route .verb-label{font-size:13px}
+  .bench-route .verb-caption{font-size:10px}
+  .bench-note{min-height:78px; margin-top:12px; padding:14px 4px; gap:9px; font-size:12px}
+  .bench-note-mark{width:12px}
+}
+@media(prefers-reduced-motion:reduce){
+  html:not(.motion-on) .bench-route *{transition:none !important}
+}
+@media(forced-colors:active){
+  .chapter .bench-route,.bench-route .verbs .lg{background:Canvas; border-color:CanvasText}
+  .bench-focus{background:none}
+  .bench-focus i{border-color:Highlight; opacity:1}
+  .bench-route .verb-label,.bench-route .verb-caption,.bench-note{color:CanvasText}
+  .bench-note{border-color:CanvasText}
+  .bench-note-mark{background:Highlight}
+  .bench-note svg{stroke:Highlight}
+}
+
 /* ── file specimens: restrained colour and continuous contours ─────────────
    A shared mineral palette carries the scientific detail. Broad satin faces
    have a small tonal range; contour pairs keep straight edges and smooth
