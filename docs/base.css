@@ -1976,11 +1976,10 @@ html:not(.motion-on) .marquee{display:block}
    **one quiet colour** rather than six: the glyphs already carry an accent
    apiece, and a rail repeating them would be the same thing said twice.
 
-   The geometry is derived rather than written down twice — the gap, the tile
-   and the padding are variables, so a segment always spans exactly the space
-   between two tile edges and cannot come adrift when any of them changes. */
+   Each connector leaves a small breathing space at both mounts, so their
+   outlines stay independent instead of meeting in dark T-junctions. */
 .verbs{
-  --vgap:clamp(12px,2vw,26px); --vtile:72px; --vpad:10px;
+  --vgap:clamp(12px,2vw,26px); --vtile:72px; --vpad:10px; --vclear:8px;
   display:grid; grid-template-columns:repeat(6,minmax(76px,1fr));
   gap:var(--vgap); width:min(100%,850px);
   margin:clamp(38px,5vw,58px) auto 0; padding:0; list-style:none;
@@ -1988,10 +1987,11 @@ html:not(.motion-on) .marquee{display:block}
 .verbs li{min-width:0; position:relative}
 /* the segment *leaving* a tile, so the one to suppress is the last of a row */
 .verbs li::after{
-  content:''; position:absolute; height:1px; background:var(--vedge);
+  content:''; position:absolute; height:1px; border-radius:1px;
+  background:color-mix(in srgb,var(--vedge) 65%,transparent);
   top:calc(var(--vpad) + var(--vtile)/2);
-  left:calc(50% + var(--vtile)/2);
-  width:calc(100% + var(--vgap) - var(--vtile));
+  left:calc(50% + var(--vtile)/2 + var(--vclear));
+  width:calc(100% + var(--vgap) - var(--vtile) - 2*var(--vclear));
 }
 /* **A rail's ends belong to a row, not to the list.** At 900 px the six wrap
    to 3 x 2, and `:last-child` is then the end of the second row only — the
@@ -2685,15 +2685,8 @@ html.js .rise.settle.in{transform:none}
   transition:transform .2s cubic-bezier(.22,.75,.2,1),border-color .2s ease,
     background .2s ease;
 }
-/* **The rail between the tiles has to be the same line as their borders**, and
-   it cannot get there by inheriting: `.lg` sets `--g-edge` on the element
-   itself, and a value set directly on an element beats an inherited one
-   whatever the specificity of the rule that inherited it. So the edge is
-   written once on the list and read twice — by the tile's border here and by
-   `.verbs li::after` below. Measured off `--line` instead, the rail came out
-   `rgba(214,221,222)` against the tiles' `rgba(194,216,233,.22)`: brighter
-   than the borders it runs between, in the theme where the chapter's ground
-   does not change at all. */
+/* Mounts and connectors share a neutral hue. The connectors are quieter and
+   stop short of the mounts; instrument outlines carry the stronger edge. */
 .chapter .verbs{--vedge:rgba(194,216,233,.34)}
 .chapter .lg{--g-body:rgba(111,146,169,.09); --g-edge:var(--vedge);
   background:linear-gradient(155deg,rgba(104,139,162,.09),rgba(30,48,58,.03))}
@@ -2917,11 +2910,14 @@ html.js [data-glyph-items] > :not(.glyph-in) .lg svg{opacity:0; transform:transl
   padding:var(--vpad) 5px 16px; grid-template-rows:var(--vtile) auto 1fr;
   gap:8px; border-radius:10px; min-height:142px; text-align:center;
 }
+.bench-route .verbs a:focus-visible{outline:none}
+.bench-route .verbs a:focus-visible .verb-label{text-decoration:underline;text-decoration-color:var(--bench-accent);text-decoration-thickness:2px;text-underline-offset:3px}
 .chapter .bench-route .verbs a:hover{background:none}
 .bench-route .verbs .lg{
   border-radius:10px; background:#172329; box-shadow:none; transition:none;
 }
 .bench-route .verbs .lg::after{content:none}
+.bench-route .scan-wash{fill:color-mix(in srgb,var(--g-accent) 10%,transparent)}
 .bench-route .verbs a:hover .lg{transform:none; background:#172329; border-color:var(--vedge)}
 .bench-route .verb-label{font-size:14px; line-height:1.3; color:#C6D2D5; transition:color .2s ease}
 .bench-route .verb-caption{max-width:13ch; font-size:11px; line-height:1.45; color:#8D9FA5}

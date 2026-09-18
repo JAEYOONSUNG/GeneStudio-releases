@@ -86,17 +86,17 @@ document.addEventListener('visibilitychange',function(){document.documentElement
 <link rel="preload" href="font/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="font/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="font/fonts.css?v=20260828">
-<link rel="stylesheet" href="base.css?v=20260918-formats2">
-<link rel="stylesheet" href="ambient-ribbons.css?v=20260918-formats2">
-<link rel="stylesheet" href="section-motion.css?v=20260918-formats2">
-<link rel="stylesheet" href="hero.css?v=20260918-formats2">
-<link rel="stylesheet" href="flow-motion.css?v=20260918-formats2">
-<link rel="stylesheet" href="formats-browser.css?v=20260918-formats2">
-<script src="hero-reel.js?v=20260918-formats2" defer></script>
-<script src="section-motion.js?v=20260918-formats2" defer></script>
-<script src="flow-motion.js?v=20260918-formats2" defer></script>
-<script src="formats-browser.js?v=20260918-formats2" defer></script>
-<script src="ambient-ribbons.js?v=20260918-formats2" defer></script>
+<link rel="stylesheet" href="base.css?v=20260918-lines1">
+<link rel="stylesheet" href="ambient-ribbons.css?v=20260918-lines1">
+<link rel="stylesheet" href="section-motion.css?v=20260918-lines1">
+<link rel="stylesheet" href="hero.css?v=20260918-lines1">
+<link rel="stylesheet" href="flow-motion.css?v=20260918-lines1">
+<link rel="stylesheet" href="formats-browser.css?v=20260918-lines1">
+<script src="hero-reel.js?v=20260918-lines1" defer></script>
+<script src="section-motion.js?v=20260918-lines1" defer></script>
+<script src="flow-motion.js?v=20260918-lines1" defer></script>
+<script src="formats-browser.js?v=20260918-lines1" defer></script>
+<script src="ambient-ribbons.js?v=20260918-lines1" defer></script>
 </head>
 <body>
 <!-- **A phone reports its own state, so nobody has to guess at it.** Open the
@@ -450,20 +450,18 @@ document.addEventListener('visibilitychange',function(){document.documentElement
         </svg></span><span class="verb-label">Open</span><span class="verb-caption">Local files</span></a><span class="sr" id="bench-hint-open">Start with the files already on your disk.</span></li>
       <li><a href="#sequence" aria-describedby="bench-hint-read"><span class="vb lg" data-glyph="read">
         <svg viewBox="0 0 64 64" aria-hidden="true">
-          <g class="depth"><rect class="plate" x="25" y="7" width="14" height="50" rx="4"/></g>
+          <g class="depth"><rect class="scan-wash" x="28" y="9" width="8" height="46" rx="3"/></g>
           <g class="face"><path class="ink" d="M7 19c12 0 14 27 25 27s13-27 25-27"/>
             <path class="muted" d="M7 45c12 0 14-27 25-27s13 27 25 27"/>
-            <path class="micro" d="M13 22l7 18M21 17l7 28M29 19l7 26M37 18l7 27M45 23l6 17"/></g>
-          <g class="mov"><rect class="scan-fill" x="27" y="8" width="10" height="48" rx="3"/>
-            <path class="signal" d="M32 11v42"/><circle class="signal-fill" cx="32" cy="32" r="2.2"/></g>
+            <path class="micro" d="M14.2 25v14M25.6 24v16M38.6 24v16M49.9 25v14"/></g>
+          <g class="mov"><path class="signal" d="M32 12v40"/></g>
         </svg></span><span class="verb-label">Read</span><span class="verb-caption">Maps & bases</span></a><span class="sr" id="bench-hint-read">Move between the whole construct and the exact base.</span></li>
       <li><a href="#digest" aria-describedby="bench-hint-cut"><span class="vb lg" data-glyph="cut">
         <svg viewBox="0 0 64 64" aria-hidden="true">
-          <g class="depth"><rect class="plate" x="20" y="10" width="24" height="44" rx="5"/></g>
           <g class="face"><path class="ink" d="M6 22h21v6h5M38 22h20"/><path class="muted" d="M6 42h26M38 36v6h20"/>
-            <path class="micro" d="M12 22v20M18 22v20M24 22v20M44 22v20M50 22v20"/></g>
+            <path class="micro" d="M13 25v14M22 25v14M44 25v14M52 25v14"/></g>
           <g class="mov"><path class="cut-fill" d="M26 8h12l-3 10h-6zM29 46h6l3 10H26z"/>
-            <path class="cut-stroke" d="M32 18v10M35 36v10"/><circle class="cut-dot" cx="32" cy="29" r="2"/></g>
+            <path class="cut-stroke" d="M32 18v8M35 38v8"/></g>
         </svg></span><span class="verb-label">Cut</span><span class="verb-caption">Digest & gel</span></a><span class="sr" id="bench-hint-cut">See the fragments and the gel before you cut.</span></li>
       <li><a href="#design" aria-describedby="bench-hint-design"><span class="vb lg" data-glyph="design">
         <svg viewBox="0 0 64 64" aria-hidden="true">
@@ -487,9 +485,9 @@ document.addEventListener('visibilitychange',function(){document.documentElement
         <svg viewBox="0 0 64 64" aria-hidden="true">
           <g class="depth"><path class="plate" d="M43 8h11l4 4v16H43zM43 36h11l4 4v16H43z"/></g>
           <g class="face"><path class="ink" d="M18 20a12 12 0 1 1-8.5 3.5"/><circle class="signal-fill" cx="18" cy="20" r="2.4"/>
-            <rect class="plate" x="29" y="22" width="7" height="20" rx="2"/><path class="micro" d="M46 15h8M46 43h8M46 48h6"/></g>
-          <g class="mov"><path class="accent" d="M26 28h6M36 28h7M26 36h6M36 36h7"/>
-            <circle class="packet" cx="32" cy="28" r="2.5"/><path class="signal" d="M48 23l2 2 4-5"/></g>
+            <path class="micro" d="M46 15h8M46 43h8M46 48h6"/></g>
+          <g class="mov"><path class="accent" d="M30 32h6M36 20v24M36 20h7M36 44h7"/>
+            <circle class="packet" cx="36" cy="32" r="1.8"/><path class="signal" d="M48 23l2 2 4-5"/></g>
         </svg></span><span class="verb-label">Share</span><span class="verb-caption">Files & figures</span></a><span class="sr" id="bench-hint-share">Take your work out as sequence files and editable figures.</span></li>
     </ul>
       <div class="bench-note" aria-hidden="true">
@@ -2371,8 +2369,8 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
 
 /* The hero has its own shared animation and media lifecycle in hero-reel.js. */
 
-/* One inspection frame travels between the six workbench links. The glyphs
-   stay put; the frame and short description show what each link will open. */
+/* One inspection frame travels below the six instruments. Its label and
+   caption stay separate from the icon mounts and connecting rail. */
 (() => {
   const route = document.querySelector('[data-bench-route]');
   if(!route) return;
@@ -2384,10 +2382,11 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
   let active = links[0], noteAnimation, reflowFrame = 0;
   const position = (instant = false) => {
     if(instant){ cancelAnimationFrame(reflowFrame); route.classList.add('bench-reflow'); }
-    const box = active.getBoundingClientRect(), origin = route.getBoundingClientRect();
+    const box = active.getBoundingClientRect(), origin = route.getBoundingClientRect(),
+      label = active.querySelector('.verb-label').getBoundingClientRect(), top = label.top - 4;
     lens.style.width = `${box.width}px`;
-    lens.style.height = `${box.height}px`;
-    lens.style.transform = `translate3d(${box.left - origin.left - route.clientLeft}px,${box.top - origin.top - route.clientTop}px,0)`;
+    lens.style.height = `${box.bottom - top}px`;
+    lens.style.transform = `translate3d(${box.left - origin.left - route.clientLeft}px,${top - origin.top - route.clientTop}px,0)`;
     if(instant){
       lens.getBoundingClientRect();
       reflowFrame = requestAnimationFrame(() => route.classList.remove('bench-reflow'));
