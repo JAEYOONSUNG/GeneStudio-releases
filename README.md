@@ -164,6 +164,17 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.3.85:begin published-at=2026-09-18T02:11:39.000Z -->
+### [1.3.85](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.3.85) — 2026-09-18
+
+- Compare GenBank `locus_tag` annotations with REBASE intervals and REBASE-reported GenBank overlaps, preserving each source's assembly version, strand and protein identifiers.
+- Distinguish R–M sets and show protein signature positions with their loci in summaries, with detailed comparisons and discovery evidence available in expandable sections.
+- Open recorded UniProt or NCBI protein entries directly beside linked loci. When exact accessions are unavailable, expanded details provide clearly labeled searches.
+- Explicitly search the matching analyzed genome for recognition sites within a size limit, including both strands and circular boundaries. Keep protein residue coordinates (aa) separate from DNA coordinates (bp).
+- Refine website file-format icons and connected workbench frames with coordinated colors, smaller corners, and guidance that follows pointer and keyboard focus.
+- Smooth website media transitions by retaining the current view until its replacement is ready and rolling walkthrough steps in the correct vertical direction. Respect reduced motion and pause playback offscreen or in hidden tabs.
+<!-- gene-studio:release:1.3.85:end -->
+
 <!-- gene-studio:release:1.3.84:begin published-at=2026-09-17T13:15:52.000Z -->
 ### [1.3.84](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.3.84) — 2026-09-17
 
