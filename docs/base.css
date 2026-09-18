@@ -1592,6 +1592,9 @@ section.plain h2{font-size:clamp(26px,3.4vw,36px); margin-top:14px}
    nothing. The description is the span *after* the name. */
 .tbcard b + span{grid-column:1 / -1; grid-row:2; display:block; margin-top:8px;
   font-size:13.5px; line-height:1.55; color:var(--slate)}
+/* These translucent cards lift above the dark plate. Their small descriptions
+   need a brighter slate than labels painted directly on the page. */
+:root[data-theme="dark"] .tbcard b + span{color:#92A3A5}
 /* **On a phone the toolbox is the longest section on the page**, and the
    comment this replaced had already bought 3,425 px of it back once. A card
    one column wide is read with the eye against its left edge rather than
@@ -2359,20 +2362,22 @@ footer{padding:clamp(48px,7vw,76px) 0 0}
    dark value on a white ground. Each of these was measured on the surface it
    is actually composited over. */
 :root[data-theme="light"] .chapter{
-  /* the chapter break is the one screen that stays dark in both themes — it is
-     a picture of the application, which is dark, and a light band between two
-     light sections would separate nothing */
-  background:#101A1D; border-color:#101A1D;
-  --ink:#F3F7F6; --body:#C9D5D3; --slate:#93A5A7; --faint:#8FA1A4;
-  --ground:#18262A; --hair:#243338;
-  /* **And the accent, which is a colour in the dark and a reading in the
-     light.** The light theme darkens `--amber` to #97590A so 11.5 px of it
-     clears 4.5 on white — and this block is the one screen that stays dark, so
-     that value lands on a near-black ground: measured, the eyebrow read
-     **2.52**. The dark theme's own amber is what belongs on a dark ground, and
-     on this one it reads 5.89 over its own tint. */
-  --amber:#5EB1FF; --amber-soft:rgba(94,177,255,.16); --amber-ink:#06121C;
+  /* A light chapter separates through its cool surface and precise edges.
+     Its text and operation signals are solved for that surface together. */
+  background:#F3F6FA; border-color:#D7E2EC;
+  --ink:#203746; --body:#405867; --slate:#506878; --faint:#556D7D;
+  --ground:#FFFFFF; --sunk:#EBF1F7; --hair:#D8E3EC; --line:#BFCDDA;
+  --amber:#286C9D; --amber-soft:rgba(40,108,157,.10); --amber-ink:#FFFFFF;
 }
+:root[data-theme="light"] .chapter::before{
+  background:radial-gradient(70% 62% at 50% 8%,rgba(255,255,255,.78),transparent 78%),
+    radial-gradient(60% 60% at 50% 100%,rgba(111,149,184,.08),transparent 75%);
+}
+:root[data-theme="light"] .chapter-eyebrow{
+  color:var(--amber); background:none; border:0; border-radius:0; padding:0;
+  letter-spacing:.035em;
+}
+:root[data-theme="light"] .chapter-eyebrow::after{content:none}
 :root[data-theme="light"] .agree{background:var(--paper)}
 :root[data-theme="light"] .kicker{background:var(--ground); box-shadow:none}
 :root[data-theme="light"] .wall blockquote{
@@ -2945,6 +2950,38 @@ html.js [data-glyph-items] > :not(.glyph-in) .lg svg{opacity:0; transform:transl
 .bench-note-mark{width:20px; height:2px; flex:none; background:var(--bench-accent); transition:background .3s ease}
 .bench-note [data-bench-note]{flex:1}
 .bench-note svg{flex:none; width:18px; height:18px; stroke:var(--bench-accent); stroke-width:1.4; stroke-linecap:round; stroke-linejoin:round}
+/* The same instrument drawings on a light mount. The selected caption uses
+   its operation accent as text, so these colors are darker than dark-mode
+   signals. Neutral outlines remain shared with the connectors. */
+:root[data-theme="light"] .chapter .verbs{--vedge:#73899A}
+:root[data-theme="light"] .chapter .verbs .lg{
+  --g-ink:#293F4E; --g-muted:#566F80; --g-body:#C8D8E5; --g-edge:var(--vedge);
+}
+:root[data-theme="light"] .chapter .verbs [data-glyph="open"]{--g-accent:#216B9C}
+:root[data-theme="light"] .chapter .verbs [data-glyph="read"]{--g-accent:#26725D}
+:root[data-theme="light"] .chapter .verbs [data-glyph="cut"]{--g-accent:#A74949}
+:root[data-theme="light"] .chapter .verbs [data-glyph="design"]{--g-accent:#73549E}
+:root[data-theme="light"] .chapter .verbs [data-glyph="check"]{--g-accent:#356B9F}
+:root[data-theme="light"] .chapter .verbs [data-glyph="share"]{--g-accent:#856027}
+:root[data-theme="light"] .chapter .bench-route{
+  --bench-accent:#216B9C;
+  border-color:#BCCDDC; background-color:#F5F8FC;
+  background-image:linear-gradient(132deg,#FFFFFF 0%,#F8FAFD 54%,#EBF2F8 100%);
+  box-shadow:0 1px 0 rgba(255,255,255,.85) inset,0 16px 40px -34px rgba(47,79,108,.36);
+}
+:root[data-theme="light"] .chapter .bench-route .verbs .lg,
+:root[data-theme="light"] .chapter .bench-route .verbs a:hover .lg{
+  background-color:#F4F8FB; background-image:linear-gradient(145deg,#FFFFFF,#EDF3F9);
+  border-color:var(--vedge);
+}
+:root[data-theme="light"] .bench-route .verb-label,
+:root[data-theme="light"] .bench-route .verbs .sr{color:#354D5D}
+:root[data-theme="light"] .bench-route .verb-caption{color:#506A7C}
+:root[data-theme="light"] .bench-route .verbs .is-inspected .verb-label{color:#1E3E55}
+:root[data-theme="light"] .bench-route .verbs .is-inspected .verb-caption{color:var(--bench-accent)}
+:root[data-theme="light"] .bench-route .bench-focus{background:color-mix(in srgb,var(--bench-accent) 6%,transparent)}
+:root[data-theme="light"] .bench-route .bench-focus i{opacity:.9}
+:root[data-theme="light"] .bench-route .bench-note{border-color:#CCDCE8; color:#445E70}
 @media(max-width:900px){
   .chapter .bench-route{max-width:560px}
   .bench-route .verbs{grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px 12px}
@@ -2962,11 +2999,21 @@ html.js [data-glyph-items] > :not(.glyph-in) .lg svg{opacity:0; transform:transl
   html:not(.motion-on) .bench-route *{transition:none !important}
 }
 @media(forced-colors:active){
-  .chapter .bench-route,.bench-route .verbs .lg{background:Canvas; border-color:CanvasText}
-  .bench-focus{background:none}
-  .bench-focus i{border-color:Highlight; opacity:1}
-  .bench-route .verb-label,.bench-route .verb-caption,.bench-note{color:CanvasText}
-  .bench-note{border-color:CanvasText}
+  :root[data-theme] .chapter{background:Canvas; --ink:CanvasText; --body:CanvasText; --slate:CanvasText; --faint:CanvasText}
+  :root[data-theme] .chapter::before{background:none}
+  :root[data-theme] .chapter .bench-route,
+  :root[data-theme] .chapter .bench-route .verbs .lg,
+  :root[data-theme] .chapter .bench-route .verbs a:hover .lg{background:Canvas; border-color:CanvasText; box-shadow:none}
+  :root[data-theme] .chapter .verbs{--vedge:CanvasText}
+  :root[data-theme] .chapter .verbs .lg{--g-ink:CanvasText; --g-muted:CanvasText; --g-body:Canvas; --g-edge:CanvasText}
+  :root[data-theme] .chapter .verbs [data-glyph]{--g-accent:Highlight}
+  :root[data-theme] .bench-route .bench-focus{background:none}
+  :root[data-theme] .bench-route .bench-focus i{border-color:Highlight; opacity:1}
+  :root[data-theme] .bench-route .verb-label,:root[data-theme] .bench-route .verb-caption,
+  :root[data-theme] .bench-route .verbs .is-inspected .verb-label,
+  :root[data-theme] .bench-route .verbs .is-inspected .verb-caption,
+  :root[data-theme] .bench-route .bench-note{color:CanvasText}
+  :root[data-theme] .bench-route .bench-note{border-color:CanvasText}
   .bench-note-mark{background:Highlight}
   .bench-note svg{stroke:Highlight}
 }
