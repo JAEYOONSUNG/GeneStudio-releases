@@ -164,6 +164,13 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.3.86:begin published-at=2026-09-18T07:13:21.000Z -->
+### [1.3.86](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.3.86) — 2026-09-18
+
+- Replace alternating R–M set color bars with subtle block backgrounds: violet for M-only systems and modification subunits, sage green for specificity subunits, and soft orange for restriction subunits. Apply the same role colors to linked loci and expanded annotations in light and dark themes; keep mixed systems neutral and activity states separate.
+- Refine the website's Files section with compact format selectors, smoothly moving and expanding previews, and expandable descriptions. Match the workbench background to the light theme and remove the center dots from the SnapGene and local-file illustrations.
+<!-- gene-studio:release:1.3.86:end -->
+
 <!-- gene-studio:release:1.3.85:begin published-at=2026-09-18T02:11:39.000Z -->
 ### [1.3.85](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.3.85) — 2026-09-18
 
