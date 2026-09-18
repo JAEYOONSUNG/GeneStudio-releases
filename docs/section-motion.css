@@ -7,7 +7,7 @@
 .motion-stage{
   display:grid; grid-template-columns:minmax(0,1fr); position:relative;
   isolation:isolate; perspective:1600px; overflow:hidden;
-  border-radius:clamp(22px,2.4vw,30px);
+  border-radius:clamp(13px,1.25vw,18px);
 }
 .motion-stage > figure,
 .motion-stage > figure[hidden]{
@@ -84,3 +84,11 @@
   html:not(.motion-on) .window-motion-ready{perspective:none}
   html:not(.motion-on) .motion-fan-layer{display:none}
 }
+
+/* One captured final frame covers the seek at a short video loop boundary. */
+.media-loop-host{position:relative}
+.media-loop-blend{
+  position:absolute; display:block;
+  opacity:0; pointer-events:none; z-index:1; object-fit:fill;
+}
+@media(max-width:760px){.media-loop-blend{display:none}}

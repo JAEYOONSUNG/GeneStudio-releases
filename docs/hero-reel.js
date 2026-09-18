@@ -61,6 +61,8 @@
   poster.setAttribute('data-detail-poster', ''); poster.alt = ''; poster.decoding = 'async';
   const loop = document.createElement('img');
   loop.setAttribute('data-reel-loop', ''); loop.alt = ''; loop.decoding = 'async';
+  const frozenFrame = document.createElement('canvas');
+  frozenFrame.setAttribute('data-reel-frozen-frame', '');
   const outgoing = document.createElement('div');
   outgoing.className = 'gallery-outgoing'; outgoing.setAttribute('data-gallery-outgoing', '');
   outgoing.dataset.visible = 'false';
@@ -69,8 +71,9 @@
   const outgoingCanvas = document.createElement('canvas');
   outgoingCanvas.setAttribute('data-gallery-snapshot', '');
   outgoing.append(outgoingPoster, outgoingCanvas);
-  plane.append(poster, video, loop); detail.append(curve, plane, outgoing); viewport.append(veil, detail);
-  video.muted = video.defaultMuted = video.loop = video.playsInline = true;
+  plane.append(poster, video, loop, frozenFrame); detail.append(curve, plane, outgoing); viewport.append(veil, detail);
+  video.muted = video.defaultMuted = video.playsInline = true;
+  video.loop = false;
   video.preload = 'auto';
 
   const panels = [], leaves = [];
@@ -204,6 +207,7 @@
     buttons.forEach((button, at) => button.setAttribute('aria-current', String(at === index)));
     count.textContent = String(index + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0');
     snapshotReady = false; detail.dataset.snapshot = 'false';
+    detail.dataset.frozenFrame = 'false';
     updatePosters(); resize(); updateCaption();
   }
 
@@ -257,13 +261,16 @@
   function releaseMedia() {
     sourceToken++; video.onloadeddata = video.onerror = null;
     loop.onload = loop.onerror = null; pauseMedia();
+    detail.dataset.frozenFrame = 'false';
     if (video.hasAttribute('src')) { video.removeAttribute('src'); video.load(); }
     video.removeAttribute('data-ready'); video.dataset.scene = '';
     media = null; reel.dataset.source = ''; updateMediaVisibility();
   }
 
   function updateMediaVisibility() {
-    const native = stage === 'focus' && !media?.failed && !!media?.ready && (!media.phone || !!loop.getAttribute('src'));
+    // A decoded desktop opening frame can travel with the incoming slide while
+    // its decoder stays paused. Starting playback then preserves that image.
+    const native = (stage === 'focus' || stage === 'slide') && !media?.failed && !!media?.ready && (!media.phone || !!loop.getAttribute('src'));
     detail.dataset.detailLive = String(native);
     reel.dataset.videoReady = String(native);
     faces.forEach((face, at) => face.dataset.live = String(native && at === index));
@@ -315,7 +322,7 @@
       if (!phone) {
         video.onloadeddata = () => {
           if (owner !== media || owner.token !== sourceToken) return;
-          owner.ready = true; if (mayPlay()) startMedia();
+          owner.ready = true; updateMediaVisibility(); if (mayPlay()) startMedia();
         };
         video.onerror = () => {
           if (owner !== media || owner.token !== sourceToken) return;
@@ -327,17 +334,36 @@
     if (mayPlay()) startMedia();
   }
 
+  // The source demonstrations are short. Retain their final painted frame as
+  // playback returns to the beginning, then dissolve it after the new frame is
+  // ready; native looping would hard-cut the interface several times per view.
+  video.addEventListener('ended', () => {
+    const owner = media;
+    if (!owner || owner.phone || owner.failed || !mayPlay()) return;
+    try {
+      drawContained(frozenFrame, video, 0, width * focusScale);
+      detail.dataset.frozenFrame = 'true';
+    } catch {}
+    owner.ready = owner.playing = false;
+    updateMediaVisibility();
+    // Commit the fully opaque cover before a cached first frame can arrive.
+    frozenFrame.getBoundingClientRect();
+    video.currentTime = 0;
+    startMedia();
+  });
+
   function snapshotSource() {
     if (detail.dataset.detailLive === 'true' && media?.ready && !media.failed) {
       if (compact.matches && loop.naturalWidth && loop.hasAttribute('src')) return loop;
       if (!compact.matches && video.readyState >= 2 && video.videoWidth) return video;
     }
+    if (detail.dataset.frozenFrame === 'true' && frozenFrame.width) return frozenFrame;
     return poster.complete && poster.naturalWidth ? poster : null;
   }
 
   function drawContained(canvas, source, left, right) {
-    const sourceWidth = source.videoWidth || source.naturalWidth;
-    const sourceHeight = source.videoHeight || source.naturalHeight;
+    const sourceWidth = source.videoWidth || source.naturalWidth || source.width;
+    const sourceHeight = source.videoHeight || source.naturalHeight || source.height;
     const density = Math.min(2, devicePixelRatio || 1);
     const frameWidth = width * focusScale, frameHeight = fullHeight * focusScale;
     const pixelWidth = Math.ceil((right - left) * density), pixelHeight = Math.ceil(frameHeight * density);
@@ -433,7 +459,11 @@
 
   function beginExpand() {
     position = segment.to; velocity = 0; focus = 0;
-    setStage('expand'); prepareMedia(); render();
+    setStage('expand');
+    // Tall overview thumbnails are cropped, while the readable detail contains
+    // the full source. Blend that framing during unfolding, before it is flat.
+    if (!compact.matches && faces[index].dataset.fit === 'tall') takeSnapshot();
+    prepareMedia(); render();
   }
 
   function beginCollapse() {

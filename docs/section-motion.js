@@ -11,6 +11,46 @@
     const box = node.getBoundingClientRect();
     return box.bottom > 0 && box.top < innerHeight && box.right > 0 && box.left < innerWidth;
   };
+  // Decode the next surface while the current one remains painted. A hidden
+  // figure still has a responsive .wide/.narrow choice, so it can be prepared
+  // without exposing an undecoded frame or changing its live media source.
+  const decoded = new Map();
+  const decodeImage = source => {
+    if(!source) return Promise.resolve(false);
+    const url = new URL(source, document.baseURI).href;
+    if(decoded.has(url)) return decoded.get(url);
+    const ready = new Promise(resolve => {
+      const image = new Image();
+      let finished = false;
+      const finish = value => {
+        if(finished) return;
+        finished = true;
+        clearTimeout(timeout);
+        resolve(value);
+      };
+      const timeout = setTimeout(() => finish(false), 6000);
+      image.src = url;
+      image.decode().then(() => finish(true)).catch(() => finish(image.complete && image.naturalWidth > 0));
+    });
+    decoded.set(url, ready);
+    ready.then(ok => { if(!ok) decoded.delete(url); });
+    return ready;
+  };
+  const prepareMedia = async node => {
+    const media = [...node.querySelectorAll('video[data-clip],img[data-anim]')]
+      .filter(item => getComputedStyle(item).display !== 'none');
+    const ready = await Promise.all(media.map(async item => {
+      if(item.tagName === 'VIDEO'){
+        if(reduced.matches) return decodeImage(item.poster || item.dataset.poster);
+        if(item.readyState >= 2 || await window.gsPrepareClip?.(item)) return true;
+        return decodeImage(item.poster || item.dataset.poster);
+      }
+      item.dataset.still ||= item.getAttribute('src');
+      return decodeImage(reduced.matches ? item.dataset.still : item.dataset.anim || item.dataset.still);
+    }));
+    return ready.every(Boolean);
+  };
+  window.gsPrepareSectionMedia = prepareMedia;
   const pauseMedia = node => {
     for(const video of node.querySelectorAll('video')){
       video.dataset.clipVisible = 'false';
@@ -97,6 +137,8 @@
     let timer = 0;
     let animations = [];
     let generation = 0;
+    let preparing = false;
+    let pending = null;
     const clearTimer = () => { clearTimeout(timer); timer = 0; };
     const running = () => visible && inViewport(stage) && canAnimate() && !paused && !hovered && !focused;
     function updateControls(){
@@ -122,13 +164,16 @@
         figure.tabIndex = inactive ? -1 : 0;
         figure.setAttribute('aria-hidden', String(inactive));
         figure.style.zIndex = i === index ? '2' : '1';
-        if(inactive) pauseMedia(figure);
+        figure.dataset.mediaHold = String(i === outgoing);
+        if(inactive && i !== outgoing) pauseMedia(figure);
       });
     }
     function settle(){
       generation++;
       for(const animation of animations) animation.cancel();
       animations = [];
+      preparing = false;
+      pending = null;
       deck.dataset.motionTransition = 'false';
       markFigures();
     }
@@ -136,51 +181,75 @@
       clearTimer();
       const active = running();
       deck.dataset.motionRunning = String(active);
-      if(active) timer = setTimeout(() => show(index + 1, 1, false), 5600);
+      if(active && !preparing && !animations.length) timer = setTimeout(() => show(index + 1, 1, false), 5600);
     }
-    function show(wanted, direction = 1, manual = true){
-      if(manual) paused = true;
+    async function show(wanted, direction = 1, manual = true, queued = false){
+      if(manual && !queued) paused = true;
       clearTimer();
-      settle();
+      const target = (wanted % figures.length + figures.length) % figures.length;
+      if(preparing || animations.length){
+        // Finish the visible trajectory before applying the most recent input.
+        // Cancelling its WAAPI pose here used to jump the window to its endpoint.
+        pending = {wanted:target, direction, manual};
+        updateControls();
+        return;
+      }
+      if(target === index){ updateControls(); queue(); return; }
+      const preparation = ++generation;
+      preparing = true;
+      deck.dataset.motionTransition = 'loading';
+      updateControls();
+      const ready = await prepareMedia(figures[target]);
+      if(preparation !== generation) return;
+      preparing = false;
+      const requested = pending;
+      pending = null;
+      if(requested && requested.wanted !== target){
+        deck.dataset.motionTransition = 'false';
+        show(requested.wanted, requested.direction, requested.manual, true);
+        return;
+      }
+      if(!ready){ deck.dataset.motionTransition = 'false'; queue(); return; }
       const previous = index;
-      index = (wanted % figures.length + figures.length) % figures.length;
+      index = target;
       updateControls();
       if(manual) status.textContent = `${names[index]}, view ${index + 1} of ${figures.length}`;
-      const animate = previous !== index && visible && inViewport(stage) && canAnimate() && typeof stage.animate === 'function';
+      const animate = visible && inViewport(stage) && canAnimate() && typeof stage.animate === 'function';
       markFigures(animate ? previous : -1);
       refreshMedia();
-      if(!animate){ queue(); return; }
+      if(!animate){ deck.dataset.motionTransition = 'false'; queue(); return; }
       const currentGeneration = ++generation;
       const incoming = figures[index];
       const outgoing = figures[previous];
       const sign = direction < 0 ? -1 : 1;
       const comet = deck.dataset.motionDeck === 'comet';
       const enter = comet ? [
-        {transform:`translate3d(0,${sign * 88}%,0) rotateX(${-sign * 14}deg) scale(.91)`, opacity:.2, filter:'blur(2px)'},
-        {transform:`translate3d(0,${sign * 6}%,0) rotateX(${-sign * 2}deg) scale(.992)`, opacity:1, filter:'blur(0px)', offset:.72},
-        {transform:'none', opacity:1, filter:'blur(0px)'}
+        {transform:`translate3d(0,${sign * 7}%,0) scale(.985)`, opacity:0},
+        {transform:`translate3d(0,${sign * .7}%,0) scale(.998)`, opacity:1, offset:.72},
+        {transform:'none', opacity:1}
       ] : [
-        {transform:`translate3d(${sign * 11}%,12%,-130px) rotateY(${-sign * 15}deg) rotateZ(${sign * 4}deg) scale(.87)`, opacity:1},
-        {transform:`translate3d(${sign * 1.5}%,1.5%,-15px) rotateY(${-sign * 2}deg) rotateZ(${sign * .5}deg) scale(.99)`, opacity:1, offset:.7},
+        {transform:`translate3d(${sign * 5}%,2%,-25px) rotateY(${-sign * 4}deg) rotateZ(${sign * .8}deg) scale(.975)`, opacity:0},
+        {transform:`translate3d(${sign * .6}%,.3%,-3px) rotateY(${-sign * .5}deg) scale(.997)`, opacity:1, offset:.72},
         {transform:'none', opacity:1}
       ];
       const leave = comet ? [
-        {transform:'none', opacity:1, filter:'blur(0px)'},
-        {transform:`translate3d(0,${-sign * 100}%,0) rotateX(${sign * 13}deg) scale(.94)`, opacity:0, filter:'blur(2px)'}
+        {transform:'none', opacity:1},
+        {transform:`translate3d(0,${-sign * 4}%,0) scale(.985)`, opacity:0}
       ] : [
         {transform:'none', opacity:1},
-        {transform:`translate3d(${-sign * 100}%,-12%,80px) rotateY(${sign * 20}deg) rotateZ(${-sign * 8}deg) scale(1.04)`, opacity:1, offset:.88},
-        {transform:`translate3d(${-sign * 112}%,-14%,80px) rotateY(${sign * 22}deg) rotateZ(${-sign * 9}deg) scale(1.04)`, opacity:0}
+        {transform:`translate3d(${-sign * 5}%,-1%,0) rotateY(${sign * 4}deg) rotateZ(${-sign * .6}deg) scale(.985)`, opacity:0}
       ];
-      const options = {duration:comet ? 1180 : 1080, easing:'cubic-bezier(.2,.72,.2,1)', fill:'both'};
+      const options = {duration:comet ? 780 : 820, easing:'cubic-bezier(.22,.68,.2,1)', fill:'both'};
       if(!comet) outgoing.style.zIndex = '3';
       deck.dataset.motionTransition = 'true';
       animations = [incoming.animate(enter, options), outgoing.animate(leave, options)];
       Promise.all(animations.map(animation => animation.finished)).then(() => {
         if(generation !== currentGeneration) return;
+        const requested = pending;
         settle();
         refreshMedia();
-        queue();
+        if(requested) show(requested.wanted, requested.direction, requested.manual, true);
+        else queue();
       }).catch(() => {});
       deck.dataset.motionRunning = String(running());
     }
@@ -189,7 +258,6 @@
     toggle.addEventListener('click', () => {
       paused = !paused;
       if(!paused){ focused = false; hovered = false; }
-      settle();
       updateControls();
       queue();
     });
@@ -203,7 +271,7 @@
       else return;
       event.preventDefault();
       show(wanted, wanted < index ? -1 : 1);
-      buttons[index].focus();
+      buttons[(wanted % figures.length + figures.length) % figures.length].focus();
     });
     deck.addEventListener('pointerenter', event => { if(event.pointerType !== 'touch'){ hovered = true; queue(); } });
     deck.addEventListener('pointerleave', () => { hovered = false; queue(); });
@@ -313,19 +381,82 @@
         lifecycle();
       }, {rootMargin:'0px 0px -14% 0px', threshold:0}).observe(figure);
     } else lifecycle();
-    if(kind === 'fan'){
-      let activeClip = figure.querySelector('.flowclip.on');
-      new MutationObserver(() => {
-        const nextClip = figure.querySelector('.flowclip.on');
-        if(nextClip === activeClip) return;
-        activeClip = nextClip;
-        enter();
-      }).observe(frame, {subtree:true, attributes:true, attributeFilter:['class']});
-    }
     windows.push(lifecycle);
   }
 
+  // The recordings are deliberately short. A native loop replaced their last
+  // interface state with the first in one paint. Hold just that final frame and
+  // dissolve it once the restarted video has actually presented a new frame.
+  // Canvas work happens once per loop, never on every playback frame.
+  const loopCleanups = [];
+  for(const video of document.querySelectorAll('video[data-clip]')){
+    video.loop = false;
+    let canvas = null, blend = null, callback = 0, revision = 0;
+    const placeCover = () => {
+      if(!canvas || !canvas.width) return;
+      // Some clips sit directly in a figure with a caption. Match the video,
+      // not its parent, so the last frame never stretches over the caption.
+      Object.assign(canvas.style, {
+        left:`${video.offsetLeft}px`, top:`${video.offsetTop}px`,
+        width:`${video.offsetWidth}px`, height:`${video.offsetHeight}px`,
+        borderRadius:getComputedStyle(video).borderRadius
+      });
+    };
+    const clear = () => {
+      revision++;
+      if(callback) video.cancelVideoFrameCallback?.(callback);
+      callback = 0;
+      blend?.cancel();
+      blend = null;
+      video.dataset.loopBlend = 'false';
+      if(canvas){ canvas.style.opacity = '0'; canvas.width = canvas.height = 0; }
+    };
+    video.addEventListener('pause', clear);
+    video.addEventListener('ended', () => {
+      if(!canAnimate() || video.dataset.clipVisible !== 'true' || getComputedStyle(video).display === 'none') return;
+      clear();
+      if(!canvas){
+        canvas = document.createElement('canvas');
+        canvas.className = 'media-loop-blend';
+        canvas.setAttribute('aria-hidden', 'true');
+        video.parentElement.classList.add('media-loop-host');
+        video.after(canvas);
+        if('ResizeObserver' in window){
+          const observer = new ResizeObserver(placeCover);
+          observer.observe(video);
+          observer.observe(video.parentElement);
+        } else addEventListener('resize', placeCover, {passive:true});
+      }
+      canvas.width = Math.min(video.videoWidth, 1440);
+      canvas.height = Math.round(canvas.width * video.videoHeight / video.videoWidth);
+      const context = canvas.getContext('2d', {alpha:false});
+      if(!context || !canvas.width || !canvas.height) return;
+      try { context.drawImage(video, 0, 0, canvas.width, canvas.height); }
+      catch { clear(); return; }
+      placeCover();
+      canvas.style.opacity = '1';
+      video.dataset.loopBlend = 'holding';
+      video.dataset.loopCount = String(Number(video.dataset.loopCount || 0) + 1);
+      canvas.getBoundingClientRect();
+      const current = revision;
+      const dissolve = () => {
+        if(current !== revision) return;
+        callback = 0;
+        if(!canAnimate() || video.paused || video.dataset.clipVisible !== 'true'){ clear(); return; }
+        video.dataset.loopBlend = 'fading';
+        blend = canvas.animate([{opacity:1}, {opacity:0}], {duration:280, easing:'ease-out', fill:'both'});
+        blend.finished.then(() => { if(current === revision) clear(); }).catch(() => {});
+      };
+      video.currentTime = 0;
+      if(video.requestVideoFrameCallback) callback = video.requestVideoFrameCallback(dissolve);
+      else video.addEventListener('seeked', () => requestAnimationFrame(() => requestAnimationFrame(dissolve)), {once:true});
+      video.play().catch(clear);
+    });
+    loopCleanups.push(clear);
+  }
+
   const synchronize = () => {
+    if(!canAnimate()) loopCleanups.forEach(clear => clear());
     decks.forEach(lifecycle => lifecycle());
     windows.forEach(lifecycle => lifecycle());
     refreshMedia();

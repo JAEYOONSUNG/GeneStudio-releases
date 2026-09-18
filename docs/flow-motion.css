@@ -1,0 +1,22 @@
+/* The window chrome stays put while the views roll through its aperture. */
+.flow-ready .flow-viewport{
+  position:relative; overflow:hidden; isolation:isolate;
+  background:var(--sunk); overflow-anchor:none;
+}
+.flow-ready .flow-viewport > .flowclip{
+  display:block; position:absolute; top:0; left:0; width:100%;
+  visibility:hidden; pointer-events:none; transform:none;
+}
+.flow-ready .flow-viewport > .flowclip.on,
+.flow-ready .flow-viewport > .flowclip.flow-entering,
+.flow-ready .flow-viewport > .flowclip.flow-leaving{visibility:visible}
+.flow-ready .flow-viewport > .flowclip.on{z-index:2; pointer-events:auto}
+.flow-ready .flow-viewport > .flowclip.flow-leaving{z-index:1}
+.flow-ready .flowclip:is(.flow-entering,.flow-leaving){will-change:transform}
+.flow-ready[data-flow-transition="true"] .flow-viewport{will-change:height}
+@media (min-width:901px){
+  .flow-ready .flowshot{align-self:start}
+}
+@media (prefers-reduced-motion:reduce){
+  html:not(.motion-on) .flow-ready .flowclip{will-change:auto}
+}

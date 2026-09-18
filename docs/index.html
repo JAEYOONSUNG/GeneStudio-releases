@@ -86,13 +86,15 @@ document.addEventListener('visibilitychange',function(){document.documentElement
 <link rel="preload" href="font/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="font/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="font/fonts.css?v=20260828">
-<link rel="stylesheet" href="base.css?v=20260918-scroll1">
-<link rel="stylesheet" href="ambient-ribbons.css?v=20260918-scroll1">
-<link rel="stylesheet" href="section-motion.css?v=20260918-scroll1">
-<link rel="stylesheet" href="hero.css?v=20260918-scroll1">
-<script src="hero-reel.js?v=20260918-scroll1" defer></script>
-<script src="section-motion.js?v=20260918-scroll1" defer></script>
-<script src="ambient-ribbons.js?v=20260918-scroll1" defer></script>
+<link rel="stylesheet" href="base.css?v=20260918-refined2">
+<link rel="stylesheet" href="ambient-ribbons.css?v=20260918-refined2">
+<link rel="stylesheet" href="section-motion.css?v=20260918-refined2">
+<link rel="stylesheet" href="hero.css?v=20260918-refined2">
+<link rel="stylesheet" href="flow-motion.css?v=20260918-refined2">
+<script src="hero-reel.js?v=20260918-refined2" defer></script>
+<script src="section-motion.js?v=20260918-refined2" defer></script>
+<script src="flow-motion.js?v=20260918-refined2" defer></script>
+<script src="ambient-ribbons.js?v=20260918-refined2" defer></script>
 </head>
 <body>
 <!-- **A phone reports its own state, so nobody has to guess at it.** Open the
@@ -242,7 +244,6 @@ document.addEventListener('visibilitychange',function(){document.documentElement
       </div>
     </div>
     <div class="shot hero-reel-shot hero-product">
-      <div class="hero-stage-label" aria-hidden="true"><span>The workspace</span><span>Six views. One construct.</span></div>
     <figure class="hero-reel" id="hero-demo" data-hero-reel data-reel-mode="cylinder" data-mode="cylinder" data-reel-period="900" data-state="idle" data-index="0"
             data-in-view="false" data-user-paused="false" aria-labelledby="hero-reel-title">
       <div class="reel-viewport" data-reel-viewport>
@@ -1652,31 +1653,23 @@ document.addEventListener('visibilitychange',function(){document.documentElement
          gaps puts one, which is what the reference does with the same six-up
          shape and is why its feature grid reads as a table of one thing
          rather than as a row of tiles. -->
-    <!-- Six optical-glass specimens: an annotated record, a plasmid packet
-         stack, an indexed FASTA record, four trace channels, an export gate,
-         and a closed local cartridge. Their surfaces share one light source;
-         the coloured records remain visible through the clear front faces. -->
+    <!-- Satin surfaces, continuous corners, and a shared mineral palette.
+         Colour identifies the annotations, channels, packets and local lock. -->
     <div class="gridlines rise" data-glyphs>
       <div>
         <span class="gico lg" data-glyph="genbank"><svg viewBox="0 0 80 80" aria-hidden="true">
           <defs>
-            <linearGradient id="genbank-pane" x1="0" y1="0" x2="1" y2="1"><stop class="glass-top"/><stop offset=".34" class="glass-clear"/><stop offset=".72" class="glass-tint"/><stop offset="1" class="glass-base"/></linearGradient>
-            <linearGradient id="genbank-side" x1="0" y1="0" x2=".8" y2="1"><stop class="glass-side-top"/><stop offset="1" class="glass-side-base"/></linearGradient>
-            <linearGradient id="genbank-edge" x1="0" y1="0" x2=".65" y2="1"><stop class="glass-edge-top"/><stop offset=".44" class="glass-edge-mid"/><stop offset="1" class="glass-edge-base"/></linearGradient>
-            <linearGradient id="genbank-shine" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#fff" stop-opacity=".66"/><stop offset=".47" stop-color="#fff" stop-opacity=".12"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
-            <linearGradient id="genbank-signal" x1="0" y1="0" x2=".7" y2="1"><stop class="glass-signal-top"/><stop offset=".48" class="glass-signal-mid"/><stop offset="1" class="glass-signal-base"/></linearGradient>
-            <radialGradient id="genbank-contact"><stop class="glass-contact-core"/><stop offset="1" class="glass-contact-edge"/></radialGradient>
+            <linearGradient id="format-genbank-paper" x1="0" y1="0" x2=".6" y2="1"><stop class="format-paper-top"/><stop offset="1" class="format-paper-base"/></linearGradient>
+            <linearGradient id="format-genbank-color" x1="0" y1="0" x2=".7" y2="1"><stop class="format-color-top"/><stop offset="1" class="format-color-base"/></linearGradient>
           </defs>
-          <ellipse class="glass-ground" cx="40" cy="72" rx="29" ry="5" fill="url(#genbank-contact)"/>
-          <g class="depth"><path class="glass-back" d="M23 13h28l13 13v38a4 4 0 0 1-4 4H23a4 4 0 0 1-4-4V17a4 4 0 0 1 4-4Z" fill="url(#genbank-pane)" stroke="url(#genbank-edge)"/>
-            <path d="m58 21 6 5v38a4 4 0 0 1-4 4H23l-6-3h37a4 4 0 0 0 4-4Z" fill="url(#genbank-side)"/></g>
-          <g class="face"><path class="glass-shell" d="M17 7h27l14 14v40a4 4 0 0 1-4 4H17a4 4 0 0 1-4-4V11a4 4 0 0 1 4-4Z" fill="url(#genbank-pane)" stroke="url(#genbank-edge)"/>
-            <path class="glass-polish" d="M17 8h26v13h14v6L14 47V12a4 4 0 0 1 3-4Z" fill="url(#genbank-shine)"/>
-            <path class="glass-fold" d="M44 7v10a4 4 0 0 0 4 4h10Z" fill="url(#genbank-side)" stroke="url(#genbank-edge)"/>
-            <path class="glass-engrave" d="M21 18h14M21 23h9M21 56h6m5 0h6m5 0h6"/>
-            <path class="glass-rim" d="M14.5 43V12a3.5 3.5 0 0 1 3.5-3.5h21"/></g>
-          <g class="mov"><path class="glass-mark" d="M21 30h18l5 3-5 3H21Zm8 10h17l5 3-5 3H29Zm-8 10h10l4 3-4 3H21Z" fill="url(#genbank-signal)"/>
-            <path class="glass-signal-glint" d="M22 30.7h16M30 40.7h15M22 50.7h8"/></g>
+          <path class="format-surface" d="M22 9H45.5C47.5 9 48.5 9.5 50 11L61 22C62.5 23.5 63 24.5 63 26.5V64C63 68 63 70 62 71C61 72 59 72 55 72H22C18 72 16 72 15 71C14 70 14 68 14 64V17C14 13 14 11 15 10C16 9 18 9 22 9Z" fill="url(#format-genbank-paper)"/>
+          <path class="format-fold" d="M46 9.5V18C46 21.5 46 23.2 47 24.1C47.9 25 49.5 25 53 25H62"/>
+          <path class="format-primary" d="M21.2 16H21.8C22.4 16 22.7 16 22.85 16.15C23 16.3 23 16.6 23 17.2V25.8C23 26.4 23 26.7 22.85 26.85C22.7 27 22.4 27 21.8 27H21.2C20.6 27 20.3 27 20.15 26.85C20 26.7 20 26.4 20 25.8V17.2C20 16.6 20 16.3 20.15 16.15C20.3 16 20.6 16 21.2 16Z"/>
+          <path class="format-ink" d="M28 18h11M28 23h7"/>
+          <path class="format-primary" d="M22 34h20l5 4-5 4H22Z"/>
+          <path class="format-secondary" d="M30 46h19l5 4-5 4H30Z"/>
+          <path class="format-gold" d="M22 58h9l4 3-4 3H22Z"/>
+          <path class="format-detail" d="M40 61h5m4 0h6"/>
         </svg></span>
         <h3><code>.gb .gbk .gbff</code></h3>
         <p>The record above FEATURES is kept whole — accession, organism, lineage, the papers, the structured comments — and written back as it arrived. Saving twice gives a byte-identical file.</p>
@@ -1684,27 +1677,19 @@ document.addEventListener('visibilitychange',function(){document.documentElement
       <div>
         <span class="gico lg" data-glyph="dna"><svg viewBox="0 0 80 80" aria-hidden="true">
           <defs>
-            <linearGradient id="dna-pane" x1="0" y1="0" x2="1" y2="1"><stop class="glass-top"/><stop offset=".34" class="glass-clear"/><stop offset=".72" class="glass-tint"/><stop offset="1" class="glass-base"/></linearGradient>
-            <linearGradient id="dna-side" x1="0" y1="0" x2=".8" y2="1"><stop class="glass-side-top"/><stop offset="1" class="glass-side-base"/></linearGradient>
-            <linearGradient id="dna-edge" x1="0" y1="0" x2=".65" y2="1"><stop class="glass-edge-top"/><stop offset=".44" class="glass-edge-mid"/><stop offset="1" class="glass-edge-base"/></linearGradient>
-            <linearGradient id="dna-shine" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#fff" stop-opacity=".66"/><stop offset=".47" stop-color="#fff" stop-opacity=".12"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
-            <linearGradient id="dna-signal" x1="0" y1="0" x2=".7" y2="1"><stop class="glass-signal-top"/><stop offset=".48" class="glass-signal-mid"/><stop offset="1" class="glass-signal-base"/></linearGradient>
-            <radialGradient id="dna-contact"><stop class="glass-contact-core"/><stop offset="1" class="glass-contact-edge"/></radialGradient>
+            <linearGradient id="format-dna-paper" x1="0" y1="0" x2=".6" y2="1"><stop class="format-paper-top"/><stop offset="1" class="format-paper-base"/></linearGradient>
+            <linearGradient id="format-dna-color" x1="0" y1="0" x2=".7" y2="1"><stop class="format-color-top"/><stop offset="1" class="format-color-base"/></linearGradient>
           </defs>
-          <ellipse class="glass-ground" cx="40" cy="73" rx="33" ry="5" fill="url(#dna-contact)"/>
-          <g class="depth"><path class="glass-shell" d="m8 48 31-17 31 17v5L39 70 8 53Z" fill="url(#dna-side)" stroke="url(#dna-edge)"/>
-            <path class="glass-shell" d="m8 48 31-17 31 17-31 17Z" fill="url(#dna-pane)" stroke="url(#dna-edge)"/>
-            <path class="glass-shell" d="m8 37 31-17 31 17v5L39 59 8 42Z" fill="url(#dna-side)" stroke="url(#dna-edge)"/>
-            <path class="glass-shell" d="m8 37 31-17 31 17-31 17Z" fill="url(#dna-pane)" stroke="url(#dna-edge)"/></g>
-          <g class="face"><path class="glass-shell" d="m8 25 31-17 31 17v6L39 48 8 31Z" fill="url(#dna-side)" stroke="url(#dna-edge)"/>
-            <path class="glass-shell" d="m8 25 31-17 31 17-31 17Z" fill="url(#dna-pane)" stroke="url(#dna-edge)"/>
-            <path class="glass-polish" d="M9 25 39 9l18 10-42 9Z" fill="url(#dna-shine)"/>
-            <path class="glass-rim" d="m10 25 29-16 13 7M10 37l29 16M10 48l29 16"/></g>
-          <g class="mov"><ellipse cx="39" cy="27" rx="12" ry="7" fill="none" stroke="url(#dna-side)" stroke-width="6"/>
-            <ellipse cx="39" cy="24.5" rx="12" ry="7" fill="none" stroke="url(#dna-signal)" stroke-width="5.5"/>
-            <path class="glass-signal-glint" d="M28 22c2-4 11-6 18-2"/>
-            <path d="m46 27 5-3 1 5Z" fill="url(#dna-signal)" stroke="url(#dna-edge)" stroke-width=".6"/>
-            <circle cx="29" cy="21" r="2.5" class="glass-bead"/></g>
+          <path class="format-back" d="M19 28H61C64 28 65.5 28 66.25 28.75C67 29.5 67 31 67 34V64C67 67 67 68.5 66.25 69.25C65.5 70 64 70 61 70H19C16 70 14.5 70 13.75 69.25C13 68.5 13 67 13 64V34C13 31 13 29.5 13.75 28.75C14.5 28 16 28 19 28Z"/>
+          <path class="format-mid" d="M19 21H61C64 21 65.5 21 66.25 21.75C67 22.5 67 24 67 27V57C67 60 67 61.5 66.25 62.25C65.5 63 64 63 61 63H19C16 63 14.5 63 13.75 62.25C13 61.5 13 60 13 57V27C13 24 13 22.5 13.75 21.75C14.5 21 16 21 19 21Z"/>
+          <path class="format-surface" d="M19 11H61C64 11 65.5 11 66.25 11.75C67 12.5 67 14 67 17V50C67 53 67 54.5 66.25 55.25C65.5 56 64 56 61 56H19C16 56 14.5 56 13.75 55.25C13 54.5 13 53 13 50V17C13 14 13 12.5 13.75 11.75C14.5 11 16 11 19 11Z" fill="url(#format-dna-paper)"/>
+          <circle class="format-ring-base" cx="40" cy="33" r="14"/>
+          <path class="format-ring-primary" d="M40 19a14 14 0 0 1 13.15 18.8"/>
+          <path class="format-ring-secondary" d="M50.7 42a14 14 0 0 1-23.85-13.8"/>
+          <path class="format-ring-gold" d="M29.3 24a14 14 0 0 1 5.9-4.15"/>
+          <path class="format-guide" d="M40 26v14m-7-7h14"/>
+          <circle class="format-primary" cx="40" cy="33" r="2.2"/>
+          <path class="format-detail" d="M20 62h10m-10 7h10"/>
         </svg></span>
         <h3><code>.dna</code></h3>
         <p>SnapGene files are read and written packet for packet: the colours, the edit history, the aligned traces and every packet this reader does not interpret ride through untouched.</p>
@@ -1712,24 +1697,19 @@ document.addEventListener('visibilitychange',function(){document.documentElement
       <div>
         <span class="gico lg" data-glyph="fasta"><svg viewBox="0 0 80 80" aria-hidden="true">
           <defs>
-            <linearGradient id="fasta-pane" x1="0" y1="0" x2="1" y2="1"><stop class="glass-top"/><stop offset=".34" class="glass-clear"/><stop offset=".72" class="glass-tint"/><stop offset="1" class="glass-base"/></linearGradient>
-            <linearGradient id="fasta-side" x1="0" y1="0" x2=".8" y2="1"><stop class="glass-side-top"/><stop offset="1" class="glass-side-base"/></linearGradient>
-            <linearGradient id="fasta-edge" x1="0" y1="0" x2=".65" y2="1"><stop class="glass-edge-top"/><stop offset=".44" class="glass-edge-mid"/><stop offset="1" class="glass-edge-base"/></linearGradient>
-            <linearGradient id="fasta-shine" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#fff" stop-opacity=".66"/><stop offset=".47" stop-color="#fff" stop-opacity=".12"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
-            <linearGradient id="fasta-signal" x1="0" y1="0" x2=".7" y2="1"><stop class="glass-signal-top"/><stop offset=".48" class="glass-signal-mid"/><stop offset="1" class="glass-signal-base"/></linearGradient>
-            <radialGradient id="fasta-contact"><stop class="glass-contact-core"/><stop offset="1" class="glass-contact-edge"/></radialGradient>
+            <linearGradient id="format-fasta-paper" x1="0" y1="0" x2=".6" y2="1"><stop class="format-paper-top"/><stop offset="1" class="format-paper-base"/></linearGradient>
+            <linearGradient id="format-fasta-color" x1="0" y1="0" x2=".7" y2="1"><stop class="format-color-top"/><stop offset="1" class="format-color-base"/></linearGradient>
           </defs>
-          <ellipse class="glass-ground" cx="39" cy="72" rx="31" ry="5" fill="url(#fasta-contact)"/>
-          <g class="depth"><rect class="glass-back" x="27" y="8" width="41" height="51" rx="5" fill="url(#fasta-pane)" stroke="url(#fasta-edge)"/>
-            <rect class="glass-shell" x="19" y="13" width="42" height="51" rx="5" fill="url(#fasta-pane)" stroke="url(#fasta-edge)"/>
-            <path d="M56 19h4v41a4 4 0 0 1-4 4H23l-6-4h34a5 5 0 0 0 5-5Z" fill="url(#fasta-side)"/></g>
-          <g class="face"><rect class="glass-shell" x="10" y="19" width="43" height="48" rx="5" fill="url(#fasta-pane)" stroke="url(#fasta-edge)"/>
-            <path class="glass-polish" d="M15 20h33a4 4 0 0 1 4 4v9L11 50V24a4 4 0 0 1 4-4Z" fill="url(#fasta-shine)"/>
-            <path class="glass-rim" d="M11.5 46V25a4.5 4.5 0 0 1 4.5-4.5h27"/>
-            <path class="glass-engrave glass-record" d="M31 31h13M31 38h10M19 49h25M19 56h18"/>
-            <path class="glass-mark" d="m18 29 8 5.5-8 5.5v-4l3-1.5-3-1.5Z" fill="url(#fasta-signal)"/></g>
-          <g class="mov"><rect class="glass-mark" x="57" y="27" width="6" height="23" rx="3" fill="url(#fasta-signal)"/>
-            <path class="glass-signal-glint" d="M58.5 45V31"/><circle cx="60" cy="27" r="4" class="glass-bead"/></g>
+          <path class="format-back" d="M32 9H61C63.5 9 64.75 9 65.375 9.625C66 10.25 66 11.5 66 14V56C66 58.5 66 59.75 65.375 60.375C64.75 61 63.5 61 61 61H32C29.5 61 28.25 61 27.625 60.375C27 59.75 27 58.5 27 56V14C27 11.5 27 10.25 27.625 9.625C28.25 9 29.5 9 32 9Z"/>
+          <path class="format-mid" d="M26 14H55C57.5 14 58.75 14 59.375 14.625C60 15.25 60 16.5 60 19V61C60 63.5 60 64.75 59.375 65.375C58.75 66 57.5 66 55 66H26C23.5 66 22.25 66 21.625 65.375C21 64.75 21 63.5 21 61V19C21 16.5 21 15.25 21.625 14.625C22.25 14 23.5 14 26 14Z"/>
+          <path class="format-surface" d="M18 20H50C52.5 20 53.75 20 54.375 20.625C55 21.25 55 22.5 55 25V66C55 68.5 55 69.75 54.375 70.375C53.75 71 52.5 71 50 71H18C15.5 71 14.25 71 13.625 70.375C13 69.75 13 68.5 13 66V25C13 22.5 13 21.25 13.625 20.625C14.25 20 15.5 20 18 20Z" fill="url(#format-fasta-paper)"/>
+          <path class="format-color" d="M55 28H60C61.5 28 62.25 28 62.625 28.375C63 28.75 63 29.5 63 31V46C63 47.5 63 48.25 62.625 48.625C62.25 49 61.5 49 60 49H55C53.5 49 52.75 49 52.375 48.625C52 48.25 52 47.5 52 46V31C52 29.5 52 28.75 52.375 28.375C52.75 28 53.5 28 55 28Z" fill="url(#format-fasta-color)"/>
+          <path class="format-on-color" d="M56 34h3m-3 5h3m-3 5h3"/>
+          <path class="format-accent" d="m21 29 4 3-4 3"/>
+          <path class="format-ink" d="M30 32h16"/>
+          <path class="format-data" d="M21 42h8m4 0h13m-25 6h15m4 0h6"/>
+          <path class="format-secondary-line" d="m21 56 4 3-4 3"/>
+          <path class="format-detail" d="M30 59h16m-25 7h9m4 0h8"/>
         </svg></span>
         <h3><code>.fa .fasta .fna</code></h3>
         <p>A file carrying 85,142 records is listed and read a record at a time, in milliseconds — because splitting is cheap and parsing everything is not.</p>
@@ -1737,25 +1717,18 @@ document.addEventListener('visibilitychange',function(){document.documentElement
       <div>
         <span class="gico lg" data-glyph="ab1"><svg viewBox="0 0 80 80" aria-hidden="true">
           <defs>
-            <linearGradient id="ab1-pane" x1="0" y1="0" x2="1" y2="1"><stop class="glass-top"/><stop offset=".34" class="glass-clear"/><stop offset=".72" class="glass-tint"/><stop offset="1" class="glass-base"/></linearGradient>
-            <linearGradient id="ab1-side" x1="0" y1="0" x2=".8" y2="1"><stop class="glass-side-top"/><stop offset="1" class="glass-side-base"/></linearGradient>
-            <linearGradient id="ab1-edge" x1="0" y1="0" x2=".65" y2="1"><stop class="glass-edge-top"/><stop offset=".44" class="glass-edge-mid"/><stop offset="1" class="glass-edge-base"/></linearGradient>
-            <linearGradient id="ab1-shine" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#fff" stop-opacity=".66"/><stop offset=".47" stop-color="#fff" stop-opacity=".12"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
-            <linearGradient id="ab1-signal" x1="0" y1="0" x2=".7" y2="1"><stop class="glass-signal-top"/><stop offset=".48" class="glass-signal-mid"/><stop offset="1" class="glass-signal-base"/></linearGradient>
-            <radialGradient id="ab1-contact"><stop class="glass-contact-core"/><stop offset="1" class="glass-contact-edge"/></radialGradient>
+            <linearGradient id="format-ab1-paper" x1="0" y1="0" x2=".6" y2="1"><stop class="format-paper-top"/><stop offset="1" class="format-paper-base"/></linearGradient>
+            <linearGradient id="format-ab1-color" x1="0" y1="0" x2=".7" y2="1"><stop class="format-color-top"/><stop offset="1" class="format-color-base"/></linearGradient>
           </defs>
-          <ellipse class="glass-ground" cx="40" cy="71" rx="33" ry="5" fill="url(#ab1-contact)"/>
-          <g class="depth"><path class="glass-shell" d="m7 54 9-5h48l9 5v9l-9 5H16l-9-5Z" fill="url(#ab1-side)" stroke="url(#ab1-edge)"/>
-            <path class="glass-shell" d="m7 54 9-5h48l9 5-9 5H16Z" fill="url(#ab1-pane)" stroke="url(#ab1-edge)"/></g>
-          <g class="face"><rect class="glass-shell" x="10" y="12" width="59" height="45" rx="5" fill="url(#ab1-pane)" stroke="url(#ab1-edge)"/>
-            <path class="glass-polish" d="M15 13h48a5 5 0 0 1 5 5v6L11 44V18a5 5 0 0 1 4-5Z" fill="url(#ab1-shine)"/>
-            <path class="glass-rim" d="M11.5 36V18a4.5 4.5 0 0 1 4.5-4.5h40"/>
-            <path class="glass-engrave" d="M17 61h6m6 0h6m6 0h6m6 0h6"/>
-            <path class="trace trace-a" d="M15 48c4 0 4-13 8-13s4 13 9 13"/>
-            <path class="trace trace-c" d="M21 48c5 0 4-25 10-25s5 25 11 25"/>
-            <path class="trace trace-g" d="M34 48c6 0 5-18 11-18s5 18 10 18"/>
-            <path class="trace trace-t" d="M46 48c5 0 5-11 9-11s4 11 9 11"/></g>
-          <g class="mov"><path class="glass-reader" d="M42 19v34"/><circle cx="42" cy="19" r="3" class="glass-bead"/></g>
+          <path class="format-surface" d="M14 15H66C69 15 70.5 15 71.25 15.75C72 16.5 72 18 72 21V59C72 62 72 63.5 71.25 64.25C70.5 65 69 65 66 65H14C11 65 9.5 65 8.75 64.25C8 63.5 8 62 8 59V21C8 18 8 16.5 8.75 15.75C9.5 15 11 15 14 15Z" fill="url(#format-ab1-paper)"/>
+          <path class="format-screen" d="M17 21H63C64.5 21 65.25 21 65.625 21.375C66 21.75 66 22.5 66 24V54C66 55.5 66 56.25 65.625 56.625C65.25 57 64.5 57 63 57H17C15.5 57 14.75 57 14.375 56.625C14 56.25 14 55.5 14 54V24C14 22.5 14 21.75 14.375 21.375C14.75 21 15.5 21 17 21Z"/>
+          <path class="format-grid" d="M19 30h42M19 41h42M26 26v27m14-27v27m14-27v27"/>
+          <path class="format-channel-a" d="M17 52c5 0 4-14 9-14s4 14 9 14"/>
+          <path class="format-channel-c" d="M23 52c6 0 5-26 11-26s5 26 12 26"/>
+          <path class="format-channel-g" d="M36 52c6 0 5-19 11-19s5 19 11 19"/>
+          <path class="format-channel-t" d="M48 52c5 0 4-11 9-11s4 11 8 11"/>
+          <path class="format-detail" d="M16 60h6m5 0h6m5 0h6"/>
+          <circle class="format-secondary" cx="63" cy="60" r="1.8"/>
         </svg></span>
         <h3><code>.ab1</code></h3>
         <p>Read as a read <em>of the construct</em>, not as a document of its own: end-trimmed by quality, aligned both ways round, and kept with the plasmid it was read against.</p>
@@ -1763,28 +1736,20 @@ document.addEventListener('visibilitychange',function(){document.documentElement
       <div>
         <span class="gico lg" data-glyph="out"><svg viewBox="0 0 80 80" aria-hidden="true">
           <defs>
-            <linearGradient id="out-pane" x1="0" y1="0" x2="1" y2="1"><stop class="glass-top"/><stop offset=".34" class="glass-clear"/><stop offset=".72" class="glass-tint"/><stop offset="1" class="glass-base"/></linearGradient>
-            <linearGradient id="out-side" x1="0" y1="0" x2=".8" y2="1"><stop class="glass-side-top"/><stop offset="1" class="glass-side-base"/></linearGradient>
-            <linearGradient id="out-edge" x1="0" y1="0" x2=".65" y2="1"><stop class="glass-edge-top"/><stop offset=".44" class="glass-edge-mid"/><stop offset="1" class="glass-edge-base"/></linearGradient>
-            <linearGradient id="out-shine" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#fff" stop-opacity=".66"/><stop offset=".47" stop-color="#fff" stop-opacity=".12"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
-            <linearGradient id="out-signal" x1="0" y1="0" x2=".7" y2="1"><stop class="glass-signal-top"/><stop offset=".48" class="glass-signal-mid"/><stop offset="1" class="glass-signal-base"/></linearGradient>
-            <radialGradient id="out-contact"><stop class="glass-contact-core"/><stop offset="1" class="glass-contact-edge"/></radialGradient>
+            <linearGradient id="format-out-paper" x1="0" y1="0" x2=".6" y2="1"><stop class="format-paper-top"/><stop offset="1" class="format-paper-base"/></linearGradient>
+            <linearGradient id="format-out-color" x1="0" y1="0" x2=".7" y2="1"><stop class="format-color-top"/><stop offset="1" class="format-color-base"/></linearGradient>
           </defs>
-          <ellipse class="glass-ground" cx="40" cy="72" rx="33" ry="5" fill="url(#out-contact)"/>
-          <g class="depth"><path class="glass-shell" d="M51 8h15l6 6v15H51Z" fill="url(#out-pane)" stroke="url(#out-edge)"/>
-            <rect class="glass-shell" x="51" y="34" width="21" height="11" rx="3" fill="url(#out-pane)" stroke="url(#out-edge)"/>
-            <rect class="glass-shell" x="51" y="50" width="21" height="16" rx="3" fill="url(#out-pane)" stroke="url(#out-edge)"/>
-            <path class="glass-engrave" d="M56 16h8M56 22h5M56 39.5h10"/>
-            <path class="glass-reader" d="m56 60 3-4 3 2 5-4"/>
-            <path d="m39 21 5 4v38l-5 4H12l-4-4h26a5 5 0 0 0 5-5Z" fill="url(#out-side)"/></g>
-          <g class="face"><path class="glass-shell" d="M12 10h16l11 11v40a4 4 0 0 1-4 4H12a4 4 0 0 1-4-4V14a4 4 0 0 1 4-4Z" fill="url(#out-pane)" stroke="url(#out-edge)"/>
-            <path class="glass-polish" d="M12 11h15v10h11v7L9 45V15a4 4 0 0 1 3-4Z" fill="url(#out-shine)"/>
-            <path class="glass-fold" d="M28 10v8a3 3 0 0 0 3 3h8Z" fill="url(#out-side)" stroke="url(#out-edge)"/>
-            <path class="glass-rim" d="M9.5 42V15a3.5 3.5 0 0 1 3.5-3.5h10"/>
-            <path class="glass-engrave glass-record" d="M15 30h15M15 38h11M15 46h14"/>
-            <rect class="glass-shell" x="39" y="29" width="8" height="22" rx="4" fill="url(#out-side)" stroke="url(#out-edge)"/></g>
-          <g class="mov"><path class="glass-flow" d="M29 40h18m0-4 7-12m-7 16h7m-7 4 7 10"/>
-            <path class="glass-mark" d="m52 35 6 5-6 5Z" fill="url(#out-signal)"/><circle class="packet glass-bead" cx="43" cy="40" r="3.5"/></g>
+          <path class="format-surface" d="M14 13H37C39.5 13 40.75 13 41.375 13.625C42 14.25 42 15.5 42 18V62C42 64.5 42 65.75 41.375 66.375C40.75 67 39.5 67 37 67H14C11.5 67 10.25 67 9.625 66.375C9 65.75 9 64.5 9 62V18C9 15.5 9 14.25 9.625 13.625C10.25 13 11.5 13 14 13Z" fill="url(#format-out-paper)"/>
+          <path class="format-primary" d="M16 19H17C17.5 19 17.75 19 17.875 19.125C18 19.25 18 19.5 18 20V28C18 28.5 18 28.75 17.875 28.875C17.75 29 17.5 29 17 29H16C15.5 29 15.25 29 15.125 28.875C15 28.75 15 28.5 15 28V20C15 19.5 15 19.25 15.125 19.125C15.25 19 15.5 19 16 19Z"/>
+          <path class="format-detail" d="M22 21h12m-12 6h8M16 36h18m-18 7h12m-12 13h13"/>
+          <path class="format-route" d="M37 42h9c3 0 5-2 5-5V24h7M46 42h12m-7 5v12c0 3 2 4 7 4"/>
+          <path class="format-surface" d="M59 14H70C71.5 14 72.25 14 72.625 14.375C73 14.75 73 15.5 73 17V31C73 32.5 73 33.25 72.625 33.625C72.25 34 71.5 34 70 34H59C57.5 34 56.75 34 56.375 33.625C56 33.25 56 32.5 56 31V17C56 15.5 56 14.75 56.375 14.375C56.75 14 57.5 14 59 14Z" fill="url(#format-out-paper)"/>
+          <path class="format-surface" d="M58.5 37H70.5C71.75 37 72.375 37 72.6875 37.3125C73 37.625 73 38.25 73 39.5V47.5C73 48.75 73 49.375 72.6875 49.6875C72.375 50 71.75 50 70.5 50H58.5C57.25 50 56.625 50 56.3125 49.6875C56 49.375 56 48.75 56 47.5V39.5C56 38.25 56 37.625 56.3125 37.3125C56.625 37 57.25 37 58.5 37Z" fill="url(#format-out-paper)"/>
+          <path class="format-surface" d="M59 56H70C71.5 56 72.25 56 72.625 56.375C73 56.75 73 57.5 73 59V69C73 70.5 73 71.25 72.625 71.625C72.25 72 71.5 72 70 72H59C57.5 72 56.75 72 56.375 71.625C56 71.25 56 70.5 56 69V59C56 57.5 56 56.75 56.375 56.375C56.75 56 57.5 56 59 56Z" fill="url(#format-out-paper)"/>
+          <path class="format-detail" d="M61 20h7m-7 5h5"/>
+          <path class="format-secondary-line" d="M61 41h7m-7 4h7m-4-4v4"/>
+          <path class="format-secondary-line" d="m60 67 3-5 3 2 3-4"/>
+          <circle class="format-primary" cx="46" cy="42" r="3"/>
         </svg></span>
         <h3><code>out</code></h3>
         <p>GenBank — and a separate sharing copy that says what it left behind — SnapGene <code>.dna</code>, FASTA, an <code>.xlsx</code> workbook, and every drawing as vector.</p>
@@ -1792,27 +1757,19 @@ document.addEventListener('visibilitychange',function(){document.documentElement
       <div>
         <span class="gico lg" data-glyph="local"><svg viewBox="0 0 80 80" aria-hidden="true">
           <defs>
-            <linearGradient id="local-pane" x1="0" y1="0" x2="1" y2="1"><stop class="glass-top"/><stop offset=".34" class="glass-clear"/><stop offset=".72" class="glass-tint"/><stop offset="1" class="glass-base"/></linearGradient>
-            <linearGradient id="local-side" x1="0" y1="0" x2=".8" y2="1"><stop class="glass-side-top"/><stop offset="1" class="glass-side-base"/></linearGradient>
-            <linearGradient id="local-edge" x1="0" y1="0" x2=".65" y2="1"><stop class="glass-edge-top"/><stop offset=".44" class="glass-edge-mid"/><stop offset="1" class="glass-edge-base"/></linearGradient>
-            <linearGradient id="local-shine" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#fff" stop-opacity=".66"/><stop offset=".47" stop-color="#fff" stop-opacity=".12"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
-            <linearGradient id="local-signal" x1="0" y1="0" x2=".7" y2="1"><stop class="glass-signal-top"/><stop offset=".48" class="glass-signal-mid"/><stop offset="1" class="glass-signal-base"/></linearGradient>
-            <radialGradient id="local-contact"><stop class="glass-contact-core"/><stop offset="1" class="glass-contact-edge"/></radialGradient>
+            <linearGradient id="format-local-paper" x1="0" y1="0" x2=".6" y2="1"><stop class="format-paper-top"/><stop offset="1" class="format-paper-base"/></linearGradient>
+            <linearGradient id="format-local-color" x1="0" y1="0" x2=".7" y2="1"><stop class="format-color-top"/><stop offset="1" class="format-color-base"/></linearGradient>
           </defs>
-          <ellipse class="glass-ground" cx="40" cy="72" rx="33" ry="5" fill="url(#local-contact)"/>
-          <g class="depth"><path class="glass-shell" d="m10 22 7-7h46l9 9v39l-7 5H15l-5-5Z" fill="url(#local-side)" stroke="url(#local-edge)"/>
-            <path class="glass-shell" d="m10 22 7-7h46l9 9-7 5H15Z" fill="url(#local-pane)" stroke="url(#local-edge)"/></g>
-          <g class="face"><rect class="glass-shell" x="8" y="22" width="58" height="43" rx="5" fill="url(#local-pane)" stroke="url(#local-edge)"/>
-            <path class="glass-polish" d="M13 23h48a4 4 0 0 1 4 4v6L9 54V27a4 4 0 0 1 4-4Z" fill="url(#local-shine)"/>
-            <path class="glass-rim" d="M9.5 48V28a4.5 4.5 0 0 1 4.5-4.5h40"/>
-            <circle cx="32" cy="42" r="10" fill="none" stroke="url(#local-side)" stroke-width="6"/>
-            <circle cx="32" cy="40" r="10" fill="none" stroke="url(#local-signal)" stroke-width="4.5"/>
-            <path class="glass-signal-glint" d="M23 37a9.5 9.5 0 0 1 13-6"/>
-            <path class="glass-engrave" d="M16 58h8m5 0h8m5 0h8"/></g>
-          <g class="mov"><path class="glass-lock" d="M52 40v-6a5 5 0 0 1 10 0v6"/>
-            <rect class="glass-mark" x="48" y="38" width="18" height="17" rx="4" fill="url(#local-signal)"/>
-            <path class="glass-signal-glint" d="M50 46v-4a2 2 0 0 1 2-2h8"/>
-            <path class="glass-key" d="M57 46v3"/><circle cx="16" cy="29" r="2.5" class="glass-bead"/></g>
+          <path class="format-surface" d="M15 18H62C65 18 66.5 18 67.25 18.75C68 19.5 68 21 68 24V59C68 62 68 63.5 67.25 64.25C66.5 65 65 65 62 65H15C12 65 10.5 65 9.75 64.25C9 63.5 9 62 9 59V24C9 21 9 19.5 9.75 18.75C10.5 18 12 18 15 18Z" fill="url(#format-local-paper)"/>
+          <path class="format-screen" d="M19 24H45C47 24 48 24 48.5 24.5C49 25 49 26 49 28V52C49 54 49 55 48.5 55.5C48 56 47 56 45 56H19C17 56 16 56 15.5 55.5C15 55 15 54 15 52V28C15 26 15 25 15.5 24.5C16 24 17 24 19 24Z"/>
+          <circle class="format-ring-base" cx="32" cy="40" r="11"/>
+          <path class="format-disk" d="M32 29a11 11 0 1 1-7.8 3.2"/>
+          <circle class="format-secondary" cx="32" cy="40" r="3.3"/>
+          <path class="format-detail" d="M17 60h8m5 0h8"/>
+          <path class="format-shackle" d="M54 42v-7c0-5 2-7 6-7s6 2 6 7v7"/>
+          <path class="format-color" d="M53.5 40H67.5C69.75 40 70.875 40 71.4375 40.5625C72 41.125 72 42.25 72 44.5V59.5C72 61.75 72 62.875 71.4375 63.4375C70.875 64 69.75 64 67.5 64H53.5C51.25 64 50.125 64 49.5625 63.4375C49 62.875 49 61.75 49 59.5V44.5C49 42.25 49 41.125 49.5625 40.5625C50.125 40 51.25 40 53.5 40Z" fill="url(#format-local-color)"/>
+          <path class="format-on-color" d="M60.5 49v6"/>
+          <circle class="format-secondary" cx="60.5" cy="48.5" r="2"/>
         </svg></span>
         <h3><code>on your machine</code></h3>
         <p>Your files are read from disk and stay there. Nothing is uploaded, and the only outbound requests are the ones you press — BLAST, InterProScan, eggNOG — each named before it is made.</p>
@@ -2240,12 +2197,43 @@ let armClips;   /* the rail advances to a clip that has never been armed */
   const videos = [...document.querySelectorAll('video[data-clip]')];
   const loops = [...document.querySelectorAll('img[data-anim]')];
   for(const v of videos)if(!v.getAttribute('poster'))v.poster=v.dataset.poster;
-  const rendered = v => !v.closest('[hidden], [data-motion-inactive="true"]') && getComputedStyle(v).display !== 'none' && getComputedStyle(v).visibility !== 'hidden' && v.getClientRects().length > 0;
+  const held = v => !!v.closest('[data-media-hold="true"]');
+  const rendered = v => !v.closest('[hidden]') &&
+    (held(v) || !v.closest('[data-motion-inactive="true"]')) &&
+    getComputedStyle(v).display !== 'none' && getComputedStyle(v).visibility !== 'hidden' && v.getClientRects().length > 0;
   const motionAllowed = () => !still.matches;
+  const imageLoads = new Map();
+  const loopRequests = new WeakMap();
+  const decodeLoop = source => {
+    if(imageLoads.has(source)) return imageLoads.get(source);
+    const ready = new Promise(resolve => {
+      const image = new Image();
+      let done = false;
+      const finish = ok => { if(done) return; done = true; clearTimeout(timer); resolve(ok); };
+      const timer = setTimeout(() => finish(false), 6000);
+      image.src = source;
+      image.decode().then(() => finish(true)).catch(() => finish(image.complete && image.naturalWidth > 0));
+    });
+    imageLoads.set(source, ready);
+    ready.then(ok => { if(!ok) imageLoads.delete(source); });
+    return ready;
+  };
   const setLoop = (img, visible) => {
     if(!img.dataset.still) img.dataset.still = img.getAttribute('src');
     const want = visible ? img.dataset.anim : img.dataset.still;
-    if(img.getAttribute('src') !== want) img.setAttribute('src', want);
+    if(!want) return;
+    if(img.getAttribute('src') === want){ loopRequests.delete(img); return; }
+    if(loopRequests.get(img) === want) return;
+    loopRequests.set(img, want);
+    // Keep the painted frame until its replacement is decoded. The request
+    // identity prevents a late load from reviving a clip that was just hidden.
+    decodeLoop(want).then(ok => {
+      if(loopRequests.get(img) !== want) return;
+      loopRequests.delete(img);
+      if(!ok) return;
+      if(visible && (document.hidden || still.matches || !rendered(img))) return;
+      img.setAttribute('src', want);
+    });
   };
   const playOne = v => {
     if(document.hidden || v.dataset.clipVisible !== 'true' || still.matches || !rendered(v)) return;
@@ -2253,7 +2241,7 @@ let armClips;   /* the rail advances to a clip that has never been armed */
        top of the page that meant ten invisible loops decoding together. A clip
        now owns playback only while its own figure is near the viewport, and it
        first releases every other product clip — including the hero's one node. */
-    for(const other of document.querySelectorAll('video')) if(other !== v) other.pause?.();
+    for(const other of document.querySelectorAll('video')) if(other !== v && !held(other)) other.pause?.();
     if(v.dataset.clipVisible === 'true' && !still.matches) v.play?.().catch(() => {});
   };
   const ensure = v => {
@@ -2262,9 +2250,31 @@ let armClips;   /* the rail advances to a clip that has never been armed */
     v.dataset.armed = '1';
     const src = document.createElement('source');
     src.type = 'video/mp4'; src.src = v.dataset.clip;
+    src.addEventListener('error', () => { v.dataset.clipFailed = 'true'; });
     v.appendChild(src);
     v.addEventListener('loadeddata', () => playOne(v), {once:true});
     v.load();
+  };
+  window.gsPrepareClip = v => {
+    v.preload = 'auto';
+    ensure(v);
+    if(v.readyState >= 2) return Promise.resolve(true);
+    if(v.dataset.clipFailed === 'true' || v.error)
+      return Promise.resolve(false);
+    return new Promise(resolve => {
+      const sources = [...v.querySelectorAll('source')];
+      const finish = () => {
+        clearTimeout(timer);
+        v.removeEventListener('loadeddata', finish);
+        v.removeEventListener('error', finish);
+        sources.forEach(source => source.removeEventListener('error', finish));
+        resolve(v.readyState >= 2);
+      };
+      const timer = setTimeout(finish, 6000);
+      v.addEventListener('loadeddata', finish, {once:true});
+      v.addEventListener('error', finish, {once:true});
+      sources.forEach(source => source.addEventListener('error', finish, {once:true}));
+    });
   };
   const visibleNow = v => {
     if(document.hidden || !rendered(v) || !motionAllowed(v)) return false;
@@ -2272,6 +2282,9 @@ let armClips;   /* the rail advances to a clip that has never been armed */
     return r.bottom >= -120 && r.top <= innerHeight + 120;
   };
   const setVisible = (v, visible) => {
+    // Exiting surfaces remain visible through the complete blend. Background
+    // tabs and reduced motion still stop immediately.
+    if(held(v) && visibleNow(v)) return;
     v.dataset.clipVisible = String(visible);
     if(v.tagName === 'IMG'){ setLoop(v, visible); return; }
     if(!visible){ v.removeAttribute('autoplay'); v.pause?.(); return; }
@@ -2409,118 +2422,7 @@ if('IntersectionObserver' in window){
   }
 }
 
-/* ── the three-move rail ────────────────────────────────────────────────────
-   It advances by itself and any step can be pressed. Three rules make that
-   bearable rather than fidgety: it only runs **while it is on screen** (a page
-   cycling in a tab nobody is looking at is work for nothing), a press stops the
-   advance for good — somebody who has chosen a step is reading it, and moving
-   them off it is the fault this whole page's notes keep naming — and a reader
-   who has asked for less motion gets no advance at all, only the presses.
-
-   A step is a real button rather than a `<li>` with a click handler, so the
-   keyboard reaches it and says what it is; the markup stays a list because
-   three steps in order is what a list is. */
-{
-  const flow = document.querySelector('[data-flow]');
-  if(flow){
-    const steps = [...flow.querySelectorAll('.step')];
-    const clips = [...flow.querySelectorAll('[data-flow-clip]')];
-    const name  = flow.querySelector('[data-flow-name]');
-    const names = ['Home · Files / Recognition sequence',
-                   'annotated_operon.gb · Features · Full + computed',
-                   'pDEMO-T7 · Fold · 51 nt · −10.6 kcal/mol'];
-    const still = window.gsMotion;
-    /* `driven` is the reader's scroll having taken over from the timer: the
-       rail introduces itself on its own until the first scroll actually chooses
-       a step, and after that the clock is the reader's. */
-    let at = 0, timer = 0, stopped = false, driven = false, visible = false;
-
-    /* the paragraph is what the button labels, so the button is the title and
-       the paragraph is described by it rather than swallowed into the name */
-    steps.forEach((li, i) => {
-      const b = li.querySelector('b');
-      if(b){
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = 'stepbtn';
-        btn.append(...b.childNodes);
-        b.append(btn);
-      }
-      li.addEventListener('click', () => { stopped = true; clearTimeout(timer); show(i); });
-    });
-
-    function show(i){
-      at = i;
-      steps.forEach((li, k) => {
-        li.classList.toggle('on', k === i);
-        li.classList.toggle('done', k < i);
-        const btn = li.querySelector('.stepbtn');
-        if(btn) btn.setAttribute('aria-current', k === i ? 'step' : 'false');
-      });
-      clips.forEach((box, k) => {
-        box.classList.toggle('on', k === i);
-        /* a step off screen keeps decoding otherwise, and three clips decoding
-           at once is what the page's own clip armer already exists to avoid */
-        if(k !== i) for(const v of box.querySelectorAll('video')) v.pause?.();
-      });
-      if(name) name.textContent = names[i] || names[0];
-      /* the clip that has just been shown may never have been armed: the armer
-         asks whether a video is *drawn*, and until this moment it was not */
-      armClips?.();
-      if(!stopped && !still.matches) queue();
-    }
-    function queue(){
-      clearTimeout(timer);
-      if(stopped || driven || !visible || still.matches || document.hidden) return;
-      timer = setTimeout(() => show((at + 1) % steps.length), 5200);
-    }
-
-    if('IntersectionObserver' in window){
-      new IntersectionObserver(entries => {
-        visible = entries.some(entry => entry.isIntersecting);
-        queue();
-      }, {threshold:0}).observe(flow.querySelector('.flowshot'));
-    }
-    still.addEventListener('change', queue);
-    document.addEventListener('visibilitychange', queue);
-
-    /* **Scrolling is what should advance a walkthrough.** It ran on a timer, so
-       the step you were reading changed under you at five seconds whether or
-       not you had finished, and reading it at your own pace meant pressing a
-       button. The reader's own scroll is the better clock: the step whose
-       heading is nearest the middle of the screen is the step being read, which
-       is how the reference drives its own gallery.
-
-       The timer stays as what runs before the section has been scrolled
-       *through* — it is what makes the rail introduce itself — and the first
-       scroll that actually chooses a step takes over for good. A click still
-       stops both, since a press is a decision. */
-    {
-      let frame = 0;
-      const follow = () => {
-        frame = 0;
-        if(stopped || still.matches || document.hidden) return;
-        const box = flow.getBoundingClientRect();
-        /* only while the rail is the thing on screen: outside that the nearest
-           heading is whichever one the section ended on, which would drag the
-           step back every time the reader left */
-        if(box.bottom < innerHeight * 0.25 || box.top > innerHeight * 0.75) return;
-        const shot = flow.querySelector('.flowshot').getBoundingClientRect();
-        const stacked = matchMedia('(max-width:900px) and (min-height:600px)').matches;
-        const mid = stacked ? Math.min(innerHeight * .86, shot.bottom + (innerHeight - shot.bottom) / 2) : innerHeight / 2;
-        let best = 0, near = Infinity;
-        steps.forEach((li, i) => {
-          const r = li.getBoundingClientRect();
-          const d = Math.abs(r.top + r.height / 2 - mid);
-          if(d < near){ near = d; best = i; }
-        });
-        if(best !== at){ driven = true; clearTimeout(timer); show(best); }
-      };
-      addEventListener('scroll', () => { if(!frame) frame = requestAnimationFrame(follow); },
-                       {passive:true});
-    }
-  }
-}
+/* The three-step walkthrough is controlled by flow-motion.js. */
 
 /* ── what may move, and only while it is on screen ─────────────────────────
    One observer arms the wall's drift and the glyphs' animations when their

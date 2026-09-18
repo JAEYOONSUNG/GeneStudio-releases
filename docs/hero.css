@@ -58,16 +58,26 @@
   color:var(--slate); font:400 11px/1 var(--mono); background:var(--paper);
 }
 .hero-workspace .hero-product{min-width:0; max-width:none; margin:0; padding:0; width:100%}
-.hero-stage-label{
-  display:flex; align-items:center; justify-content:space-between; gap:12px;
-  margin:0 16px 6px; color:var(--faint); font:400 10px/1.4 var(--mono); letter-spacing:.005em;
-}
-.hero-stage-label > span:first-child{color:var(--slate)}
 .hero-workspace .reel-viewport{
-  height:clamp(330px,31vw,480px); border:0; border-radius:28px;
+  height:clamp(330px,31vw,480px); border:0; border-radius:20px;
   background:transparent; box-shadow:none;
 }
 :root[data-theme="light"] .hero-workspace .reel-viewport{background:transparent; box-shadow:none}
+.hero-workspace .detail-plane > [data-reel-frozen-frame]{
+  position:absolute; inset:0; display:block; width:100%; height:100%; opacity:0;
+}
+.hero-workspace .reel-detail[data-frozen-frame="true"] [data-reel-frozen-frame]{opacity:1}
+.hero-workspace .reel-detail[data-frozen-frame="true"][data-detail-live="true"] [data-reel-frozen-frame]{
+  opacity:0; transition:opacity .28s ease-out;
+}
+/* Reveal decoded media over the matching poster/frozen frame. Source release
+   remains immediate so an outgoing decoder can never bleed into the next view. */
+.hero-workspace .reel-detail[data-detail-live="true"] .detail-plane > :is([data-reel-video],[data-reel-loop]){
+  transition:opacity .24s ease-out;
+}
+.hero-workspace .reel-detail[data-frozen-frame="true"][data-detail-live="true"] .detail-plane > :is([data-reel-video],[data-reel-loop]){
+  transition:none;
+}
 .hero-workspace [data-ambient-ribbons="reel"]{border-radius:inherit}
 .hero-workspace .reel-caption{
   min-height:160px; text-align:left; width:100%; margin:10px auto 0; padding:0 18px;
@@ -125,8 +135,7 @@
   .hero-actions{gap:16px; margin-top:22px}
   .hero-start{padding-inline:16px}
   .hero-note{font-size:11px; margin-top:11px}
-  .hero-stage-label{margin-inline:2px; font-size:9px}
-  .hero-workspace .reel-viewport{height:clamp(270px,83vw,410px); border-radius:20px}
+  .hero-workspace .reel-viewport{height:clamp(270px,83vw,410px); border-radius:16px}
   .hero-workspace .reel-caption{min-height:156px; margin-top:13px; padding:0 4px}
   .hero-workspace .reel-caption strong{font-size:22px}
   .hero-workspace .reel-caption p{font-size:12.5px}
@@ -145,4 +154,5 @@
 }
 @media (prefers-reduced-motion:reduce){
   html:not(.motion-on) .hero-start,html:not(.motion-on) .hero-explore{transition:none; transform:none}
+  html:not(.motion-on) .hero-workspace .detail-plane > :is([data-reel-video],[data-reel-loop],[data-reel-frozen-frame]){transition:none}
 }
