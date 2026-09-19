@@ -164,6 +164,13 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.3.88:begin published-at=2026-09-19T20:42:51.000Z -->
+### [1.3.88](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.3.88) — 2026-09-19
+
+- Narrow the codon table's tRNA copy bars to the width of the RSCU value beside them: a gene copy count is a small integer, and its track had been the widest column in the figure. The bars are also thinner, so each row reads as a count rather than as a progress bar, and the card around the table now fits the table instead of leaving empty space beside the legend. The freed width goes to the RBS and amino-acid panels, which lay their residues out in three columns.
+- Put the website's workbench frame back around the whole step it marks, centred on the instrument it names, and run the connecting line through the mounts again so the strip reads as one sequence rather than six separate dashes.
+<!-- gene-studio:release:1.3.88:end -->
+
 <!-- gene-studio:release:1.3.87:begin published-at=2026-09-19T13:35:02.000Z -->
 ### [1.3.87](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.3.87) — 2026-09-19
 
