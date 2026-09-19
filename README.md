@@ -164,6 +164,15 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.3.87:begin published-at=2026-09-19T13:35:02.000Z -->
+### [1.3.87](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.3.87) — 2026-09-19
+
+- Draw the strain Details tab instead of listing it: the codon table carries frequency bars and RSCU deviation bars centred on 1.0, the RBS section shows the SD consensus paired base by base with the 16S anti-SD tail, a spacer distribution with its mean, and the matched motifs compared with the consensus position by position, and a tRNA gene supply chart sets tRNA gene copies and anticodon variety beside residue share. Annotated promoters and terminators show length bars with strand direction.
+- Shorten the R–M overview cards: recognition motif cells are smaller and the modification chemistry (6mA, 5mC, 4mC) is named beside the motif text with its modified base and strand, instead of being printed inside each marked cell.
+- Simplify the website workbench drawings: connectors stop short of the instrument mounts, share a quieter neutral hue, and keyboard focus underlines the step label. The inspected step sits in one closed frame with even room around its label, and the note under the strip ends in a "See how" link into that step's section.
+- Set the whole website in one typeface: file extensions, the release number, step counters and the format tray's eyebrow no longer switch to a monospace face, and the page checks refuse any text that does.
+<!-- gene-studio:release:1.3.87:end -->
+
 <!-- gene-studio:release:1.3.86:begin published-at=2026-09-18T07:13:21.000Z -->
 ### [1.3.86](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.3.86) — 2026-09-18
 
