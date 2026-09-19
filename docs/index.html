@@ -86,17 +86,17 @@ document.addEventListener('visibilitychange',function(){document.documentElement
 <link rel="preload" href="font/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="font/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="font/fonts.css?v=20260828">
-<link rel="stylesheet" href="base.css?v=20260918-lines1">
-<link rel="stylesheet" href="ambient-ribbons.css?v=20260918-lines1">
-<link rel="stylesheet" href="section-motion.css?v=20260918-lines1">
-<link rel="stylesheet" href="hero.css?v=20260918-lines1">
-<link rel="stylesheet" href="flow-motion.css?v=20260918-lines1">
-<link rel="stylesheet" href="formats-browser.css?v=20260918-lines1">
-<script src="hero-reel.js?v=20260918-lines1" defer></script>
-<script src="section-motion.js?v=20260918-lines1" defer></script>
-<script src="flow-motion.js?v=20260918-lines1" defer></script>
-<script src="formats-browser.js?v=20260918-lines1" defer></script>
-<script src="ambient-ribbons.js?v=20260918-lines1" defer></script>
+<link rel="stylesheet" href="base.css?v=20260919-rail1">
+<link rel="stylesheet" href="ambient-ribbons.css?v=20260919-rail1">
+<link rel="stylesheet" href="section-motion.css?v=20260919-rail1">
+<link rel="stylesheet" href="hero.css?v=20260919-rail1">
+<link rel="stylesheet" href="flow-motion.css?v=20260919-rail1">
+<link rel="stylesheet" href="formats-browser.css?v=20260919-rail1">
+<script src="hero-reel.js?v=20260919-rail1" defer></script>
+<script src="section-motion.js?v=20260919-rail1" defer></script>
+<script src="flow-motion.js?v=20260919-rail1" defer></script>
+<script src="formats-browser.js?v=20260919-rail1" defer></script>
+<script src="ambient-ribbons.js?v=20260919-rail1" defer></script>
 </head>
 <body>
 <!-- **A phone reports its own state, so nobody has to guess at it.** Open the
@@ -438,7 +438,7 @@ document.addEventListener('visibilitychange',function(){document.documentElement
          moves once on arrival or focus and every reduced-motion state is a
          complete, scientifically legible drawing. -->
     <div class="bench-route" data-bench-route>
-      <div class="bench-focus" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      <div class="bench-focus" aria-hidden="true"></div>
     <ul class="verbs" data-glyphs data-glyphs-once>
       <li><a href="#formats" aria-describedby="bench-hint-open"><span class="vb lg" data-glyph="open">
         <svg viewBox="0 0 64 64" aria-hidden="true">
@@ -490,9 +490,15 @@ document.addEventListener('visibilitychange',function(){document.documentElement
             <circle class="packet" cx="36" cy="32" r="1.8"/><path class="signal" d="M48 23l2 2 4-5"/></g>
         </svg></span><span class="verb-label">Share</span><span class="verb-caption">Files & figures</span></a><span class="sr" id="bench-hint-share">Take your work out as sequence files and editable figures.</span></li>
     </ul>
+      <!-- The arrow used to sit alone at the far end of the bar, 800 px from
+           the sentence, and pressed nothing. It is a link now, to the section
+           the inspected instrument opens, and it carries a word so the eye has
+           something to land on. Pointer only: the six links above are the
+           keyboard's way in, and the whole bar is already hidden from readers. -->
       <div class="bench-note" aria-hidden="true">
         <span class="bench-note-mark"></span><span data-bench-note>Start with the files already on your disk.</span>
-        <svg viewBox="0 0 20 20" fill="none"><path d="M4 10h12m-5-5 5 5-5 5"/></svg>
+        <a class="bench-note-go" data-bench-go href="#formats" tabindex="-1">See how
+          <svg viewBox="0 0 20 20" fill="none"><path d="M4 10h12m-5-5 5 5-5 5"/></svg></a>
       </div>
     </div>
   </div>
@@ -2369,24 +2375,32 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
 
 /* The hero has its own shared animation and media lifecycle in hero-reel.js. */
 
-/* One inspection frame travels below the six instruments. Its label and
-   caption stay separate from the icon mounts and connecting rail. */
+/* One inspection frame travels between the six instruments, holding the
+   one being read — tile, label and caption — while the rail runs through. */
 (() => {
   const route = document.querySelector('[data-bench-route]');
   if(!route) return;
   const links = [...route.querySelectorAll('.verbs a')];
   const lens = route.querySelector('.bench-focus');
-  const note = route.querySelector('[data-bench-note]');
+  const note = route.querySelector('[data-bench-note]'), go = route.querySelector('[data-bench-go]');
   if(!links.length || !lens || !note) return;
   const fine = matchMedia('(hover:hover) and (pointer:fine)');
   let active = links[0], noteAnimation, reflowFrame = 0;
   const position = (instant = false) => {
     if(instant){ cancelAnimationFrame(reflowFrame); route.classList.add('bench-reflow'); }
+    /* the frame holds the whole step — tile, label and caption — with the
+       same room above the tile and below the caption, centred on the tile's
+       own axis; the link's box ends at its padding and min-height, so a frame
+       cut from it was loose at the foot */
     const box = active.getBoundingClientRect(), origin = route.getBoundingClientRect(),
-      label = active.querySelector('.verb-label').getBoundingClientRect(), top = label.top - 4;
-    lens.style.width = `${box.width}px`;
-    lens.style.height = `${box.bottom - top}px`;
-    lens.style.transform = `translate3d(${box.left - origin.left - route.clientLeft}px,${top - origin.top - route.clientTop}px,0)`;
+      caption = active.querySelector('.verb-caption').getBoundingClientRect(),
+      tile = active.querySelector('.lg').getBoundingClientRect(),
+      pad = 12, top = tile.top - pad, bottom = caption.bottom + pad,
+      width = Math.min(box.width, Math.max(tile.width + 2 * pad + 24, caption.width + 2 * pad)),
+      left = tile.left + tile.width / 2 - width / 2;
+    lens.style.width = `${width}px`;
+    lens.style.height = `${bottom - top}px`;
+    lens.style.transform = `translate3d(${left - origin.left - route.clientLeft}px,${top - origin.top - route.clientTop}px,0)`;
     if(instant){
       lens.getBoundingClientRect();
       reflowFrame = requestAnimationFrame(() => route.classList.remove('bench-reflow'));
@@ -2399,6 +2413,7 @@ fetch(FEED, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(f => {
     const glyph = link.querySelector('.lg');
     route.style.setProperty('--bench-accent', getComputedStyle(glyph).getPropertyValue('--g-accent').trim());
     note.textContent = document.getElementById(link.getAttribute('aria-describedby')).textContent;
+    if(go) go.setAttribute('href', link.getAttribute('href'));
     position();
     noteAnimation?.cancel();
     if(changed && !window.gsMotion.matches)

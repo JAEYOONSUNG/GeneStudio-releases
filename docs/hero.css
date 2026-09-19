@@ -55,7 +55,7 @@
 .hero-formats > div{display:flex; gap:9px; margin-top:10px}
 .hero-formats code{
   padding:5px 8px; border:1px solid var(--line); border-radius:5px;
-  color:var(--slate); font:400 11px/1 var(--mono); background:var(--paper);
+  color:var(--slate); font:500 11px/1 var(--ui); background:var(--paper);
 }
 .hero-workspace .hero-product{min-width:0; max-width:none; margin:0; padding:0; width:100%}
 .hero-workspace .reel-viewport{

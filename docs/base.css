@@ -47,6 +47,12 @@
      line gets the page in the system face and it settles rather than blocking. */
   --ui:"Inter",ui-sans-serif,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   --display:"Inter Tight","Inter",ui-sans-serif,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  /* **The landing page is set in one family.** Nothing on it reads `--mono`
+     any more: extensions, version numbers, the step counters and the inline
+     `code` all take Inter, with tabular figures where digits have to line
+     up. A label in a second face is a label in a different voice, and six
+     places had each drifted into one. The token stays for the guide, whose
+     GenBank and FASTA listings are genuinely column-aligned text. */
   --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
   --pad:clamp(20px, 5vw, 64px);
   --wide:1180px;
@@ -94,7 +100,7 @@ img{max-width:100%; height:auto; display:block}
    there" failure it was written to avoid. Found by rendering it, not by reading
    it. */
 [hidden]{display:none !important}
-code{font-family:var(--mono); font-size:.92em}
+code{font-family:var(--ui); font-weight:500; font-size:.96em; letter-spacing:-.005em}
 ::selection{background:var(--amber-soft); color:var(--ink)}
 :focus-visible{outline:2px solid var(--amber); outline-offset:3px; border-radius:6px}
 .wrap{max-width:var(--wide); margin:0 auto; padding:0 var(--pad)}
@@ -146,7 +152,7 @@ header.rail{
    default is what makes a 512 → 22 reduction clean. */
 .brand .mark{flex:none; width:22px; height:22px; display:block}
 .footbrand .mark{width:26px; height:26px}
-.brand .tag{font:500 10px/1 var(--mono); color:var(--faint); letter-spacing:.14em; padding-top:2px}
+.brand .tag{font:600 10px/1 var(--ui); color:var(--faint); letter-spacing:.12em; padding-top:2px}
 .rail nav{margin-left:14px; display:flex; align-items:center; gap:2px}
 .rail nav a{font-size:14px; color:var(--slate); text-decoration:none; padding:8px 12px; border-radius:999px; white-space:nowrap}
 .rail nav a:hover{color:var(--ink); background:rgba(255,255,255,.07)}
@@ -419,7 +425,7 @@ h1{font-size:clamp(34px,5.1vw,58px); font-weight:500; letter-spacing:-.025em;
 .chips{display:flex; flex-wrap:wrap; gap:7px; margin:20px 0 0; padding:0; list-style:none;
        justify-content:center}
 .chips li{
-  font:500 12px/1 var(--mono); color:var(--slate);
+  font:500 12px/1 var(--ui); color:var(--slate); letter-spacing:-.005em;
   border:1px solid var(--hair); border-radius:7px; padding:7px 9px; background:var(--ground);
 }
 .cta{display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin:24px 0 0;
@@ -428,8 +434,8 @@ h1{font-size:clamp(34px,5.1vw,58px); font-weight:500; letter-spacing:-.025em;
 .download-offer.hero-download{width:min(100%,1120px)}
 .release-once{display:flex; align-items:baseline; justify-content:center; gap:8px;
   margin:0; color:var(--slate); font:600 12px/1 var(--ui); letter-spacing:-.005em}
-.release-once b{color:var(--ink); font:600 12px/1 var(--mono);
-  letter-spacing:.02em; font-variant-numeric:tabular-nums}
+.release-once b{color:var(--ink); font:600 12px/1 var(--ui);
+  letter-spacing:-.005em; font-variant-numeric:tabular-nums}
 .hero .platform-rows{display:grid; grid-template-columns:minmax(0,1fr); gap:8px;
   width:100%; margin:9px 0 0}
 @media (min-width:1000px){
@@ -649,7 +655,7 @@ figure{margin:0}
 .frame .bar{display:flex; align-items:center; gap:7px; padding:11px 15px;
   border-bottom:1px solid var(--hair); background:var(--ground)}
 .frame .bar i{width:10px; height:10px; border-radius:50%; background:var(--line); display:block}
-.frame .bar span{flex:1; min-width:0; margin-left:8px; font:400 11.5px/1 var(--mono);
+.frame .bar span{flex:1; min-width:0; margin-left:8px; font:400 11.5px/1 var(--ui);
   color:var(--faint); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
 /* **A figure that needs a paragraph under it is a figure that did not land.**
    Every one of these ran three lines of numbers read off the screenshot above
@@ -1308,7 +1314,7 @@ section .num + h2, section.plain .num + h2{margin-top:0}
 .num b{padding:4px 7px; border-radius:999px; font-variant-numeric:tabular-nums;
   background:color-mix(in oklab, var(--topic) 24%, transparent);
   box-shadow:0 0 0 1px color-mix(in oklab, var(--topic) 20%, transparent) inset;
-  font-weight:600; font-family:var(--mono); font-size:11px; letter-spacing:.06em;
+  font-weight:600; font-family:var(--ui); font-size:11px; letter-spacing:.04em;
   opacity:.72; letter-spacing:.08em}
 /* ── the scene card ──────────────────────────────────────────────────────────
    **The wash was a guess and the reference does something else entirely.** Read
@@ -1390,7 +1396,7 @@ section.plain h2{font-size:clamp(26px,3.4vw,36px); margin-top:14px}
 .cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(258px,1fr)); gap:14px; margin-top:34px}
 .card{border:1px solid var(--hair); border-radius:16px; padding:20px; background:var(--ground)}
 .card h3{font-size:16px; display:flex; align-items:center; gap:9px}
-.card h3 code{font:500 11.5px/1 var(--mono); color:var(--amber); background:var(--amber-soft); padding:4px 7px; border-radius:6px}
+.card h3 code{font:500 11.5px/1 var(--ui); color:var(--amber); background:var(--amber-soft); padding:4px 7px; border-radius:6px}
 .card p{margin:11px 0 0; font-size:14.5px; color:var(--slate); line-height:1.6}
 .also{display:grid; grid-template-columns:repeat(auto-fit,minmax(216px,1fr)); gap:1px; margin-top:32px; background:var(--hair); border:1px solid var(--hair); border-radius:16px; overflow:hidden}
 .also div{background:var(--paper); padding:17px 18px}
@@ -1439,8 +1445,8 @@ section.plain h2{font-size:clamp(26px,3.4vw,36px); margin-top:14px}
    readings on the whole page that were short, and they had been for a while.
    `--slate` is the next step up and is already solved for these surfaces; it is
    still the quietest thing in its own cell. */
-.cmp .cm .nostate{font-style:normal; font:500 11px/1 var(--mono);
-  letter-spacing:.08em; text-transform:uppercase; color:var(--slate)}
+.cmp .cm .nostate{font-style:normal; font:500 11px/1 var(--ui);
+  letter-spacing:.06em; text-transform:uppercase; color:var(--slate)}
 /* the lit column's own mark, so the eye lands there first */
 .cmp .us svg.tick{stroke:var(--amber)}
 /* the column this page is about is the one that is lit */
@@ -1628,7 +1634,7 @@ section.plain h2{font-size:clamp(26px,3.4vw,36px); margin-top:14px}
 details{border-bottom:1px solid var(--hair)}
 summary{cursor:pointer; list-style:none; padding:18px 34px 18px 0; position:relative; color:var(--ink); font-weight:500; font-size:16.5px}
 summary::-webkit-details-marker{display:none}
-summary::after{content:'+'; position:absolute; right:6px; top:50%; transform:translateY(-50%); font:400 20px/1 var(--mono); color:var(--slate)}
+summary::after{content:'+'; position:absolute; right:6px; top:50%; transform:translateY(-50%); font:300 22px/1 var(--ui); color:var(--slate)}
 details[open] summary::after{content:'–'}
 details p{margin:0 0 20px; max-width:70ch; font-size:15.5px; color:var(--slate)}
 
@@ -1638,7 +1644,7 @@ details p{margin:0 0 20px; max-width:70ch; font-size:15.5px; color:var(--slate)}
 .betabox h2{font-size:clamp(24px,3.2vw,32px); margin-top:0}
 .steps{margin:26px 0 0; padding:0; list-style:none; counter-reset:s}
 .steps li{counter-increment:s; position:relative; padding-left:40px; margin:16px 0; max-width:66ch}
-.steps li::before{content:counter(s,decimal-leading-zero); position:absolute; left:0; top:1px; font:500 12px/1.5 var(--mono); color:var(--amber)}
+.steps li::before{content:counter(s,decimal-leading-zero); position:absolute; left:0; top:1px; font:500 12px/1.5 var(--ui); font-variant-numeric:tabular-nums; color:var(--amber)}
 /* stacked, and full width of the column: three buttons in a row would wrap
    raggedly in a 380 px column, and here they are a list of platforms rather
    than a row of choices the way the hero draws them */
@@ -1649,7 +1655,7 @@ details p{margin:0 0 20px; max-width:70ch; font-size:15.5px; color:var(--slate)}
 .askdl small{font:500 12px/1 var(--ui); letter-spacing:-.012em; color:inherit}
 .mail{
   display:inline-flex; align-items:center; gap:10px; margin-top:26px;
-  font:500 15px/1 var(--mono); color:var(--ink); text-decoration:none;
+  font:500 15px/1 var(--ui); color:var(--ink); text-decoration:none;
   border:1px solid var(--line); border-radius:10px; padding:13px 18px; background:var(--paper);
   word-break:break-all;
 }
@@ -1976,10 +1982,14 @@ html:not(.motion-on) .marquee{display:block}
    **one quiet colour** rather than six: the glyphs already carry an accent
    apiece, and a rail repeating them would be the same thing said twice.
 
-   Each connector leaves a small breathing space at both mounts, so their
-   outlines stay independent instead of meeting in dark T-junctions. */
+   **And it is one line, through the mounts.** A pass cut 8 px off each end
+   of every segment so the outlines would not meet in T-junctions — and six
+   dashes between six boxes is a dotted line, not a rail; the arrival draw
+   then read as six things lighting up instead of one line run through the
+   strip. The segments meet the tile edges again, in the edge's own colour,
+   so the rail and the borders are the same line. */
 .verbs{
-  --vgap:clamp(12px,2vw,26px); --vtile:72px; --vpad:10px; --vclear:8px;
+  --vgap:clamp(12px,2vw,26px); --vtile:72px; --vpad:10px; --vclear:0px;
   display:grid; grid-template-columns:repeat(6,minmax(76px,1fr));
   gap:var(--vgap); width:min(100%,850px);
   margin:clamp(38px,5vw,58px) auto 0; padding:0; list-style:none;
@@ -1987,8 +1997,8 @@ html:not(.motion-on) .marquee{display:block}
 .verbs li{min-width:0; position:relative}
 /* the segment *leaving* a tile, so the one to suppress is the last of a row */
 .verbs li::after{
-  content:''; position:absolute; height:1px; border-radius:1px;
-  background:color-mix(in srgb,var(--vedge) 65%,transparent);
+  content:''; position:absolute; height:1px;
+  background:var(--vedge);
   top:calc(var(--vpad) + var(--vtile)/2);
   left:calc(50% + var(--vtile)/2 + var(--vclear));
   width:calc(100% + var(--vgap) - var(--vtile) - 2*var(--vclear));
@@ -2191,7 +2201,7 @@ section.plain.onplate .gridlines > div{background:var(--plate)}
 .gridlines .gico.lg svg{width:56px; height:56px}
 .gridlines h3{grid-column:2; grid-row:1; font-size:17px; display:flex;
   align-items:center; gap:9px; flex-wrap:wrap; margin-top:2px}
-.gridlines h3 code{font:500 12px/1 var(--mono); color:var(--amber);
+.gridlines h3 code{font:500 12px/1 var(--ui); color:var(--amber);
   background:var(--amber-soft); padding:5px 8px; border-radius:7px; letter-spacing:0}
 .gridlines p{grid-column:2; grid-row:2; margin:11px 0 0; font-size:14.5px;
   color:var(--slate); line-height:1.6}
@@ -2239,7 +2249,7 @@ section.plain.onplate .gridlines > div{background:var(--plate)}
 .wall blockquote{--faint:#89999C}
 :root[data-theme="light"] .wall blockquote{--faint:#56686B}
 .wall cite{
-  display:block; margin-top:12px; font:400 12px/1.45 var(--mono);
+  display:block; margin-top:12px; font:400 12px/1.45 var(--ui);
   font-style:normal; color:var(--faint); letter-spacing:-.01em;
 }
 @media (max-width:1000px){ .wallcol:nth-child(n+4){display:none} }
@@ -2350,7 +2360,7 @@ footer{padding:clamp(48px,7vw,76px) 0 0}
   margin-top:clamp(38px,5vw,58px); padding-top:22px; padding-bottom:34px;
   border-top:1px solid var(--hair); font-size:13px; color:var(--faint);
 }
-.footver{font-family:var(--mono); font-size:12px; letter-spacing:-.01em}
+.footver{font-family:var(--ui); font-size:12px; letter-spacing:-.005em; font-variant-numeric:tabular-nums}
 /* the credit sits after the terms as a quieter clause, not as a second line
    of them */
 .footcred{display:inline-block; margin-left:10px; color:var(--faint)}
@@ -2898,18 +2908,19 @@ html.js [data-glyph-items] > :not(.glyph-in) .lg svg{opacity:0; transform:transl
    The instruments share a quiet mount. A single set of corner marks follows
    pointer or keyboard focus; their short descriptions explain each destination. */
 .chapter .bench-route{
-  --bench-accent:#62AED8;
+  --bench-accent:#62AED8; --vwide:850px;
   position:relative; isolation:isolate; max-width:960px; overflow:hidden; overflow:clip;
-  margin:clamp(38px,5vw,58px) auto 0; padding:24px 20px 0;
+  margin:clamp(38px,5vw,58px) auto 0; padding:26px 20px 0;
   border:1px solid #2C3B41; border-radius:16px;
   background:linear-gradient(135deg,#162126,#111B20 68%);
   text-align:left;
 }
-.bench-route .verbs{position:relative; z-index:1; width:100%; margin:0; --vgap:12px}
+.bench-route .verbs{position:relative; z-index:1; width:min(100%,var(--vwide)); margin:0 auto; --vgap:12px}
 .bench-route .verbs a{
-  padding:var(--vpad) 5px 16px; grid-template-rows:var(--vtile) auto 1fr;
-  gap:8px; border-radius:10px; min-height:142px; text-align:center;
+  padding:var(--vpad) 5px 14px; grid-template-rows:var(--vtile) auto 1fr;
+  gap:12px 0; border-radius:14px; min-height:142px; text-align:center;
 }
+.bench-route .verb-caption{margin-top:-8px}
 .bench-route .verbs a:focus-visible{outline:none}
 .bench-route .verbs a:focus-visible .verb-label{text-decoration:underline;text-decoration-color:var(--bench-accent);text-decoration-thickness:2px;text-underline-offset:3px}
 .chapter .bench-route .verbs a:hover{background:none}
@@ -2919,33 +2930,47 @@ html.js [data-glyph-items] > :not(.glyph-in) .lg svg{opacity:0; transform:transl
 .bench-route .verbs .lg::after{content:none}
 .bench-route .scan-wash{fill:color-mix(in srgb,var(--g-accent) 10%,transparent)}
 .bench-route .verbs a:hover .lg{transform:none; background:#172329; border-color:var(--vedge)}
-.bench-route .verb-label{font-size:14px; line-height:1.3; color:#C6D2D5; transition:color .2s ease}
-.bench-route .verb-caption{max-width:13ch; font-size:11px; line-height:1.45; color:#8D9FA5}
+.bench-route .verb-label{font:500 15px/1.3 var(--ui); letter-spacing:-.012em; color:#C6D2D5; transition:color .2s ease}
+.bench-route .verb-caption{max-width:14ch; font-size:11.5px; line-height:1.45; letter-spacing:-.005em; color:#8D9FA5}
 .bench-route .verbs .sr{color:#C6D2D5}
 .bench-route .verbs .is-inspected .verb-label{color:#F1F5F6}
 .bench-route .verbs .is-inspected .verb-caption{color:var(--bench-accent)}
+/* **The frame holds the instrument, not a caption under it.** It was first
+   the whole link — icon, label and caption, travelling from one to the next —
+   then a pass dropped it to four corner marks under the text alone, tight at
+   the top and loose at the foot and off the axis the tile sits on. It is one
+   closed hairline round the whole step again, in the instrument's accent over
+   its wash, sized in `position()` from the tile's top to the caption's foot
+   with the same room either end, and centred by construction. */
 .bench-focus{
   position:absolute; z-index:0; top:0; left:0; pointer-events:none;
-  border-radius:10px; opacity:0;
-  background:color-mix(in srgb,var(--bench-accent) 5%,transparent);
+  border-radius:14px; opacity:0;
+  border:1px solid color-mix(in srgb,var(--bench-accent) 42%,transparent);
+  background:color-mix(in srgb,var(--bench-accent) 6%,transparent);
 }
 .bench-ready .bench-focus{opacity:1;
-  transition:transform .4s cubic-bezier(.22,.75,.2,1),width .4s ease,height .4s ease,background .3s ease}
+  transition:transform .4s cubic-bezier(.22,.75,.2,1),width .4s ease,height .4s ease,
+    background .3s ease,border-color .3s ease}
 .bench-route.bench-reflow .bench-focus{transition:none}
-.bench-focus i{position:absolute; width:17px; height:17px;
-  border:1px solid var(--bench-accent); opacity:.75; transition:border-color .3s ease}
-.bench-focus i:nth-child(1){top:0; left:0; border-right:0; border-bottom:0; border-radius:10px 0 0 0}
-.bench-focus i:nth-child(2){top:0; right:0; border-left:0; border-bottom:0; border-radius:0 10px 0 0}
-.bench-focus i:nth-child(3){bottom:0; left:0; border-right:0; border-top:0; border-radius:0 0 0 10px}
-.bench-focus i:nth-child(4){bottom:0; right:0; border-left:0; border-top:0; border-radius:0 0 10px 0}
+/* the bar's contents start where the tile columns start, so the mark stands
+   under the first frame rather than 40 px to its left */
 .bench-note{
-  display:flex; align-items:center; gap:12px; min-height:66px;
-  margin-top:17px; padding:16px 6px;
-  border-top:1px solid #2C3B41; font:400 13px/1.5 var(--ui); color:#B9C8CF;
+  display:flex; align-items:center; gap:12px; min-height:64px;
+  margin-top:16px; padding:14px max(4px,calc((100% - var(--vwide))/2));
+  border-top:1px solid #2C3B41; font:400 13.5px/1.5 var(--ui); letter-spacing:-.005em; color:#B9C8CF;
 }
 .bench-note-mark{width:20px; height:2px; flex:none; background:var(--bench-accent); transition:background .3s ease}
 .bench-note [data-bench-note]{flex:1}
-.bench-note svg{flex:none; width:18px; height:18px; stroke:var(--bench-accent); stroke-width:1.4; stroke-linecap:round; stroke-linejoin:round}
+.bench-note-go{
+  display:inline-flex; align-items:center; gap:6px; flex:none; margin-left:auto;
+  padding:7px 8px 7px 12px; border-radius:999px;
+  font:500 13px/1 var(--ui); letter-spacing:-.005em; color:var(--bench-accent); text-decoration:none;
+  transition:color .3s ease,background-color .2s ease;
+}
+.bench-note-go svg{flex:none; width:16px; height:16px; stroke:currentColor; stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round;
+  transition:transform .25s cubic-bezier(.2,.7,.2,1)}
+.bench-note-go:hover{background:color-mix(in srgb,var(--bench-accent) 10%,transparent)}
+.bench-note-go:hover svg{transform:translateX(2px)}
 /* The same instrument drawings on a light mount. The selected caption uses
    its operation accent as text, so these colors are darker than dark-mode
    signals. Neutral outlines remain shared with the connectors. */
@@ -2975,11 +3000,12 @@ html.js [data-glyph-items] > :not(.glyph-in) .lg svg{opacity:0; transform:transl
 :root[data-theme="light"] .bench-route .verb-caption{color:#506A7C}
 :root[data-theme="light"] .bench-route .verbs .is-inspected .verb-label{color:#1E3E55}
 :root[data-theme="light"] .bench-route .verbs .is-inspected .verb-caption{color:var(--bench-accent)}
-:root[data-theme="light"] .bench-route .bench-focus{background:color-mix(in srgb,var(--bench-accent) 6%,transparent)}
-:root[data-theme="light"] .bench-route .bench-focus i{opacity:.9}
+:root[data-theme="light"] .bench-route .bench-focus{
+  border-color:color-mix(in srgb,var(--bench-accent) 38%,transparent);
+  background:color-mix(in srgb,var(--bench-accent) 6%,#FFFFFF)}
 :root[data-theme="light"] .bench-route .bench-note{border-color:#CCDCE8; color:#445E70}
 @media(max-width:900px){
-  .chapter .bench-route{max-width:560px}
+  .chapter .bench-route{max-width:560px; --vwide:500px}
   .bench-route .verbs{grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px 12px}
 }
 @media(max-width:620px){
@@ -2988,8 +3014,9 @@ html.js [data-glyph-items] > :not(.glyph-in) .lg svg{opacity:0; transform:transl
   .bench-route .verbs a{min-height:132px; padding-inline:2px; padding-bottom:12px}
   .bench-route .verb-label{font-size:13px}
   .bench-route .verb-caption{font-size:10px}
-  .bench-note{min-height:78px; margin-top:12px; padding:14px 4px; gap:9px; font-size:12px}
+  .bench-note{min-height:78px; margin-top:12px; padding:14px 4px; gap:9px; font-size:12.5px}
   .bench-note-mark{width:12px}
+  .bench-note-go{padding:7px 4px 7px 8px; font-size:12px}
 }
 @media(prefers-reduced-motion:reduce){
   html:not(.motion-on) .bench-route *{transition:none !important}
@@ -3003,15 +3030,14 @@ html.js [data-glyph-items] > :not(.glyph-in) .lg svg{opacity:0; transform:transl
   :root[data-theme] .chapter .verbs{--vedge:CanvasText}
   :root[data-theme] .chapter .verbs .lg{--g-ink:CanvasText; --g-muted:CanvasText; --g-body:Canvas; --g-edge:CanvasText}
   :root[data-theme] .chapter .verbs [data-glyph]{--g-accent:Highlight}
-  :root[data-theme] .bench-route .bench-focus{background:none}
-  :root[data-theme] .bench-route .bench-focus i{border-color:Highlight; opacity:1}
+  :root[data-theme] .bench-route .bench-focus{background:none; border-color:Highlight}
+  :root[data-theme] .bench-route .bench-note-go{color:LinkText}
   :root[data-theme] .bench-route .verb-label,:root[data-theme] .bench-route .verb-caption,
   :root[data-theme] .bench-route .verbs .is-inspected .verb-label,
   :root[data-theme] .bench-route .verbs .is-inspected .verb-caption,
   :root[data-theme] .bench-route .bench-note{color:CanvasText}
   :root[data-theme] .bench-route .bench-note{border-color:CanvasText}
   .bench-note-mark{background:Highlight}
-  .bench-note svg{stroke:Highlight}
 }
 
 /* ── file specimens: restrained colour and continuous contours ─────────────
