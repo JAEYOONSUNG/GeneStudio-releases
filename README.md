@@ -164,6 +164,14 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.3.89:begin published-at=2026-09-20T00:05:26.000Z -->
+### [1.3.89](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.3.89) — 2026-09-20
+
+- Find the catalytic, cofactor and nucleotide-binding motifs of an R–M system's proteins and mark them with their positions: a table per subunit with the catalytic motif, the AdoMet-binding motif and the P-loop in their own columns, the class of an amino-methyltransferase read from the order of its motifs, and every motif carrying the work it is taken from.
+- Separate the real motifs from the chance matches with a predicted structure. These patterns are short enough that a genuine methyltransferase offers two or three catalytic candidates, so the panel fetches the locus's AlphaFold model and reports how confident the prediction is where each motif sits and how near its residues come to a residue of another motif family. A motif is called part of a site only when both readings support it.
+- The catalogue is measured rather than asserted: against the curated active-site and cofactor residues of 126 reviewed restriction-modification proteins it now covers 81.6% of catalytic residues and 71.4% of cofactor residues, and the structure ranks the curated motif first in eleven of the twelve proteins offering more than one candidate. Motifs that could not earn that are named as needing a profile search instead of being reported unreliably.
+<!-- gene-studio:release:1.3.89:end -->
+
 <!-- gene-studio:release:1.3.88:begin published-at=2026-09-19T20:42:51.000Z -->
 ### [1.3.88](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.3.88) — 2026-09-19
 
