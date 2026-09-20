@@ -164,6 +164,13 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.3.90:begin published-at=2026-09-20T02:54:01.000Z -->
+### [1.3.90](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.3.90) — 2026-09-20
+
+- Read an R–M subunit's protein from the UniProt accession printed beside it. A built-in strain's linked loci carried the accession and still reported no protein sequence; the motif panel now lists such a locus, fetches its sequence together with the AlphaFold model, and says whether the peptide came from a stored analysis, the open genome or the UniProt entry, preferring a local one.
+- Show the linear Figure view whole. An artboard taller than the pane used to run under the fold with its scale bar and note out of sight; it now fits the pane's height as well as its width, keeping its proportions, and the exported figure is unchanged.
+<!-- gene-studio:release:1.3.90:end -->
+
 <!-- gene-studio:release:1.3.89:begin published-at=2026-09-20T00:05:26.000Z -->
 ### [1.3.89](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.3.89) — 2026-09-20
 
