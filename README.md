@@ -164,6 +164,15 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.3.91:begin published-at=2026-09-20T06:51:45.000Z -->
+### [1.3.91](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.3.91) — 2026-09-20
+
+- Build the built-in strain library from real reference genomes: fifty assemblies and fifty-four strains, every accession resolved against NCBI. TOP10, DH5α, XL1-Blue and HST04 now take their codon usage, tRNA inventory and ribosome-binding tail from their own complete RefSeq genome instead of K-12's, and the Geobacillus, Fervidobacterium, Thermotoga, Thermus, Parageobacillus, Caldicellulosiruptor, Colwellia, Vibrio, Haloferax and Streptomyces reference strains are built in beside them. Ten assemblies NCBI has suppressed but still serves say so in their own profile.
+- Read the R–M motif positions from the protein accession a locus actually names. The panel reached its peptide through UniProt alone, which seven loci in eight do not record, so the catalytic, cofactor and P-loop motif positions were missing for most strains; they are fetched from NCBI by protein accession now, in one request, and a locus with no UniProt accession is given its motif positions and told plainly that it has no predicted structure to check them against.
+- A laboratory E. coli host keeps K-12's restriction–modification loci as an explicitly labelled reference. Their own assemblies annotate no hsd gene, so reading the loci from them would have lost the type I subunits the R–M tab exists to show, while their sequence figures remain their own.
+- Corynebacterium glutamicum moves to the assembly NCBI flags as the reference genome. Its annotation-derived R–M system identifiers change with it, so a saved document that had recorded a state for one of those systems by hand starts again from the annotation; the published genotypes, Dam, Dcm, CpG, GpC, EcoKI and EcoBI, are unaffected.
+<!-- gene-studio:release:1.3.91:end -->
+
 <!-- gene-studio:release:1.3.90:begin published-at=2026-09-20T02:54:01.000Z -->
 ### [1.3.90](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.3.90) — 2026-09-20
 
