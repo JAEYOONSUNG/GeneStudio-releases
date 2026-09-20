@@ -164,6 +164,14 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.3.93:begin published-at=2026-09-20T15:47:10.000Z -->
+### [1.3.93](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.3.93) — 2026-09-20
+
+- Opening an R–M system's motif panel now fetches its predicted structures and measures them there and then, so the Structure column no longer reads "Not checked" until somebody finds the control under the table. That column carries the measurement the section exists for: whether a motif's residues sit close enough to another family's to be one site, and whether AlphaFold was confident where they sit. E. coli K-12's EcoKI asks for the three accessions it names, and each row comes back with its entry, its confidence and the count of motifs in one site, too far apart, or below the floor.
+- Only the system that was opened is asked about. The table is built for every card on a strain's page, so a reader who scrolls past a dozen systems sends nothing; closing and reopening sends nothing either. The models are held for the session and never stored, and the button under the table becomes a way to ask again, which is the only way to retry one that failed.
+- A row whose model is on its way says so, and on the web build the column says the desktop application is what fetches it. Those are three different facts that had all been the words "Not checked".
+<!-- gene-studio:release:1.3.93:end -->
+
 <!-- gene-studio:release:1.3.92:begin published-at=2026-09-20T14:46:59.000Z -->
 ### [1.3.92](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.3.92) — 2026-09-20
 
