@@ -164,6 +164,16 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.3.92:begin published-at=2026-09-20T14:46:59.000Z -->
+### [1.3.92](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.3.92) — 2026-09-20
+
+- Every built-in strain carries its subunits' own translations, so the R–M panel's catalytic, cofactor and P-loop motifs are given as amino-acid positions the moment it opens. The peptides are read out of each reference assembly's own annotation rather than fetched, which is why they belong to that genome's allele; 390 of 428 subunits carry one, and the remaining thirty-eight are pseudogenes that have no translation to carry. E. coli K-12's EcoKI now reads NPPF at residues 266–269 of hsdM and the Walker A and Walker B loops of hsdR without a single request leaving the machine. Only the AlphaFold structural check is still fetched.
+- The recognition sequence is no longer a column of that table. It belongs to the system rather than to any one subunit, so it was the same string repeated down every row, and while the peptides were unread it was the only filled cell — a DNA answer standing in a table asked for the protein one. It is stated once above the table and marked as DNA.
+- A linked subunit with no translation says so instead of vanishing. A pseudogene records neither a peptide nor a protein accession, so BL21(DE3)'s two hsdS and its adenine-methyltransferase were dropped from the table outright, and a subunit that is present and cannot be scanned looked exactly like one that is not there. The panel no longer reports those loci as proteins carrying no motif either: an absence read off a sequence nobody has is not a finding.
+- Rebuilding a reference genome's annotation no longer makes resolved subunit links stale. The evidence fingerprint was taken over the whole source record, including the moment it was read, so accepting a rebuilt profile moved no coordinate and renamed no gene and still took every linked locus — and its motif rows — off the panel.
+- A locus whose peptide is already in hand is no longer told that no protein accession is recorded for it. What such a locus lacks is a UniProt entry, which is a predicted structure rather than a sequence, and that is what the panel says.
+<!-- gene-studio:release:1.3.92:end -->
+
 <!-- gene-studio:release:1.3.91:begin published-at=2026-09-20T06:51:45.000Z -->
 ### [1.3.91](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.3.91) — 2026-09-20
 
