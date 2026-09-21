@@ -164,6 +164,15 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.3.95:begin published-at=2026-09-21T06:12:35.000Z -->
+### [1.3.95](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.3.95) — 2026-09-21
+
+- Four E. coli strains get their Dam back. A methyltransferase is recognised as the canonical one by its gene name together with its product, and the product test was written for one phrasing — so RefSeq's other one, "adenine-specific DNA-methyltransferase", was read as an ordinary annotated component. BL21(DE3) showed it worst: its Dam became an anonymous genome system, typed as though it had a restriction partner against a definition that says it has none, and the registered Dam linked to no locus at all — no coordinates, no motifs, an empty panel with the gene sitting in the same profile. TOP10/DH10B, DH5α and XL1-Blue carried the same miss. The rule now accepts both orders and the hyphen, the way the general methyltransferase rule beside it always has, and a gene called dam whose product says something else is still refused. It applies to any genome you analyse, not only the built-ins.
+- A strain profile can fetch a whole strain from REBASE. The panel could search the enzyme catalogue and nothing else, so the one window that is about a strain sent you to another to fetch one — even though the organism search, the complete strain record behind it and the conversion into a profile were all already built. They are offered here now, under the enzyme search, and they are the same three calls the other window makes rather than a second copy of them.
+- A strain finds its own DNMB results. Point Settings at the folder your runs are kept under, and a profile opening onto an empty reports tab looks there for itself: the match is on the assembly accession in the folder's name, with the version ignored, since a folder written for GCF_000767275.1 is the same genome as .3. A folder found this way is verified exactly as strictly as one chosen by hand, because it goes through the same import. A strain that is not in the folder passes quietly.
+- The profile generator survives its own cleanup. Chrome flushes its cache directory after the process returns, so deleting the temporary profile raced it and failed with ENOTEMPTY — which the `force` flag does not cover, since that only forgives a path already gone. A full rebuild died on the seventeenth genome for this, with nothing wrong in the genome.
+<!-- gene-studio:release:1.3.95:end -->
+
 <!-- gene-studio:release:1.3.94:begin published-at=2026-09-21T02:09:11.000Z -->
 ### [1.3.94](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.3.94) — 2026-09-21
 
