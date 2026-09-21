@@ -164,6 +164,16 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.3.94:begin published-at=2026-09-21T02:09:11.000Z -->
+### [1.3.94](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.3.94) — 2026-09-21
+
+- Opening an annotated genome now offers to screen it for restriction–modification loci, where the genome is. That flow reached no R–M code at all before, so every way into it began by asking for the file a second time; a dismissible line above the drawing makes the offer instead, and nothing runs unasked. The loci it finds become candidates to curate — none of them is registered for anybody.
+- A candidate row shows the catalytic catalogue beside its family signatures. The signatures say which family a locus belongs to; the catalogue is the evidence somebody deciding whether to register it is actually weighing, and it was the half that was missing. The scan runs on the peptide the analysis had already stored, so the row costs nothing new to fill.
+- A registered candidate links as a subunit on its PROSITE signature alone. It had linked only when the annotation happened to name a role, so a locus found by signature was registered and then left unattached — and the motif panel told the curator to analyze the genome they had just analyzed.
+- A profile that carries expression figures for a genome no longer counts as having screened it. The two are different records: the figures name the genome they were measured from and say nothing about whether its loci were ever read. Every profile shipped with the application carries both, so this changes nothing there; a profile with figures and no screen is now offered one.
+- A strain profile says how to edit it, from its header. The window is a reader, and the only way into the editor was a button inside the R–M tab worded as though it concerned R–M alone — so the Overview, Details and reports tabs offered nothing, and the name at the top least of all. The door is beside Close now, on every tab, and a shipped profile carries "Built in · read-only" beside its own name rather than leaving that to be discovered by pressing the button. Editing still happens in the strain editor, where a copy is made first and where the name can be changed.
+<!-- gene-studio:release:1.3.94:end -->
+
 <!-- gene-studio:release:1.3.93:begin published-at=2026-09-20T15:47:10.000Z -->
 ### [1.3.93](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.3.93) — 2026-09-20
 
