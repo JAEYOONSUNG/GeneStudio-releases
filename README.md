@@ -164,6 +164,13 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.3.98:begin published-at=2026-09-22T08:09:06.000Z -->
+### [1.3.98](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.3.98) — 2026-09-22
+
+- Drag the ring and the reading stays. The length of the arc you dragged was written into the map's panel while the mouse was down and wiped the moment you let go — the map redraws on release, and that rebuilds the panel — so the number vanished at exactly the moment you stopped to read it. The two other things this panel reports, a measurement in progress and a picked cut, were both rebuilt; a settled selection was the one that was not.
+- And a selection on a circle is two fragments. Choosing a stretch of a plasmid decides both pieces you would get if you cut at its ends, and the panel named only the piece under the pointer: it reads `80 → 778 · 698 bp · rest 2,252 bp` now, and the two add up to the molecule. A linear molecule has three pieces, not two, so it says how much lies before the selection and how much after rather than pretending its ends are joined.
+<!-- gene-studio:release:1.3.98:end -->
+
 <!-- gene-studio:release:1.3.97:begin published-at=2026-09-22T06:58:57.000Z -->
 ### [1.3.97](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.3.97) — 2026-09-22
 
