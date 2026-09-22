@@ -164,6 +164,20 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.3.99:begin published-at=2026-09-22T23:09:08.000Z -->
+### [1.3.99](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.3.99) — 2026-09-22
+
+- The ring says what you dragged where you dragged it. The length of a selection on the circular map was printed only in the layer panel — on a wide window, the far side of the screen from the arc. It is written on the drawing now, inside the selection's own angle, with the rest of the molecule beside it: `698 bp · rest 2,252`. The panel keeps its copy, and that copy no longer breaks in two with its button stranded beside the wrap.
+- The gel is bigger. It is the picture the digest view exists for and it was the smallest thing in it — a 36 % column drew it at 0.69 of its size. It takes 44 % now, which is 458 × 416 at 1440 px wide, and no cell of the fragment table beside it is clipped.
+- The Analyze menu has icons. Thirteen analyses as a column of plain sentences is a list you read rather than scan; each row carries the mark of what it does, from the same set the tool strip uses.
+- The tool strip shows when there is more of it. At 1440 px, Export, Zoom and Fit sat past the right edge with no scrollbar and no sign they were there. The edge now shades while there is more that way, and only then.
+- The Strain DB was put on the same sizes, corners and colours as the rest of the app. Row text is no longer cut off before it says what a strain is for, labels in the Details tab get the width they need, the base cells' letters can be read against their fills, and on a phone every control is big enough to tap.
+- The names around the ring follow the circle instead of hanging off brackets. Every cluster used to be a vertical spine with square rungs, which is why the map looked angular. Now names keep the order they have round the ring, and each is joined to its stretch by a single line that leaves the ring along the radius and curves in level with the name. Names in one cluster fan out from one point, and a line passing behind a name stops at its edge instead of striking through it.
+- The Map options panel no longer covers the map. The left-hand names used to run underneath it. While the panel is open the drawing is centred in the space beside it, and folding the panel gives that space back.
+- The selection reading on the ring sits on a pill of its own, clear of the coordinate numbers it used to be printed across. The two ends of the selection are marked on the DNA.
+- The Map options panel and the top bars use one text size and weight throughout, and the panel has one "Show N hidden" button instead of two controls for the same thing.
+<!-- gene-studio:release:1.3.99:end -->
+
 <!-- gene-studio:release:1.3.98:begin published-at=2026-09-22T08:09:06.000Z -->
 ### [1.3.98](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.3.98) — 2026-09-22
 
