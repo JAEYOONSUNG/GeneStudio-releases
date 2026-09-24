@@ -164,6 +164,18 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.4.2:begin published-at=2026-09-24T22:13:04.000Z -->
+### [1.4.2](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.2) — 2026-09-24
+
+- On a desktop-width window the file tabs sit in the title bar, so the drawing gets the height of a whole bar. Each tab keeps its unsaved dot, close button and right-click menu. The open construct's name is shown whole up to 60 characters, and Close all appears once two or more files are open. On a phone the tabs keep their own row.
+- On the maps, a highlight and a base colour look different. A highlight is a translucent wash wider than the strand. A base colour draws the strand line itself in that colour, on the strand it was put on. Before, both were the same translucent band.
+- GenBank files whose lines end in padding spaces are read the way Biopython and the format read them. A wrapped note no longer carries a double space where a line ended.
+- The Sanger pileup's coordinate ruler shows as many numbers as fit, and the last number no longer runs into the end coordinate.
+- A table wider than its panel, such as the primer table or the Sanger reads table, fades at the edge that has more to scroll.
+- The enzymes in a band of cuts the ring cannot draw apart stay in ring order. A search no longer reshuffles them.
+- The title bar no longer shows the leftover "seq" beside the name.
+<!-- gene-studio:release:1.4.2:end -->
+
 <!-- gene-studio:release:1.4.1:begin published-at=2026-09-24T11:04:00.000Z -->
 ### [1.4.1](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.1) — 2026-09-24
 
