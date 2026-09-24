@@ -164,6 +164,32 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.4.0:begin published-at=2026-09-24T02:40:02.000Z -->
+### [1.4.0](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.0) — 2026-09-24
+
+- Label lines on the circular map are now curved or straight, and you choose which. The choice is in Map options (Label lines), in Settings → Figures & Export, and in the export dialog. Every line crosses the ring along its radius, runs straight toward its name and turns level into it; curved rounds those two bends, straight keeps them as corners.
+- The lines no longer tangle. A cluster used to send all its lines into one point and out again, so an MCS read as a broom of overlapping curves. Each line now sets off toward its own name from where it leaves the ring, so the lines fan out in order and do not cross. A line that has left the ring never cuts back across the others, it passes behind the features instead of over them, and a line passing behind a name stops at its edge.
+- A name on its own no longer wiggles into place. Its line goes straight out and bends once, rather than turning one way and then the other.
+- Crowded poles are handled. When many names gather at the top or bottom of the ring, they stack outward instead of being pushed down past the ring. With label density on, a name whose line would have to go the long way round is left off, and the density note counts it.
+- Hovering a primer, a feature, a cut or a cluster of cuts shows a card instead of the browser's grey tooltip. It opens with the numbers that matter (a primer's Tm, length and GC; a feature's length and direction; where an enzyme cuts, the ends it leaves and how many sites it has), a small drawing of where the thing sits on the construct, and for an enzyme the two strands of its site with the cut drawn in. A primer's sequence shows the tail that does not anneal faded and the 3′ end in bold. The linear map uses the same cards.
+- The top of the window has one rhythm. The toolbar, file tabs and view tabs share one height scale, the toolbar buttons are grouped with dividers, NCBI and Strain DB have their own icons, and the strain name beside Strain DB is a quiet chip instead of green text.
+- Fixed: after the map redrew itself to fit fewer names, keyboard focus was lost from the Map options sheet on a phone.
+- Hover cards are more compact. A strip of numbers, a small drawing and a row of chips replace the boxed readings, and the cards are about 40% shorter.
+- An enzyme's card draws the cut in this construct's own bases instead of the enzyme's pattern with N in it. The site is set in bold between two faint bases on each side, with its span numbered and the two bases each strand is cut between.
+- The circular map's two strands sit 1.5× further apart and are drawn twice as heavy, so a colour or highlight on one strand can be read.
+- A single-stranded molecule is drawn as one line. GenBank's `ss-DNA` and SnapGene's strand flag are read and written back.
+- Saving a SnapGene file keeps its Dam, Dcm and EcoKI methylation flags. Before, every `.dna` saved here lost them.
+- The linear map draws the DNA as two firm strands and fans the enzyme names along the row, each joined to its cut by a slanted line, instead of stacking them in a column.
+- Strain DB:
+  - A profile with unsaved changes is no longer closed without asking, whether by Cancel, opening another profile, switching host or importing.
+  - Searching or filtering inside a tab no longer undoes its review. Only tabs that hold data need signing, and "Sign remaining" signs the rest at once.
+  - Every profile has Source and Recipient buttons, and a bar under the title shows this construct's pair.
+  - Your own profiles come first, with search, Mine / Drafts / Built-in filters, and recent strains at the top of every host menu.
+  - Importing a genome that is already in the library updates that profile instead of making a second copy.
+- The sequence view reads like text. Bases were small letters in wide square cells, so a line read as scattered letters. They now fill their cells, with rows a little taller, much as SnapGene sets a sequence.
+- Hovering a primer in the sequence view shows the same card as the maps. It gives the annealing and whole-primer Tm side by side, length and GC, where it binds, whether it has a 5′ overhang, which feature it sits in, and its bases with the tail faded and the 3′ end in bold.
+<!-- gene-studio:release:1.4.0:end -->
+
 <!-- gene-studio:release:1.3.99:begin published-at=2026-09-22T23:09:08.000Z -->
 ### [1.3.99](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.3.99) — 2026-09-22
 
