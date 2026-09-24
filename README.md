@@ -164,6 +164,25 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.4.1:begin published-at=2026-09-24T11:04:00.000Z -->
+### [1.4.1](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.1) — 2026-09-24
+
+- The default enzyme set is now Commercial (615): the enzymes a current catalogue sells. About 500 of the 1,113 REBASE enzymes have no supplier, and they were the first names on the first map and what Suggest digests offered. All is still second in every set menu. If All was saved only because it used to be the default, it moves to Commercial; an All you choose from now on is kept.
+- Primers on the circular map are easy to see. They sit just outside the features they overlap instead of on the backbone, with a heavier shaft, and overlapping primers step outward rather than piling up.
+- The circular map's backbone and primers keep their proportion as you zoom, so the double strand no longer thins out when you zoom in.
+- In the sequence view a cut is drawn through both strands at every zoom, and a faint band marks the bases the enzyme recognises. Hovering an enzyme's name opens its card.
+- A primer's bases in the sequence view are set at the size of the sequence beside them, and a cut's line passes behind a primer's name instead of through it.
+- Text longer than a hover card scrolls back and forth so all of it can be read. With Reduce Motion on, it wraps instead.
+- The toolbar fits the window. Labels drop one at a time as space runs out, starting with the buttons whose icons are familiar (Save, Undo, Copy, Find), so Analyze, Export and Zoom no longer disappear off the right edge. Analyze has its own icon.
+- The sequence view's tool strip stays on one line at a laptop's width.
+- An enzyme picked for the digest is readable on its chip in the dark theme.
+- A cut blocked by methylation is labelled × Name in slate italic instead of struck through, which had looked like a drawing fault.
+- Home opens with the app's mark and a larger title. The buttons carry icons and plainer names ("Open files…", "Reconnect a folder…"), the History card says "1 change", and the file search runs the width of its panel.
+- Map options starts folded, so the first map fills the pane, and it remembers whether you left it open.
+- The demonstration construct names its parts (backbone, insert ORF, AmpR, ori) and says in each note which stretches are generated.
+- A feature drawn faded because its reading frame stops inside it keeps a readable name; only the bar is faded.
+<!-- gene-studio:release:1.4.1:end -->
+
 <!-- gene-studio:release:1.4.0:begin published-at=2026-09-24T02:40:02.000Z -->
 ### [1.4.0](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.0) — 2026-09-24
 
