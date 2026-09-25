@@ -164,6 +164,18 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.4.3:begin published-at=2026-09-25T06:08:07.000Z -->
+### [1.4.3](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.3) — 2026-09-25
+
+- A Type I specificity subunit now names the half-sites it reads. Its two halves are found from its own internal repeat, and each is matched against REBASE's Type I S subunits whose recognition sequence has been determined (646 distinct subunits). Over every pair of those references, a half that scores 0.4 or better carries the right half-site 100% of the time for the first domain and 99.5% for the second, so nothing below that is reported. Tested by leaving each reference out in turn, it answers about one subunit in five and is right when it answers; the rest say there is no close relative rather than guess. K-12's EcoKI comes out as AACNNNNNNGTGC, the sequence REBASE records for it. The spacer shown is the matched reference's own, not a prediction.
+- Each half of a specificity subunit has a Search homologs button that opens the homology search with that half alone, since a recognition domain is shared between unrelated subunits and a search of the whole subunit cannot say which half matched.
+- A CDS card is about the protein it encodes: residues, mass and pI, whether the reading frame is whole (start codon, stop codon, nothing between), the product, gene, locus tag and EC number from the record, GRAVY, and the peptide itself. A broken frame says so once.
+- Words drawn in the accent colour on the map, such as the distance between two picked cuts, are readable on the dark page with a dark accent chosen.
+- The current find result on the map is no longer smudged on its chip after pressing Enter.
+- The Dock icon's menu offers New Construct, Open, Search NCBI and Home / Library.
+- While Home is open, its toolbar button shows a back arrow to match the word Back.
+<!-- gene-studio:release:1.4.3:end -->
+
 <!-- gene-studio:release:1.4.2:begin published-at=2026-09-24T22:13:04.000Z -->
 ### [1.4.2](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.2) — 2026-09-24
 
