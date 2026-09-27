@@ -164,6 +164,20 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.4.4:begin published-at=2026-09-27T17:04:19.000Z -->
+### [1.4.4](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.4) — 2026-09-27
+
+- Type I specificity subunits are read as what they are. NCBI's annotation pipeline names them "restriction endonuclease subunit S" — with no gene name and no mention of type I — which the screen read as a restriction subunit instead. Across the fifty built-in reference genomes there are 62 of these genes and only one was being recognised. An S subunit is also taken as type I whether or not the annotation says so, and a type I system will now pair with a methylase whose annotation names no type, which is how NCBI writes them. Geobacillus kaustophilus HTA426 went from no assembled type I system to two.
+- A CDS card shows what the record actually carries: the protein accession, gene synonyms, and every other qualifier the feature holds, in the order GenBank writes them. Cross-references to GeneID, UniProt, PDB, InterPro and Pfam are links; a database with no known address stays as text. A pseudogene, a translation exception or a ribosomal slippage is said before any complaint about the reading frame.
+- The strain library calls one group by one name. The filter chips read Saved here, Drafts and Built in, matching the headings, and a heading appears only under All where it separates the two groups.
+- The review bar names who it will sign as before it is pressed, and asks for a reviewer where none is named. It follows the reviewer field as you type it.
+- The DNMB reports list marks the two families whose figures are already in the window instead of repeating "Not connected" on all eighteen rows.
+- The R–M motif table can be reached at a tablet's width, where 185 px of it used to sit past the right edge with no way to scroll, and its notes wrap on a phone instead of being cut off.
+- A built-in strain opens with its R–M analysis already done. Every one of the fifty reference genomes was shipped with an empty locus list — the screen had been run to produce everything else on the record and its result was then dropped — so the R–M tab of a strain whose genome the application had already read offered only "Analyze genome…". There are now 873 putative loci across the fifty, each with where it is, what named it, the protein-family signatures and the database matches. Each carries its peptide, which is the query the homology search, the specificity-subunit half search and the signatures all take; the coding DNA is left to be recovered by analyzing the genome, and the list says so rather than showing a locus with no sequence.
+- A plasmid opened from Addgene is called what Addgene calls it. The GenBank file's own name is the name of the download — "sequence-80652-e" — and that is what the construct was titled. The catalogue number is now written under the name in the middle of the map, where a record fetched from NCBI shows its accession the same way.
+- The toolbar groups the three catalogues together — Strain DB, NCBI, Addgene — and puts Save beside Files, which is the file the construct came from.
+<!-- gene-studio:release:1.4.4:end -->
+
 <!-- gene-studio:release:1.4.3:begin published-at=2026-09-25T06:08:07.000Z -->
 ### [1.4.3](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.3) — 2026-09-25
 
