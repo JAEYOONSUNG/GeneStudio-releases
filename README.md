@@ -164,6 +164,14 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.4.5:begin published-at=2026-09-27T22:07:45.000Z -->
+### [1.4.5](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.5) — 2026-09-27
+
+- A GenBank file whose writer lines its qualifiers up further to the right than the standard column is read in full. Every `/label` in such a file used to be skipped, so each feature was named after its type — a plasmid SnapGene labels as insert, kan, lacI and T7 opened as fourteen "misc_feature_". A feature key padded with underscores is read as the key it pads.
+- Label by, in the map's options, the sidebar and the linear and sequence strips, offers every column the Features table shows: besides Name, Type and the record's own fields, Location, Length, Strand and %GC. It is there for any construct with features, not only one whose features carry fields.
+- Selecting on the linear map no longer turns the row black. The selection is the light wash it was.
+<!-- gene-studio:release:1.4.5:end -->
+
 <!-- gene-studio:release:1.4.4:begin published-at=2026-09-27T17:04:19.000Z -->
 ### [1.4.4](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.4) — 2026-09-27
 
