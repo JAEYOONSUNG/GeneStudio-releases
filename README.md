@@ -164,6 +164,12 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.4.6:begin published-at=2026-09-28T01:17:18.000Z -->
+### [1.4.6](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.6) — 2026-09-28
+
+- A construct read by an earlier version from a file whose qualifiers sit further right than the standard column no longer shows `1..1785/label="insert"` as a feature's location. That spelling was the earlier reader taking the label line for part of the location; it is now rebuilt from the coordinates, on screen and when the file is saved, so it cannot be written back into GenBank.
+<!-- gene-studio:release:1.4.6:end -->
+
 <!-- gene-studio:release:1.4.5:begin published-at=2026-09-27T22:07:45.000Z -->
 ### [1.4.5](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.5) — 2026-09-27
 
