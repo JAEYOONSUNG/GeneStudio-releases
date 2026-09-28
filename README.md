@@ -164,6 +164,16 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.4.7:begin published-at=2026-09-28T15:40:37.000Z -->
+### [1.4.7](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.7) — 2026-09-28
+
+- An extended or reissued licence reaches the computer by itself. A copy whose licence has ended no longer waits for a new block to be pasted: at launch, on the licence window and every six hours it asks the licence service for its Machine ID, and a licence issued for it — an extension, a renewal, or a new one after the old ran out — is taken and the app opens. Everything received is checked against the key inside the application, so the service can pass a licence on but never write one, and a laptop with no network still opens with the licence it has.
+- A licence its issuer has stopped now stops on the computer that holds it, the next time that copy checks. The notice is signed like a licence and kept, so it holds offline too; the app stays open behind the licence window, so nothing unsaved is lost.
+- Primer stock → Columns… sets up any lab's own list on the list itself: open the workbook or CSV, and a table of it appears with a choice over each column — Sequence, Name, Location, Note, or nothing. A sheet can be marked as not a box, and the default is still this lab's layout.
+- The Sanger library can be shown as Details, one trace to a line with its whole name, as well as Cards.
+- Opening a file that is already open reads it again when the open copy has no unsaved change, so a reader fix reaches a file without closing its tab first.
+<!-- gene-studio:release:1.4.7:end -->
+
 <!-- gene-studio:release:1.4.6:begin published-at=2026-09-28T01:17:18.000Z -->
 ### [1.4.6](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.6) — 2026-09-28
 
