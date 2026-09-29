@@ -164,6 +164,24 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.4.8:begin published-at=2026-09-29T11:59:22.000Z -->
+### [1.4.8](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.8) — 2026-09-29
+
+- Homology hits sent to Align are aligned on every computer. A protein set used to stop at "Kalign is not installed" wherever no protein aligner had been installed; Gene Studio now aligns it itself (every sequence against the query, BLOSUM62 with affine gaps) and says so, and MAFFT or MUSCLE is still used when one is installed.
+- Every Homology Search service was run end to end against the live service and fixed where a step failed: NCBI and UniProt BLAST, HMMER, Pfam, CD-Search, InterProScan, ScanProsite, AlphaFold DB and Server, Foldseek, SWISS-MODEL, HHpred, DefenseFinder, PADLOC, dbCAN, antiSMASH and Evo 2.
+- Retrieve sequences now works for NCBI DNA hits, versioned Swiss-Prot hits, PDB chains (including author chains such as 7QOR_FFF), UniParc and UniRef records, so more hit tables can go on to an alignment and a tree.
+- A protein with a stop codon inside it is no longer shown as "0 aa · not sent". The search window names the position of the stop and what to check — the CDS boundaries, the reading frame, the genetic code — and Strip blanks and the frame picker keep the stop visible instead of silently removing it.
+- Foldseek shows hits from both AlphaFold and PDB rather than filling the table from one; HHpred and AlphaFold Server recognise the current provider pages; CD-Search keeps NCBI's ten-second spacing and opens its summary page; Official result opens the right page for InterProScan and antiSMASH.
+- A job that is stopped, timed out or reopened after a restart keeps its place in Analysis activity; Next analysis no longer cancels a local run in progress; Run again reruns a local analysis on its unchanged source.
+- Primers: the construct's own primers and the freezer stock are told apart while scrolling — each heading stays pinned at the top of its list, marked This construct (green) or Freezer stock (blue).
+- Sequence view: a held feature is ringed in a deeper shade of its own colour instead of a dark frame, and a feature bar is now exactly as tall as a base row and a residue cell, so a coding line's sequence, translation and gene bar stand at one height (Settings → Feature bar height still offers 0.8–2×). A feature's outline now follows its own corners and arrowhead at an even width, instead of thickening at the corners and thinning along the point.
+- A feature stored as parts that touch — `join(1284..1360,1361..2144)`, as SnapGene exports some genes and promoters — is drawn as one bar again instead of two with a seam in the middle.
+- Primers: the search above the lists is easy to find — a magnifier, a taller field with a firm edge — and each list now has its own find beside its heading, to search only this construct's primers or only the freezer stock.
+- Dialogs whose header reaches the top of the window (the Strain database at full height) now take every click on their buttons; the window's drag strip no longer steals them on macOS.
+- Windows: the menu bar is part of the app's own top row. File, Edit, View and the rest are drawn with room between them in the app's typeface, open on click or hover, reach from the keyboard with Alt and the arrows, and run exactly the commands the system menu did; the window's own buttons sit at the right of the same row in the theme's colours.
+- Strain database → R–M: ticking putative loci now brings up a bar with their next steps — register them (several ticked together are registered as the subunits of one system), run BLASTp or ScanProsite on them, or exclude them; on a built-in strain it says an editable copy is made first. The candidate rows keep their tick, locus, evidence and status in fixed columns.
+<!-- gene-studio:release:1.4.8:end -->
+
 <!-- gene-studio:release:1.4.7:begin published-at=2026-09-28T15:40:37.000Z -->
 ### [1.4.7](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.7) — 2026-09-28
 
