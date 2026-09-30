@@ -164,6 +164,13 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.4.10:begin published-at=2026-09-30T09:24:05.000Z -->
+### [1.4.10](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.10) — 2026-09-30
+
+- Windows: while a dialog is open, the window's own minimise, maximise and close buttons take the dimmed colour of the backdrop instead of sitting bright on top of it, and a dialog stops short of them, so its own Export and Close are never underneath the system's buttons.
+- A feature that runs across the origin keeps its real place in its hover card: the piece running off the right end and the piece coming in at the left, with an arrowhead only on the piece that holds the feature's end and a dashed arc joining the two ends of the rule.
+<!-- gene-studio:release:1.4.10:end -->
+
 <!-- gene-studio:release:1.4.9:begin published-at=2026-09-30T05:53:34.000Z -->
 ### [1.4.9](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.9) — 2026-09-30
 
