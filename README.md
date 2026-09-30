@@ -164,6 +164,16 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.4.11:begin published-at=2026-09-30T23:09:06.000Z -->
+### [1.4.11](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.11) — 2026-09-30
+
+- Primer stock and the other pinned tables: pointing at a column no longer makes its heading see-through, so the name of a row scrolling underneath can no longer print through the heading.
+- Digest: Suggest digests sits beside the enzyme boxes as the strip's main button, instead of at the far end of the gel settings.
+- Digest → selected stretch: the count reads as what it is — "0/37 · enzymes cut here" — instead of a bare "0 ENZYMES".
+- Primers table: each binding site carries its own View, which holds the primer and shows it binding there in the Sequence view; the column that opens the primer itself — sequence, binding, hairpin and self-dimer, colour and note — is now called Detail.
+- Features: the selected feature's details are a framed card headed by its name, type and location, so the list above and the one feature below no longer run together; the GenBank preview no longer writes /label twice.
+<!-- gene-studio:release:1.4.11:end -->
+
 <!-- gene-studio:release:1.4.10:begin published-at=2026-09-30T09:24:05.000Z -->
 ### [1.4.10](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.10) — 2026-09-30
 
