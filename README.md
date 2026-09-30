@@ -164,6 +164,18 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.4.9:begin published-at=2026-09-30T05:53:34.000Z -->
+### [1.4.9](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.9) — 2026-09-30
+
+- A genome and the Strain DB now hand work to each other: an open genome names or saves its strain above the drawing, Extended analysis keeps a genome as a strain profile, CAI and tAI can take a saved strain as their reference, the assembly codon table follows the recipient strain, and the library says how much its profiles weigh.
+- A saved strain can be refreshed from the genome that is open, DefenseFinder's restriction–modification calls reach the R–M screen, and whether the Strain DB runs its analyses automatically is a setting.
+- The Strain DB takes GenBank genomes, folders and profiles dropped onto it, and its rows can be dragged onto the host slots.
+- A Docker engine that has hung is diagnosed at once, and on a computer with nothing installed the module runner says the two steps to get going.
+- Primers: the construct's own primers and the freezer stock are told apart by their heading and a lightly tinted frame, instead of a bar down the left edge.
+- Asking for a licence now says what happens next: the licence reaches the computer by itself, usually within a day — leave the window open or reopen Gene Studio — and if a day passes with nothing, write to genestudio.help@gmail.com.
+- A feature that runs across the origin is drawn in its hover card as one bar with one arrowhead, the little map turned so the feature sits whole in the middle, and base 1 marked where it falls — instead of two pieces at the two ends, each with a head.
+<!-- gene-studio:release:1.4.9:end -->
+
 <!-- gene-studio:release:1.4.8:begin published-at=2026-09-29T11:59:22.000Z -->
 ### [1.4.8](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.8) — 2026-09-29
 
