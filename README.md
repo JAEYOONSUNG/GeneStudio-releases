@@ -164,6 +164,13 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.4.16:begin published-at=2026-10-02T18:07:28.000Z -->
+### [1.4.16](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.16) — 2026-10-02
+
+- Find similar now aligns through internal insertions and deletions and continues comparing the downstream sequence. Results report query coverage, substitutions and inserted or deleted bases on either strand, including circular-origin spans; uncovered query regions and uncertain repeat placement remain explicit.
+- Sequence comparisons have a clearer outlined, tinted query band and Query/Reference coordinate labels. Inserted bases appear in full beside a pin at their exact between-base position, deleted query bases appear as dashes against the reference, and substitutions retain paired gold boxes. The original sequence grid, annotations and editing coordinates are preserved.
+<!-- gene-studio:release:1.4.16:end -->
+
 <!-- gene-studio:release:1.4.15:begin published-at=2026-10-02T13:45:27.000Z -->
 ### [1.4.15](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.15) — 2026-10-02
 
