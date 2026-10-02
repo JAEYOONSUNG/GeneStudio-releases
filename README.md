@@ -164,6 +164,22 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.4.13:begin published-at=2026-10-02T06:17:35.000Z -->
+### [1.4.13](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.13) — 2026-10-02
+
+- Strain DB: clearer section headings and spacing for profile identity, revision review, source records, RBS evidence and R–M details. Genome inspection and annotation curation actions are grouped separately, with readable layouts on narrower screens.
+- Align: visible starting options for a sequence search or saved results, links back to source results, and direct access to retained alignments and trees. Searches use the chosen provider and still require explicit submission; local alignment work and existing input are preserved.
+- Find similar: compare the selected DNA query directly with the reference in Sequence. Substitutions receive an underline and a quiet highlight; matching letters remain plain. Reverse-complement and circular-origin matches retain their query and reference coordinates, and prefix-only matches explicitly identify the uncovered query suffix.
+- Sequence: one readable comparison summary replaces repeated long row headings. Measured coordinate gutters keep complete numbers and strand labels visible; fixed-width rows remain scrollable when needed. Query captions stay visible while panning, and primer continuation names remain inside their displayed row. Light-mode primer-name strokes match the Sequence background, while dark-mode halos retain their contrast.
+- Find now reserves its own footer space, keeping the Sequence reader, navigator and readout above the search controls.
+- Linear: the Sources controls now share consistent height and padding with neighbouring toolbar groups.
+- Navigation: stronger active-file and active-view emphasis, with clearer neutral interface borders. Open DNA file tabs retain a readable minimum width and scroll horizontally; full names appear immediately on hover, and newly selected or opened files are brought into view. The sequence typeface, case masks and biological colours are preserved.
+- Home: compact cards with quiet translucent surfaces and consistent workflow icons.
+- Primers table: small triangles below the 10th, 20th and subsequent ten-base positions in the 5′→3′ Sequence column make oligos easier to count, without inserting spaces or changing copied or exported sequences. Reverse primers are counted in their own displayed 5′→3′ direction.
+- Map controls: layer and label switches use consistent checked and unchecked indicators. The All labels switch has centred check and mixed-state marks, with clearer hover and keyboard-focus feedback.
+- macOS installer: a branded Retina background and clear drag-to-Applications layout, with both native icons and their names visible inside the compact Finder window.
+<!-- gene-studio:release:1.4.13:end -->
+
 <!-- gene-studio:release:1.4.12:begin published-at=2026-10-01T09:31:10.000Z -->
 ### [1.4.12](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.12) — 2026-10-01
 
