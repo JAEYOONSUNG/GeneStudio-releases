@@ -164,6 +164,13 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.4.17:begin published-at=2026-10-02T23:33:14.000Z -->
+### [1.4.17](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.17) — 2026-10-02
+
+- DNA searches with no exact match now offer Find similar in a visible confirmation after typing settles or the search is confirmed. Accepting searches the whole construct for substitutions, insertions and deletions, then opens the current query's inline comparison immediately. Cancel keeps the exact-search result; changed queries or documents invalidate old prompts, and confirmation is guarded against duplicate activation.
+- Inserted query bases now sit on a connected green sequence rail with their insertion position and full sequence visible. Deletions use stronger purple backgrounds and closed outlines on both the query gaps and corresponding reference bases, while native sequence coordinates and spacing stay unchanged.
+<!-- gene-studio:release:1.4.17:end -->
+
 <!-- gene-studio:release:1.4.16:begin published-at=2026-10-02T18:07:28.000Z -->
 ### [1.4.16](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.16) — 2026-10-02
 
