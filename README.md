@@ -164,6 +164,14 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.4.14:begin published-at=2026-10-02T08:42:21.000Z -->
+### [1.4.14](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.14) — 2026-10-02
+
+- Sequence Find similar: query bases now sit directly beside the corresponding reference strand, with primer and annotation tracks outside the comparison. Differing bases receive stronger paired highlights on both the query and reference; original sequence, letter case, coordinates and annotations remain unchanged.
+- Map options: consistent checkbox sizes and checkmarks, aligned label and control columns, and matching heights and corner radii for selectors, buttons and segmented controls. All labels aligns with the Labels column, and narrow screens retain 44 px control targets.
+- Open DNA files: flatter tabs with a lighter selected surface and one clear underline replace the outlined pill style. Close icons are centred in consistent targets; minimum tab widths, scrolling, immediate full names and drag reordering are preserved.
+<!-- gene-studio:release:1.4.14:end -->
+
 <!-- gene-studio:release:1.4.13:begin published-at=2026-10-02T06:17:35.000Z -->
 ### [1.4.13](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.13) — 2026-10-02
 
