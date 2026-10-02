@@ -164,6 +164,14 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.4.15:begin published-at=2026-10-02T13:45:27.000Z -->
+### [1.4.15](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.15) — 2026-10-02
+
+- Find similar: differing query and reference bases now have clear gold boxes and tinted backgrounds, distinct from red restriction-site marks. Adjacent differences share a joined frame while matching bases remain plain.
+- Sequence translation: selected amino acids retain their feature colour instead of receiving an opaque interface-accent band. A light wash and underline mark selected coding residues; selected run-on residues remain readable and use a dashed line to distinguish them from the annotated gene.
+- Circular Map: clustered cut marks use lighter fills and slimmer outlines and endpoint rails, reducing the heavy-bar appearance while retaining cluster members, true cut positions, hover details and export information.
+<!-- gene-studio:release:1.4.15:end -->
+
 <!-- gene-studio:release:1.4.14:begin published-at=2026-10-02T08:42:21.000Z -->
 ### [1.4.14](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.14) — 2026-10-02
 
