@@ -11,7 +11,7 @@ research, and copying, changing or redistributing it needs written permission.
 The terms are in [`LICENSE`](LICENSE), and the same text ships inside the
 application.
 
-**[What Gene Studio is, with pictures →](https://jaeyoonsung.github.io/GeneStudio-releases/)**
+**[What Gene Studio is, with pictures →](https://genestudio.app/)**
 &nbsp;·&nbsp; **[Download the latest build →](../../releases/latest)**
 
 The application opens on a licence window showing a **Machine ID**. Send it to
