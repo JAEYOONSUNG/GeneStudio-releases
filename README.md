@@ -164,6 +164,13 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.4.20:begin published-at=2026-10-03T15:39:54.000Z -->
+### [1.4.20](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.20) — 2026-10-03
+
+- Map Marks and Labels controls now use smaller, centred filled checkmarks with clear off and mixed states. Keyboard focus follows the individual control while the full row-cell click area stays available.
+- Home workspace cards use soft glass reflections in place of the expanding wave fill. Text stays still and readable, the current workspace has a cleaner selection treatment, and motion settles quickly with static feedback for reduced-motion and touch input.
+<!-- gene-studio:release:1.4.20:end -->
+
 <!-- gene-studio:release:1.4.19:begin published-at=2026-10-03T05:46:54.000Z -->
 ### [1.4.19](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.19) — 2026-10-03
 
