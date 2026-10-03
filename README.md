@@ -164,6 +164,14 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.4.19:begin published-at=2026-10-03T05:46:54.000Z -->
+### [1.4.19](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.19) — 2026-10-03
+
+- Map centre labels can now use a separate multiline display title while keeping the construct and file names intact. Choose title, length, topology and GC information directly in the label editor; long labels wrap or move below a small map, and saved documents and figure exports preserve the complete text.
+- Gel tracking dyes have softer, diffuse fronts clipped to the gel interior, so BPB and other dyes stay inside the frame while DNA bands and migration positions remain unchanged.
+- macOS gains dedicated high-resolution document icons for FASTA, GenBank, DNA, Sanger traces, ApE and plain sequence files, with distinct artwork for small Finder sizes and Retina displays.
+<!-- gene-studio:release:1.4.19:end -->
+
 <!-- gene-studio:release:1.4.18:begin published-at=2026-10-03T03:15:24.000Z -->
 ### [1.4.18](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.18) — 2026-10-03
 
