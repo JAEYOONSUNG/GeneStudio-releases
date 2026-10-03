@@ -164,6 +164,14 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.4.18:begin published-at=2026-10-03T03:15:24.000Z -->
+### [1.4.18](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.18) — 2026-10-03
+
+- Map options now presents Marks and Labels in a compact, clearer layer panel with aligned density, feature and label controls. Curved and Straight label-line choices use a smooth sliding selection that follows rapid changes, preserves keyboard focus and respects reduced motion.
+- Search comparisons in Sequence now use bold query letters, including inserted bases, so they stand out above the reference without changing native sequence spacing or coordinates. Substitutions receive stronger paired highlights on both the query and reference.
+- Home workspace cards gain a subtle directional liquid-color hover effect while keeping labels sharp, active workspace indicators clear and navigation immediate; reduced-motion preferences are respected.
+<!-- gene-studio:release:1.4.18:end -->
+
 <!-- gene-studio:release:1.4.17:begin published-at=2026-10-02T23:33:14.000Z -->
 ### [1.4.17](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.17) — 2026-10-02
 
