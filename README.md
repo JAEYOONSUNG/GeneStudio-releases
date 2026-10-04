@@ -164,6 +164,14 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.4.21:begin published-at=2026-10-04T11:01:19.000Z -->
+### [1.4.21](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.21) — 2026-10-04
+
+- Home workspace cards now reveal translucent liquid colour and refracted highlights from the pointer entry edge. The effect is more visible while titles, icons and construct details stay sharp and stationary.
+- Card motion uses one shared renderer and settles after the transition. Reduced-motion, touch and graphics fallback modes keep static feedback, and leaving Home releases the effect resources.
+- Map Marks, Labels and All labels checkboxes now use compact outlined controls with a light selected tint and crisp centred ticks. Full row hit areas, keyboard focus and partial-selection states are preserved.
+<!-- gene-studio:release:1.4.21:end -->
+
 <!-- gene-studio:release:1.4.20:begin published-at=2026-10-03T15:39:54.000Z -->
 ### [1.4.20](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.20) — 2026-10-03
 
