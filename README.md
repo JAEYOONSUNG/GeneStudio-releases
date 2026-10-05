@@ -164,6 +164,17 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.4.24:begin published-at=2026-10-05T21:57:19.000Z -->
+### [1.4.24](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.24) — 2026-10-05
+
+- Home library search now keeps the caret, selection, native Undo/Redo and text composition in place while editing the middle of a query or refreshing folders.
+- Background Home refreshes no longer commit unfinished file-name or hidden-extension drafts. An unfinished rename cannot restore a file that has been removed from the library.
+- Result-table filters, motif fields, query-region drafts and Alignment editors retain their input during workflow updates. Figure controls finish their current edit before a pending refresh, without swallowing button clicks.
+- Feature coordinates remain editable drafts while typing and are formatted when committed. Clearing or entering an incomplete coordinate no longer silently moves a feature.
+- IME confirmation and cancellation keys stay with the native editor instead of submitting searches or closing dialogs.
+- Primer sequence editing preserves native Undo/Redo, selection and composition across focus changes. Apply still validates and normalizes saved sequences; per-line coordinates are omitted when the literal draft is not correctly grouped.
+<!-- gene-studio:release:1.4.24:end -->
+
 <!-- gene-studio:release:1.4.23:begin published-at=2026-10-05T09:28:04.000Z -->
 ### [1.4.23](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.23) — 2026-10-05
 
