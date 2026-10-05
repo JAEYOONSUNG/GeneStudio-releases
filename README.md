@@ -164,6 +164,17 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.4.22:begin published-at=2026-10-05T08:13:07.000Z -->
+### [1.4.22](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.22) — 2026-10-05
+
+- Fixed copying HEX values from the macOS colour picker using Cmd+C or Edit > Copy.
+- Copy now respects selected text in dialogs, read-only fields and auxiliary windows. Selecting bases, amino acids or Sanger read regions also clears stale field focus and text selections that could intercept copying.
+- Copying a sequence region within the same Gene Studio session now carries attached freezer and universal primers, including their names, complete sequences, notes and colours, without duplicating repeated bindings.
+- New primers created from a selection now open as drafts. Escape or Cancel closes an unchanged draft without adding a primer or an undo entry.
+- Clipboard fallback preserves focus and text selection, reports copy failures accurately and prevents an older failed copy from overwriting a newer copy.
+- Map options use softly raised controls and a mint selected tint in light and dark themes, with clear selected, partial and keyboard-focus states for Marks, Labels and All labels.
+<!-- gene-studio:release:1.4.22:end -->
+
 <!-- gene-studio:release:1.4.21:begin published-at=2026-10-04T11:01:19.000Z -->
 ### [1.4.21](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.21) — 2026-10-04
 
