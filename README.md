@@ -164,6 +164,12 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.4.23:begin published-at=2026-10-05T09:28:04.000Z -->
+### [1.4.23](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.23) — 2026-10-05
+
+- Map display checkboxes now use neutral theme colours instead of a green tint. Checkmarks, partial selections and keyboard focus remain clear in light and dark themes.
+<!-- gene-studio:release:1.4.23:end -->
+
 <!-- gene-studio:release:1.4.22:begin published-at=2026-10-05T08:13:07.000Z -->
 ### [1.4.22](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.22) — 2026-10-05
 
