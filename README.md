@@ -164,6 +164,19 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.4.25:begin published-at=2026-10-06T05:24:03.000Z -->
+### [1.4.25](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.25) — 2026-10-06
+
+- Home now lets you star individual files, including DNA vectors, and collect them in Favorite files in both Cards and Details views. Stars stay on this device without changing the sequence file.
+- Recent files includes the full recorded opening history instead of stopping at ten files. Older entries remain searchable and can be shown in additional batches; folder scans no longer count as file opens.
+- Successful Sanger file opens, first saves and reopened Save As copies now appear in Home. Failed file opens do not create new history entries.
+- Folder refreshes and file renames preserve recent history and the latest star or unstar decision, including changes made while a scan is running. Restored native tabs can recover missing history entries.
+- Saving a star no longer interrupts a search edit made while that save is finishing.
+- The Guides Target picker now accepts typed feature names and locus tags, including targets beyond the old first-300 list. Search keeps the manual range option and keyboard selection.
+- A selected CDS can open Guide design directly from the Features table or the Sequence/Map context menu, carrying its exact target and range. Circular targets display their wrapped length correctly.
+- Click a populated value in the bottom information bar to copy it, or use Enter/Space while focused. Peptide copies its full sequence even when the displayed value is shortened; unavailable values stay inactive.
+<!-- gene-studio:release:1.4.25:end -->
+
 <!-- gene-studio:release:1.4.24:begin published-at=2026-10-05T21:57:19.000Z -->
 ### [1.4.24](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.24) — 2026-10-05
 
