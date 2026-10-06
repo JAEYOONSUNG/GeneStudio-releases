@@ -164,6 +164,15 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.4.26:begin published-at=2026-10-06T10:59:24.000Z -->
+### [1.4.26](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.26) — 2026-10-06
+
+- Sequence search starts within the selected region, or at the visible reading position, and keeps every match available through Next and Previous. Typing previews results without moving the view.
+- Primers keep their lanes across wrapped Sequence rows. Guides disable the cloning-enzyme control for Inverse PCR and show the saved target's surrounding sequence and PAM alongside the vector preview, including when methylation data is unavailable.
+- Large template sequence pickers use bounded windows. Leaving a view clears its native text selection, and an interrupted desktop renderer offers an explicit recovery action instead of leaving an unusable blank workspace.
+- Strain profiles can import existing DNMBsuite result folders without rerunning the analyses. Saved tables and original reports remain accessible with their source records. REBASE discovery recognizes public species synonyms and keeps reference evidence separate from curated activity calls.
+<!-- gene-studio:release:1.4.26:end -->
+
 <!-- gene-studio:release:1.4.25:begin published-at=2026-10-06T05:24:03.000Z -->
 ### [1.4.25](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.25) — 2026-10-06
 
