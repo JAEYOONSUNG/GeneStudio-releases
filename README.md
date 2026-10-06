@@ -164,6 +164,16 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.4.27:begin published-at=2026-10-06T15:18:28.000Z -->
+### [1.4.27](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.27) — 2026-10-06
+
+- Strain DB’s Choose folder now recognizes DNMB runs and reads their root GenBank file, including chromosome and plasmid records. Module copies and cached genomes are excluded, and matching saved profiles receive a reviewed refresh instead of a duplicate.
+- Imported REBASEfinder matches show recorded identities, references and source rows while preserving curated R–M systems and activity calls. A completed zero-hit result clears earlier imported matches; evidence that exceeds the profile limit is refused without discarding saved data.
+- DNMB report lookup accepts a strain folder or its parent library, requires the exact assembly version and reports ambiguous matches instead of choosing a run silently.
+- The built-in Geobacillus thermoleovorans KCTC 3570 profile includes 17 original DNMB reference PDFs. User-connected reports take priority, and damaged saved reports are not silently replaced with bundled references.
+- The Korean website now shares the English homepage’s current content and layout. A visible header button switches languages on desktop and phones, and menu hover colors match their icons in both themes.
+<!-- gene-studio:release:1.4.27:end -->
+
 <!-- gene-studio:release:1.4.26:begin published-at=2026-10-06T10:59:24.000Z -->
 ### [1.4.26](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.26) — 2026-10-06
 
