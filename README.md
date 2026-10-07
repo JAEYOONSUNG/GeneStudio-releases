@@ -164,6 +164,17 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.4.28:begin published-at=2026-10-07T07:30:13.000Z -->
+### [1.4.28](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.28) — 2026-10-07
+
+- Windows Setup updates offer download, installation and restart in one action, with progress and retryable errors. Restart reviews unsaved documents, and installation failure restores editing. Portable copies open the official downloads page and explain how to enable automatic updates with the Setup installer.
+- Home shows last-viewed dates as local YYYY-MM-DD and remembers file opens and tab revisits. Sort files and folder groups by Name or Last viewed while Recent files stays chronological.
+- Guides presents ranked guide RNA candidates at alternative target positions. Choosing a candidate preserves that exact target through design and oligo output, and changing the target or scan settings clears an outdated selection.
+- Guides adds interactive candidate-position and score-factor views, clearer comparison details and collapsible setup controls. Refreshed light and dark colors and more readable labels make the existing heuristic scores easier to compare.
+- Map cut-site shortcuts switch between All, Unique cut, Double cut and 3+ cuts. Unique means exactly one cut in the current DNA, and the selected count also applies to highlighted and picked enzymes on the map.
+- REBASE searches use certificate-verified desktop transport and distinguish connection failures from successful empty results. Retry controls, partial-result warnings and additional-result paging keep usable matches accessible without presenting a failed search as zero records.
+<!-- gene-studio:release:1.4.28:end -->
+
 <!-- gene-studio:release:1.4.27:begin published-at=2026-10-06T15:18:28.000Z -->
 ### [1.4.27](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.27) — 2026-10-06
 
