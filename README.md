@@ -164,6 +164,15 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.4.29:begin published-at=2026-10-11T15:31:57.000Z -->
+### [1.4.29](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.29) — 2026-10-11
+
+- The view tabs now span the window above the sidebar. Opening Home keeps them in place with none selected, and pressing a tab returns to that view, so the frame no longer shifts when the sidebar is hidden.
+- Strain DB keeps the saved profile list on screen when switching between Profiles and Import genomes; only the right-hand column changes. On narrow windows Import still uses the full width.
+- Home's file and folder search boxes show a single clear button in the usual position.
+- Licence checks accept a second author key, so licences stay verifiable if the primary signing key is ever replaced.
+<!-- gene-studio:release:1.4.29:end -->
+
 <!-- gene-studio:release:1.4.28:begin published-at=2026-10-07T07:30:13.000Z -->
 ### [1.4.28](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.28) — 2026-10-07
 
