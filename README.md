@@ -164,6 +164,17 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.4.30:begin published-at=2026-10-13T00:14:33.000Z -->
+### [1.4.30](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.30) — 2026-10-13
+
+- Open GenBank and FASTA files by their contents even when their filename ends in .dna. These files no longer fail with a misleading SnapGene error, and their original files are left unchanged when opened.
+- Reopening a clean file now refreshes changed contents and metadata even when its sequence length is unchanged. Unchanged files keep their current tab and selected record; unsaved edits and edited names stay protected.
+- Compressed .ab1.gz and .abi.gz traces open through both direct and Recent routes while keeping their original file identity. Multi-file opening reports successful opens and failures separately.
+- Save As offers extensions for the selected sequence format and stops a conflicting extension before writing. Existing files still save in place, and compatible GenBank and FASTA extensions remain supported.
+- Primary actions, including Open a file, use a calmer blue with a subtle satin finish. Light and dark themes keep readable labels, clear focus states and saved custom accent colors.
+- Map options stays inside the visible drawing area on short windows. Its settings scroll while the fold control remains visible, keeping the bottom actions reachable without moving the map.
+<!-- gene-studio:release:1.4.30:end -->
+
 <!-- gene-studio:release:1.4.29:begin published-at=2026-10-11T15:31:57.000Z -->
 ### [1.4.29](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.29) — 2026-10-11
 
