@@ -164,6 +164,16 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.4.32:begin published-at=2026-10-13T06:57:38.000Z -->
+### [1.4.32](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.32) — 2026-10-13
+
+- Added an **Exact matches only** filter for attached primer stock. Map, Linear, Sequence, the sidebar, and the stock table share the setting; counts, Copy, and Keep follow the displayed results. Turning the filter off restores the cached results.
+- Made long primer names and full Box/Well locations readable in hover cards and dialog tooltips, including the Stock tile. Stock controls now wrap on small screens and retain keyboard focus through redraws.
+- Prevented dialog and Home shortcuts from editing or navigating the hidden document, and made toolbar Copy follow the visible Features or Sanger selection.
+- Fixed native shortcut conflicts and shortcut recording in Settings. Text-size reset now uses Alt+Cmd/Ctrl+0, while Cmd/Ctrl+0 continues to open Sanger; reserved system shortcuts cannot be assigned to Sequence actions.
+- Kept selected view tabs visible in narrow desktop windows and aligned navigation names, platform-specific shortcut hints, and Home counts.
+<!-- gene-studio:release:1.4.32:end -->
+
 <!-- gene-studio:release:1.4.31:begin published-at=2026-10-13T02:46:56.000Z -->
 ### [1.4.31](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.31) — 2026-10-13
 
