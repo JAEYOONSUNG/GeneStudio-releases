@@ -164,6 +164,14 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.4.31:begin published-at=2026-10-13T02:46:56.000Z -->
+### [1.4.31](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.31) — 2026-10-13
+
+- Move the sidebar toggle down from the file toolbar to the left of the Map tab, keeping it beside the views it controls.
+- Give Open a file the same neutral appearance as the other Home actions, with readable text in light and dark themes and when using a custom accent.
+- Use 6 for Digest and 7 for Guides. Desktop menu shortcuts and the user guide follow the same order.
+<!-- gene-studio:release:1.4.31:end -->
+
 <!-- gene-studio:release:1.4.30:begin published-at=2026-10-13T00:14:33.000Z -->
 ### [1.4.30](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.30) — 2026-10-13
 
