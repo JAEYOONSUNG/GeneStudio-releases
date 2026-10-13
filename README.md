@@ -164,6 +164,15 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.4.33:begin published-at=2026-10-13T10:35:49.000Z -->
+### [1.4.33](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.33) — 2026-10-13
+
+- Keep connected DNMB reports across application updates and restarts, including connections made with older profile identifiers. Changes to profile data keep the saved reports available with their historical label.
+- Add **Detach** for DNMB report connections. Detaching preserves the original files and saved snapshots, stays detached after restart, and requires an explicit Connect or Find action to reconnect.
+- Preserve existing connections when saved reports are unavailable or fail verification. Automatic folder lookup no longer replaces them, and forgetting the library search folder leaves saved profile connections intact.
+- Prevent a folder picker, lookup, preview, or background result started before Detach from restoring an old connection. Other profiles and selected source files remain unchanged.
+<!-- gene-studio:release:1.4.33:end -->
+
 <!-- gene-studio:release:1.4.32:begin published-at=2026-10-13T06:57:38.000Z -->
 ### [1.4.32](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.32) — 2026-10-13
 
