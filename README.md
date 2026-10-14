@@ -164,6 +164,14 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.4.38:begin published-at=2026-10-14T22:33:14.000Z -->
+### [1.4.38](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.38) — 2026-10-14
+
+- Open selected DNA as an independent linear fragment with Cmd/Ctrl+D in Sequence, Map or Linear, without requiring primers. Keep the existing exact primer-pair PCR fragment action when primers are selected.
+- Preserve the complete selected interval across a circular origin, including annotations, highlights and lowercase bases. Mark annotations cut by the new linear ends and retain source provenance without changing the original document.
+- Create fragments repeatedly from different sources, including sources with the same name, and add them to Join parts while retaining existing parts. Use Open fragment consistently in menus and shortcut settings, with clear guidance when no DNA region is selected.
+<!-- gene-studio:release:1.4.38:end -->
+
 <!-- gene-studio:release:1.4.37:begin published-at=2026-10-14T09:21:49.000Z -->
 ### [1.4.37](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.37) — 2026-10-14
 
