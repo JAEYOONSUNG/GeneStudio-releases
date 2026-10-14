@@ -164,6 +164,14 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.4.39:begin published-at=2026-10-14T23:46:12.000Z -->
+### [1.4.39](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.39) — 2026-10-14
+
+- Design PCR primers directly in Join parts for Gibson/HiFi and Golden Gate. Each ordered part receives forward and reverse oligos with separate 5′ tails and template-binding regions, annealing-region Tm, source evidence and design warnings. Copy all primers or export an order table as TSV.
+- Preserve the exact selected DNA and orientation in the predicted assembly. Gibson adds neighboring terminal homology; Golden Gate searches scarless junction windows and verifies the synthetic PCR products using the selected enzyme's physical cut geometry. Reject internal recognition sites, incompatible ends and incomplete designs.
+- Open individual PCR fragments or the annotated assembly with primer records and source provenance. Preserve existing prepared-fragment workflows and saved plans, leave original documents unchanged, and refresh the displayed design before copying or opening when template evidence or hybridization conditions change.
+<!-- gene-studio:release:1.4.39:end -->
+
 <!-- gene-studio:release:1.4.38:begin published-at=2026-10-14T22:33:14.000Z -->
 ### [1.4.38](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.38) — 2026-10-14
 
