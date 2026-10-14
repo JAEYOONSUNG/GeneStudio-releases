@@ -164,6 +164,15 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.4.35:begin published-at=2026-10-14T04:22:47.000Z -->
+### [1.4.35](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.35) — 2026-10-14
+
+- Show matching stock box and well locations beside each construct primer. Match the complete recorded oligo sequence, retain distinct stock locations, and identify saved locations when the workbook is unavailable.
+- Select two primer rows with ordinary clicks or the keyboard to see the expected PCR size immediately. Construct and stock rows share the selection; multiple binding sites require an explicit choice. Keep details on View or double-click.
+- Keep the selected-pair readout visible while scrolling and preserve the clicked row, table scroll, and focus. Clear old selections when the underlying document or sequence changes. Removing or replacing a selected stock entry also clears its stale readout.
+- Update row selection in place instead of rebuilding the stock table and sidebar. Batch name-width and sequence-tick measurements and reuse stock ownership lookups during rendering.
+<!-- gene-studio:release:1.4.35:end -->
+
 <!-- gene-studio:release:1.4.34:begin published-at=2026-10-14T01:34:30.000Z -->
 ### [1.4.34](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.34) — 2026-10-14
 
