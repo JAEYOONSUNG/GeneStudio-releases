@@ -1,15 +1,15 @@
 {
   "mac": {
-    "version": "1.4.34",
-    "url": "https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.34"
+    "version": "1.4.35",
+    "url": "https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.35"
   },
   "win": {
-    "version": "1.4.34",
-    "url": "https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.34"
+    "version": "1.4.35",
+    "url": "https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.35"
   },
   "linux": {
-    "version": "1.4.34",
-    "url": "https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.34"
+    "version": "1.4.35",
+    "url": "https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.35"
   },
-  "notes": "Gene Studio 1.4.34"
+  "notes": "Gene Studio 1.4.35"
 }
