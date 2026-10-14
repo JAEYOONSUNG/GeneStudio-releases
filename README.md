@@ -164,6 +164,15 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.4.36:begin published-at=2026-10-14T07:59:05.000Z -->
+### [1.4.36](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.36) — 2026-10-14
+
+- Open a new primer sequence field with Cmd/Ctrl+R in Sequence even when no bases are selected. Focus the empty sequence field immediately and clear warnings left by an earlier draft.
+- Create a primer directly from the selected DNA strand. Selecting the lower complementary row automatically supplies its reverse complement, in either drag direction; explicit forward/reverse commands retain their chosen direction.
+- Turn two selected primer rows into a separate PCR fragment with Open fragment, or add it directly to Join parts. Use the exact chosen binding sites, include recorded primer tails, and preserve the source document and existing assembly parts.
+- Preserve mapped annotations, highlights and lowercase regions in the new linear fragment, including circular source intervals. Require a binding-site choice for ambiguous pairs and reject actions whose document, stock or selection has changed.
+<!-- gene-studio:release:1.4.36:end -->
+
 <!-- gene-studio:release:1.4.35:begin published-at=2026-10-14T04:22:47.000Z -->
 ### [1.4.35](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.35) — 2026-10-14
 
