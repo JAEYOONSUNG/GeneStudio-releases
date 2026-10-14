@@ -164,6 +164,14 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.4.37:begin published-at=2026-10-14T09:21:49.000Z -->
+### [1.4.37](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.37) — 2026-10-14
+
+- Restore Cmd/Ctrl+D as Open PCR fragment in Sequence, Map, Linear and Primers. Use the exact selected primer pair and the same source-preserving fragment action as the button; guide incomplete or ambiguous selections to Primers.
+- Let Cmd/Ctrl+R open the highlighted DNA search match as a primer draft while the search field keeps focus. A single preview match can open directly; multiple preview matches require a choice. Reject pending or stale search results.
+- Keep native menus, the command menu, shortcut settings and button hints synchronized. Preserve older custom key assignments, honor remapped or cleared shortcuts, and prevent repeated keys from opening duplicate documents.
+<!-- gene-studio:release:1.4.37:end -->
+
 <!-- gene-studio:release:1.4.36:begin published-at=2026-10-14T07:59:05.000Z -->
 ### [1.4.36](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.36) — 2026-10-14
 
