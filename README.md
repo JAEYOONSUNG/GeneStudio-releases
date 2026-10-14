@@ -164,6 +164,16 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.4.34:begin published-at=2026-10-14T01:34:30.000Z -->
+### [1.4.34](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.34) — 2026-10-14
+
+- Add responsive panels for the 17 bundled DNMB reports and connected originals with identical contents. Rearrange 45 drawing panels without losing the saved vector shapes, fonts, labels or legends.
+- Give wide diagrams, shared headings and legends a full row while smaller independent panels sit side by side. Add **Fit panel**, zoom and full annotation details for pointer, keyboard and touch use. Dense connected drawings retain their original geometry.
+- Support saved chart data supplied alongside DNMB PDFs, including responsive axes, wrapping legends, exact recorded values and complete tables. Verify each chart against its original PDF and retain the original Open PDF and Export PDF actions.
+- Keep existing connections and historical results intact when using the new viewer. Missing or invalid chart data falls back to the original report; Detach and late-response protection continue to apply.
+- Remove costly repeated geometry measurements during large-report rendering and resizing. Fix detail dismissal, full annotation labels and retrying a failed chart or preview request.
+<!-- gene-studio:release:1.4.34:end -->
+
 <!-- gene-studio:release:1.4.33:begin published-at=2026-10-13T10:35:49.000Z -->
 ### [1.4.33](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.33) — 2026-10-13
 
