@@ -164,6 +164,15 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.4.41:begin published-at=2026-10-15T05:18:16.000Z -->
+### [1.4.41](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.41) — 2026-10-15
+
+- Save renewed or pasted licences atomically before accepting them. Report write failures with a retry path, and prevent a delayed preferences write from replacing a newly saved renewal.
+- Show related Machine IDs, the latest request, server-offered licence and app-reported saved licence separately in the licence desk. Renewal checks report OS, OS version, architecture, app version and saved licence status without changing Machine IDs; missing reports remain unknown.
+- Repair management Copy on browsers without Clipboard API access and provide a selectable full-message fallback. Edit institution, country and intended use without changing the signed licence identity or expiry. Repeated renewal requests can copy an existing valid extension without issuing another trial.
+- Require name, email, institution, country and intended use before copying or composing licence requests in both the licence window and in-app enquiry form. Add current device details where available and validate required fields again in the native process.
+<!-- gene-studio:release:1.4.41:end -->
+
 <!-- gene-studio:release:1.4.40:begin published-at=2026-10-15T01:13:08.000Z -->
 ### [1.4.40](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.40) — 2026-10-15
 
