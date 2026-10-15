@@ -164,6 +164,14 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.4.42:begin published-at=2026-10-15T13:43:47.000Z -->
+### [1.4.42](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.42) — 2026-10-15
+
+- Select the entire construct with Command+A or Ctrl+A in Map and Linear, then copy its complete DNA sequence. Whole-molecule selections now have a visible map perimeter, and prior page-text selections cannot override the DNA copy. Custom shortcut assignments and text-field controls remain respected.
+- Open a selected primer pair with Command+D or Ctrl+D as an independent PCR fragment containing both complete primers, including their 5′ tails and the reverse primer's reverse complement. Exact drawing selections now work with universal primers and mixed sources even when a previous document's primer table remains cached. Stale or ambiguous bindings are refused.
+- Show the included tail length in the selected pair summary and the opened PCR fragment confirmation. Ordinary selected DNA still opens as a plain fragment.
+<!-- gene-studio:release:1.4.42:end -->
+
 <!-- gene-studio:release:1.4.41:begin published-at=2026-10-15T05:18:16.000Z -->
 ### [1.4.41](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.41) — 2026-10-15
 
