@@ -164,6 +164,13 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.4.40:begin published-at=2026-10-15T01:13:08.000Z -->
+### [1.4.40](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.40) — 2026-10-15
+
+- Show a prominent Golden Gate warning when the selected enzyme recognizes DNA inside an intended gene or part. Include the recognition sequence, original part coordinates, strand and overlapping gene/CDS names; refresh the warning when the enzyme or part orientation changes.
+- Distinguish internal sites from sites formed across assembly junctions, including the circular origin. Keep intended donor flanking sites and sites outside the selected payload out of the warning. Preserve the existing block on primer ordering and product creation until the conflicting sites are resolved.
+<!-- gene-studio:release:1.4.40:end -->
+
 <!-- gene-studio:release:1.4.39:begin published-at=2026-10-14T23:46:12.000Z -->
 ### [1.4.39](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.4.39) — 2026-10-14
 
