@@ -158,3 +158,32 @@ SeqFold and Aioli run locally under their own licences; full notices ship with
 the application. The `.dna` reader was worked out from the bytes of real files
 for interoperability — Gene Studio contains no SnapGene code and is not
 connected with, or endorsed by, SnapGene or Dotmatics.
+
+<!-- gene-studio:release-notes:begin -->
+## Release notes
+
+Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
+
+<!-- gene-studio:release:1.1.50:begin published-at=2026-10-18T13:15:10.000Z -->
+### [1.1.50](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.50) — 2026-10-18
+
+Gene Studio 1.1.50 gathers every earlier build into one release. From here on, updates are numbered 1.1.50.1, 1.1.50.2 and so on. Copies on a 1.4.x build cannot update to it by themselves: download it once from this page, and later updates install themselves.
+
+- **Maps**: circular and linear maps of double- and single-stranded molecules. Features are packed per strand, names are placed on the arc or in margin columns with curved or straight leader lines, and crowded poles stack outward. A cut tick shows the end it leaves. Primers are drawn as arrows with their 5′ tails. Hover cards cover features, primers and cuts. Selections can be measured as arcs and read as the two fragments they make. A multiline centre title is optional, and cut-site shortcuts cover All, Unique, Double and 3+ cutters.
+- **Sequence view**: both strands with gggenes-style feature arrows, translations under their codons, primers above and below, and stepped cuts through both strands. Includes a whole-molecule navigator, ⌘A select-all with copy, a copy button on each bottom readout value, and a Find similar comparison that aligns a query through insertions and deletions against the reference.
+- **Find and go to**: DNA (IUPAC and regular expressions, widening to near matches), protein over translated regions, any feature field, and Go to a base or range. Searches start from the current selection or reading position, and the last searches are a key away.
+- **Digests and gel**: 1,113 REBASE enzymes with the Commercial set as default, and Dam/Dcm/EcoKI methylation checked against the host strain. The simulated agarose gel shows ladders, tracking dyes (including NEB purple and Orange G) and a bigger plate. Suggest digests is included.
+- **Feature table**: every qualifier as a column in GenBank order, plus computed %GC, mass, pI, GRAVY and RBS scoring. Columns can be pinned. CDS cards show the protein, accessions and qualifiers.
+- **Primers and PCR**: matching by the 3′ seed, with the lab freezer workbook (any layout via Columns…), stock box and well locations, an Exact matches only filter, and two-row PCR size readouts. ⌘R opens a primer from a selection or search hit, and ⌘D opens a PCR fragment or selected DNA as a new linear construct with annotations kept.
+- **Cloning and assembly**: restriction and Gibson cloning, Golden Gate with domestication and warnings for internal sites, and Join parts with PCR primer design for Gibson/HiFi and Golden Gate.
+- **Guide RNAs**: guide scoring and ranked candidates at alternative positions, Golden Gate oligos, Gibson inverse-PCR and four-primer deletion arms. Methylation of the target DNA is assessed per strain, and Guide design opens straight from a selected CDS.
+- **Sanger**: `.ab1`/`.abi` traces (including `.gz`) shown as a pileup in construct coordinates, with chromatograms under their bases, gapped alignment of indels and quality-aware calls. A live traces folder follows Finder renames, and the library shows Cards or Details.
+- **Align and trees**: ggmsa-style alignments with figure export and sequence logos, plus per-column inspection and local sequence analyses. IQ-TREE 3 with ModelFinder, UFBoot and SH-aLRT, ancestral states, and a Tree studio with layouts, presets, heatmap layers, symbols and clade backgrounds.
+- **Homology and analyses**: NCBI and UniProt BLAST, HMMER, Pfam, CD-Search, Foldseek, HHpred and AlphaFold Server handoffs, with retrieval of hit sequences. SignalP 5 and 6, InterProScan, eggNOG, DefenseFinder and Prodigal pipelines run with visible progress.
+- **Strain DB**: 54 built-in strains from 50 NCBI reference genomes. Each has codon, tRNA and RBS evidence, plus restriction–modification systems with linked M/R/S/C loci, catalytic and cofactor motifs measured against predicted structures, Type I half-site reading, and REBASE strain and locus comparison. The profile list stays on screen while the import column changes.
+- **DNMB**: imports DNMBsuite result folders and runs modules in an isolated Docker container. Prepare fetches each module's databases once. Connected reports survive updates and can be detached, and 17 bundled reports are drawn as responsive panels from their chart data.
+- **Files and Home**: GenBank, FASTA, SnapGene `.dna` (methylation flags kept), ApE, xlsx and Sanger formats, detected by content rather than file extension. Save As makes a copy in a new tab. Home has starred files, full recent history, last-viewed dates and sorting, a single clear button in search, and reorderable file tabs.
+- **Window and platforms**: view tabs span the window above the sidebar, with a dark theme, drawn menus throughout and Escape closing the open dialog. macOS document icons and a branded installer are included. Builds are Windows Setup and portable, Linux AppImage and `.deb` with MIME types, and a web viewer and iPhone home-screen app.
+- **Licence and updates**: an offline machine-bound licence that renews or is revoked by itself, with a request form. Licences verify against a second author key. The Mac build is signed and notarized. One-press updates download, install and restart on macOS, Windows and AppImage.
+<!-- gene-studio:release:1.1.50:end -->
+<!-- gene-studio:release-notes:end -->
