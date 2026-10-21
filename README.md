@@ -164,6 +164,19 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.1.50.2:begin published-at=2026-10-21T09:30:14.000Z -->
+### [1.1.50.2](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.50.2) — 2026-10-21
+
+Gene Studio 1.1.50.2 turns the licence request into a form, puts a map of the whole template under the Guides picker, and lets an editing vector say which strain it was grown in — which is what decides whether the enzyme can cut it.
+
+- **Asking for a licence is a form, not an empty mail**: name, e-mail, lab or institution and country are fields in the window, all required and all named in one answer. Well-known institutions and every country are searchable as you type, so the request arrives complete and the only thing left to decide is how long it runs.
+- **The desk decides how long**: an approval period set on the desk is the period issued, so a trial given a year is a year rather than silently a month.
+- **A navigator under the template picker**: a strip of the whole template sits below the bases with the gRNA site and the homology arms drawn on it, so moving between them is a press rather than a long drag. A feature crossing the origin is drawn as its two pieces, the readout says where the window really is, and a drag that runs past the laid-out window moves it when the pointer is released rather than mid-scrub.
+- **The strain an editing vector was grown in**: choose it on the editing-vector card and the note judges the two cloning sites flanking the stuffer — not the whole vector, which was wrong in both directions: a warning for a blocked site nowhere near the insertion point, and a clean verdict for a vector the enzyme cannot cut at all. A strain profile this copy cannot read is said to be unassessed rather than treated as having no marks.
+- **Sanger `.ab1` inspection** is laid out on its own frame again, with the waveform, the base, quality and reference rows aligned to one axis.
+- **Pasting a protein** is read as amino acids instead of being refused as a sequence with bad letters.
+<!-- gene-studio:release:1.1.50.2:end -->
+
 <!-- gene-studio:release:1.1.50.1:begin published-at=2026-10-21T00:31:15.000Z -->
 ### [1.1.50.1](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.50.1) — 2026-10-21
 
