@@ -164,6 +164,18 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.1.50.3:begin published-at=2026-10-21T17:08:54.000Z -->
+### [1.1.50.3](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.50.3) — 2026-10-21
+
+Gene Studio 1.1.50.3 takes a whole genome-wide guide design away in one file, and quiets two panels that were marking the same thing four times over.
+
+- **A genome-wide run comes away whole**: *Download workbook + every vector (.zip)* puts the primer workbook and one annotated GenBank per design in a single archive, instead of a hundred CDS meaning a hundred presses on a hundred selected rows. A design whose vector cannot be rebuilt is named in `not-saved.txt` rather than being quietly one file fewer, and two designs that want the same file name are both kept.
+- **Designing every annotated CDS at once says so where the choice is made.** It was always one option above Output — *All CDS — genome-wide* — and read as not existing at all.
+- **The Guides panel is marked by its cards, not by rails down their edges.** A selected row was carrying its wash, a blue rank chip, a blue score, the word *Selected* **and** a 3 px rail — which, drawn as an inset shadow inside a rounded card, was clipped to a point at both ends. The rails are gone; what each of them was actually saying — which site a change belongs to, which arm a fragment is — is kept as the card's own border and ground.
+- **A methylation tally is no longer dressed as a warning**: the summary takes its amber only when the assessment found an overlap or an interference to look at, and takes it from the theme rather than from a colour fixed against a white page.
+- **The two primer inventories wear calmer labels, and one fewer meaning.** *This construct* was in the forward-primer green while, two columns to its right, the same green marks a forward primer — so the live list takes the accent and the freezer takes slate. The chips are read at reading size rather than shouted in capitals, and the line saying which construct the rows belong to is legible.
+<!-- gene-studio:release:1.1.50.3:end -->
+
 <!-- gene-studio:release:1.1.50.2:begin published-at=2026-10-21T09:30:14.000Z -->
 ### [1.1.50.2](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.50.2) — 2026-10-21
 
