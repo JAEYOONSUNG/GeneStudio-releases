@@ -164,6 +164,20 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.1.50.1:begin published-at=2026-10-21T00:31:15.000Z -->
+### [1.1.50.1](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.50.1) — 2026-10-21
+
+Gene Studio 1.1.50.1 brings Sanger review that shows deletions, insertions and junctions on the read map, and reads much more of what SnapGene keeps in a `.dna`, including its history of how a construct was made.
+
+- **Sanger traces**: the whole read scrolls sideways with the wheel or a drag, at Compact, Standard or Wide spacing, and peak heights are scaled to the signal nearby. The trace keeps its place when the view is rebuilt.
+- **Sanger structure**: a deletion is cut into its read on the map, an insertion is marked, and a read that matches at the start and then carries something else is drawn that way. Every matching stretch is found, short ones included, on both strands. Indels in a region that only loosely matches the construct are marked as unconfirmed. On a genome the map zooms to where the reads are.
+- **SnapGene colours and notes**: colours set with Set DNA Color are read, drawn and written back. The organism, the strain a construct was transformed into, natural or synthetic, DNA ends, citation details, primer descriptions and colours, and hidden features and primers come through. Multi-value qualifiers (db_xref, GO terms, notes), `transl_except` and collection dates are no longer lost.
+- **SnapGene history**: the History view shows how a construct was made in SnapGene — each edit and cloning step with what went into it — and any earlier version opens as its own tab.
+- **Segment colours**: a feature coloured piece by piece in SnapGene (for example a mutated codon inside a gene) is drawn piece by piece on the map, the linear view and the sequence.
+- **Digest from a selection**: select a stretch and open Digest to see the enzymes that cut only inside it and the pairs that cut it out, with fragment size and whether the remaining ends rejoin. Isoschizomers are grouped only when they cut alike, methylation included.
+- **Hiding features**: right-click a feature on the map to hide it, the selected features, or every feature of its type. The Features panel lists what is hidden, with Show and Show all. Hiding can be undone and is kept in GenBank and `.dna` files.
+<!-- gene-studio:release:1.1.50.1:end -->
+
 <!-- gene-studio:release:1.1.50:begin published-at=2026-10-18T13:15:10.000Z -->
 ### [1.1.50](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.50) — 2026-10-18
 
