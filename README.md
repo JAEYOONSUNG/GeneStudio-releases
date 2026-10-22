@@ -164,6 +164,18 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.1.50.4:begin published-at=2026-10-22T12:49:48.000Z -->
+### [1.1.50.4](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.50.4) — 2026-10-22
+
+Gene Studio 1.1.50.4 makes the Guides panel's two insertion sites tellable apart wherever they are drawn, and stops its fields getting worse as the window gets wider.
+
+- **The gRNA and homology-arm sites carry one colour each, everywhere.** The legend dot beside the template, the mark on the preview ring, the underline under the site's own bases and the card you type the coordinates into were not agreeing; the colour had in fact never reached the two cards at all. They are a red and a blue now, each chosen for the theme it is read on rather than one pair asked to work on both — and the colour written into a saved vector is unchanged, so a file made by an earlier build opens the same.
+- **Both sites can be found on the preview ring.** A 20 bp site on a 2.7 kb plasmid was about three pixels of arc, drawn among the template's own features at whatever radius happened to be free — so the two marks the card exists to compare read as two different kinds of thing. They sit together outside the features now, at a size the eye can land on, and two sites set to the same bases are drawn as two marks rather than one on top of the other.
+- **The editing-vector fields no longer get narrower as the window gets wider.** On a wide screen *Template DNA* came out narrower than it does on a laptop and *U6 guide* was stranded alone on a row of its own. The block keeps the same two-by-two at every width, and three menus that had been cut short on a wide screen — the template, where it was grown and the spacer rule — now show their whole text.
+- **A replacement range is one line.** *Replace from* and *through* are the two ends of one span and were being laid out as two unrelated fields, which on a wide card put them on opposite diagonals with a gap between them. They are side by side, at the same width as every other number box in the panel.
+- **The sequence picker is as tall as its own text.** The band of bases you pick a site on was reserving a lane sized for the full sequence view — about eleven pixels per row more than it needed — so the strip was a fixed, over-tall box whatever was in it.
+<!-- gene-studio:release:1.1.50.4:end -->
+
 <!-- gene-studio:release:1.1.50.3:begin published-at=2026-10-21T17:08:54.000Z -->
 ### [1.1.50.3](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.50.3) — 2026-10-21
 
