@@ -164,6 +164,15 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.1.50.7:begin published-at=2026-10-25T06:13:09.000Z -->
+### [1.1.50.7](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.50.7) — 2026-10-25
+
+Gene Studio 1.1.50.7 puts the external-service notice where the button that demands it can be read beside it.
+
+- **The notice you are asked to tick is on screen with the button that asks for it.** Pressing Submit in Homolog & domain search — which is where Identify in the 16S panel sends a merged sequence — refused with *review and tick the external-service notice first*, about a tick box that was not on the screen: it was the last thing in the scrolling column, after every provider card, while Submit is pinned to the window. Measured in a 1440×900 window: the button at y 820–852, the notice at 1123–1166, so 365 px below the fold of a column with 384 px hidden under it. Scrolling down reached it, which is how it had gone unreported; nothing said it was there. It is a band of its own above the buttons now, so what is being sent, where it is going and the button that sends it are read in one place — which is the point of saying it at all. Same shape as Unlock sitting 101 px below the fold of the licence window.
+- **A refusal points at the box it is about.** Both notices — the one for an external provider and the one for a local DNMBsuite run — now move the keyboard focus to the tick box they are refusing over, rather than leaving the reader to work out which of the things on screen is meant.
+<!-- gene-studio:release:1.1.50.7:end -->
+
 <!-- gene-studio:release:1.1.50.6:begin published-at=2026-10-24T21:15:17.000Z -->
 ### [1.1.50.6](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.50.6) — 2026-10-24
 
