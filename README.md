@@ -164,6 +164,19 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.1.50.8:begin published-at=2026-10-26T02:15:46.000Z -->
+### [1.1.50.8](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.50.8) — 2026-10-26
+
+Gene Studio 1.1.50.8 answers a folder search with the folder, where it is typed.
+
+- **A folder is an answer.** Typing a folder's name in Home's file search did find the files inside it — the path is searched — but the folder itself was in no answer, and nothing under the box moved while it was typed: the favourite folders sit between the box and the list, so in an 800 px window the first result began at the bottom edge. The box now answers under itself: the folders the search names, with where each one is and how many files it holds, and how many files match, as a press that goes down to the list. `Escherichia coli` names that folder and `Escherichia coli genome` beside it, not the thirty folders under them. It finds folders outside the favourites too, up to your home folder, and old cards recorded without a full path are marked as such.
+- **Pressing a folder goes into it.** The list narrows to that folder and the view moves to its files, in Details or Cards, with every file shown; *Only in SpCas9 ×* sits under the box and at the head of the list for as long as it is narrowed, and its × shows everything again. Searching inside it finds the folders below it, and if the folder is renamed in Finder the list follows. A card can now be reached and opened from the keyboard, like a row.
+- **A folder is said with spaces.** `Escherichia coli SpCas9` finds the folder `Escherichia coli/SpCas9`, `SnapGene Library` finds `8. SnapGene_Library`, and a path pasted from Windows Explorer finds its folder: an unquoted search reads a slash, a backslash or an underscore as the space somebody types for it. A hyphen is still part of a name, and a quoted phrase is still literal. When two words find nothing together but would apart, the answer offers *Try A + B*.
+- **A hidden match says so.** A search whose only matches were kept out by the Show and Hide filters said there was nothing. It now says how many match and which extensions hide them, with *Show them* — a folder of traces under a hidden `.ab1` read as a folder that does not exist.
+- **Enter opens the file and nothing else.** Opening a file from Home with Enter, after leaving a feature selected in the Features table, also opened that previous construct's feature editor: Home closed at once and the same key went on to the table.
+- **The search reads its operators the same way every time.** A `/pattern/g` answered true, false, true about one file down one list; `-_` hid every file; `-/A[0-9]+/` was cut in two at its `+`; and a quoted `“A + B”` was split at the `+`. These were shared with the Sanger trace picker, which is fixed with it.
+<!-- gene-studio:release:1.1.50.8:end -->
+
 <!-- gene-studio:release:1.1.50.7:begin published-at=2026-10-25T06:13:09.000Z -->
 ### [1.1.50.7](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.50.7) — 2026-10-25
 
