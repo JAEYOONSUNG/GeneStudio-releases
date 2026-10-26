@@ -164,6 +164,20 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.1.50.9:begin published-at=2026-10-26T15:04:11.000Z -->
+### [1.1.50.9](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.50.9) — 2026-10-26
+
+Gene Studio 1.1.50.9 makes the 16S panel take the reads a sequencing service actually sends, shows them, and names the strain from NCBI, SILVA or JGI — with what BacDive knows about it.
+
+- **Forward and reverse reads pair wherever the primer sits in the name.** Only the end of a name was read, so `S1_27F_A01` and `S1_1492R_B01` (a plate well after the primer), `S1(27F)`, `27F_S1` and `S1F`/`S1R` each came in as two samples of one read, and nothing was merged. The primer is found anywhere in the name now, a well or run number after it is set aside, and `S1F S2F S1R S2R` is two samples rather than one. A word that merely ends in r, like `Water`, is no longer taken for a reverse read.
+- **Reads whose names say nothing are paired by their overlap.** The forward and reverse reads of one amplicon overlap the wrong way round to each other, and two samples' forward reads never do; each read's best partner has to name it back. A read that overlaps two others about as well is left for you, with *Pair with…*, and a pair can be taken apart with *Unpair*. Where no name says which read runs along the gene, the conserved 16S primer sites decide, so the contig reads 5′ to 3′.
+- **The reads are on the panel.** *Reads* lays both chromatograms under the merged sequence — the reverse read turned round, each peak on its own base — with every difference marked and stepped through, saying what each read called and at what quality. Each row names the files it was made from.
+- **`.seq`, FASTA and pasted reads are reads.** A service's results folder can be dropped whole: the traces are taken, the `.seq` and `_revComp.fasta` copies of them are not read twice, and the PDFs and web pages are counted and left out. *Paste reads* takes a forward and a reverse read from anywhere.
+- **Identify against NCBI, SILVA or JGI.** SILVA classifies a whole plate in one job on its ACT service, in about five minutes: SILVA's taxonomy to genus, GTDB's to species, and the nearest references with their identity. JGI BLASTs each sample against the 16S genes of IMG/M's isolate genomes, 10–40 seconds each, judged by species rather than by isolate. Neither offers an API, so the app makes the requests their own pages make; if one changes, the row says so and offers its page with the sequence copied.
+- **BacDive, when you want it.** An identified sample shows what DSMZ's BacDive holds on the strain the search matched — type strain, culture collections, Gram stain, shape, motility, spores, oxygen, temperature, pH, salt, where it was isolated, biosafety level — and says plainly that it describes that strain, not your isolate.
+- **Submit sends.** The homolog search no longer asks for a tick before it sends; what is sent, and where, is still written beside the button. A finished result opens at its top rather than below the fold.
+<!-- gene-studio:release:1.1.50.9:end -->
+
 <!-- gene-studio:release:1.1.50.8:begin published-at=2026-10-26T02:15:46.000Z -->
 ### [1.1.50.8](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.50.8) — 2026-10-26
 
