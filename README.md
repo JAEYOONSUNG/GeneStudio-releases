@@ -164,6 +164,18 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.1.50.11:begin published-at=2026-10-27T19:01:05.000Z -->
+### [1.1.50.11](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.50.11) — 2026-10-27
+
+Gene Studio 1.1.50.11 lets a guide be cloned with any Type IIS enzyme the picker offers, and shows a spacer whole.
+
+- **A Golden Gate enzyme is looked for as far out as it actually reaches.** The pair of recognition sites that releases a vector's stuffer was looked for in 20 bases either side of it — the room a BsaI needs. An enzyme that cuts further out stands further back from its own cut, so on a vector built for it the site was outside the window and the design answered that the vector carried no pair. Of the 182 Type IIS enzymes the picker offers, 60 could not be used on any vector at all, and 65 more only where the stuffer was marked exactly on the cut. The window is the enzyme's own reach now.
+- **A recognition site is read as a pattern.** 48 of those enzymes have an IUPAC code in their site — MmeI's `TCCRAC`, BaeI, BcgI — and were matched as literal text, so none of them was ever found on a real vector while a vector carrying the letters `TCCRAC` was. The site a design is built on and the site the digest draws are read the same way now. A site so unspecific that it is found in most vectors is refused rather than reported as a finding.
+- **Where a vector carries more than one site, the oligos are built on the outer one.** Every site cuts, so the backbone ends at the outermost and the piece between comes away with the stuffer; a design built on the inner site cannot close the vector. Checked against this app's own digest.
+- **A pair that cannot replace what was marked says so.** An enzyme whose cut falls inside the stuffer on both strands is refused with the number of bases in the sentence, as is one that cuts on both sides of its own site, and one whose two cuts between them leave nothing to replace. Where only the overhang reaches in, the oligos are still designed and the panel says how much of the stuffer stays in the product — the completed vector beside them replaces the whole of it, and those two had been disagreeing with nothing on screen admitting it. A vector that was chosen and could not be read now says why instead of falling back to a published convention in silence.
+- **A guide's spacer is read on one line.** *Genomic target context* broke its rows every 24 bases while opening with 12 bases of flank, so a 20 nt spacer was split 12 and 8 across two lines — every guide, and the one thing the panel is for. A row ends where a region ends now, so the spacer and its PAM are read together, and the bases stay on the same column grid as the lines above and below.
+<!-- gene-studio:release:1.1.50.11:end -->
+
 <!-- gene-studio:release:1.1.50.10:begin published-at=2026-10-27T01:52:50.000Z -->
 ### [1.1.50.10](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.50.10) — 2026-10-27
 
