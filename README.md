@@ -164,6 +164,52 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.1.50.12:begin published-at=2026-10-27T23:46:37.000Z -->
+### [1.1.50.12](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.50.12) — 2026-10-27
+
+# Gene Studio 1.1.50.12
+
+Golden Gate guide cloning, read round the circle and told what else the enzyme
+does to the vector.
+
+- **A plasmid has no first base.** Every read in the Golden Gate pair search was
+  a flat slice of the sequence, so a stuffer sitting near a circular vector's
+  origin had its window cut short and the pair the vector was built with went
+  missing: *No GGTCTC on the sense strand in the 10 bp before the stuffer*,
+  about a vector carrying that pair 2,990 bases away round the circle. The
+  windows, the overhangs and the fill bases are all read across the join now,
+  and the answer is the same whatever base the vector calls 1. The blind zone
+  was a window's width at each end — 21 rotations of a 162 bp fixture and 21 of
+  a 442 bp one, so it did not shrink as the vector grew.
+
+- **The enzyme's other cuts in the backbone are counted and named.** A third
+  cut anywhere else breaks the backbone into pieces no pair of oligos closes,
+  which is the whole reason domestication exists, and nothing said how many
+  cuts the enzyme has in the vector in front of you. The oligo panel and the
+  design checklist now say so, with the size of the piece the nearest one
+  leaves. Nothing is refused on it: 83–86 % of random 4 kb backbones carry
+  another cut somewhere and a domesticated vector carries none, which is what
+  makes the count worth printing when it is not. It counts cuts and not sites,
+  because a site lying wholly inside the stuffer still cuts past its end.
+
+- **A blocked outer site is not a blocked flank.** The pair is chosen outermost
+  because in a digest every site cuts — but a host mark on that one leaves the
+  inner ones cutting, and the arm ends at the first the host does not block.
+  The template line now names that site and says what cutting there costs:
+  more of the stuffer left in the product, or, where the cut only eats into the
+  fill, nothing at all, in which case the oligos can be rebuilt rather than the
+  template regrown. A flank that will still cut reads amber rather than red.
+
+- **Two cuts that pass each other leave nothing to ligate to.** Reading round
+  the circle made that geometry reachable, so it is refused: a circle has to
+  keep some backbone duplex, and a linear template cannot be cut past its own
+  end. A line's flush end — zero duplex, the top strand still there as an
+  overhang — is an ordinary design and is not refused with them.
+
+- **Thirteen regression tests** and the reasoning behind each threshold, from an
+  adversarial review of the change.
+<!-- gene-studio:release:1.1.50.12:end -->
+
 <!-- gene-studio:release:1.1.50.11:begin published-at=2026-10-27T19:01:05.000Z -->
 ### [1.1.50.11](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.50.11) — 2026-10-27
 
