@@ -164,6 +164,90 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.1.50.13:begin published-at=2026-10-28T08:07:00.000Z -->
+### [1.1.50.13](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.50.13) — 2026-10-28
+
+# Gene Studio 1.1.50.13
+
+Fifty-two defects from a second adversarial bug hunt, across every half of the
+application. The ones worth knowing about:
+
+- **A stop stays stopped.** The licence record lives in the same preferences file
+  the page writes its settings to, and a preference patch names keys — so a
+  `remove` naming the desk's revocation took it out and the copy answered
+  "licensed" again, with no new licence and nobody's authorisation. That key and
+  the clock floor are the native side's now and the page cannot touch them.
+  Three more doors into the same room are shut: an older signed notice replayed
+  from the server no longer lifts a newer stop, pasting a stopped licence into
+  the gate no longer unlocks it, and dismissing the gate the stop put up no
+  longer leaves a stopped copy running — it asks about unsaved work and quits,
+  and comes back if the quit is declined.
+
+- **A read with a bad patch in the middle is not a 98 % read.** Scored as a
+  mismatch, a run of unresolved calls cost more than a pair of gaps, so the
+  aligner parked the Ns in insertions and invented four indels: 70 bases, 40 N
+  and 90 bases against the sequence they came from answered **196 of 200
+  matched, 98.0 % identity**. An N is evidence of nothing and is now worth
+  nothing: the same read answers **160 of 200, 80.0 %, no indel**, while a real
+  12 bp deletion and a real 9 bp insertion are unchanged. Copying a selection
+  from a read that crosses the origin copies the calls picked rather than
+  everything between the first and the last — 181 instead of 380 — and a
+  deletion over the join is named in bases the molecule has.
+
+- **Three bases of a codon are one stretch, and a part found across the join is
+  one part.** A CDS at 13,209..5 reported its first codon as the whole plasmid:
+  the start marker said *starts at 1* and pressing it selected all 13,210 bases.
+  A 10×His tag rotated over the origin was annotated as fifteen bases — five
+  histidines of ten — and at 24 of a 150 bp fixture's rotations the whole match
+  was dropped in favour of two shorter ones. Both are the same arithmetic, and
+  the drawings, the terminator stems and the ribosome binding sites are read
+  round the molecule with it: a binding site now answers the same at all 174
+  rotations of its fixture.
+
+- **A record cut short is not a record with less in it.** A GenBank file
+  declaring 400 bp whose ORIGIN carries four opened as a four-base molecule, and
+  a save would have written that out as a complete, shorter construct. It is
+  refused by name now — measured against 7,715 GenBank files in this machine's
+  own folders, not one of which trips it. A wrapped DEFINITION, an explicitly
+  empty `/replace`, the spaces inside `/PCR_primers`, a `.dna`'s creation date
+  and sequence class, a blank row in a workbook and a location naming another
+  accession all survive a round trip now; none of them did.
+
+- **A tail does not anneal, and a cached temperature is only the temperature of
+  the conditions it was computed in.** The facts line, the PCR advice and the
+  Gibson table quoted the whole oligo's melting point beside a binding they had
+  just said carried a 20 nt overhang — 75.4 °C where what pairs melts at 72.4,
+  and 74.6 against 62.2 on a Gibson primer, so one too cold to work could not
+  trip its own warning. And changing the salt or the primer concentration in
+  Settings left every figure where it was: 72.1 °C and a 52 °C anneal held while
+  500 mM Na⁺ makes them 84.1 and 64.
+
+- **A gene over a line break is pointed only where it ends.** The linear map put
+  an arrowhead on both pieces, the second of them claiming the gene stops at the
+  end of the line; a spliced gene's connector hung 20 px under the exons it
+  joins, and two exons within 5 px of each other were drawn at two heights. The
+  navigator's cut marks no longer stay where they were when the picked enzyme
+  changes, a thirty-character name is no longer written 124 px off the left of
+  the window, and a go-to in the one-line sequence lands where the renderer
+  reads it rather than 1.2 bases away.
+
+- **A referral is a code or the account they sign in with.** The box took six
+  characters with the capitals forced, so the e-mail somebody was told to put in
+  it could not be typed — and what did arrive was stripped to six characters of
+  nonsense that the desk then looked up as a code. Either shape goes through as
+  it was typed now, and the desk resolves a code against the codes its holders
+  have and an account against the people in it, saying by name when it resolves
+  to nobody or to several.
+
+Thirty-seven regression tests in the page suite and eight more across the
+licence, save and packaging harnesses, each built from the measurement that
+named the fault; the reasoning behind every threshold is in the project
+record. One
+finding went the other way: the record said a read's end is kept when it ties
+the anchor, the code never did, and the code was right — nineteen calls agreeing
+four of nineteen are noise, so the record was corrected instead.
+<!-- gene-studio:release:1.1.50.13:end -->
+
 <!-- gene-studio:release:1.1.50.12:begin published-at=2026-10-27T23:46:37.000Z -->
 ### [1.1.50.12](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.50.12) — 2026-10-27
 
