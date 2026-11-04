@@ -164,6 +164,94 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.1.50.14:begin published-at=2026-11-04T10:19:51.000Z -->
+### [1.1.50.14](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.50.14) — 2026-11-04
+
+# Gene Studio 1.1.50.14
+
+Three things asked for at the bench: changing an amino acid by pointing at the
+amino acid, deleting an operon rather than one gene, and a workbook that stays
+chosen.
+
+- **Point at the residue, not at the bases.** Double-click an amino acid over
+  the sequence — or take *Change L2 · CTG* from its right-click menu — and the
+  mutagenesis window opens on that codon. Twenty residues grouped by what they
+  are, and the stop; under each, the synonymous codons of **that gene's own
+  translation table**, ranked by their share of the residue in the chosen host
+  and marked where one is rare. Leucine in *E. coli* is offered as CTG 50 %,
+  TTA 13 %, TTG 13 %, CTC 10 %, CTT 10 %, CTA 4 %, the last marked; glutamate
+  as GAA 69 % against GAG 31 %, and changing the host to human turns that pair
+  round without losing the codon already picked. Which codons are synonymous is
+  a property of the table and not of the standard code — a gene annotated
+  `/transl_table=2` has four arginine codons where table 1 has six, and the
+  window reads the gene's own.
+
+- **Picking one designs the inverse-PCR pair that puts it there.** Not with a
+  designer of its own: it asks the one the Guides view already uses and then
+  **chooses among the candidates that designer returns**, so the two cannot come
+  to disagree about what a good primer is. The window the guide arms are held to
+  is the window here — annealing 18–50 nt aimed at 60 °C within 55–65 °C, a
+  70 nt ceiling, a self-dimer screen at −9 kcal/mol, and a preference for an
+  oligo that binds once — and the criteria are written under the pair rather
+  than left to be taken on trust. Measured on a 3,666 bp construct, L2E came out
+  as `citA_L2E_F` 22 nt / 60.4 °C and `citA_L2E_R` 30 nt / 60.4 °C, ΔTm 0.0 °C,
+  with the new codon riding the forward primer's 5′ tail so the whole codon is
+  replaced in one step. A reverse-strand gene is the part that is easy to get
+  wrong by hand: the codon offered is the gene's own, and what goes into the
+  molecule is its reverse complement (`GCG` → `CGC`). The mutant can be opened
+  as its own construct, taken out as a GenBank file, or the two oligos copied as
+  a row each.
+
+- **And it says what it will not do, with the reason.** A linear molecule has no
+  inverse PCR. A codon split by an exon junction or by the origin is named as
+  its three separate bases rather than as a false span across the hole between
+  them. A residue of the frame that runs on past a stop is not a residue of that
+  gene. The codon already there is not a mutation. Where the record's own
+  `/translation` disagrees with the bases, that is said rather than quietly
+  resolved, and a rare codon is offered with its share named instead of being
+  hidden.
+
+- **A deletion is sometimes one gene and sometimes an operon.** The Guides view
+  could delete the gene you picked and nothing else — an operon had to be
+  deleted by reading two coordinates off the map and typing them in, which is
+  the step that is silently wrong. There is a second box now, *delete through
+  this gene as well*: an operon is a contiguous stretch by definition, so
+  everything between the two genes goes with them, the way it is written on a
+  bench sheet. A gene the stretch cuts through rather than removes whole is
+  named next to it, because a partial gene left behind is the one thing nobody
+  wants to find out about afterwards.
+
+- **A dropdown is not a way to find one gene among four thousand.** The Target
+  picker offered 4,153 unlabelled rows of name and coordinates on this machine's
+  1.88 Mb record — reported from the bench as opening the list, picking one,
+  going back and picking the next, because nothing on the row said which gene it
+  was. It is typed into now: the name, the locus tag, the gene symbol, the
+  feature type and the **product** are all searched, so *division* finds ftsZ,
+  and each row carries the strand, the type and the product under the name. A
+  searched list keeps every feature rather than being capped, and the coding
+  features come first with their length in residues.
+
+- **A workbook chosen by hand stays chosen.** It was forgotten the moment the
+  window closed, so every launch went back to scanning a folder for
+  `*primer*.xlsx` — a workbook kept anywhere else, or named anything else, was
+  found by nobody, and the launch asked for it again once per launch, forever.
+  The file is remembered and it wins over the folder, because it is the more
+  specific answer; naming a folder goes back to scanning one; *Forget the
+  workbook* is the other door. The remembered path names a file this app opens
+  at launch, so it is the native side's to write and the page cannot set it —
+  the capability check still stands in front of every read, but what this app
+  reaches for on its own is not the page's to choose.
+
+What holds the three in place: ten new tests in the page suite, a harness of
+thirty-seven checks that drives the designer on the real page with pointer
+events — the menu entry, the keyboard, the host change, the refusals and the
+mutant it opens — forty-four more across the Target picker and the operon
+stretch, and the dialog close-geometry audit extended to cover the new window at
+six viewports. Two layout faults it found were in the shared dialog
+chrome rather than in the new code, and they are fixed where the chrome is
+defined.
+<!-- gene-studio:release:1.1.50.14:end -->
+
 <!-- gene-studio:release:1.1.50.13:begin published-at=2026-10-28T08:07:00.000Z -->
 ### [1.1.50.13](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.50.13) — 2026-10-28
 
