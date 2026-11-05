@@ -164,6 +164,61 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.1.50.16:begin published-at=2026-11-05T17:13:38.000Z -->
+### [1.1.50.16](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.50.16) — 2026-11-05
+
+# Gene Studio 1.1.50.16
+
+Imported DNA can now be reviewed against a local feature library, then passed
+on to gene prediction and functional annotation when more evidence is needed.
+
+- **Known features on import.** Opening or pasting DNA offers local reference
+  matches without changing the sequence or adding unchecked annotations.
+  Both strands and circular origins are searched. Exact DNA, complete-protein
+  identity and conservative similar-DNA candidates are distinguished, with
+  reading-frame and short-motif conflicts marked for review.
+- **More complete CDS references.** The verified catalog contains 36 source
+  intervals, alongside the existing short motifs. Complete references include
+  selectable markers, fluorescent proteins, luciferases, TetR, AraC, Cre, Flp,
+  SacB and a specifically identified SpCas9 fusion. Source accession versions,
+  boundaries and translations are retained; vector variants keep their labels.
+  Protein and similar-DNA matches identify the matched reference without
+  claiming its DNA allele. Protein evidence uses a verified protein accession
+  when available, and lacI CDS matches no longer inherit the lacIq allele claim.
+- **Inspect before adding.** Candidate details show sequence context,
+  translation and actual reference differences, including affected codons.
+  Search, feature-type filters, bounded pages and keyboard controls help review
+  long lists. A selected batch is added in one undoable edit; existing
+  annotations are preserved.
+- **Keep a laboratory feature library.** Save a complete contiguous feature as
+  an independent reference, edit its name and DNA/protein matching preference,
+  and export or merge libraries as JSON. Conflicting imported definitions are
+  reported without silently replacing existing choices. The library explains
+  its separate backup requirement and warns about very short references.
+- **Continue into annotation.** The candidate review links to the existing
+  prediction tools. Prodigal predictions receive stable protein identifiers,
+  retain partial boundaries and coding phase, and avoid adding the same CDS
+  again, including predictions that only choose a different start codon.
+  Circular predictions use flanking context and fold complete calls across the
+  origin; unresolved edge fragments are counted and omitted. Existing CDSs can
+  receive missing identifiers in one undoable step so
+  eggNOG and InterProScan results can be joined back to the correct features.
+  Changed documents and stale results are refused.
+
+The local reference search does not upload sequence. Prodigal runs in the
+desktop app with the local tool installed; functional services still require an
+explicit submission or results-file import. A match or a predicted CDS does not
+establish biological activity. Similar-DNA matching remains substitution-only;
+general partial-CDS and fusion-boundary inference are not included.
+Circular prediction uses at most 10 kb of context per side, so longer
+origin-crossing genes may need another annotation method. Large manual local
+reference searches can pause the interface; the import offer can open gene
+prediction directly without running that search first.
+
+Validation includes the full regression suite, responsive review and pipeline
+handoff checks, public reference sequences and an actual Prodigal 2.6.3 run.
+<!-- gene-studio:release:1.1.50.16:end -->
+
 <!-- gene-studio:release:1.1.50.15:begin published-at=2026-11-05T03:52:50.000Z -->
 ### [1.1.50.15](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.50.15) — 2026-11-05
 
