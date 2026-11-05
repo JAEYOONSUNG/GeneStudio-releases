@@ -164,6 +164,87 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.1.50.15:begin published-at=2026-11-05T03:52:50.000Z -->
+### [1.1.50.15](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.50.15) — 2026-11-05
+
+# Gene Studio 1.1.50.15
+
+A deletion is picked by pointing at the genes it takes, and its ends are cut the
+way the lab cuts them.
+
+- **Point at the region, and it lands on the genes.** Under the Target boxes in
+  Guides there is now a strip of the molecule around the deletion: the genes in
+  it, the bases that go, and — outside them, hatched — the two homology arms
+  that will be amplified, because where the arms fall is a consequence of the
+  region and is the thing worth looking at before four primers are ordered.
+  Drag across it and the ends snap outward to whole genes: the first gene's own
+  start, the last gene's own stop, so a deletion that stops two bases inside a
+  gene stops being something you can do by accident. A gene's own bar takes that
+  gene alone, and under the strip each gene is a tick box — ticking extends the
+  stretch through it, unticking an end pulls it back, and a gene in the middle
+  of an operon says so rather than quietly doing nothing. A stretch nobody
+  annotated is still a stretch: drag over bare DNA and the coordinates stand as
+  drawn.
+
+- **Whole gene, or in frame — both are offered.** One lab deletes a gene start
+  codon to stop; another keeps both codons and removes what is between them, so
+  the remnant is in frame and what the operon transcribes after it is still
+  translated. *Deletion ends* now carries both, and a third that keeps a set
+  number of codons at each end. Which codon an end keeps depends on that gene's
+  strand — the low end of a forward gene is its start codon and of a reverse
+  gene its stop — so the readout names the gene and the codon rather than
+  leaving it to be worked out from an arrow.
+
+- **What has to be in frame is the join, not the length removed.** The two
+  retained pieces are whole codons of their own genes, so the fusion reads
+  through exactly when what *stays* is a whole number of codons — and a
+  three-gene stretch whose ends keep a codon each is in frame however many
+  bases went between them. Measured on a real pair of reading frames, that
+  deletion leaves `ATG` reading straight into `TAA`; judging the 1,994 bases
+  removed instead would have called it two bases out. Where a junction really
+  is out of frame — after a nudge, say — the line says so and a button keeps
+  the one or two bases that put it right. Either end can be nudged without
+  losing the genes the region was picked on, and the two cuts are drawn at base
+  resolution underneath, with the ruler, the gene and the translation, so what
+  is kept and what goes is read rather than inferred.
+
+- **The tube still says ΔgltA.** A design was named by looking for a feature
+  whose start and end *are* the span, so keeping a codon at each end named the
+  deletion after its coordinates instead — on all four arm primers, which is
+  what the tube carries. The genes the region was picked on are carried beside
+  the bases that go, and an operon is named by its first and last gene. The same
+  rule travels to a genome-wide run, where it is applied to each CDS and the
+  guide is searched inside the bases that actually go — a guide that cut outside
+  them would cut the edited genome again.
+
+- **The Guides panel stopped jumping.** Every press in that view is put back at
+  the pixel it was pressed at, and the control is found again afterwards by a
+  key made of its tag, class and dataset — which eleven of the nineteen drawn
+  menus there share, each of them changing its own text as it is chosen. So for
+  the one control the reader had just used the tiebreak was empty, the fallback
+  put *a different* menu at the pressed pixel, and the panel scrolled: measured,
+  choosing a target moved it 994 px. Each control is named by the label beside
+  it now, and the panel's menus are dressed before the correction is measured
+  rather than a frame after it, which was worth a further 8 px on the first
+  frame drawn.
+
+Eighty-two checks drive the new picker on the real page with pointer events —
+the drag and its snap, the bars, the ticks and the refusal to break an operon,
+the end rules on both strands, the nudges, the junction previews, a real
+genome-wide run and the design the names come out of — with six more in the
+page suite for the arithmetic alone and five over the Target picker. Eight
+reviewers went over it from different angles before it shipped, and what they
+found is in the tests: twenty-nine reverts, one per decision, each naming its
+own fault. One of them is a band that was never painted at all, because the
+colour it asked for was a name this file does not define; another is a deletion
+across the origin read as the stretch between its pieces, which is the trap this
+project records in nine other places and now in a tenth.
+
+Two limits worth knowing: the strip draws the first 160 genes of its window and
+says how many it left out, and the ruler in the two cut figures runs its labels
+together past a million bases.
+<!-- gene-studio:release:1.1.50.15:end -->
+
 <!-- gene-studio:release:1.1.50.14:begin published-at=2026-11-04T10:19:51.000Z -->
 ### [1.1.50.14](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.50.14) — 2026-11-04
 
