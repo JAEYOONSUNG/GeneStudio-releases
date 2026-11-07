@@ -164,6 +164,107 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.1.50.17:begin published-at=2026-11-07T13:07:53.000Z -->
+### [1.1.50.17](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.50.17) — 2026-11-07
+
+# Gene Studio 1.1.50.17
+
+The local known-feature review gets the three things it was missing: a topology
+to work with, genes it had been blind to because they were fused, and references
+for the parts it kept not finding. The feature library's limits are now counted
+in the unit they are stated in.
+
+- **A pasted sequence can say it is a plasmid.** The paste dialog had no
+  topology control and defaulted to linear, so a plasmid whose origin falls
+  inside a gene lost that gene — on pUC19 rotated by 2,000 bp, the missing
+  candidate was AmpR. There is a Topology menu now, filled from a record's own
+  LOCUS line. Where the sequence is still read as linear, the scan reports only
+  the difference closing it would make — "1 more match if this is a plasmid: it
+  crosses the origin" — with the button that closes it. The topology is not
+  guessed, and the press is one Undo.
+- **A gene fused at either end is the same gene.** A CDS whose start or stop
+  codon has been replaced by a tag or a linker was invisible to both searches:
+  the exact search wants every base including both termini, and the approximate
+  search declined it because the bases that changed *are* the stop codon. The
+  coding body is now searched on its own and reported as the fusion it is, with
+  the replaced codon and the sequence that replaced it named. Where the stop
+  codon was replaced, the reading is followed to the next in-frame stop, which
+  is where that protein actually ends; where there is no stop to reach, the 3′
+  end stays open rather than being invented. On the deposited pEGFP-C1 and
+  pGEX-4T1 records this puts the candidate on each record's own fusion CDS to
+  the base.
+- **A motif you would expect to find anyway is not evidence.** A four- or
+  six-residue site is contained by chance in any long sequence, so short motif
+  matches with nothing saying the stretch is translated are set aside and
+  counted rather than listed as findings. The list says what is holding them
+  back — "Every match here is a short motif this sequence is long enough to
+  contain by chance" — and offers the tick box that shows them.
+- **One unread base no longer loses a gene.** Both searches required ACGT
+  throughout, so a single N — which a Sanger read of a construct routinely
+  carries — dropped a 720 nt CDS and the import offered nothing. An N now costs
+  what a substitution costs and is counted apart from one, because it is not a
+  base that was read and found different.
+- **The obvious button says what it is leaving behind.** "Select visible exact"
+  silently skipped every candidate needing review, which on an ordinary vector
+  is the pUC origin at 99.8% identity — a map built with that button had no
+  origin of replication and nothing said why. Accepting the suggestions also no
+  longer reports the construct as changed and asks you to scan again about your
+  own press.
+- **Two more verified references, and the catalog is 38 intervals.** The
+  complete *Schistosoma japonicum* Sj26 glutathione S-transferase CDS
+  (M14654.1) identifies the GST tag the pGEX vectors carry, where before there
+  was only a fifteen-residue peptide motif; with the fusion reading above it
+  lands on pGEX-4T1's own annotated fusion CDS exactly. The pGL3 upstream
+  poly(A) signal is now its full deposited 154 nt interval (U47298.2) rather
+  than the shorter pCI-neo signal that is its first 49 bases, and the two are
+  recognised as one element at two extents. The luciferase reference now cites
+  the current version of its accession rather than a superseded one; its
+  sequence, interval and translation are unchanged.
+- **The feature library has one limit, counted in bytes.** Saving and importing
+  weighed text two different ways, so a library whose metadata is written in
+  Korean walked through the budget — a Hangul character is one unit and three
+  bytes — and the app then refused its own backup. Both paths weigh bytes now,
+  an export that would not fit back through the import is refused where it is
+  made, and the budget is **32 MiB**: the smallest figure that admits the 1,000
+  entries the entry cap already allows, so the two limits no longer contradict
+  each other. The qualifiers that say a straight reading of a gene's bases is
+  not the protein it makes — including `/exception` and `/ribosomal_slippage` —
+  now survive a save, instead of an entry coming back out as a protein
+  reference the matcher itself would refuse.
+- **A CDS read from its second base keeps the peptide its record and its bases
+  agree on.** A `/codon_start=2` CDS beginning on TTG or GTG was translated two
+  different ways in one session: the feature dialog called the record's own
+  correct protein a disagreement with its own bases, and an unrelated edit
+  inside the CDS deleted `/translation` and left a note saying the peptide had
+  never matched. It had. One answer now serves every reader of it.
+- **Genes over the origin, in two more places.** A gene annotated across the
+  join came back as a new candidate because its segments were read as covering
+  nothing, and a tag inside a gene whose reading frame shifts mid-way went
+  unflagged. Two candidates for the same stretch are also no longer both added.
+- **The browser and phone builds cannot fall behind the desktop.** The shipped
+  web copies are generated from the desktop page and are checked against it
+  before every commit, so a fix landed here reaches genestudio.app rather than
+  shipping as the bug it fixed.
+
+The local reference search does not upload sequence, and no candidate is added
+to a construct without being ticked. A fusion candidate and a similar-DNA
+candidate are review evidence: a match does not establish that a sequence is the
+reference's own allele, that a fusion partner is in frame, or that anything is
+expressed. Similar-DNA matching remains substitution-only; a 3′ end is read to a
+stop codon only for a fused coding body, and only while the reading stays
+shorter than the body it was matched on. In-frame insertions and deletions,
+partial CDS boundaries and intron inference are still not attempted. The
+reference catalog is small, source-backed and deliberately so; it is not a
+complete parts database, and absence from it says nothing about a sequence.
+
+Validation includes the full regression suite, the known-feature engine at
+398/398 checks, the five-plasmid benchmark at 60/60 key regions across three
+coordinate transforms, the three independent plasmid records whose every
+predeclared interval is now covered, the representative CDS catalog at 72/72,
+the review dialog at three widths, and a revert check on each fix so that
+undoing it names the defect by name.
+<!-- gene-studio:release:1.1.50.17:end -->
+
 <!-- gene-studio:release:1.1.50.16:begin published-at=2026-11-05T17:13:38.000Z -->
 ### [1.1.50.16](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.50.16) — 2026-11-05
 
