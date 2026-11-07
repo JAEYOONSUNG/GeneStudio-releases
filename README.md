@@ -164,6 +164,56 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.1.50.18:begin published-at=2026-11-07T17:52:02.000Z -->
+### [1.1.50.18](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.50.18) — 2026-11-07
+
+# Gene Studio 1.1.50.18
+
+A licence request now says what it is for, and can carry a work address to
+back it. This release changes the request window, the site and the editor's own
+known-feature scan; the licence desk behind them changed with it.
+
+- **What this is for.** The licence request asks whether the seat is for a
+  student, for academic research or for a company, the same way it asks for a
+  name, a lab and a country. It is asked rather than assumed: the price is read
+  off the answer, and a window that guesses is a window that quotes a
+  professor the company price.
+- **A work address, if you have one.** Student and academic prices are
+  confirmed against an address at your institution. Where the e-mail on the
+  request already is one, nothing more is needed; where it is not — a lab that
+  writes from Gmail, say — a work address can be added, and on genestudio.app
+  a link is sent to it. Following the link confirms that you can read mail
+  there, and that is all it confirms; nothing else is looked up. The request
+  window itself has no network and confirms nothing — it carries the address,
+  and the desk reads it.
+- **On genestudio.app**, the account page asks for a country (from the same
+  list the application uses) and a work address, and a request made there
+  says what it is for. The administrator's page tells a request that is yours
+  to answer from one that is waiting on the applicant, and can remove one that
+  was never a request.
+- **Known features follow the sequence.** The scan for known features ran
+  when a sequence was opened or pasted and nowhere else, so a construct
+  started empty and filled in afterwards — typed, or pasted into the sequence
+  view — was never offered anything, and one that had been scanned asked to
+  be scanned again after every edit. It now runs by itself once an edit
+  settles, on sequences up to 50 kb, and a PCR or cloning product opened as a
+  new construct is scanned like an imported one. A bar you have closed stays
+  closed while you edit.
+
+Nothing changes for a licence already issued: the signed licence, its machine
+binding and its end date are untouched, and a request already waiting is
+answered as before. A confirmed work address is evidence of where somebody
+works, not of what they are — a university address is held by staff and
+alumni as well as students — so the student price remains a person's decision.
+Where no work address can be given, the request still goes through; say so in
+the note and a person reads it.
+
+Validation includes the full regression suite, the request window measured in
+its own 500×560 frame with the two new fields reachable and focusable, the
+request composer and the desk's reader held to the same field labels, and the
+live site driven end to end against a local copy including the daily digest.
+<!-- gene-studio:release:1.1.50.18:end -->
+
 <!-- gene-studio:release:1.1.50.17:begin published-at=2026-11-07T13:07:53.000Z -->
 ### [1.1.50.17](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.50.17) — 2026-11-07
 
