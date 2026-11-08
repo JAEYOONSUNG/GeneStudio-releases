@@ -164,6 +164,95 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.1.50.19:begin published-at=2026-11-08T22:45:32.000Z -->
+### [1.1.50.19](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.50.19) — 2026-11-08
+
+# Gene Studio 1.1.50.19
+
+A review of the whole program, and what it found. Most of this release is
+things that were wrong in ways nothing on screen would have told you about: an
+account somebody else could keep a hold of, a licence signed twice under one
+number, an annotation deleted by an edit nowhere near it, and a panel offering
+to change bases nobody had selected.
+
+- **A dialog never proposes changing a base you did not choose.** A selection
+  that crosses the origin is written with its end before its start, and the
+  silent-mutation panel read the two ends as an ordinary range — which is the
+  stretch *between* them, the part that was not selected. Measured on a
+  1,000 bp circle with 900..100 held: it offered a substitution at 142 and
+  applying it committed one. Clearing highlighting over such a selection had
+  the same fault, and cleared the marks on every base you had not chosen.
+- **An ORF over the join survives an edit.** Find ORFs → Add wrote an ORF that
+  crosses the origin as a single piece from its start back round to its end,
+  and the edit path read that piece as an empty one — so any edit, anywhere in
+  the construct, silently deleted the feature. The preview still showed it,
+  which is how the two came to disagree about what the result was.
+- **The offer bar does not rebuild while a button is down**, which it still did
+  in two cases. The release was flushed on the pointer going up, one event
+  before the click that follows it, so the button that had been pressed was
+  replaced before the press reached it; and the safety timer treated any press
+  held longer than a second and a half as a lost one and rebuilt the strip
+  under the hand.
+- **A small scan stays small.** The known-feature scan runs on the spot for
+  sequences under 20 kb, and the work it did grew with the number of
+  annotations as well as the length: on a repetitive 20 kb construct with a
+  thousand coding sequences it took most of a second with the window frozen.
+  What each candidate needs is worked out once per scan now, and the same
+  record takes about forty milliseconds.
+
+On genestudio.app and at the licence desk, four things that mattered more:
+
+- **Signing up with an address is not owning it.** Anybody could register
+  somebody else's address with a password of their own — signing up asks for no
+  confirmation — and wait. When the real owner later signed in through Google
+  or GitHub, the site attached their identity to that account and marked it
+  confirmed, and left the other person's password and live session exactly as
+  they were: the owner's own proof completed the takeover. An account that has
+  never been confirmed now belongs to the first confirmed sign-in, and every
+  earlier password, session, mail link and linked provider on it is dropped.
+- **One licence, one serial.** Every signing path read the ledger, took the
+  next number, waited for the signature and then wrote back the list it had
+  read — so two issues at once each wrote their own copy and the second erased
+  the first, both carrying the same serial. Two renewals of one licence both
+  claimed to be its first replacement, and a licence stopped while its renewal
+  was being signed still got an unstopped replacement. A pack of licences
+  started numbering at one every time, so two packs on one day collided with
+  no concurrency at all.
+- **A signature authenticates the licence, not the message around it.** A
+  licence issued from the phone comes home as a block of JSON, and only the
+  licence inside it was checked: the holder, the computer, the expiry and even
+  a confirmed institution could be anything the block said, and moving that row
+  then signed all of it. Those now come from the signed licence and from
+  nowhere else, and a licence already recorded is recognised however its
+  signature is spelled.
+- **A confirmation belongs to a person.** Correcting a licence's holder, or
+  recording who a seat was given to, left the previous holder's claim and
+  confirmed institution attached to the new name — the one fact only the site
+  may write, about the wrong person. And the site's own "work e-mail confirmed"
+  message could not reach the desk at all, so asking first and confirming
+  second, which is the order both forms teach, produced a request that said
+  "not confirmed" for ever.
+
+The pictures and the six-second films on genestudio.app are taken from this
+build. They had been frozen since early October by a capture gate pinned to a
+source hash the tree could never have again: the site went on serving films of
+a version five releases old while the publisher refused to publish them, and
+the one path that actually deploys the site had no such check. The gate is a
+reviewable file now, and the Guides film follows the panel's three-step
+workflow because the button it used to press no longer exists.
+
+Nothing changes for a licence already issued: the signed licence, its machine
+binding and its end date are untouched. If you signed in to genestudio.app with
+a password on an address you had not yet confirmed, and have since signed in
+through a provider, set a password again from the account page.
+
+Validation includes the full regression suite, a new harness that tries to talk
+the desk into each of the things above, the commit guard tried against the three
+commits it used to let through, the site's own sign-in walked end to end against
+a local copy — including the account takeover, which now has its own check — and
+every film smoke-tested against this renderer before it was recorded.
+<!-- gene-studio:release:1.1.50.19:end -->
+
 <!-- gene-studio:release:1.1.50.18:begin published-at=2026-11-07T17:52:02.000Z -->
 ### [1.1.50.18](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.50.18) — 2026-11-07
 
