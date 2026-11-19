@@ -164,6 +164,15 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.1.50.23:begin published-at=2026-11-19T09:37:40.000Z -->
+### [1.1.50.23](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.50.23) — 2026-11-19
+
+# Gene Studio 1.1.50.23
+
+- **SVG map export.** Circular and linear ruler numbers stay visible and individually editable in Illustrator. SVG labels use the figure’s selected font size, and two closely spaced coordinates across the origin of a circular map now have room to be read. Transparent figures keep their transparent background.
+- **Copy an entire AB1 read.** Choose **Copy full read** beside its chromatogram or in the read inspector. You can also click the read and use Select All, then Copy. The clipboard contains the original base calls in file order, including trimmed ends, even for a reverse alignment.
+<!-- gene-studio:release:1.1.50.23:end -->
+
 <!-- gene-studio:release:1.1.50.22:begin published-at=2026-11-19T05:27:43.000Z -->
 ### [1.1.50.22](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.50.22) — 2026-11-19
 
