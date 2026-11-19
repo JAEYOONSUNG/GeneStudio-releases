@@ -164,6 +164,17 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.1.50.20:begin published-at=2026-11-19T02:21:30.000Z -->
+### [1.1.50.20](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.50.20) — 2026-11-19
+
+# Gene Studio 1.1.50.20
+
+- **Sequence.** When reading a large annotated genome, you can change the zoom and keep your place. To select bases beyond the screen, drag toward the top or bottom edge of the wrapped Sequence view and hold there. The selection follows the visible letters as new rows appear and stops when you release the mouse.
+- **Align.** Compare a full-length plasmid consensus with its circular reference even when the files start at different bases or report opposite strands. Align shows the orientation it used and preserves the original input. If the sequence supports several equivalent origins, the result says so.
+- **Find.** Paste an entire matching circular sequence into Find to select the full molecule. The result identifies the strand and the reference coordinate of the first base you pasted, even when it falls in the middle of the reference.
+- **Desktop Save.** If another program has changed the original file since you opened it, Gene Studio detects the conflict before replacing it. Reopen the file to compare the changes, or use Save As to keep a separate copy of your edits.
+<!-- gene-studio:release:1.1.50.20:end -->
+
 <!-- gene-studio:release:1.1.50.19:begin published-at=2026-11-08T22:45:32.000Z -->
 ### [1.1.50.19](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.50.19) — 2026-11-08
 
