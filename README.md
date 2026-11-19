@@ -164,6 +164,16 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.1.50.21:begin published-at=2026-11-19T03:52:15.000Z -->
+### [1.1.50.21](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.50.21) — 2026-11-19
+
+# Gene Studio 1.1.50.21
+
+- **Editable map labels.** Choose **Text → Editable straight text** when exporting a circular or linear map. Feature names in the PDF can be selected and edited together in Illustrator, including names containing Korean, Latin characters or consecutive spaces.
+- **Figure fonts.** New figures use Roboto by default. Labels containing Hangul use Noto Sans KR for the whole label. Both fonts travel with the export for offline viewing. A font you previously chose is preserved.
+- **Pseudogenes.** Circular and linear SVG and PDF exports retain the lighter fill and stroke of a pseudogene or disrupted coding feature. Its name stays at full opacity.
+<!-- gene-studio:release:1.1.50.21:end -->
+
 <!-- gene-studio:release:1.1.50.20:begin published-at=2026-11-19T02:21:30.000Z -->
 ### [1.1.50.20](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.50.20) — 2026-11-19
 
