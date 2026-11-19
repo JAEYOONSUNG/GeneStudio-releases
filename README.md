@@ -164,6 +164,15 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.1.50.22:begin published-at=2026-11-19T05:27:43.000Z -->
+### [1.1.50.22](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.50.22) — 2026-11-19
+
+# Gene Studio 1.1.50.22
+
+- **Licence extensions.** Install 1.1.50.22 to collect an extension published by a second signing desk. The app checks when the workspace opens, and an open window shows the new expiry as soon as the check succeeds. To check immediately, open Settings → About → Check now.
+- **Signing desk.** Renewal requests use the requested computer even when several machines share the same contact email. The desk distinguishes saving a signed extension from publishing it for pickup, and can retry delivery without issuing another licence.
+<!-- gene-studio:release:1.1.50.22:end -->
+
 <!-- gene-studio:release:1.1.50.21:begin published-at=2026-11-19T03:52:15.000Z -->
 ### [1.1.50.21](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.50.21) — 2026-11-19
 
