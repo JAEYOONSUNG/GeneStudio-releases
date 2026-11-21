@@ -164,6 +164,22 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.1.50.24:begin published-at=2026-11-21T10:42:12.000Z -->
+### [1.1.50.24](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.50.24) — 2026-11-21
+
+# Gene Studio 1.1.50.24
+
+A full-codebase audit and genome-scale performance pass across the desktop application, analysis pipelines, signing desk and genestudio.app.
+
+- **Faster genome tab switching, contig hopping and reopening.** Switching between open megabase-scale bacterial genomes, switching views (including Map, Guides and History), moving across untouched contigs (up to 6 cached per assembly) and reopening already-open clean records now reuses cached genome map SVGs, batched single-pass primer binding scans, streaming annotation signatures, methylation, feature-table and contig caches and short-circuits unchanged payload hashes instead of rescanning or rebuilding tens of thousands of SVG nodes from scratch. Clean desktop genomes of 500 kb or larger also restore from disk as file pointers across restarts instead of duplicating megabytes in session storage.
+- **Primer dialog non-binding highlights and continuous copy.** The Primer dialog's Sequence box highlights 5′ overhangs and annealed mismatches directly on the editable sequence so you can drag-select and copy immediately, adds clickable overhang/mismatch/annealing chips to select any segment in one click, and provides a `10 bp` / `Continuous` spacing toggle alongside a one-click `Copy` button for continuous space-free bases.
+- **Cloning, digests, primers and sequence analyses.** Fixes Type IIB two-sided upstream cut offsets (`ENZ_TWO_SIDED`) and unrecorded-cut handling, cross-system same-chemistry methylation protection, Golden Gate IUPAC and junction checks, Select All circular digest regions, linear/circular sequencing-primer planning, reverse-strand RBS folding, and read-only Fold, Repeats and Terminators analyses so circular constructs are never rotated unexpectedly.
+- **Origin-crossing editing, copy/paste and persistence.** Keeps disk contig identity, Sanger persistence state (including manual read ordering), single-stranded topology, highlights (background, text and strand), lowercase masks, partial ends and FASTA descriptions accurate across Undo/Redo, Save, History and clipboard operations, while splitting origin-crossing features cleanly at linear paste/fragment boundaries without reversing traversal order or keeping stale `/translation` qualifiers.
+- **Maps, Sequence view, Sanger, Align and Strain DB.** Isolates Split Map SVG definitions, selection, hover, companion primer memoization and controls between panes; preserves highlight colors under selections and origin-spanning CDS translations; retains pre-origin mutations and per-read sequence/topology validity in circular Sanger alignments, fixes gamma-corrected nucleotide distance precision (including identical TN93 pairs) in Align, and fixes circular R-M gap distance and Custom strain persistence.
+- **Desktop stability, networking, DNMB pipelines and viewer safety.** Validates HTTPS redirects cleanly via Electron `net.request` for Addgene, AlphaFold DB and REBASE; cancels in-flight JGI and homology tasks cleanly on window close or recovery; preserves PGAP automatic CPU selection and CRLF IQ-TREE parsing; fixes self-closing OOXML workbook cells and origin-crossing/invalid tRNA extraction in DNMB; guards interrupted packaging backups against overwriting newer source; and closes remaining edit-bypass paths in read-only web viewer mode.
+- **Signing desk and genestudio.app.** Binds OAuth account linking to the initiating verified user and live session (requiring `homepage/migrations-0006.sql` on existing D1 databases before Worker deploy), lets signed-in users complete password-reset links cleanly, highlights deep-linked admin licence requests (including older rows past the 200-row list), restricts the desk's standing token to loopback, re-signs resumed licences cleanly, and makes backup restore atomic with rollback on failure.
+<!-- gene-studio:release:1.1.50.24:end -->
+
 <!-- gene-studio:release:1.1.50.23:begin published-at=2026-11-19T09:37:40.000Z -->
 ### [1.1.50.23](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.50.23) — 2026-11-19
 
