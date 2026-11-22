@@ -164,6 +164,18 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.1.50.27:begin published-at=2026-11-22T05:26:42.000Z -->
+### [1.1.50.27](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.50.27) — 2026-11-22
+
+# Gene Studio 1.1.50.27
+
+Compare two open vector maps with **Map options → Beside**, and scroll through annotated genomes in the Sequence view.
+
+- **Two maps at fit.** On a wide canvas, each drawing fits inside its own column, including when the options card is open. In a narrow window the maps stack vertically with room for both drawings.
+- **Zoomed maps.** Each pane has its own horizontal scroll position. Redrawing a map preserves the part of the vector you were looking at.
+- **Genome sequence scrolling.** Returning to the start shows the first base without an empty space above it. Short scrolls between annotated regions keep their place, and a selection drag can begin on an edge row.
+<!-- gene-studio:release:1.1.50.27:end -->
+
 <!-- gene-studio:release:1.1.50.24:begin published-at=2026-11-21T10:42:12.000Z -->
 ### [1.1.50.24](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.50.24) — 2026-11-21
 
