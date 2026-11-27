@@ -164,6 +164,19 @@ connected with, or endorsed by, SnapGene or Dotmatics.
 
 Version-specific changes are retained below. Earlier releases: [GitHub Releases](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases).
 
+<!-- gene-studio:release:1.1.50.28:begin published-at=2026-11-27T18:16:19.000Z -->
+### [1.1.50.28](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.50.28) — 2026-11-27
+
+# Gene Studio 1.1.50.28
+
+A security and reliability update.
+
+- **Runtime.** The app now runs on Electron 43.8.10, which carries the security fixes published for the 43 line since the previous build.
+- **Unusual files.** A feature colour read from a SnapGene file can no longer restyle the window, and a trace file that declares more samples than its bytes can hold no longer exhausts memory.
+- **Primer stock.** When the lab workbook is online-only or still syncing, the stock panel shows **Download and load** and **Check again** as soon as the check finishes, instead of staying on “Checking the workbook…”.
+- **Web viewer.** The viewer at genestudio.app/app is for viewing: controls that edit a construct, run an online analysis or open the strain database are dimmed there and say they are in the desktop app.
+<!-- gene-studio:release:1.1.50.28:end -->
+
 <!-- gene-studio:release:1.1.50.27:begin published-at=2026-11-22T05:26:42.000Z -->
 ### [1.1.50.27](https://github.com/JAEYOONSUNG/GeneStudio-releases/releases/tag/v1.1.50.27) — 2026-11-22
 
